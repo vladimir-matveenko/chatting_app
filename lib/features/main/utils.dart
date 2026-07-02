@@ -9,13 +9,13 @@ class MainScreenUtils {
     final location = GoRouterState.of(context).uri;
     if (location.pathSegments.length == 2) {
       if (location.pathSegments.last == AppRoutes.editProfile) {
-        return 'editProfilePage.screenName'.tr();
+        return 'editProfileScreen.screenName'.tr();
       }
     }
     return switch (location.toString()) {
-      AppRoutes.contacts => 'testsPage.screenName'.tr(),
-      AppRoutes.chats => 'testsPage.screenName'.tr(),
-      AppRoutes.profile => 'profilePage.screenName'.tr(),
+      AppRoutes.contacts => 'contactsScreen.screenName'.tr(),
+      AppRoutes.chats => 'chatsScreen.screenName'.tr(),
+      AppRoutes.profile => 'profileScreen.screenName'.tr(),
       _ => '',
     };
   }

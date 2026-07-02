@@ -1,20 +1,23 @@
+import 'package:chatting_app/features/auth/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/login/presentation/cubit/state.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../app/router/app_routes.dart';
 import '../../../../core/presentation/widgets/app_message.dart';
 import '../../../../core/presentation/widgets/app_text_form_field.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -22,10 +25,11 @@ class _LoginPageState extends State<LoginPage> {
 
   void handleLogin() {
     if (_formKey.currentState!.validate()) {
-      context.read<LoginCubit>().login(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
+      // context.read<LoginCubit>().login(
+      //   email: _emailController.text,
+      //   password: _passwordController.text,
+      // );
+      context.read<AuthCubit>().fakeAuth();
     }
   }
 
@@ -103,6 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _passwordController,
                       enabled: !isLoading,
                       obscureText: obscure,
+                      maxLines: 1,
                       decoration: InputDecoration(
                         labelText: 'loginScreen.fieldNamePassword'.tr(),
                         prefix: GestureDetector(
@@ -128,6 +133,12 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             )
                           : Text('loginScreen.btnLogin'.tr()),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.go(AppRoutes.createProfile);
+                      },
+                      child: Text('createProfileScreen.screenName'.tr()),
                     ),
                   ],
                 ),

@@ -12,14 +12,14 @@ import '../cubit/state.dart';
 import '../widgets/language_selector.dart';
 import '../widgets/theme_selector.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfileScreenState extends State<ProfileScreen> {
   late ProfileCubit cubit;
   late AuthCubit authCubit;
 
@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         spacing: 4.0,
                         mainAxisSize: .min,
                         children: [
-                          Text('editProfilePage.screenName'.tr()),
+                          Text('editProfileScreen.screenName'.tr()),
                           Icon(
                             Icons.edit,
                             color: theme.colorScheme.primary,
@@ -90,6 +90,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       },
                       child: const Text('Open Source Licenses'),
                     ),
+                    OutlinedButton(
+                      onPressed: () {
+                        authCubit.logout();
+                      },
+                      child: Text('profileScreen.logout'.tr()),
+                    ),
                     TextButton(
                       style: TextButton.styleFrom(
                         foregroundColor: theme.colorScheme.error,
@@ -97,8 +103,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       onPressed: () async {
                         final result = await AppDialog.show(
                           context,
-                          title: 'profilePage.btnRemove'.tr(),
-                          text: 'profilePage.youWantRemove'.tr(),
+                          title: 'profileScreen.btnRemove'.tr(),
+                          text: 'profileScreen.youWantRemove'.tr(),
                           cancelText: 'cancelText'.tr(),
                           okText: 'okText'.tr(),
                         );
@@ -107,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           authCubit.logout();
                         }
                       },
-                      child: Text('profilePage.btnRemoveProfile'.tr()),
+                      child: Text('profileScreen.btnRemoveProfile'.tr()),
                     ),
                   ],
                 ),
