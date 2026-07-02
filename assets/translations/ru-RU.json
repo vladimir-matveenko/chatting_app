@@ -1,0 +1,53 @@
+{
+  "okText": "ОК",
+  "cancelText": "Отмена",
+  "bottomNavBar": {
+    "homeTab": "Старт",
+    "profileTab": "Профиль"
+  },
+  "loginScreen": {
+    "screenName": "Вход",
+    "fieldNameEmail": "Email",
+    "fieldNamePassword": "Пароль",
+    "btnLogin": "Войти"
+  },
+  "createProfilePage": {
+    "screenName": "Создать аккаунт",
+    "fieldFirstName": "Имя",
+    "fieldLastName": "Фамилия",
+    "wordCount": "Количество слов в тесте",
+    "btnCreate": "Создать аккаунт"
+  },
+  "profilePage": {
+    "screenName": "Профиль",
+    "created": "Профиль создан успешно",
+    "btnRemove": "Удаление профиля",
+    "btnRemoveProfile": "Удалить профиль",
+    "youWantRemove": "Вы действительно хотите удалить профиль? Это действие необратимо и удалит все данные пользователя",
+    "themeDark": "Темная тема",
+    "themeLight": "Светлая тема",
+    "role": "Роль"
+  },
+  "editProfilePage": {
+    "screenName": "Редактировать профиль",
+    "btnSave": "Сохранить изменения",
+    "updated": "Профиль изменен успешно"
+  },
+  "fieldValidation": {
+    "fieldIsRequired": "Это поле обязательно!"
+  },
+  "errors": {
+    "errors": "Ошибки",
+    "noData": "Нет данных для отображения",
+    "noWords": "Failed to load words",
+    "cacheError": "Ошибка чтения данных с устройства",
+    "assetError": "Ошибка чтения из базы данных",
+    "noText": "Введите текст!",
+    "network": {
+      "noInternet": "Проблемы с подключением к сети",
+      "timeout": "Время ожидания ответа истекло",
+      "sslError": "Ошибка SSL сертификата",
+      "connectionError": "Ошибка соединения"
+    }
+  }
+}

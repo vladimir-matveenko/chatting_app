@@ -1,0 +1,57 @@
+import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+
+import '../../../../core/error/exception.dart';
+import '../models/auth_token_model.dart';
+import '../models/user_model.dart';
+
+abstract class AuthRemoteDataSource {
+  Future<AuthTokenModel?> login(String email, String password);
+
+  Future<UserModel?> getUserProfile();
+
+  Future<void> logout();
+}
+
+@LazySingleton(as: AuthRemoteDataSource)
+class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
+  AuthRemoteDataSourceImpl(this.dio);
+
+  final Dio dio;
+
+  @override
+  Future<AuthTokenModel?> login(String email, String password) async {
+    final response = await dio.post(
+      'auth/login',
+      queryParameters: {'email': email, 'password': password},
+      options: Options(extra: {'skipAuth': true}),
+    );
+    if (response.data != null) {
+      return AuthTokenModel.fromJson(response.data);
+    } else {
+      throw InvalidCredentialsException();
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+  }
+
+  @override
+  Future<UserModel?> getUserProfile() async {
+    try {
+      final response = await dio.get('auth/profile');
+      if (response.data != null) {
+        return UserModel.fromJson(response.data);
+      }
+    } on Exception catch (e) {
+      if (e is DioException && e.response?.statusCode == 401) {
+        throw InvalidCredentialsException();
+      } else {
+        throw ServerException();
+      }
+    }
+    return null;
+  }
+}

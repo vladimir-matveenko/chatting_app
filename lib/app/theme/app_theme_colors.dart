@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+
+import '../../features/theme/domain/entity/app_theme_mode.dart';
+
+class AppThemeColors {
+  const AppThemeColors({
+    required this.primary,
+    required this.onPrimary,
+    required this.error,
+    required this.onError,
+    required this.success,
+    required this.scaffoldBackground,
+    required this.unselectedWidget,
+    required this.canvas,
+    required this.splash,
+    required this.surfaceTint,
+    required this.bottomBarBackground,
+    required this.fieldBorder,
+    required this.fieldBorderFocussed,
+    required this.fieldBorderDisabled,
+    required this.primaryText,
+    required this.secondaryText,
+    required this.cardBackground,
+  });
+
+  final Color primary;
+  final Color onPrimary;
+  final Color error;
+  final Color onError;
+  final Color success;
+  final Color scaffoldBackground;
+  final Color unselectedWidget;
+  final Color canvas;
+  final Color splash;
+  final Color surfaceTint;
+  final Color bottomBarBackground;
+  final Color fieldBorder;
+  final Color fieldBorderFocussed;
+  final Color fieldBorderDisabled;
+  final Color primaryText;
+  final Color secondaryText;
+  final Color cardBackground;
+
+  static AppThemeColors fromMode(AppThemeMode mode) {
+    switch (mode) {
+      case AppThemeMode.light:
+        return light;
+      case AppThemeMode.dark:
+        return dark;
+    }
+  }
+
+  static final light = AppThemeColors(
+    primary: Colors.blue,
+    onPrimary: Colors.white,
+    error: Colors.red,
+    onError: Colors.white,
+    success: Colors.green,
+    scaffoldBackground: Colors.white,
+    unselectedWidget: Colors.grey.shade400,
+    canvas: Colors.white,
+    splash: Colors.white,
+    surfaceTint: Colors.transparent,
+    bottomBarBackground: Colors.grey,
+    fieldBorder: Colors.grey,
+    fieldBorderFocussed: Colors.blue,
+    fieldBorderDisabled: Colors.blueGrey,
+    primaryText: Colors.black,
+    secondaryText: Colors.grey.shade600,
+    cardBackground: Colors.grey.shade300,
+  );
+
+  static final dark = AppThemeColors(
+    primary: Colors.blue,
+    onPrimary: Colors.white,
+    error: Colors.red,
+    onError: Colors.white,
+    success: Colors.green,
+    scaffoldBackground: Colors.black,
+    unselectedWidget: Colors.grey.shade600,
+    canvas: Colors.black,
+    splash: Colors.black,
+    surfaceTint: Colors.transparent,
+    bottomBarBackground: const Color(0xFF222222),
+    fieldBorder: Colors.grey,
+    fieldBorderFocussed: Colors.blue,
+    fieldBorderDisabled: Colors.blueGrey,
+    primaryText: Colors.white,
+    secondaryText: Colors.grey.shade400,
+    cardBackground: Colors.grey.shade700,
+  );
+}

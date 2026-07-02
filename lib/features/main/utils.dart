@@ -1,0 +1,27 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../app/router/app_routes.dart';
+
+class MainScreenUtils {
+  static String getAppBarTitle(BuildContext context) {
+    final location = GoRouterState.of(context).uri;
+    if (location.pathSegments.length == 2) {
+      if (location.pathSegments.last == AppRoutes.editProfile) {
+        return 'editProfilePage.screenName'.tr();
+      }
+    }
+    return switch (location.toString()) {
+      AppRoutes.contacts => 'testsPage.screenName'.tr(),
+      AppRoutes.chats => 'testsPage.screenName'.tr(),
+      AppRoutes.profile => 'profilePage.screenName'.tr(),
+      _ => '',
+    };
+  }
+
+  static bool showBackButton(BuildContext context) {
+    final uri = GoRouterState.of(context).uri;
+    return uri.pathSegments.length > 1;
+  }
+}
