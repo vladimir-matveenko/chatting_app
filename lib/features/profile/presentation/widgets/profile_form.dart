@@ -50,7 +50,7 @@ class ProfileForm extends StatelessWidget {
                 controller: firstNameController,
                 enabled: isFormActive,
                 keyboardType: .name,
-                hintText: 'createProfilePage.fieldFirstName'.tr(),
+                hintText: 'createProfileScreen.fieldFirstName'.tr(),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'fieldValidation.fieldIsRequired'.tr();
@@ -62,7 +62,7 @@ class ProfileForm extends StatelessWidget {
                 controller: lastNameController,
                 enabled: isFormActive,
                 keyboardType: .name,
-                hintText: 'createProfilePage.fieldLastName'.tr(),
+                hintText: 'createProfileScreen.fieldLastName'.tr(),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'fieldValidation.fieldIsRequired'.tr();
@@ -74,7 +74,7 @@ class ProfileForm extends StatelessWidget {
                 crossAxisAlignment: .start,
                 spacing: 8.0,
                 children: [
-                  Text('${'createProfilePage.wordCount'.tr()}:'),
+                  Text('${'createProfileScreen.wordCount'.tr()}:'),
                   OneValueSlider(
                     isActive: isFormActive,
                     initValue: initWordsCount,

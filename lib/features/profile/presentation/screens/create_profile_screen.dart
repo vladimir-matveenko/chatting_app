@@ -7,14 +7,14 @@ import '../cubit/cubit.dart';
 import '../widgets/profile_form.dart';
 import '../widgets/profile_screen_wrapper.dart';
 
-class CreateProfilePage extends StatefulWidget {
-  const CreateProfilePage({super.key});
+class CreateProfileScreen extends StatefulWidget {
+  const CreateProfileScreen({super.key});
 
   @override
-  State<CreateProfilePage> createState() => _CreateProfilePageState();
+  State<CreateProfileScreen> createState() => _CreateProfileScreenState();
 }
 
-class _CreateProfilePageState extends State<CreateProfilePage> {
+class _CreateProfileScreenState extends State<CreateProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -42,12 +42,12 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('createProfilePage.screenName'.tr()),
+        title: Text('createProfileScreen.screenName'.tr()),
         centerTitle: true,
       ),
       resizeToAvoidBottomInset: true,
       body: ProfileScreenWrapper(
-        successMessage: 'profilePage.created'.tr(),
+        successMessage: 'profileScreen.created'.tr(),
         buildBody: (context, state) {
           final isLoading = state.isLoading;
           final isBlocked = jobDone;
@@ -61,7 +61,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
               _wordCount = count;
             },
             onSaveTapped: _handleCreateProfile,
-            mainButtonText: 'createProfilePage.btnCreate'.tr(),
+            mainButtonText: 'createProfileScreen.btnCreate'.tr(),
           );
         },
         onJobDone: () {

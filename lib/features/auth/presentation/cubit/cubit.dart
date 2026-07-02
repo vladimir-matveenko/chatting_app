@@ -36,6 +36,10 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
+  Future<void> fakeAuth() async {
+    emit(state.copyWith(status: AuthStatus.authenticated));
+  }
+
   Future<void> logout() async {
     await _logoutUseCase.call(NoParams());
     emit(state.copyWith(status: AuthStatus.unauthenticated));

@@ -3,14 +3,14 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../../core/presentation/widgets/app_loader.dart';
 
-class LicensesPage extends StatefulWidget {
-  const LicensesPage({super.key});
+class LicensesScreen extends StatefulWidget {
+  const LicensesScreen({super.key});
 
   @override
-  State<LicensesPage> createState() => _LicensesPageState();
+  State<LicensesScreen> createState() => _LicensesScreenState();
 }
 
-class _LicensesPageState extends State<LicensesPage> {
+class _LicensesScreenState extends State<LicensesScreen> {
   late Future<PackageInfo> _future;
 
   @override

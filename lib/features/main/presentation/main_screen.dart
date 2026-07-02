@@ -33,7 +33,7 @@ class MainScreen extends StatelessWidget {
         child: navigationShell,
       ),
       bottomNavigationBar: BottomNavBar(
-        currentPage: navigationShell.currentIndex,
+        currentIndex: navigationShell.currentIndex,
         onItemTap: (index) {
           navigationShell.goBranch(index);
         },

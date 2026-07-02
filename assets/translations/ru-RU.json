@@ -2,8 +2,9 @@
   "okText": "ОК",
   "cancelText": "Отмена",
   "bottomNavBar": {
-    "homeTab": "Старт",
-    "profileTab": "Профиль"
+    "contacts": "Контакты",
+    "chats": "Чаты",
+    "profile": "Профиль"
   },
   "loginScreen": {
     "screenName": "Вход",
@@ -11,38 +12,50 @@
     "fieldNamePassword": "Пароль",
     "btnLogin": "Войти"
   },
-  "createProfilePage": {
+  "createProfileScreen": {
     "screenName": "Создать аккаунт",
     "fieldFirstName": "Имя",
     "fieldLastName": "Фамилия",
-    "wordCount": "Количество слов в тесте",
     "btnCreate": "Создать аккаунт"
   },
-  "profilePage": {
+  "profileScreen": {
     "screenName": "Профиль",
     "created": "Профиль создан успешно",
     "btnRemove": "Удаление профиля",
     "btnRemoveProfile": "Удалить профиль",
     "youWantRemove": "Вы действительно хотите удалить профиль? Это действие необратимо и удалит все данные пользователя",
+    "btnLogout": "Выйти",
+    "changeLang": "Сменить язык",
+    "langEn": "Английский",
+    "langRu": "Русский",
     "themeDark": "Темная тема",
     "themeLight": "Светлая тема",
-    "role": "Роль"
+    "logout": "Выйти"
   },
-  "editProfilePage": {
+  "editProfileScreen": {
     "screenName": "Редактировать профиль",
     "btnSave": "Сохранить изменения",
     "updated": "Профиль изменен успешно"
   },
+  "contactsScreen": {
+    "screenName": "Контакты"
+  },
+  "chatsScreen": {
+    "screenName": "Чаты"
+  },
   "fieldValidation": {
-    "fieldIsRequired": "Это поле обязательно!"
+    "fieldIsRequired": "Это поле обязательно!",
+    "enterEmail": "Введите email",
+    "enterPassword": "Введите password"
   },
   "errors": {
-    "errors": "Ошибки",
-    "noData": "Нет данных для отображения",
-    "noWords": "Failed to load words",
+    "authError": "Ошибка аутентификации",
+    "wrongEmailOrPassword": "Неверный email или пароль",
+    "serverError": "Ошибка сервера",
     "cacheError": "Ошибка чтения данных с устройства",
-    "assetError": "Ошибка чтения из базы данных",
-    "noText": "Введите текст!",
+    "noData": "Нет данных для отображения",
+    "accessTokenInvalid": "Access token невалидный",
+    "logoutError": "Ошибка logout",
     "network": {
       "noInternet": "Проблемы с подключением к сети",
       "timeout": "Время ожидания ответа истекло",

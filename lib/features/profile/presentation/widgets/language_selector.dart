@@ -12,38 +12,38 @@ class LanguageSelector extends StatefulWidget {
 }
 
 class _LanguageSelectorState extends State<LanguageSelector> {
-  late String dropdownValue;
-  late String initialValue;
+  late Locale dropdownValue;
+  late Locale initialValue;
   late TextTheme textTheme;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    initialValue = context.locale.languageCode;
+    initialValue = context.locale;
     dropdownValue = initialValue;
     textTheme = Theme.of(context).textTheme;
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomDropdownMenu<String>(
+    return CustomDropdownMenu<Locale>(
       key: ValueKey(context.locale),
       initialValue: initialValue,
       leadingIcon: Padding(
         padding: const EdgeInsets.only(left: 4.0),
-        child: ProfileUtils.getLanguageIcon(dropdownValue),
+        child: ProfileUtils.getLanguageIcon(dropdownValue.languageCode),
       ),
       onChanged: (value) {
         if (value != null) {
           setState(() {
             dropdownValue = value;
-            context.setLocale(Locale(value));
+            context.setLocale(value);
           });
         }
       },
-      entries: <DropdownMenuEntry<String>>[
-        DropdownMenuEntry<String>(
-          value: 'en-US',
+      entries: <DropdownMenuEntry<Locale>>[
+        DropdownMenuEntry<Locale>(
+          value: const Locale('en', 'US'),
           label: 'profileScreen.langEn'.tr(),
           leadingIcon: ProfileUtils.getLanguageIcon('en'),
           labelWidget: Text(
@@ -51,8 +51,8 @@ class _LanguageSelectorState extends State<LanguageSelector> {
             style: textTheme.bodyMedium,
           ),
         ),
-        DropdownMenuEntry<String>(
-          value: 'ru-RU',
+        DropdownMenuEntry<Locale>(
+          value: const Locale('ru', 'RU'),
           label: 'profileScreen.langRu'.tr(),
           leadingIcon: ProfileUtils.getLanguageIcon('ru'),
           labelWidget: Text(

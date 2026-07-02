@@ -8,14 +8,14 @@ import '../cubit/cubit.dart';
 import '../widgets/profile_form.dart';
 import '../widgets/profile_screen_wrapper.dart';
 
-class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
+class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
 
   @override
-  State<EditProfilePage> createState() => _EditProfilePageState();
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class _EditProfileScreenState extends State<EditProfileScreen> {
   late ProfileCubit cubit;
   late ProfileEntity profile;
   final _formKey = GlobalKey<FormState>();
@@ -65,7 +65,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     return ColoredBox(
       color: theme.scaffoldBackgroundColor,
       child: ProfileScreenWrapper(
-        successMessage: 'editProfilePage.updated'.tr(),
+        successMessage: 'editProfileScreen.updated'.tr(),
         buildBody: (context, state) {
           final isLoading = state.isLoading;
           final isBlocked = jobDone;
@@ -80,7 +80,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               _wordCount = count;
             },
             onSaveTapped: _onSave,
-            mainButtonText: 'editProfilePage.btnSave'.tr(),
+            mainButtonText: 'editProfileScreen.btnSave'.tr(),
           );
         },
         onJobDone: () {

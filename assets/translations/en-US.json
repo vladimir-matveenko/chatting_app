@@ -1,11 +1,10 @@
 {
-  "updatedAt": "Updated at:",
-  "you": "You",
+  "okText": "ОК",
+  "cancelText": "Cancel",
   "bottomNavBar": {
-    "homeTab": "Home",
-    "usersTab": "Users",
-    "locationsTab": "Locations",
-    "profileTab": "Profile"
+    "contacts": "Contacts",
+    "chats": "Chats",
+    "profile": "Profile"
   },
   "loginScreen": {
     "screenName": "Login",
@@ -13,83 +12,55 @@
     "fieldNamePassword": "Password",
     "btnLogin": "Login"
   },
-  "productsScreen": {
-    "screenName": "Products",
-    "categories": "Categories",
-    "delete": "Delete",
-    "deleteProduct": "Delete product",
-    "deleteCategory": "Delete category",
-    "areYouSureProduct": "Are you sure you want to delete product?",
-    "areYouSureCategory": "Are you sure you want to delete category?",
-    "okText": "OK",
-    "cancelText": "Cancel"
-  },
-  "productScreen": {
-    "screenName": "Product",
-    "relatedProducts": "Related products"
-  },
-  "addProductScreen": {
-    "screenName": "Add product",
-    "selectCategory": "Select category",
-    "addImages": "Add images (< 3)",
-    "fieldTitle": "Title",
-    "fieldPrice": "Price",
-    "fieldDescription": "Description",
-    "createBtn": "Create",
-    "createdSuccess": "Created successful"
-  },
-  "addCategoryScreen": {
-    "screenName": "Add category",
-    "addImage": "Add image",
-    "fieldName": "Name",
-    "createBtn": "Create",
-    "createdSuccess": "Created successful"
-  },
-  "usersScreen": {
-    "screenName": "Users"
-  },
-  "userScreen": {
-    "screenName": "User"
+  "createProfileScreen": {
+    "screenName": "Create profile",
+    "fieldFirstName": "First name",
+    "fieldLastName": "Last name",
+    "btnCreate": "Create profile"
   },
   "profileScreen": {
     "screenName": "Profile",
+    "created": "Profile created successful",
+    "btnRemove": "Remove profile",
+    "btnRemoveProfile": "Remove profile",
+    "youWantRemove": "Do you really want delete profile? This action is permanent and all your data will be removed.",
     "btnLogout": "Logout",
     "changeLang": "Change language",
     "langEn": "English",
     "langRu": "Russian",
     "themeDark": "Dark theme",
     "themeLight": "Light theme",
-    "role": "Role"
+    "logout": "Logout"
   },
-  "locationsScreen": {
-    "screenName": "Locations",
-    "latitude": "latitude:",
-    "longitude": "longitude:",
-    "list": "List",
-    "map": "Map",
-    "modalTitle": "Geolocation is not available",
-    "modalText": "Open the Settings to allow it?"
+  "editProfileScreen": {
+    "screenName": "Edit profile",
+    "btnSave": "Save changes",
+    "updated": "Profile changed successful"
   },
-  "filtersModal": {
-    "modalName": "Filters",
-    "amount": "Amount",
-    "from": "From",
-    "to": "To",
-    "btnConfirm": "Confirm",
-    "btnReset": "Reset filters"
+  "contactsScreen": {
+    "screenName": "Contacts"
+  },
+  "chatsScreen": {
+    "screenName": "Chats"
   },
   "fieldValidation": {
+    "fieldIsRequired": "This field is required!",
     "enterEmail": "Enter email",
-    "enterPassword": "Enter password",
-    "notEmpty": "Must be not empty",
-    "maxAmount": "Max amount should be greater then min"
+    "enterPassword": "Enter password"
   },
   "errors": {
     "authError": "Auth error",
     "wrongEmailOrPassword": "Wrong email or password",
     "serverError": "Server error",
+    "cacheError": "Cache reading error",
+    "noData": "No data available",
     "accessTokenInvalid": "Access token is invalid",
     "logoutError": "Logout error",
-    "noItemsAvailable": "No items available"
+    "network": {
+      "noInternet": "Network error",
+      "timeout": "Connection timeout",
+      "sslError": "SSL error",
+      "connectionError": "Connection error"
+    }
   }
 }

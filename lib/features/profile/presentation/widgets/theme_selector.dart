@@ -30,6 +30,7 @@ class _ThemeSelectorState extends State<ThemeSelector> {
   @override
   Widget build(BuildContext context) {
     return CustomDropdownMenu<AppThemeMode>(
+      key: ValueKey(context.locale),
       initialValue: initialValue,
       onChanged: (value) {
         if (value != null) {
@@ -41,17 +42,17 @@ class _ThemeSelectorState extends State<ThemeSelector> {
       entries: <DropdownMenuEntry<AppThemeMode>>[
         DropdownMenuEntry<AppThemeMode>(
           value: AppThemeMode.dark,
-          label: 'profilePage.themeDark'.tr(),
+          label: 'profileScreen.themeDark'.tr(),
           labelWidget: Text(
-            'profilePage.themeDark'.tr(),
+            'profileScreen.themeDark'.tr(),
             style: textTheme.bodyMedium,
           ),
         ),
         DropdownMenuEntry<AppThemeMode>(
           value: AppThemeMode.light,
-          label: 'profilePage.themeLight'.tr(),
+          label: 'profileScreen.themeLight'.tr(),
           labelWidget: Text(
-            'profilePage.themeLight'.tr(),
+            'profileScreen.themeLight'.tr(),
             style: textTheme.bodyMedium,
           ),
         ),
