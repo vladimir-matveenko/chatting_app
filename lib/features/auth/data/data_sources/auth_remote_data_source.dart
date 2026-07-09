@@ -1,14 +1,21 @@
+import 'package:chatting_app/features/auth/data/models/auth_model.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/exception.dart';
 import '../models/auth_token_model.dart';
-import '../models/user_model.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<AuthTokenModel?> login(String email, String password);
+  Future<AuthTokenModel?> register({
+    required String username,
+    required String email,
+    required String password,
+  });
 
-  Future<UserModel?> getUserProfile();
+  Future<AuthTokenModel?> login({
+    required String email,
+    required String password,
+  });
 
   Future<void> logout();
 }
@@ -20,14 +27,43 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final Dio dio;
 
   @override
-  Future<AuthTokenModel?> login(String email, String password) async {
+  Future<AuthTokenModel?> register({
+    required String username,
+    required String email,
+    required String password,
+  }) async {
     final response = await dio.post(
-      'auth/login',
-      queryParameters: {'email': email, 'password': password},
+      'auth/register',
+      queryParameters: {
+        'username': username,
+        'email': email,
+        'password': password,
+      },
       options: Options(extra: {'skipAuth': true}),
     );
-    if (response.data != null) {
-      return AuthTokenModel.fromJson(response.data);
+    if (response.statusCode == 201 && response.data != null) {
+      final authResult = AuthModel.fromJson(response.data);
+      return authResult.tokens;
+    } else {
+      throw InvalidCredentialsException();
+    }
+  }
+
+  @override
+  Future<AuthTokenModel?> login({
+    required String email,
+    required String password,
+  }) async {
+    final response = await dio.post(
+      'auth/login',
+      data: {'email': email, 'password': password},
+      options: Options(extra: {'skipAuth': true}),
+    );
+    if (response.statusCode == 200 && response.data != null) {
+      final authResult = AuthModel.fromJson(response.data);
+      return authResult.tokens;
+    } else if (response.statusCode == 400) {
+      throw UnknownException(response.statusMessage.toString());
     } else {
       throw InvalidCredentialsException();
     }
@@ -35,23 +71,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<void> logout() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-  }
-
-  @override
-  Future<UserModel?> getUserProfile() async {
-    try {
-      final response = await dio.get('auth/profile');
-      if (response.data != null) {
-        return UserModel.fromJson(response.data);
-      }
-    } on Exception catch (e) {
-      if (e is DioException && e.response?.statusCode == 401) {
-        throw InvalidCredentialsException();
-      } else {
-        throw ServerException();
-      }
+    final response = await dio.post('auth/logout');
+    if (response.statusCode != 204) {
+      throw InvalidCredentialsException();
     }
-    return null;
   }
 }

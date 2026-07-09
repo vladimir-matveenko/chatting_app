@@ -23,6 +23,8 @@ class LoginCubit extends Cubit<LoginState> {
           message = 'errors.wrongEmailOrPassword'.tr();
         } else if (l is ServerFailure) {
           message = 'errors.serverError'.tr();
+        } else if (l is UnknownFailure) {
+          message = l.message;
         }
         emit(state.copyWith(error: message, status: LoginStatus.failure));
       },

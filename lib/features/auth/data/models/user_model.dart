@@ -13,11 +13,11 @@ abstract class UserModel with _$UserModel {
 
   const factory UserModel({
     required int id,
-    required String name,
+    String? username,
+    String? displayName,
     required String email,
-    required String password,
-    required String role,
-    String? avatar,
+    String? avatarUrl,
+    required DateTime createdAt,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
@@ -27,10 +27,11 @@ abstract class UserModel with _$UserModel {
 extension UserModelExt on UserModel {
   UserEntity toEntity() => UserEntity(
     id: id.toString(),
-    name: name,
+    username: username ?? '',
+    displayName: displayName ?? '',
     email: email,
-    role: role,
-    avatar: avatar ?? '',
+    avatarUrl: avatarUrl ?? '',
+    createdAt: createdAt,
   );
 }
 

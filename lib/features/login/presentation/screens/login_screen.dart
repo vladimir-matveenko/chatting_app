@@ -25,11 +25,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void handleLogin() {
     if (_formKey.currentState!.validate()) {
-      // context.read<LoginCubit>().login(
-      //   email: _emailController.text,
-      //   password: _passwordController.text,
-      // );
-      context.read<AuthCubit>().fakeAuth();
+      context.read<LoginCubit>().login(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
     }
   }
 
@@ -41,8 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    _emailController.text = 'john@mail.com';
-    _passwordController.text = 'changeme';
+    _emailController.text = 'email11@email.com';
+    _passwordController.text = '123456789';
     super.initState();
   }
 
@@ -147,8 +146,12 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         },
         listener: (context, state) {
-          if (state.error?.isNotEmpty == true) {
+          if (state.status == LoginStatus.failure &&
+              state.error?.isNotEmpty == true) {
             AppMessage.error(context, message: state.error!);
+          }
+          if (state.status == LoginStatus.success) {
+            context.read<AuthCubit>().checkAuth();
           }
         },
       ),

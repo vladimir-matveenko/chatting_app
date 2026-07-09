@@ -24,8 +24,6 @@ import 'package:chatting_app/features/auth/domain/repository/auth_repository.dar
     as _i207;
 import 'package:chatting_app/features/auth/domain/usecases/check_auth_usecase.dart'
     as _i323;
-import 'package:chatting_app/features/auth/domain/usecases/get_user_profile_usecase.dart'
-    as _i421;
 import 'package:chatting_app/features/auth/domain/usecases/logout_usecase.dart'
     as _i844;
 import 'package:chatting_app/features/auth/presentation/cubit/cubit.dart'
@@ -163,9 +161,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i323.CheckAuthUseCase>(
       () => _i323.CheckAuthUseCase(gh<_i207.AuthRepository>()),
     );
-    gh.lazySingleton<_i421.GetUserProfileUseCase>(
-      () => _i421.GetUserProfileUseCase(gh<_i207.AuthRepository>()),
-    );
     gh.lazySingleton<_i844.LogoutUseCase>(
       () => _i844.LogoutUseCase(gh<_i207.AuthRepository>()),
     );
@@ -175,7 +170,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i330.AuthCubit>(
       () => _i330.AuthCubit(
         gh<_i323.CheckAuthUseCase>(),
-        gh<_i421.GetUserProfileUseCase>(),
         gh<_i844.LogoutUseCase>(),
       ),
     );

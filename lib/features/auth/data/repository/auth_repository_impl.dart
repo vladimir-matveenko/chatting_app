@@ -4,12 +4,10 @@ import 'package:injectable/injectable.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/error/mapper.dart';
 import '../../domain/entity/auth_token_entity.dart';
-import '../../domain/entity/user_entity.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../data_sources/auth_local_data_source.dart';
 import '../data_sources/auth_remote_data_source.dart';
 import '../models/auth_token_model.dart';
-import '../models/user_model.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
@@ -37,7 +35,10 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     try {
-      final token = await authRemoteDataSource.login(email, password);
+      final token = await authRemoteDataSource.login(
+        email: email,
+        password: password,
+      );
       await authLocalDataSource.cacheToken(
         const AuthTokenModel(accessToken: '', refreshToken: ''),
       );
@@ -54,16 +55,6 @@ class AuthRepositoryImpl implements AuthRepository {
       await authRemoteDataSource.logout();
       await authLocalDataSource.clearToken();
       return const Right(null);
-    } catch (e) {
-      return Left(mapExceptionToFailure(e));
-    }
-  }
-
-  @override
-  Future<Either<Failure, UserEntity?>> getUserProfile() async {
-    try {
-      final user = await authRemoteDataSource.getUserProfile();
-      return Right(user?.toEntity());
     } catch (e) {
       return Left(mapExceptionToFailure(e));
     }
