@@ -1,20 +1,31 @@
-import 'package:equatable/equatable.dart';
+import 'package:chatting_app/features/auth/data/models/user_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class UserEntity extends Equatable {
-  const UserEntity({
-    required this.id,
-    required this.email,
-    required this.name,
-    required this.role,
-    required this.avatar,
-  });
+part 'user_entity.freezed.dart';
+part 'user_entity.g.dart';
 
-  final String id;
-  final String email;
-  final String name;
-  final String role;
-  final String avatar;
+@freezed
+abstract class UserEntity with _$UserEntity {
+  const factory UserEntity({
+    required String id,
+    required String username,
+    required String displayName,
+    required String email,
+    required String avatarUrl,
+    required DateTime createdAt,
+  }) = _UserEntity;
 
-  @override
-  List<Object?> get props => [id, email, name, role, avatar];
+  factory UserEntity.fromJson(Map<String, dynamic> json) =>
+      _$UserEntityFromJson(json);
+}
+
+extension UserEntityExt on UserEntity {
+  UserModel toModel() => UserModel(
+    id: int.tryParse(id) ?? 0,
+    username: username,
+    displayName: displayName,
+    email: email,
+    avatarUrl: avatarUrl,
+    createdAt: createdAt,
+  );
 }

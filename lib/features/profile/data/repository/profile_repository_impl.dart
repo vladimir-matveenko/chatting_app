@@ -1,41 +1,27 @@
+import 'package:chatting_app/features/auth/domain/entity/user_entity.dart';
+import 'package:chatting_app/features/profile/data/data_sources/profile_remote_data_source.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/error/mapper.dart';
-import '../../domain/entity/profile_entity.dart';
+import '../../../auth/data/models/user_model.dart';
 import '../../domain/repository/profile_repository.dart';
-import '../data_sources/profile_local_data_source.dart';
-import '../models/profile_model.dart';
 
 @LazySingleton(as: ProfileRepository)
 class ProfileRepositoryImpl implements ProfileRepository {
-  ProfileRepositoryImpl({required this.profileLocalDataSource});
+  ProfileRepositoryImpl({required this.profileRemoteDataSource});
 
-  final ProfileLocalDataSource profileLocalDataSource;
-  ProfileEntity? profile;
-
-  @override
-  Future<Either<Failure, bool>> hasProfile() async {
-    try {
-      final model = await profileLocalDataSource.fetchProfile();
-      if (model == null) {
-        return const Right(false);
-      }
-      profile = model.toEntity();
-      return const Right(true);
-    } catch (e) {
-      return Left(mapExceptionToFailure(e));
-    }
-  }
+  final ProfileRemoteDataSource profileRemoteDataSource;
+  UserEntity? profile;
 
   @override
-  Future<Either<Failure, ProfileEntity>> fetchProfile() async {
+  Future<Either<Failure, UserEntity>> fetchProfile() async {
     try {
       if (profile != null) {
         return Right(profile!);
       }
-      final model = await profileLocalDataSource.fetchProfile();
+      final model = await profileRemoteDataSource.fetchProfile();
       if (model == null) {
         return Left(CacheFailure());
       }
@@ -46,24 +32,42 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Either<Failure, void>> saveProfile({
-    required ProfileEntity profile,
+  Future<Either<Failure, bool>> changePassword({
+    required String currentPassword,
+    required String newPassword,
   }) async {
     try {
-      await profileLocalDataSource.saveProfile(profile.toModel());
-      this.profile = profile;
-      return const Right(null);
+      final result = await profileRemoteDataSource.changePassword(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      );
+      if (!result) {
+        return Left(CacheFailure());
+      }
+      return Right(result);
     } catch (e) {
       return Left(mapExceptionToFailure(e));
     }
   }
 
   @override
-  Future<Either<Failure, void>> deleteProfile() async {
+  Future<Either<Failure, bool>> updateProfile({
+    String? username,
+    String? displayName,
+    String? email,
+    String? avatarUrl,
+  }) async {
     try {
-      await profileLocalDataSource.deleteProfile();
-      profile = null;
-      return const Right(null);
+      final result = await profileRemoteDataSource.updateProfile(
+        username: username,
+        displayName: displayName,
+        email: email,
+        avatarUrl: avatarUrl,
+      );
+      if (!result) {
+        return Left(CacheFailure());
+      }
+      return Right(result);
     } catch (e) {
       return Left(mapExceptionToFailure(e));
     }

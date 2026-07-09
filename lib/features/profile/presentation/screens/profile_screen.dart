@@ -1,3 +1,4 @@
+import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,8 +8,8 @@ import '../../../../app/router/app_routes.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
 import '../../../auth/presentation/cubit/cubit.dart';
-import '../cubit/cubit.dart';
-import '../cubit/state.dart';
+import '../profile_cubit/cubit.dart';
+import '../profile_cubit/state.dart';
 import '../widgets/language_selector.dart';
 import '../widgets/theme_selector.dart';
 
@@ -22,6 +23,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late ProfileCubit cubit;
   late AuthCubit authCubit;
+  late LoginCubit loginCubit;
 
   @override
   void initState() {
@@ -29,6 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     cubit = context.read<ProfileCubit>();
     cubit.loadProfile();
     authCubit = context.read<AuthCubit>();
+    loginCubit = context.read<LoginCubit>();
   }
 
   @override
@@ -45,11 +48,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   spacing: 16.0,
                   children: [
                     Text(
-                      state.profile?.firstName ?? '',
+                      state.profile?.displayName ?? '',
                       style: theme.textTheme.headlineSmall,
                     ),
                     Text(
-                      state.profile?.lastName ?? '',
+                      state.profile?.email ?? '',
                       style: theme.textTheme.headlineSmall,
                     ),
                     const ThemeSelector(),
@@ -93,6 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     OutlinedButton(
                       onPressed: () {
                         authCubit.logout();
+                        loginCubit.onLogout();
                       },
                       child: Text('profileScreen.logout'.tr()),
                     ),
@@ -109,8 +113,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           okText: 'okText'.tr(),
                         );
                         if (result) {
-                          cubit.deleteProfile();
                           authCubit.logout();
+                          loginCubit.onLogout();
                         }
                       },
                       child: Text('profileScreen.btnRemoveProfile'.tr()),

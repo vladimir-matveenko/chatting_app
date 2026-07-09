@@ -9,6 +9,9 @@ class ServerFailure extends Failure {
   ServerFailure({this.message});
 
   final String? message;
+
+  @override
+  List<dynamic> get props => [message];
 }
 
 class CacheFailure extends Failure {}
@@ -22,7 +25,10 @@ class TimeoutFailure extends Failure {}
 class NoInternetFailure extends Failure {}
 
 class UnknownFailure extends Failure {
-  UnknownFailure(this.message);
+  UnknownFailure({this.message});
 
-  final String message;
+  final String? message;
+
+  @override
+  List<dynamic> get props => [message];
 }

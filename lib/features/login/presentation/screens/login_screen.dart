@@ -1,3 +1,5 @@
+import 'package:chatting_app/core/presentation/widgets/text_fields/email_text_field.dart';
+import 'package:chatting_app/core/presentation/widgets/text_fields/password_field.dart';
 import 'package:chatting_app/features/auth/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/login/presentation/cubit/state.dart';
@@ -8,7 +10,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/presentation/widgets/app_message.dart';
-import '../../../../core/presentation/widgets/app_text_form_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,28 +22,21 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  var obscure = true;
+  final obscure = ValueNotifier<bool>(true);
 
   void handleLogin() {
     if (_formKey.currentState!.validate()) {
-      // context.read<LoginCubit>().login(
-      //   email: _emailController.text,
-      //   password: _passwordController.text,
-      // );
-      context.read<AuthCubit>().fakeAuth();
+      context.read<LoginCubit>().login(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
     }
-  }
-
-  void obscureIcon() {
-    setState(() {
-      obscure = !obscure;
-    });
   }
 
   @override
   void initState() {
-    _emailController.text = 'john@mail.com';
-    _passwordController.text = 'changeme';
+    _emailController.text = 'email11@email.com';
+    _passwordController.text = '123456789';
     super.initState();
   }
 
@@ -88,38 +82,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: theme.colorScheme.primary,
                     ),
                     const SizedBox(height: 40.0),
-                    AppTextFormField(
-                      controller: _emailController,
+                    EmailTextField(
                       enabled: !isLoading,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        labelText: 'loginScreen.fieldNameEmail'.tr(),
-                        prefix: const Icon(Icons.email),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'fieldValidation.enterPassword'.tr();
-                        }
-                        return null;
-                      },
+                      emailController: _emailController,
                     ),
-                    AppTextFormField(
-                      controller: _passwordController,
+                    PasswordTextField(
                       enabled: !isLoading,
-                      obscureText: obscure,
-                      maxLines: 1,
-                      decoration: InputDecoration(
-                        labelText: 'loginScreen.fieldNamePassword'.tr(),
-                        prefix: GestureDetector(
-                          onTap: obscureIcon,
-                          child: Icon(obscure ? Icons.lock : Icons.lock_open),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'fieldValidation.enterPassword'.tr();
-                        }
-                        return null;
+                      passwordController: _passwordController,
+                      obscure: obscure,
+                      onObscureChanged: (value) {
+                        obscure.value = value;
                       },
                     ),
                     ElevatedButton(
@@ -136,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        context.go(AppRoutes.createProfile);
+                        context.push(AppRoutes.createProfile);
                       },
                       child: Text('createProfileScreen.screenName'.tr()),
                     ),
@@ -147,8 +119,12 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         },
         listener: (context, state) {
-          if (state.error?.isNotEmpty == true) {
+          if (state.status == LoginStatus.failure &&
+              state.error?.isNotEmpty == true) {
             AppMessage.error(context, message: state.error!);
+          }
+          if (state.status == LoginStatus.success) {
+            context.read<AuthCubit>().checkAuth();
           }
         },
       ),

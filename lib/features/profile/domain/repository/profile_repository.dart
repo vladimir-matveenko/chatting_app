@@ -1,14 +1,20 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failure.dart';
-import '../entity/profile_entity.dart';
+import '../../../auth/domain/entity/user_entity.dart';
 
 abstract class ProfileRepository {
-  Future<Either<Failure, bool>> hasProfile();
+  Future<Either<Failure, UserEntity>> fetchProfile();
 
-  Future<Either<Failure, ProfileEntity>> fetchProfile();
+  Future<Either<Failure, bool>> updateProfile({
+    String? username,
+    String? displayName,
+    String? email,
+    String? avatarUrl,
+  });
 
-  Future<Either<Failure, void>> saveProfile({required ProfileEntity profile});
-
-  Future<Either<Failure, void>> deleteProfile();
+  Future<Either<Failure, bool>> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  });
 }

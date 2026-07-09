@@ -1,11 +1,11 @@
+import 'package:chatting_app/features/profile/presentation/widgets/edit_profile_form.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/entity/profile_entity.dart';
-import '../cubit/cubit.dart';
-import '../widgets/profile_form.dart';
+import '../../../auth/domain/entity/user_entity.dart';
+import '../profile_cubit/cubit.dart';
 import '../widgets/profile_screen_wrapper.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -17,11 +17,11 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   late ProfileCubit cubit;
-  late ProfileEntity profile;
+  late UserEntity profile;
   final _formKey = GlobalKey<FormState>();
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
-  int _wordCount = 10;
+  final _userNameController = TextEditingController();
+  final _displayNameController = TextEditingController();
+  final _emailController = TextEditingController();
   bool jobDone = false;
 
   void _onSave() {
@@ -29,33 +29,43 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       return;
     }
 
-    final updatedProfile = profile.copyWith(
-      firstName: _firstNameController.text.trim(),
-      lastName: _lastNameController.text.trim(),
-      wordCount: _wordCount,
+    cubit.updateProfile(
+      username: profile.username == _userNameController.text.trim()
+          ? ''
+          : _userNameController.text.trim(),
+      displayName: profile.displayName == _displayNameController.text.trim()
+          ? ''
+          : _displayNameController.text.trim(),
+      email: profile.email == _emailController.text.trim()
+          ? ''
+          : _emailController.text.trim(),
     );
-
-    if (updatedProfile == cubit.state.profile) {
-      return;
-    }
-
-    cubit.updateProfile(profile: updatedProfile);
   }
 
   @override
   void initState() {
     super.initState();
     cubit = context.read<ProfileCubit>();
-    profile = cubit.state.profile!;
-    _firstNameController.text = profile.firstName;
-    _lastNameController.text = profile.lastName;
-    _wordCount = profile.wordCount;
+    profile =
+        cubit.state.profile ??
+        UserEntity(
+          id: '',
+          username: '',
+          displayName: '',
+          email: '',
+          avatarUrl: '',
+          createdAt: DateTime.now(),
+        );
+    _userNameController.text = profile.username;
+    _displayNameController.text = profile.displayName;
+    _emailController.text = profile.email;
   }
 
   @override
   void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
+    _userNameController.dispose();
+    _displayNameController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -69,16 +79,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         buildBody: (context, state) {
           final isLoading = state.isLoading;
           final isBlocked = jobDone;
-          return ProfileForm(
+          return EditProfileForm(
             isFormActive: !isLoading && !isBlocked,
             isLoading: isLoading,
             formKey: _formKey,
-            initWordsCount: profile.wordCount,
-            firstNameController: _firstNameController,
-            lastNameController: _lastNameController,
-            onWordCountChanged: (count) {
-              _wordCount = count;
-            },
+            userNameController: _userNameController,
+            displayNameController: _displayNameController,
+            emailController: _emailController,
             onSaveTapped: _onSave,
             mainButtonText: 'editProfileScreen.btnSave'.tr(),
           );
@@ -87,6 +94,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           jobDone = true;
         },
         onSuccess: () {
+          context.read<ProfileCubit>().loadProfile();
           context.pop();
         },
       ),

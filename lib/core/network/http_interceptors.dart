@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:chatting_app/features/auth/data/models/auth_model.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../features/auth/data/data_sources/auth_local_data_source.dart';
@@ -17,7 +20,7 @@ class AuthInterceptor extends Interceptor {
   );
 
   static const _loginPath = 'auth/login';
-  static const _refreshPath = 'auth/refresh-token';
+  static const _refreshPath = 'auth/refresh';
 
   final AuthLocalDataSource localDataSource;
   final AuthSessionManager sessionManager;
@@ -52,6 +55,11 @@ class AuthInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     final statusCode = err.response?.statusCode;
+
+    // TODO(): remove logs!
+    log(statusCode.toString());
+    log(err.requestOptions.baseUrl + err.requestOptions.path);
+    log(err.message.toString());
 
     final isUnauthorized = statusCode == 401;
 
@@ -97,6 +105,10 @@ class AuthInterceptor extends Interceptor {
   Future<void> _performRefresh() async {
     try {
       final newAccessToken = await _refreshToken();
+
+      if (kDebugMode) {
+        log('token refreshed');
+      }
 
       final queuedRequests = List.of(_queue);
       _queue.clear();
@@ -154,8 +166,10 @@ class AuthInterceptor extends Interceptor {
       options: Options(extra: {'skipAuth': true}),
     );
 
-    final accessToken = response.data['access_token'] as String;
-    final refreshToken = response.data['refresh_token'] as String;
+    final authData = AuthModel.fromJson(response.data);
+
+    final accessToken = authData.tokens.accessToken;
+    final refreshToken = authData.tokens.refreshToken;
 
     await localDataSource.cacheToken(
       AuthTokenModel(accessToken: accessToken, refreshToken: refreshToken),
