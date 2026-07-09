@@ -14,8 +14,7 @@
   },
   "createProfileScreen": {
     "screenName": "Создать аккаунт",
-    "fieldFirstName": "Имя",
-    "fieldLastName": "Фамилия",
+    "fieldUserName": "Имя пользователя",
     "btnCreate": "Создать аккаунт"
   },
   "profileScreen": {
@@ -34,6 +33,8 @@
   },
   "editProfileScreen": {
     "screenName": "Редактировать профиль",
+    "fieldDisplayName": "Отображаемое имя",
+    "btnChangePass": "Сменить пароль",
     "btnSave": "Сохранить изменения",
     "updated": "Профиль изменен успешно"
   },
@@ -46,7 +47,8 @@
   "fieldValidation": {
     "fieldIsRequired": "Это поле обязательно!",
     "enterEmail": "Введите email",
-    "enterPassword": "Введите password"
+    "enterPassword": "Введите пароль",
+    "minPasLength": "Минимальная длина 8 символов"
   },
   "errors": {
     "authError": "Ошибка аутентификации",

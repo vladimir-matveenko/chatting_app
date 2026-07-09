@@ -1,3 +1,4 @@
+import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late ProfileCubit cubit;
   late AuthCubit authCubit;
+  late LoginCubit loginCubit;
 
   @override
   void initState() {
@@ -29,6 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     cubit = context.read<ProfileCubit>();
     cubit.loadProfile();
     authCubit = context.read<AuthCubit>();
+    loginCubit = context.read<LoginCubit>();
   }
 
   @override
@@ -93,6 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     OutlinedButton(
                       onPressed: () {
                         authCubit.logout();
+                        loginCubit.onLogout();
                       },
                       child: Text('profileScreen.logout'.tr()),
                     ),
@@ -111,6 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         if (result) {
                           cubit.deleteProfile();
                           authCubit.logout();
+                          loginCubit.onLogout();
                         }
                       },
                       child: Text('profileScreen.btnRemoveProfile'.tr()),
