@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../domain/entity/profile_entity.dart';
+import '../../../auth/domain/entity/user_entity.dart';
 import '../cubit/cubit.dart';
 import '../widgets/profile_screen_wrapper.dart';
 
@@ -17,9 +17,11 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   late ProfileCubit cubit;
-  late ProfileEntity profile;
+  late UserEntity profile;
   final _formKey = GlobalKey<FormState>();
   final _userNameController = TextEditingController();
+  final _displayNameController = TextEditingController();
+  final _emailNameController = TextEditingController();
   bool jobDone = false;
 
   void _onSave() {
@@ -28,7 +30,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
 
     final updatedProfile = profile.copyWith(
-      firstName: _userNameController.text.trim(),
+      username: _userNameController.text.trim(),
     );
 
     if (updatedProfile == cubit.state.profile) {
@@ -42,8 +44,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     super.initState();
     cubit = context.read<ProfileCubit>();
-    profile = cubit.state.profile ?? ProfileEntity(firstName: '', lastName: '');
-    _userNameController.text = profile.firstName;
+    profile =
+        cubit.state.profile ??
+        UserEntity(
+          id: '',
+          username: '',
+          displayName: '',
+          email: '',
+          avatarUrl: '',
+          createdAt: DateTime.now(),
+        );
+    _userNameController.text = profile.username;
   }
 
   @override
@@ -67,6 +78,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             isLoading: isLoading,
             formKey: _formKey,
             userNameController: _userNameController,
+            displayNameController: _displayNameController,
+            emailController: _emailNameController,
             onSaveTapped: _onSave,
             mainButtonText: 'editProfileScreen.btnSave'.tr(),
           );

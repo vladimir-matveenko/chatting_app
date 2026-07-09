@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../domain/entity/profile_entity.dart';
+import '../../../auth/domain/entity/user_entity.dart';
 
 class ProfileState extends Equatable {
   const ProfileState({
@@ -10,13 +10,13 @@ class ProfileState extends Equatable {
     this.success = false,
   });
 
-  final ProfileEntity? profile;
+  final UserEntity? profile;
   final String? error;
   final bool isLoading;
   final bool success;
 
   ProfileState copyWith({
-    ProfileEntity? profile,
+    UserEntity? profile,
     String? error,
     bool? isLoading,
     bool? success,

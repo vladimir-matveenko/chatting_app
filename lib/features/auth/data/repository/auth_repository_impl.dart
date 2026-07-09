@@ -20,6 +20,28 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource authRemoteDataSource;
 
   @override
+  Future<Either<Failure, AuthTokenEntity?>> register({
+    required String username,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final token = await authRemoteDataSource.register(
+        username: username,
+        email: email,
+        password: password,
+      );
+      if (token != null) {
+        return Right(token.toEntity());
+      } else {
+        return const Right(null);
+      }
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> isAuthenticated() async {
     try {
       final token = await authLocalDataSource.getCachedToken();

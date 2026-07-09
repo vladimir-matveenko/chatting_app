@@ -26,8 +26,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
   void _handleCreateProfile() {
     if (_formKey.currentState!.validate()) {
       context.read<ProfileCubit>().createProfile(
-        firstName: _userNameController.text,
-        lastName: _emailController.text,
+        username: _userNameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
       );
     }
   }

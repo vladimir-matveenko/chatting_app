@@ -1,16 +1,16 @@
 import 'dart:convert';
 
+import 'package:chatting_app/features/auth/data/models/user_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../app/constants/app_constants.dart';
 import '../../../../core/error/exception.dart';
-import '../models/profile_model.dart';
 
 abstract class ProfileLocalDataSource {
-  Future<ProfileModel?> fetchProfile();
+  Future<UserModel?> fetchProfile();
 
-  Future<void> saveProfile(ProfileModel profile);
+  Future<void> saveProfile(UserModel profile);
 
   Future<void> deleteProfile();
 }
@@ -22,11 +22,11 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
   final SharedPreferences sharedPreferences;
 
   @override
-  Future<ProfileModel?> fetchProfile() async {
+  Future<UserModel?> fetchProfile() async {
     try {
       final jsonString = sharedPreferences.getString(AppConstants.profileKey);
       if (jsonString != null) {
-        return ProfileModel.fromJson(jsonDecode(jsonString));
+        return UserModel.fromJson(jsonDecode(jsonString));
       }
     } on Exception {
       throw CacheException();
@@ -35,7 +35,7 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
   }
 
   @override
-  Future<void> saveProfile(ProfileModel profile) async {
+  Future<void> saveProfile(UserModel profile) async {
     try {
       final data = jsonEncode(profile.toJson());
       await sharedPreferences.setString(AppConstants.profileKey, data);

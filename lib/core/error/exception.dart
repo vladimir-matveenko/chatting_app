@@ -4,7 +4,11 @@ abstract class AppException implements Exception {}
 /// Network Exceptions
 abstract class NetworkException extends AppException {}
 
-class UnauthorizedException extends NetworkException {}
+class UnauthorizedException extends NetworkException {
+  UnauthorizedException({this.message});
+
+  final String? message;
+}
 
 class ServerException extends NetworkException {
   ServerException({this.message});
@@ -12,14 +16,22 @@ class ServerException extends NetworkException {
   final String? message;
 }
 
-class TimeoutException extends NetworkException {}
+class TimeoutException extends NetworkException {
+  TimeoutException({this.message});
 
-class NoInternetException extends NetworkException {}
+  final String? message;
+}
+
+class NoInternetException extends NetworkException {
+  NoInternetException({this.message});
+
+  final String? message;
+}
 
 class UnknownException extends NetworkException {
-  UnknownException(this.message);
+  UnknownException({this.message});
 
-  final String message;
+  final String? message;
 }
 
 /// CacheException

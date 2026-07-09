@@ -48,11 +48,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   spacing: 16.0,
                   children: [
                     Text(
-                      state.profile?.firstName ?? '',
+                      state.profile?.username ?? '',
                       style: theme.textTheme.headlineSmall,
                     ),
                     Text(
-                      state.profile?.lastName ?? '',
+                      state.profile?.email ?? '',
                       style: theme.textTheme.headlineSmall,
                     ),
                     const ThemeSelector(),
@@ -113,7 +113,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           okText: 'okText'.tr(),
                         );
                         if (result) {
-                          cubit.deleteProfile();
                           authCubit.logout();
                           loginCubit.onLogout();
                         }

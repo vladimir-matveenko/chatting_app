@@ -1,3 +1,4 @@
+import 'package:chatting_app/core/presentation/widgets/text_fields/email_text_field.dart';
 import 'package:chatting_app/core/presentation/widgets/text_fields/username_text_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ class EditProfileForm extends StatelessWidget {
     required this.isLoading,
     required this.formKey,
     required this.userNameController,
+    required this.displayNameController,
+    required this.emailController,
     required this.onSaveTapped,
     required this.mainButtonText,
   });
@@ -19,6 +22,8 @@ class EditProfileForm extends StatelessWidget {
   final bool isLoading;
   final GlobalKey<FormState> formKey;
   final TextEditingController userNameController;
+  final TextEditingController displayNameController;
+  final TextEditingController emailController;
   final VoidCallback onSaveTapped;
   final String mainButtonText;
 
@@ -42,7 +47,15 @@ class EditProfileForm extends StatelessWidget {
               UsernameTextField(
                 enabled: isFormActive,
                 userNameController: userNameController,
+              ),
+              UsernameTextField(
+                enabled: isFormActive,
+                userNameController: displayNameController,
                 hintText: 'editProfileScreen.fieldDisplayName'.tr(),
+              ),
+              EmailTextField(
+                enabled: isFormActive,
+                emailController: emailController,
               ),
               OutlinedButton(
                 onPressed: () {},
