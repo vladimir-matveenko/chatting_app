@@ -1,5 +1,7 @@
+import 'package:chatting_app/core/presentation/widgets/app_dialog.dart';
 import 'package:chatting_app/core/presentation/widgets/text_fields/email_text_field.dart';
 import 'package:chatting_app/core/presentation/widgets/text_fields/username_text_field.dart';
+import 'package:chatting_app/features/profile/presentation/widgets/change_password_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -61,7 +63,12 @@ class EditProfileForm extends StatelessWidget {
                 emailController: emailController,
               ),
               OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  AppDialog.empty(
+                    context,
+                    content: const ChangePasswordDialog(),
+                  );
+                },
                 child: Text('editProfileScreen.btnChangePass'.tr()),
               ),
               ElevatedButton(

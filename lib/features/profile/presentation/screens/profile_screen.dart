@@ -8,8 +8,8 @@ import '../../../../app/router/app_routes.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
 import '../../../auth/presentation/cubit/cubit.dart';
-import '../cubit/cubit.dart';
-import '../cubit/state.dart';
+import '../profile_cubit/cubit.dart';
+import '../profile_cubit/state.dart';
 import '../widgets/language_selector.dart';
 import '../widgets/theme_selector.dart';
 

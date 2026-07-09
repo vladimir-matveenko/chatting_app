@@ -33,10 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void obscureIcon() {
-    obscure.value = !obscure.value;
-  }
-
   @override
   void initState() {
     _emailController.text = 'email11@email.com';

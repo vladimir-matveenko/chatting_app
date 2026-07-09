@@ -50,8 +50,10 @@ import 'package:chatting_app/features/profile/domain/usecases/fetch_profile_usec
     as _i483;
 import 'package:chatting_app/features/profile/domain/usecases/update_profile_usecase.dart'
     as _i237;
-import 'package:chatting_app/features/profile/presentation/cubit/cubit.dart'
-    as _i1058;
+import 'package:chatting_app/features/profile/presentation/change_password_cubit/cubit.dart'
+    as _i126;
+import 'package:chatting_app/features/profile/presentation/profile_cubit/cubit.dart'
+    as _i643;
 import 'package:chatting_app/features/theme/data/data_sources/theme_local_data_source.dart'
     as _i595;
 import 'package:chatting_app/features/theme/data/repository/theme_repository_impl.dart'
@@ -158,6 +160,9 @@ extension GetItInjectableX on _i174.GetIt {
         authRemoteDataSource: gh<_i509.AuthRemoteDataSource>(),
       ),
     );
+    gh.lazySingleton<_i126.ChangePasswordCubit>(
+      () => _i126.ChangePasswordCubit(gh<_i312.ChangePasswordUseCase>()),
+    );
     gh.lazySingleton<_i323.CheckAuthUseCase>(
       () => _i323.CheckAuthUseCase(gh<_i207.AuthRepository>()),
     );
@@ -170,18 +175,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i605.CreateProfileUseCase>(
       () => _i605.CreateProfileUseCase(gh<_i207.AuthRepository>()),
     );
-    gh.lazySingleton<_i1058.ProfileCubit>(
-      () => _i1058.ProfileCubit(
-        gh<_i483.FetchProfileUseCase>(),
-        gh<_i312.ChangePasswordUseCase>(),
-        gh<_i605.CreateProfileUseCase>(),
-        gh<_i237.UpdateProfileUseCase>(),
-      ),
-    );
     gh.lazySingleton<_i330.AuthCubit>(
       () => _i330.AuthCubit(
         gh<_i323.CheckAuthUseCase>(),
         gh<_i844.LogoutUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i643.ProfileCubit>(
+      () => _i643.ProfileCubit(
+        gh<_i483.FetchProfileUseCase>(),
+        gh<_i605.CreateProfileUseCase>(),
+        gh<_i237.UpdateProfileUseCase>(),
       ),
     );
     gh.lazySingleton<_i523.LoginCubit>(

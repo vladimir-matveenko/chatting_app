@@ -61,9 +61,6 @@ class AuthRepositoryImpl implements AuthRepository {
         email: email,
         password: password,
       );
-      await authLocalDataSource.cacheToken(
-        const AuthTokenModel(accessToken: '', refreshToken: ''),
-      );
       await authLocalDataSource.cacheToken(token!);
       return Right(token.toEntity());
     } catch (e) {

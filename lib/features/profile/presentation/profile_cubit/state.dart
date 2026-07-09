@@ -7,28 +7,38 @@ class ProfileState extends Equatable {
     this.profile,
     this.error,
     this.isLoading = false,
-    this.success = false,
+    this.createdSuccessful = false,
+    this.updatedSuccessful = false,
   });
 
   final UserEntity? profile;
   final String? error;
   final bool isLoading;
-  final bool success;
+  final bool createdSuccessful;
+  final bool updatedSuccessful;
 
   ProfileState copyWith({
     UserEntity? profile,
     String? error,
     bool? isLoading,
-    bool? success,
+    bool? createdSuccessful,
+    bool? updatedSuccessful,
   }) {
     return ProfileState(
       profile: profile ?? this.profile,
       error: error ?? this.error,
       isLoading: isLoading ?? this.isLoading,
-      success: success ?? this.success,
+      createdSuccessful: createdSuccessful ?? this.createdSuccessful,
+      updatedSuccessful: updatedSuccessful ?? this.updatedSuccessful,
     );
   }
 
   @override
-  List<dynamic> get props => [profile, error, isLoading, success];
+  List<dynamic> get props => [
+    profile,
+    error,
+    isLoading,
+    createdSuccessful,
+    updatedSuccessful,
+  ];
 }

@@ -1,11 +1,10 @@
 import 'package:chatting_app/features/profile/domain/usecases/update_profile_usecase.dart';
-import 'package:chatting_app/features/profile/presentation/cubit/state.dart';
+import 'package:chatting_app/features/profile/presentation/profile_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../app/utils/app_utils.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../domain/usecases/change_password_usecase.dart';
 import '../../domain/usecases/create_profile_usecase.dart';
 import '../../domain/usecases/fetch_profile_usecase.dart';
 
@@ -13,12 +12,10 @@ import '../../domain/usecases/fetch_profile_usecase.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit(
     this._fetchProfileUseCase,
-    this._changePasswordUseCase,
     this._createProfileUseCase,
     this._updateProfileUseCase,
   ) : super(const ProfileState());
   final FetchProfileUseCase _fetchProfileUseCase;
-  final ChangePasswordUseCase _changePasswordUseCase;
   final CreateProfileUseCase _createProfileUseCase;
   final UpdateProfileUseCase _updateProfileUseCase;
 
@@ -59,7 +56,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         );
       },
       (r) {
-        emit(state.copyWith(isLoading: false, success: true));
+        emit(state.copyWith(isLoading: false, createdSuccessful: true));
       },
     );
   }
@@ -89,33 +86,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         );
       },
       (r) {
-        emit(state.copyWith(isLoading: false, success: true));
-      },
-    );
-  }
-
-  Future<void> changePassword({
-    required String currentPassword,
-    required String newPassword,
-  }) async {
-    emit(state.copyWith(isLoading: true));
-    final result = await _changePasswordUseCase(
-      ChangePasswordParams(
-        currentPassword: currentPassword,
-        newPassword: newPassword,
-      ),
-    );
-    result.fold(
-      (l) {
-        emit(
-          state.copyWith(
-            error: AppUtils.parseFailureMessage(l),
-            isLoading: false,
-          ),
-        );
-      },
-      (r) {
-        emit(state.copyWith(isLoading: false, success: true));
+        emit(state.copyWith(isLoading: false, updatedSuccessful: true));
       },
     );
   }
@@ -125,6 +96,6 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> disableSuccess() async {
-    emit(state.copyWith(success: false));
+    emit(state.copyWith(createdSuccessful: false, updatedSuccessful: false));
   }
 }

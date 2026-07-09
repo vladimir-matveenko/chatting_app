@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../auth/domain/entity/user_entity.dart';
-import '../cubit/cubit.dart';
+import '../profile_cubit/cubit.dart';
 import '../widgets/profile_screen_wrapper.dart';
 
 class EditProfileScreen extends StatefulWidget {

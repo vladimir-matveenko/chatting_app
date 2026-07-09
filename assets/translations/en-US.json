@@ -38,6 +38,13 @@
     "btnSave": "Save changes",
     "updated": "Profile changed successful"
   },
+  "changePasswordScreen": {
+    "screenName": "Change password",
+    "currentPasField": "Current password",
+    "newPasField": "New password",
+    "btnSave": "Save new password",
+    "changed": "Password changed successful"
+  },
   "contactsScreen": {
     "screenName": "Contacts"
   },

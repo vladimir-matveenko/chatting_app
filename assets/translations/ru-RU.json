@@ -38,6 +38,13 @@
     "btnSave": "Сохранить изменения",
     "updated": "Профиль изменен успешно"
   },
+  "changePasswordScreen": {
+    "screenName": "Смена пароля",
+    "currentPasField": "Текущий пароль",
+    "newPasField": "Новый пароль",
+    "btnSave": "Сохранить новый пароль",
+    "changed": "Пароль сохранен успешно"
+  },
   "contactsScreen": {
     "screenName": "Контакты"
   },

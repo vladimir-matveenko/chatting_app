@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/presentation/widgets/app_back_button.dart';
 import '../../../auth/presentation/cubit/cubit.dart';
-import '../cubit/cubit.dart';
+import '../profile_cubit/cubit.dart';
 import '../widgets/create_profile_form.dart';
 import '../widgets/profile_screen_wrapper.dart';
 
