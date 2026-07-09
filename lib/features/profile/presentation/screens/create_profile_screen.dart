@@ -37,6 +37,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
   void dispose() {
     _userNameController.dispose();
     _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 

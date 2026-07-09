@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../app/utils/app_utils.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../../auth/domain/entity/user_entity.dart';
 import '../../domain/usecases/change_password_usecase.dart';
 import '../../domain/usecases/create_profile_usecase.dart';
 import '../../domain/usecases/fetch_profile_usecase.dart';
@@ -65,10 +64,20 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
-  Future<void> updateProfile({required UserEntity profile}) async {
+  Future<void> updateProfile({
+    String? username,
+    String? displayName,
+    String? email,
+    String? avatarUrl,
+  }) async {
     emit(state.copyWith(isLoading: true));
     final result = await _updateProfileUseCase(
-      UpdateProfileParams(profile: profile),
+      UpdateProfileParams(
+        username: username,
+        displayName: displayName,
+        email: email,
+        avatarUrl: avatarUrl,
+      ),
     );
     result.fold(
       (l) {
@@ -80,7 +89,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         );
       },
       (r) {
-        emit(state.copyWith(profile: profile, isLoading: false, success: true));
+        emit(state.copyWith(isLoading: false, success: true));
       },
     );
   }

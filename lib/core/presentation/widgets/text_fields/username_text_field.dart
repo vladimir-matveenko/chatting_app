@@ -1,3 +1,4 @@
+import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +10,13 @@ class UsernameTextField extends StatelessWidget {
     required this.enabled,
     required this.userNameController,
     this.hintText,
+    this.validator,
   });
 
   final bool enabled;
   final TextEditingController userNameController;
   final String? hintText;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +28,7 @@ class UsernameTextField extends StatelessWidget {
         hintText: hintText ?? 'createProfileScreen.fieldUserName'.tr(),
         prefixIcon: const Icon(Icons.person),
       ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'fieldValidation.fieldIsRequired'.tr();
-        }
-        return null;
-      },
+      validator: validator ?? AppUtils.fieldRequired,
     );
   }
 }

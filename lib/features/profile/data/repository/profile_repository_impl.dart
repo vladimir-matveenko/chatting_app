@@ -52,11 +52,17 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   @override
   Future<Either<Failure, bool>> updateProfile({
-    required UserEntity profile,
+    String? username,
+    String? displayName,
+    String? email,
+    String? avatarUrl,
   }) async {
     try {
       final result = await profileRemoteDataSource.updateProfile(
-        profile.toModel(),
+        username: username,
+        displayName: displayName,
+        email: email,
+        avatarUrl: avatarUrl,
       );
       if (!result) {
         return Left(CacheFailure());

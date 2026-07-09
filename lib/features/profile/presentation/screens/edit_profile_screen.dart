@@ -21,7 +21,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   final _userNameController = TextEditingController();
   final _displayNameController = TextEditingController();
-  final _emailNameController = TextEditingController();
+  final _emailController = TextEditingController();
   bool jobDone = false;
 
   void _onSave() {
@@ -29,15 +29,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       return;
     }
 
-    final updatedProfile = profile.copyWith(
-      username: _userNameController.text.trim(),
+    cubit.updateProfile(
+      username: profile.username == _userNameController.text.trim()
+          ? ''
+          : _userNameController.text.trim(),
+      displayName: profile.displayName == _displayNameController.text.trim()
+          ? ''
+          : _displayNameController.text.trim(),
+      email: profile.email == _emailController.text.trim()
+          ? ''
+          : _emailController.text.trim(),
     );
-
-    if (updatedProfile == cubit.state.profile) {
-      return;
-    }
-
-    cubit.updateProfile(profile: updatedProfile);
   }
 
   @override
@@ -55,11 +57,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           createdAt: DateTime.now(),
         );
     _userNameController.text = profile.username;
+    _displayNameController.text = profile.displayName;
+    _emailController.text = profile.email;
   }
 
   @override
   void dispose() {
     _userNameController.dispose();
+    _displayNameController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -79,7 +85,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             formKey: _formKey,
             userNameController: _userNameController,
             displayNameController: _displayNameController,
-            emailController: _emailNameController,
+            emailController: _emailController,
             onSaveTapped: _onSave,
             mainButtonText: 'editProfileScreen.btnSave'.tr(),
           );
@@ -88,6 +94,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           jobDone = true;
         },
         onSuccess: () {
+          context.read<ProfileCubit>().loadProfile();
           context.pop();
         },
       ),

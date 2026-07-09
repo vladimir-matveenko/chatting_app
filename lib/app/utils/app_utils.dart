@@ -44,4 +44,11 @@ class AppUtils {
     if (name.isEmpty) return '';
     return name.split(' ').last;
   }
+
+  static String? fieldRequired(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'fieldValidation.fieldIsRequired'.tr();
+    }
+    return null;
+  }
 }

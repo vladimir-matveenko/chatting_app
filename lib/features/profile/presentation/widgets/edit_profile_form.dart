@@ -47,6 +47,9 @@ class EditProfileForm extends StatelessWidget {
               UsernameTextField(
                 enabled: isFormActive,
                 userNameController: userNameController,
+                validator: (value) {
+                  return null;
+                },
               ),
               UsernameTextField(
                 enabled: isFormActive,

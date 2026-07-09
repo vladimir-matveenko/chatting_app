@@ -1,4 +1,3 @@
-import 'package:chatting_app/features/auth/domain/entity/user_entity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -14,12 +13,25 @@ class UpdateProfileUseCase implements UseCase<bool, UpdateProfileParams> {
 
   @override
   Future<Either<Failure, bool>> call(UpdateProfileParams params) async {
-    return await repository.updateProfile(profile: params.profile);
+    return await repository.updateProfile(
+      username: params.username,
+      displayName: params.displayName,
+      email: params.email,
+      avatarUrl: params.avatarUrl,
+    );
   }
 }
 
 class UpdateProfileParams {
-  UpdateProfileParams({required this.profile});
+  UpdateProfileParams({
+    this.username,
+    this.displayName,
+    this.email,
+    this.avatarUrl,
+  });
 
-  final UserEntity profile;
+  final String? username;
+  final String? displayName;
+  final String? email;
+  final String? avatarUrl;
 }

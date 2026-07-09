@@ -48,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   spacing: 16.0,
                   children: [
                     Text(
-                      state.profile?.username ?? '',
+                      state.profile?.displayName ?? '',
                       style: theme.textTheme.headlineSmall,
                     ),
                     Text(
