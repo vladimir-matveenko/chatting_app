@@ -51,8 +51,11 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.sizeOf(context);
     final isLandscape = screenSize.width > screenSize.height;
-    return ColoredBox(
-      color: theme.scaffoldBackgroundColor,
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.scaffoldBackgroundColor,
+        borderRadius: BorderRadius.circular(12.0),
+      ),
       child: ChangePasswordScreenWrapper(
         successMessage: 'changePasswordScreen.changed'.tr(),
         buildBody: (context, state) {
