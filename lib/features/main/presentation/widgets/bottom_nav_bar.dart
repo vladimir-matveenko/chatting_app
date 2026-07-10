@@ -29,6 +29,10 @@ class BottomNavBar extends StatelessWidget {
               label: 'bottomNavBar.chats'.tr(),
             ),
             BottomNavigationBarItem(
+              icon: const Icon(Icons.notifications),
+              label: 'bottomNavBar.notifications'.tr(),
+            ),
+            BottomNavigationBarItem(
               icon: const Icon(Icons.account_circle),
               label: 'bottomNavBar.profile'.tr(),
             ),

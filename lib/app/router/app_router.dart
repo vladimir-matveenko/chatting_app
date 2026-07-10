@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:chatting_app/features/chats/presentation/screens/chats_screen.dart';
 import 'package:chatting_app/features/contacts/presentation/screens/contacts_screen.dart';
 import 'package:chatting_app/features/login/presentation/screens/login_screen.dart';
+import 'package:chatting_app/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -99,6 +100,15 @@ class AppRouter {
                 path: AppRoutes.chats,
                 pageBuilder: (context, state) =>
                     const NoTransitionPage(child: ChatsScreen()),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.notifications,
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: NotificationsScreen()),
               ),
             ],
           ),

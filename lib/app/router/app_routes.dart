@@ -9,5 +9,6 @@ class AppRoutes {
   /// Shell routes
   static const chats = '/chats';
   static const contacts = '/contacts';
+  static const notifications = '/notifications';
   static const profile = '/profile';
 }

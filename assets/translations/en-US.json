@@ -4,6 +4,7 @@
   "bottomNavBar": {
     "contacts": "Contacts",
     "chats": "Chats",
+    "notifications": "Notifications",
     "profile": "Profile"
   },
   "loginScreen": {
@@ -50,6 +51,9 @@
   },
   "chatsScreen": {
     "screenName": "Chats"
+  },
+  "notificationsScreen": {
+    "screenName": "Notifications"
   },
   "fieldValidation": {
     "fieldIsRequired": "This field is required!",
