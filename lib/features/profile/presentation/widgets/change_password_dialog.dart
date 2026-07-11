@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/utils/extensions.dart';
 import 'change_password_form.dart';
 
 class ChangePasswordDialog extends StatefulWidget {
@@ -50,7 +51,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.sizeOf(context);
-    final isLandscape = screenSize.width > screenSize.height;
+    final isLandscape = context.isLandscape();
     return Container(
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,

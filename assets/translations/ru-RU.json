@@ -16,7 +16,8 @@
   "createProfileScreen": {
     "screenName": "Создать аккаунт",
     "fieldUserName": "Имя пользователя",
-    "btnCreate": "Создать аккаунт"
+    "btnCreate": "Создать аккаунт",
+    "createSuccessMessage": "Поздравляем! Профиль успешно создан. Пожалуйста, войдите, чтобы начать пользоваться приложением."
   },
   "profileScreen": {
     "screenName": "Профиль",

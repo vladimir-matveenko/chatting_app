@@ -8,13 +8,13 @@ import '../../../auth/domain/repository/auth_repository.dart';
 
 @lazySingleton
 class LoginUseCase implements UseCase<AuthTokenEntity, LoginParams> {
-  LoginUseCase(this.repository);
+  LoginUseCase(this._repository);
 
-  final AuthRepository repository;
+  final AuthRepository _repository;
 
   @override
   Future<Either<Failure, AuthTokenEntity>> call(params) async {
-    return await repository.login(
+    return await _repository.login(
       email: params.email,
       password: params.password,
     );

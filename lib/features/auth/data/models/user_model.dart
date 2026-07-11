@@ -12,7 +12,7 @@ abstract class UserModel with _$UserModel {
   const UserModel._();
 
   const factory UserModel({
-    required int id,
+    required String id,
     String? username,
     String? displayName,
     required String email,
@@ -26,7 +26,7 @@ abstract class UserModel with _$UserModel {
 
 extension UserModelExt on UserModel {
   UserEntity toEntity() => UserEntity(
-    id: id.toString(),
+    id: id,
     username: username ?? '',
     displayName: displayName ?? '',
     email: email,

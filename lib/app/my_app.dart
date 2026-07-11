@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../features/auth/presentation/cubit/cubit.dart';
+import '../features/chats/presentation/cubit/cubit.dart';
 import '../features/profile/presentation/profile_cubit/cubit.dart';
 import '../features/theme/presentation/cubit/cubit.dart';
 import '../features/theme/presentation/cubit/state.dart';
@@ -25,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   final loginCubit = getIt<LoginCubit>();
   final profileCubit = getIt<ProfileCubit>();
   final changePasswordCubit = getIt<ChangePasswordCubit>();
+  final chatsCubit = getIt<ChatsCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => loginCubit),
         BlocProvider(create: (_) => profileCubit),
         BlocProvider(create: (_) => changePasswordCubit),
+        BlocProvider(create: (_) => chatsCubit),
         BlocProvider(create: (_) => themeCubit..loadTheme()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(

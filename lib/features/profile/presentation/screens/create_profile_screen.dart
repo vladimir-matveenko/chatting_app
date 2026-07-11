@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/presentation/widgets/app_back_button.dart';
-import '../../../auth/presentation/cubit/cubit.dart';
+import '../../../../core/presentation/widgets/app_dialog.dart';
+import '../../../../core/utils/extensions.dart';
 import '../profile_cubit/cubit.dart';
 import '../widgets/create_profile_form.dart';
 import '../widgets/profile_screen_wrapper.dart';
@@ -43,6 +45,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final isLandscape = context.isLandscape();
     return Scaffold(
       appBar: AppBar(
         title: Text('createProfileScreen.screenName'.tr()),
@@ -74,7 +78,38 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
           jobDone = true;
         },
         onSuccess: () {
-          context.read<AuthCubit>().checkAuth();
+          AppDialog.empty(
+            context,
+            onClose: () {
+              context.pop();
+            },
+            content: Container(
+              padding: const .all(32.0),
+              constraints: BoxConstraints(
+                maxHeight: isLandscape
+                    ? screenSize.height - 32.0
+                    : screenSize.height * 0.8,
+                maxWidth: isLandscape
+                    ? screenSize.height * 0.8
+                    : screenSize.width - 32.0,
+              ),
+              child: Column(
+                crossAxisAlignment: .center,
+                mainAxisSize: .min,
+                spacing: 16.0,
+                children: [
+                  const Icon(Icons.check, color: Colors.green, size: 60.0),
+                  Text('createProfileScreen.createSuccessMessage'.tr()),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.pop();
+                    },
+                    child: Text('okText'.tr()),
+                  ),
+                ],
+              ),
+            ),
+          );
         },
       ),
     );

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- int get id; String? get username; String? get displayName; String get email; String? get avatarUrl; DateTime get createdAt;
+ String get id; String? get username; String? get displayName; String get email; String? get avatarUrl; DateTime get createdAt;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String? username, String? displayName, String email, String? avatarUrl, DateTime createdAt
+ String id, String? username, String? displayName, String email, String? avatarUrl, DateTime createdAt
 });
 
 
@@ -68,7 +68,7 @@ class _$UserModelCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = freezed,Object? displayName = freezed,Object? email = null,Object? avatarUrl = freezed,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String?,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
@@ -158,7 +158,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String? username,  String? displayName,  String email,  String? avatarUrl,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? username,  String? displayName,  String email,  String? avatarUrl,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
 return $default(_that.id,_that.username,_that.displayName,_that.email,_that.avatarUrl,_that.createdAt);case _:
@@ -179,7 +179,7 @@ return $default(_that.id,_that.username,_that.displayName,_that.email,_that.avat
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String? username,  String? displayName,  String email,  String? avatarUrl,  DateTime createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? username,  String? displayName,  String email,  String? avatarUrl,  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
 return $default(_that.id,_that.username,_that.displayName,_that.email,_that.avatarUrl,_that.createdAt);case _:
@@ -199,7 +199,7 @@ return $default(_that.id,_that.username,_that.displayName,_that.email,_that.avat
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String? username,  String? displayName,  String email,  String? avatarUrl,  DateTime createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? username,  String? displayName,  String email,  String? avatarUrl,  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
 return $default(_that.id,_that.username,_that.displayName,_that.email,_that.avatarUrl,_that.createdAt);case _:
@@ -217,7 +217,7 @@ class _UserModel extends UserModel {
   const _UserModel({required this.id, this.username, this.displayName, required this.email, this.avatarUrl, required this.createdAt}): super._();
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
-@override final  int id;
+@override final  String id;
 @override final  String? username;
 @override final  String? displayName;
 @override final  String email;
@@ -257,7 +257,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String? username, String? displayName, String email, String? avatarUrl, DateTime createdAt
+ String id, String? username, String? displayName, String email, String? avatarUrl, DateTime createdAt
 });
 
 
@@ -277,7 +277,7 @@ class __$UserModelCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = freezed,Object? displayName = freezed,Object? email = null,Object? avatarUrl = freezed,Object? createdAt = null,}) {
   return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String?,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable

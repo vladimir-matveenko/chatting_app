@@ -7,13 +7,13 @@ import '../repository/profile_repository.dart';
 
 @lazySingleton
 class UpdateProfileUseCase implements UseCase<bool, UpdateProfileParams> {
-  UpdateProfileUseCase(this.repository);
+  UpdateProfileUseCase(this._repository);
 
-  final ProfileRepository repository;
+  final ProfileRepository _repository;
 
   @override
   Future<Either<Failure, bool>> call(UpdateProfileParams params) async {
-    return await repository.updateProfile(
+    return await _repository.updateProfile(
       username: params.username,
       displayName: params.displayName,
       email: params.email,

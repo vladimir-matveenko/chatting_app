@@ -28,8 +28,22 @@ import 'package:chatting_app/features/auth/domain/usecases/logout_usecase.dart'
     as _i844;
 import 'package:chatting_app/features/auth/presentation/cubit/cubit.dart'
     as _i330;
-import 'package:chatting_app/features/login/data/data_sources/login_remote_data_source.dart'
-    as _i515;
+import 'package:chatting_app/features/chats/data/data_sources/chats_remote_data_source.dart'
+    as _i423;
+import 'package:chatting_app/features/chats/data/repository/chats_repository_impl.dart'
+    as _i252;
+import 'package:chatting_app/features/chats/domain/repository/chats_repository.dart'
+    as _i989;
+import 'package:chatting_app/features/chats/domain/usecases/create_chat_usecase.dart'
+    as _i812;
+import 'package:chatting_app/features/chats/domain/usecases/get_chat_members_usecase.dart'
+    as _i423;
+import 'package:chatting_app/features/chats/domain/usecases/get_chat_usecase.dart'
+    as _i575;
+import 'package:chatting_app/features/chats/domain/usecases/load_chats_usecase.dart'
+    as _i321;
+import 'package:chatting_app/features/chats/presentation/cubit/cubit.dart'
+    as _i55;
 import 'package:chatting_app/features/login/domain/usecases/login_usecase.dart'
     as _i171;
 import 'package:chatting_app/features/login/presentation/cubit/cubit.dart'
@@ -134,16 +148,31 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i125.ProfileRemoteDataSource>(
       () => _i125.ProfileRemoteDataSourceImpl(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i423.ChatsRemoteDataSource>(
+      () => _i423.ChatsRemoteDataSourceImpl(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i672.ProfileRepository>(
       () => _i557.ProfileRepositoryImpl(
         profileRemoteDataSource: gh<_i125.ProfileRemoteDataSource>(),
       ),
     );
-    gh.lazySingleton<_i515.LoginRemoteDataSource>(
-      () => _i515.LoginRemoteDataSourceImpl(gh<_i361.Dio>()),
-    );
     gh.lazySingleton<_i509.AuthRemoteDataSource>(
       () => _i509.AuthRemoteDataSourceImpl(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i989.ChatsRepository>(
+      () => _i252.ChatsRepositoryImpl(gh<_i423.ChatsRemoteDataSource>()),
+    );
+    gh.lazySingleton<_i812.CreateChatUseCase>(
+      () => _i812.CreateChatUseCase(gh<_i989.ChatsRepository>()),
+    );
+    gh.lazySingleton<_i423.GetChatMembersUseCase>(
+      () => _i423.GetChatMembersUseCase(gh<_i989.ChatsRepository>()),
+    );
+    gh.lazySingleton<_i575.GetChatUseCase>(
+      () => _i575.GetChatUseCase(gh<_i989.ChatsRepository>()),
+    );
+    gh.lazySingleton<_i321.LoadChatsUseCase>(
+      () => _i321.LoadChatsUseCase(gh<_i989.ChatsRepository>()),
     );
     gh.lazySingleton<_i312.ChangePasswordUseCase>(
       () => _i312.ChangePasswordUseCase(gh<_i672.ProfileRepository>()),
@@ -154,14 +183,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i237.UpdateProfileUseCase>(
       () => _i237.UpdateProfileUseCase(gh<_i672.ProfileRepository>()),
     );
+    gh.lazySingleton<_i55.ChatsCubit>(
+      () => _i55.ChatsCubit(
+        gh<_i321.LoadChatsUseCase>(),
+        gh<_i812.CreateChatUseCase>(),
+        gh<_i575.GetChatUseCase>(),
+      ),
+    );
     gh.lazySingleton<_i207.AuthRepository>(
       () => _i626.AuthRepositoryImpl(
         authLocalDataSource: gh<_i999.AuthLocalDataSource>(),
         authRemoteDataSource: gh<_i509.AuthRemoteDataSource>(),
       ),
-    );
-    gh.lazySingleton<_i126.ChangePasswordCubit>(
-      () => _i126.ChangePasswordCubit(gh<_i312.ChangePasswordUseCase>()),
     );
     gh.lazySingleton<_i323.CheckAuthUseCase>(
       () => _i323.CheckAuthUseCase(gh<_i207.AuthRepository>()),
@@ -187,6 +220,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i605.CreateProfileUseCase>(),
         gh<_i237.UpdateProfileUseCase>(),
       ),
+    );
+    gh.lazySingleton<_i126.ChangePasswordCubit>(
+      () => _i126.ChangePasswordCubit(gh<_i312.ChangePasswordUseCase>()),
     );
     gh.lazySingleton<_i523.LoginCubit>(
       () => _i523.LoginCubit(gh<_i171.LoginUseCase>()),

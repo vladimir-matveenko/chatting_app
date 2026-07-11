@@ -16,7 +16,8 @@
   "createProfileScreen": {
     "screenName": "Create profile",
     "fieldUserName": "User name",
-    "btnCreate": "Create profile"
+    "btnCreate": "Create profile",
+    "createSuccessMessage": "Your profile has been successfully created. Please log in to start using the app."
   },
   "profileScreen": {
     "screenName": "Profile",

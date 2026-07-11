@@ -7,13 +7,13 @@ import '../../../../core/usecases/usecase.dart';
 
 @lazySingleton
 class CreateProfileUseCase implements UseCase<void, CreateProfileParams> {
-  CreateProfileUseCase(this.repository);
+  CreateProfileUseCase(this._repository);
 
-  final AuthRepository repository;
+  final AuthRepository _repository;
 
   @override
   Future<Either<Failure, void>> call(params) async {
-    return await repository.register(
+    return await _repository.register(
       username: params.username,
       email: params.email,
       password: params.password,

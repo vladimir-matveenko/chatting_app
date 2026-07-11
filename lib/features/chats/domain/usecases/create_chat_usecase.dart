@@ -1,0 +1,38 @@
+import 'package:chatting_app/features/chats/domain/repository/chats_repository.dart';
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+
+import '../../../../core/error/failure.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../../data/chats_enums.dart';
+
+@lazySingleton
+class CreateChatUseCase implements UseCase<void, CreateChatParams> {
+  CreateChatUseCase(this._repository);
+
+  final ChatsRepository _repository;
+
+  @override
+  Future<Either<Failure, void>> call(params) async {
+    return await _repository.createChat(
+      type: params.type,
+      title: params.title,
+      avatarUrl: params.avatarUrl,
+      memberIds: params.memberIds,
+    );
+  }
+}
+
+class CreateChatParams {
+  CreateChatParams({
+    required this.type,
+    this.title,
+    this.avatarUrl,
+    required this.memberIds,
+  });
+
+  final ChatType type;
+  final String? title;
+  final String? avatarUrl;
+  final List<String> memberIds;
+}

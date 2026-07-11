@@ -15,3 +15,10 @@ extension ThemeDataX on ThemeData {
 
   bool isLight() => brightness == Brightness.light;
 }
+
+extension BuildContextX on BuildContext {
+  bool isLandscape() {
+    final screenSize = MediaQuery.sizeOf(this);
+    return screenSize.width > screenSize.height;
+  }
+}
