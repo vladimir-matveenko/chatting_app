@@ -1,4 +1,4 @@
-import 'package:chatting_app/features/chats/presentation/cubit/cubit.dart';
+import 'package:chatting_app/features/chats/presentation/chats_cubit/cubit.dart';
 import 'package:chatting_app/features/main/presentation/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

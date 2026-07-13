@@ -4,15 +4,16 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
+import '../entity/chat_entity.dart';
 
 @lazySingleton
-class GetChatUseCase implements UseCase<void, GetChatParams> {
+class GetChatUseCase implements UseCase<ChatEntity, GetChatParams> {
   GetChatUseCase(this._repository);
 
   final ChatsRepository _repository;
 
   @override
-  Future<Either<Failure, void>> call(params) async {
+  Future<Either<Failure, ChatEntity>> call(params) async {
     return await _repository.getChatById(params.chatId);
   }
 }

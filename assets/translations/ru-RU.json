@@ -53,6 +53,9 @@
   "chatsScreen": {
     "screenName": "Чаты"
   },
+  "chatScreen": {
+    "screenName": "Чат"
+  },
   "notificationsScreen": {
     "screenName": "Уведомления"
   },

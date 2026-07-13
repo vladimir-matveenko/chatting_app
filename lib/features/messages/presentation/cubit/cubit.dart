@@ -1,0 +1,140 @@
+import 'package:chatting_app/features/messages/domain/usecases/add_reaction_usecase.dart';
+import 'package:chatting_app/features/messages/domain/usecases/delete_message_usecase.dart';
+import 'package:chatting_app/features/messages/domain/usecases/delete_reaction_usecase.dart';
+import 'package:chatting_app/features/messages/domain/usecases/load_messages_usecase.dart';
+import 'package:chatting_app/features/messages/domain/usecases/send_message_usecase.dart';
+import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+
+import '../../../../app/constants/app_enums.dart';
+import '../../../../app/utils/app_utils.dart';
+
+@lazySingleton
+class MessagesCubit extends Cubit<MessagesState> {
+  MessagesCubit(
+    this._loadMessagesUseCase,
+    this._sendMessageUseCase,
+    this._deleteMessageUseCase,
+    this._addReactionUseCase,
+    this._deleteReactionUseCase,
+  ) : super(const MessagesState());
+  final LoadMessagesUseCase _loadMessagesUseCase;
+  final SendMessageUseCase _sendMessageUseCase;
+  final DeleteMessageUseCase _deleteMessageUseCase;
+  final AddReactionUseCase _addReactionUseCase;
+  final DeleteReactionUseCase _deleteReactionUseCase;
+
+  Future<void> loadMessages({
+    bool loadSilent = true,
+    required String chatId,
+  }) async {
+    if (!loadSilent) {
+      emit(state.copyWith(isLoading: true));
+    }
+    final profile = await _loadMessagesUseCase(
+      LoadMessagesParams(chatId: chatId),
+    );
+    profile.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+            updateList: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(messages: r, isLoading: false, updateList: false));
+      },
+    );
+  }
+
+  Future<void> sendMessage({
+    required String chatId,
+    String? replyToId,
+    required MessageType type,
+    String? body,
+  }) async {
+    final result = await _sendMessageUseCase(
+      SendMessageParams(
+        chatId: chatId,
+        replyToId: replyToId,
+        type: type,
+        body: body,
+      ),
+    );
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+            updateList: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(isLoading: false, updateList: true));
+      },
+    );
+  }
+
+  Future<void> deleteMessage(String messageId) async {
+    final profile = await _deleteMessageUseCase(
+      DeleteMessageParams(messageId: messageId),
+    );
+    profile.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+            updateList: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(updateList: true));
+      },
+    );
+  }
+
+  Future<void> addReaction(
+    String messageId, {
+    required ReactionType type,
+  }) async {
+    final profile = await _addReactionUseCase(
+      AddReactionParams(messageId: messageId, type: type),
+    );
+    profile.fold((l) {
+      emit(
+        state.copyWith(
+          error: AppUtils.parseFailureMessage(l),
+          isLoading: false,
+          updateList: false,
+        ),
+      );
+    }, (r) {});
+  }
+
+  Future<void> deleteReaction(String messageId) async {
+    final profile = await _deleteReactionUseCase(
+      DeleteReactionParams(messageId: messageId),
+    );
+    profile.fold((l) {
+      emit(
+        state.copyWith(
+          error: AppUtils.parseFailureMessage(l),
+          isLoading: false,
+          updateList: false,
+        ),
+      );
+    }, (r) {});
+  }
+
+  Future<void> disableError() async {
+    emit(state.copyWith(error: ''));
+  }
+}

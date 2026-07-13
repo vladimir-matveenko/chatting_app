@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/presentation/widgets/app_back_button.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
-import '../../../../core/utils/extensions.dart';
+import '../../../../app/utils/extensions.dart';
 import '../profile_cubit/cubit.dart';
 import '../widgets/create_profile_form.dart';
 import '../widgets/profile_screen_wrapper.dart';

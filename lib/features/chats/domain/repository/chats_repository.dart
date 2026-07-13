@@ -1,20 +1,24 @@
+import 'package:chatting_app/features/chats/domain/entity/chat_list_item_entity.dart';
+import 'package:chatting_app/features/chats/domain/entity/chat_member_entity.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../../../app/constants/app_enums.dart';
 import '../../../../core/error/failure.dart';
-import '../../../auth/domain/entity/user_entity.dart';
-import '../../data/chats_enums.dart';
+import '../entity/chat_entity.dart';
 
 abstract class ChatsRepository {
-  Future<Either<Failure, UserEntity>> loadChats();
+  Future<Either<Failure, List<ChatListItemEntity>>> loadChats();
 
-  Future<Either<Failure, UserEntity>> createChat({
+  Future<Either<Failure, ChatEntity>> createChat({
     required ChatType type,
     String? title,
     String? avatarUrl,
     required List<String> memberIds,
   });
 
-  Future<Either<Failure, UserEntity>> getChatById(String chatId);
+  Future<Either<Failure, ChatEntity>> getChatById(String chatId);
 
-  Future<Either<Failure, UserEntity>> getChatMembers({required String chatId});
+  Future<Either<Failure, List<ChatMemberEntity>>> getChatMembers({
+    required String chatId,
+  });
 }

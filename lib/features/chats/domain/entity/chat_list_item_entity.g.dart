@@ -1,0 +1,42 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'chat_list_item_entity.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_ChatListItemEntity _$ChatListItemEntityFromJson(Map<String, dynamic> json) =>
+    _ChatListItemEntity(
+      id: json['id'] as String,
+      type: $enumDecode(_$ChatTypeEnumMap, json['type']),
+      title: json['title'] as String?,
+      avatarUrl: json['avatarUrl'] as String?,
+      ownerId: json['ownerId'] as String?,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      lastMessage: json['lastMessage'] as String?,
+      lastMessageAt: json['lastMessageAt'] == null
+          ? null
+          : DateTime.parse(json['lastMessageAt'] as String),
+      unreadCount: (json['unreadCount'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$ChatListItemEntityToJson(_ChatListItemEntity instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'type': _$ChatTypeEnumMap[instance.type]!,
+      'title': ?instance.title,
+      'avatarUrl': ?instance.avatarUrl,
+      'ownerId': ?instance.ownerId,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'updatedAt': instance.updatedAt.toIso8601String(),
+      'lastMessage': ?instance.lastMessage,
+      'lastMessageAt': ?instance.lastMessageAt?.toIso8601String(),
+      'unreadCount': ?instance.unreadCount,
+    };
+
+const _$ChatTypeEnumMap = {
+  ChatType.private: 'private',
+  ChatType.group: 'group',
+};

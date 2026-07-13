@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/utils/extensions.dart';
+import '../../../../app/utils/extensions.dart';
 import 'change_password_form.dart';
 
 class ChangePasswordDialog extends StatefulWidget {

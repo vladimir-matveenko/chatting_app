@@ -1,24 +1,26 @@
-import 'package:chatting_app/features/chats/data/chats_enums.dart';
+import 'package:chatting_app/features/chats/data/models/chat_list_item_model.dart';
+import 'package:chatting_app/features/chats/data/models/chat_member_model.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../app/constants/app_enums.dart';
 import '../../../../core/error/dio_error_parser.dart';
 import '../../../../core/error/exception.dart';
-import '../../../auth/data/models/user_model.dart';
+import '../models/chat_model.dart';
 
 abstract class ChatsRemoteDataSource {
-  Future<UserModel?> loadChats();
+  Future<List<ChatListItemModel>> loadChats();
 
-  Future<UserModel?> createChat({
+  Future<ChatModel?> createChat({
     required ChatType type,
     String? title,
     String? avatarUrl,
     required List<String> memberIds,
   });
 
-  Future<UserModel?> getChatById(String chatId);
+  Future<ChatModel?> getChatById(String chatId);
 
-  Future<UserModel?> getChatMembers({required String chatId});
+  Future<List<ChatMemberModel>> getChatMembers({required String chatId});
 }
 
 @LazySingleton(as: ChatsRemoteDataSource)
@@ -28,20 +30,22 @@ class ChatsRemoteDataSourceImpl implements ChatsRemoteDataSource {
   final Dio dio;
 
   @override
-  Future<UserModel?> loadChats() async {
+  Future<List<ChatListItemModel>> loadChats() async {
     try {
       final response = await dio.get('chats');
       if (response.statusCode == 200 && response.data != null) {
-        return UserModel.fromJson(response.data);
+        return ChatListItemModel.fromList(response.data);
       }
+    } on DioException catch (e) {
+      DioErrorHandler.onDioError(e);
     } catch (e) {
       throw InvalidCredentialsException();
     }
-    return null;
+    return [];
   }
 
   @override
-  Future<UserModel?> createChat({
+  Future<ChatModel?> createChat({
     required ChatType type,
     String? title,
     String? avatarUrl,
@@ -51,7 +55,7 @@ class ChatsRemoteDataSourceImpl implements ChatsRemoteDataSource {
       final response = await dio.post(
         'chats',
         data: {
-          'type': type,
+          'type': type.name,
           'title': title,
           'avatarUrl': avatarUrl,
           'memberIds': memberIds,
@@ -59,15 +63,10 @@ class ChatsRemoteDataSourceImpl implements ChatsRemoteDataSource {
       );
 
       if (response.statusCode == 201 && response.data != null) {
-        return UserModel.fromJson(response.data);
+        return ChatModel.fromJson(response.data);
       }
     } on DioException catch (e) {
-      if (e.response?.statusCode == 400 || e.response?.statusCode == 409) {
-        final serverMessage = e.response?.data?['error']?['message'] ?? '';
-        throw UnknownException(message: serverMessage);
-      } else if (e.response?.statusCode == 401) {
-        throw InvalidCredentialsException();
-      }
+      DioErrorHandler.onDioError(e);
     } catch (e) {
       throw InvalidCredentialsException();
     }
@@ -75,11 +74,11 @@ class ChatsRemoteDataSourceImpl implements ChatsRemoteDataSource {
   }
 
   @override
-  Future<UserModel?> getChatById(String chatId) async {
+  Future<ChatModel?> getChatById(String chatId) async {
     try {
       final response = await dio.get('chats/$chatId');
       if (response.statusCode == 200 && response.data != null) {
-        return UserModel.fromJson(response.data);
+        return ChatModel.fromJson(response.data);
       }
     } on DioException catch (e) {
       DioErrorHandler.onDioError(e);
@@ -90,17 +89,17 @@ class ChatsRemoteDataSourceImpl implements ChatsRemoteDataSource {
   }
 
   @override
-  Future<UserModel?> getChatMembers({required String chatId}) async {
+  Future<List<ChatMemberModel>> getChatMembers({required String chatId}) async {
     try {
       final response = await dio.get('chats/$chatId/members');
       if (response.statusCode == 200 && response.data != null) {
-        return UserModel.fromJson(response.data);
+        return ChatMemberModel.fromList(response.data);
       }
     } on DioException catch (e) {
       DioErrorHandler.onDioError(e);
     } catch (e) {
       throw UnknownException(message: e.toString());
     }
-    return null;
+    return [];
   }
 }

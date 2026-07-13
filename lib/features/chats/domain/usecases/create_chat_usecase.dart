@@ -2,18 +2,19 @@ import 'package:chatting_app/features/chats/domain/repository/chats_repository.d
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../app/constants/app_enums.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../data/chats_enums.dart';
+import '../entity/chat_entity.dart';
 
 @lazySingleton
-class CreateChatUseCase implements UseCase<void, CreateChatParams> {
+class CreateChatUseCase implements UseCase<ChatEntity, CreateChatParams> {
   CreateChatUseCase(this._repository);
 
   final ChatsRepository _repository;
 
   @override
-  Future<Either<Failure, void>> call(params) async {
+  Future<Either<Failure, ChatEntity>> call(params) async {
     return await _repository.createChat(
       type: params.type,
       title: params.title,
