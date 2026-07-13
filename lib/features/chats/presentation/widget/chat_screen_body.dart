@@ -1,5 +1,6 @@
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
+import 'package:chatting_app/features/profile/presentation/profile_cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +21,7 @@ class ChatScreenBody extends StatefulWidget {
 }
 
 class _ChatScreenBodyState extends State<ChatScreenBody> {
+  late String currentUserId;
   final _scrollController = ScrollController();
   final _messageController = TextEditingController();
 
@@ -41,6 +43,12 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    currentUserId = context.read<ProfileCubit>().state.profile?.id ?? '';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<MessagesCubit, MessagesState>(
       builder: (context, state) {
@@ -54,6 +62,7 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
                     child: MessagesList(
                       scrollController: _scrollController,
                       messages: state.messages,
+                      currentUserId: currentUserId,
                     ),
                   ),
                   MessageBar(
