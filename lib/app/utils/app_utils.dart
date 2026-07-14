@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:chatting_app/app/constants/app_constants.dart';
 import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 
 import '../../core/error/failure.dart';
 
@@ -79,8 +79,18 @@ class AppUtils {
     return list.map((item) => toEntity(item)).toList();
   }
 
-  static IconData getReactionIcon(ReactionType type) => switch (type) {
-    ReactionType.like => Icons.thumb_up,
-    ReactionType.dislike => Icons.thumb_down,
+  static String getReactionSymbol(ReactionType type) => switch (type) {
+    ReactionType.like => AppConstants.reactions[0],
+    ReactionType.dislike => AppConstants.reactions[1],
   };
+
+  static ReactionType getReactionTypeBySymbol(String symbol) {
+    if (symbol == AppConstants.reactions[0]) {
+      return ReactionType.like;
+    }
+    if (symbol == AppConstants.reactions[1]) {
+      return ReactionType.dislike;
+    }
+    return ReactionType.like;
+  }
 }

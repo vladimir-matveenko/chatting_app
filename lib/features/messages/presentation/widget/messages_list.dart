@@ -1,4 +1,4 @@
-import 'package:chatting_app/app/constants/app_enums.dart';
+import 'package:chatting_app/app/constants/app_constants.dart';
 import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/utils/extensions.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
+import '../../../../core/presentation/widgets/reaction_menu.dart';
 
 class MessagesList extends StatelessWidget {
   const MessagesList({
@@ -48,6 +49,7 @@ class MessagesList extends StatelessWidget {
         final next = hasNext ? messages[nextIndex].createdAt.toLocal() : null;
 
         final shouldShowDate = next == null || !current.isSameDay(next);
+        final messageKey = GlobalKey();
 
         return Column(
           children: [
@@ -61,6 +63,7 @@ class MessagesList extends StatelessWidget {
               ),
             ListItem(
               key: ValueKey(message.id),
+              messageKey: messageKey,
               message: message,
               currentUserId: currentUserId,
               messageColor: messageColor,
@@ -77,7 +80,17 @@ class MessagesList extends StatelessWidget {
                 }
               },
               onReactionTap: () {
-                cubit.addReaction(message.id, type: ReactionType.like);
+                showReactionsMenu(
+                  context: context,
+                  messageKey: messageKey,
+                  reactions: AppConstants.reactions,
+                  onReactionSelected: (reaction) {
+                    cubit.addReaction(
+                      message.id,
+                      type: AppUtils.getReactionTypeBySymbol(reaction),
+                    );
+                  },
+                );
               },
               onDeleteReactionTap: () {
                 cubit.deleteReaction(message.id);
@@ -94,6 +107,7 @@ class MessagesList extends StatelessWidget {
 class ListItem extends StatelessWidget {
   const ListItem({
     super.key,
+    required this.messageKey,
     required this.message,
     required this.currentUserId,
     required this.messageColor,
@@ -102,6 +116,7 @@ class ListItem extends StatelessWidget {
     required this.onDeleteReactionTap,
   });
 
+  final GlobalKey messageKey;
   final MessageEntity message;
   final String currentUserId;
   final Color messageColor;
@@ -115,7 +130,8 @@ class ListItem extends StatelessWidget {
     final itsMe = currentUserId == message.senderId;
 
     return GestureDetector(
-      onDoubleTap: itsMe ? onReactionTap : null,
+      key: messageKey,
+      onTap: itsMe ? onReactionTap : null,
       onLongPress: itsMe ? onDeleteTap : null,
       child: Row(
         spacing: 8.0,
@@ -127,8 +143,8 @@ class ListItem extends StatelessWidget {
               Container(
                 padding: const .all(8.0),
                 decoration: BoxDecoration(
-                  border: itsMe ? null : Border.all(color: messageColor),
-                  borderRadius: BorderRadius.circular(12.0),
+                  border: itsMe ? null : .all(color: messageColor),
+                  borderRadius: .circular(12.0),
                   color: itsMe ? messageColor : null,
                 ),
                 child: Column(
@@ -156,10 +172,9 @@ class ListItem extends StatelessWidget {
               if (message.currentUserReaction != null)
                 GestureDetector(
                   onTap: onDeleteReactionTap,
-                  child: Icon(
-                    AppUtils.getReactionIcon(message.currentUserReaction!),
-                    size: 16.0,
-                    color: Colors.yellow,
+                  child: Text(
+                    AppUtils.getReactionSymbol(message.currentUserReaction!),
+                    style: const TextStyle(fontSize: 18.0),
                   ),
                 ),
             ],
