@@ -13,21 +13,34 @@ class MessageBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 120.0,
+    return Padding(
+      padding: const .only(bottom: 16.0),
       child: Row(
         spacing: 8.0,
+        crossAxisAlignment: .end,
         children: [
           Expanded(
-            child: AppTextFormField(controller: messageController, maxLines: 5),
-          ),
-          ElevatedButton(
-            onPressed: onSend,
-            style: ElevatedButton.styleFrom(
-              shape: const CircleBorder(),
-              padding: const .all(8.0),
+            child: AppTextFormField(
+              controller: messageController,
+              keyboardType: TextInputType.multiline,
+              maxLines: 5,
+              minLines: 1,
             ),
-            child: const Icon(Icons.send),
+          ),
+          Padding(
+            padding: const .only(bottom: 8.0),
+            child: SizedBox(
+              width: 32.0,
+              height: 32.0,
+              child: ElevatedButton(
+                onPressed: onSend,
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  padding: .zero,
+                ),
+                child: const Icon(Icons.send, size: 16.0),
+              ),
+            ),
           ),
         ],
       ),

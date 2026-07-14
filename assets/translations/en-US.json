@@ -54,7 +54,9 @@
     "screenName": "Chats"
   },
   "chatScreen": {
-    "screenName": "Chat"
+    "screenName": "Chat",
+    "deleteMessage": "Delete message",
+    "areYouSure": "Are you sure you want to delete a message?"
   },
   "notificationsScreen": {
     "screenName": "Notifications"

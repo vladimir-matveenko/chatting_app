@@ -18,6 +18,7 @@ class AppTextFormField extends StatelessWidget {
     this.unfocusOnTapOutside = true,
     this.inputFormatters,
     this.maxLines,
+    this.minLines,
     this.onChanged,
   });
 
@@ -35,6 +36,7 @@ class AppTextFormField extends StatelessWidget {
   final bool unfocusOnTapOutside;
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLines;
+  final int? minLines;
   final Function(String)? onChanged;
 
   @override
@@ -51,6 +53,7 @@ class AppTextFormField extends StatelessWidget {
       inputFormatters: inputFormatters,
       style: textTheme.bodyMedium,
       maxLines: maxLines,
+      minLines: minLines,
       onChanged: onChanged,
       decoration:
           decoration ??

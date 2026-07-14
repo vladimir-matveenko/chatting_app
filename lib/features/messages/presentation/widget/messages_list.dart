@@ -1,8 +1,13 @@
+import 'package:chatting_app/app/constants/app_enums.dart';
+import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
+import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/utils/extensions.dart';
+import '../../../../core/presentation/widgets/app_dialog.dart';
 
 class MessagesList extends StatelessWidget {
   const MessagesList({
@@ -21,6 +26,7 @@ class MessagesList extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final formatter = DateFormat('yyyy.MM.dd', context.locale.languageCode);
+    final cubit = context.read<MessagesCubit>();
 
     return ListView.separated(
       controller: scrollController,
@@ -35,11 +41,11 @@ class MessagesList extends StatelessWidget {
             ? Colors.grey.shade200
             : Colors.grey.shade400;
 
-        final current = message.createdAt;
+        final current = message.createdAt.toLocal();
 
         final nextIndex = index + 1;
         final hasNext = nextIndex < messages.length;
-        final next = hasNext ? messages[nextIndex].createdAt : null;
+        final next = hasNext ? messages[nextIndex].createdAt.toLocal() : null;
 
         final shouldShowDate = next == null || !current.isSameDay(next);
 
@@ -58,6 +64,24 @@ class MessagesList extends StatelessWidget {
               message: message,
               currentUserId: currentUserId,
               messageColor: messageColor,
+              onDeleteTap: () async {
+                final result = await AppDialog.show(
+                  context,
+                  title: 'chatScreen.deleteMessage'.tr(),
+                  text: 'chatScreen.areYouSure'.tr(),
+                  cancelText: 'cancelText'.tr(),
+                  okText: 'okText'.tr(),
+                );
+                if (result) {
+                  cubit.deleteMessage(message.id);
+                }
+              },
+              onReactionTap: () {
+                cubit.addReaction(message.id, type: ReactionType.like);
+              },
+              onDeleteReactionTap: () {
+                cubit.deleteReaction(message.id);
+              },
             ),
           ],
         );
@@ -73,44 +97,75 @@ class ListItem extends StatelessWidget {
     required this.message,
     required this.currentUserId,
     required this.messageColor,
+    required this.onDeleteTap,
+    required this.onReactionTap,
+    required this.onDeleteReactionTap,
   });
 
   final MessageEntity message;
   final String currentUserId;
   final Color messageColor;
+  final VoidCallback onDeleteTap;
+  final VoidCallback onReactionTap;
+  final VoidCallback onDeleteReactionTap;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final itsMe = currentUserId == message.senderId;
 
-    return Row(
-      spacing: 8.0,
-      mainAxisAlignment: itsMe ? .end : .start,
-      children: [
-        Container(
-          padding: const .all(8.0),
-          decoration: BoxDecoration(
-            border: itsMe ? null : Border.all(color: messageColor),
-            borderRadius: BorderRadius.circular(12.0),
-            color: itsMe ? messageColor : null,
-          ),
-          child: Column(
-            spacing: 8.0,
-            crossAxisAlignment: .start,
+    return GestureDetector(
+      onDoubleTap: itsMe ? onReactionTap : null,
+      onLongPress: itsMe ? onDeleteTap : null,
+      child: Row(
+        spacing: 8.0,
+        mainAxisAlignment: itsMe ? .end : .start,
+        children: [
+          Column(
+            spacing: 4.0,
             children: [
-              Text(
-                message.body ?? '',
-                style: textTheme.bodyMedium?.copyWith(color: Colors.blueGrey),
+              Container(
+                padding: const .all(8.0),
+                decoration: BoxDecoration(
+                  border: itsMe ? null : Border.all(color: messageColor),
+                  borderRadius: BorderRadius.circular(12.0),
+                  color: itsMe ? messageColor : null,
+                ),
+                child: Column(
+                  spacing: 8.0,
+                  crossAxisAlignment: .start,
+                  children: [
+                    if (message.isDeleted)
+                      const Icon(Icons.close, size: 16.0, color: Colors.red)
+                    else
+                      Text(
+                        message.body ?? '',
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: Colors.blueGrey,
+                        ),
+                      ),
+                    Text(
+                      DateFormat('H:mm').format(message.createdAt),
+                      style: textTheme.bodySmall?.copyWith(
+                        color: Colors.blueGrey,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Text(
-                DateFormat('H:mm').format(message.createdAt),
-                style: textTheme.bodySmall?.copyWith(color: Colors.blueGrey),
-              ),
+              if (message.currentUserReaction != null)
+                GestureDetector(
+                  onTap: onDeleteReactionTap,
+                  child: Icon(
+                    AppUtils.getReactionIcon(message.currentUserReaction!),
+                    size: 16.0,
+                    color: Colors.yellow,
+                  ),
+                ),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

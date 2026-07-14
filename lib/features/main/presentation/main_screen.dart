@@ -43,6 +43,8 @@ class _MainScreenState extends State<MainScreen> {
             : null,
       ),
       body: SafeArea(
+        top: true,
+        bottom: true,
         left: true,
         right: true,
         minimum: const .only(left: 16.0, right: 16.0),

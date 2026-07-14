@@ -108,30 +108,40 @@ class MessagesCubit extends Cubit<MessagesState> {
     final profile = await _addReactionUseCase(
       AddReactionParams(messageId: messageId, type: type),
     );
-    profile.fold((l) {
-      emit(
-        state.copyWith(
-          error: AppUtils.parseFailureMessage(l),
-          isLoading: false,
-          updateList: false,
-        ),
-      );
-    }, (r) {});
+    profile.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+            updateList: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(updateList: true));
+      },
+    );
   }
 
   Future<void> deleteReaction(String messageId) async {
     final profile = await _deleteReactionUseCase(
       DeleteReactionParams(messageId: messageId),
     );
-    profile.fold((l) {
-      emit(
-        state.copyWith(
-          error: AppUtils.parseFailureMessage(l),
-          isLoading: false,
-          updateList: false,
-        ),
-      );
-    }, (r) {});
+    profile.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+            updateList: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(updateList: true));
+      },
+    );
   }
 
   Future<void> disableError() async {

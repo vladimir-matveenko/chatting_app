@@ -26,11 +26,14 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
   final _messageController = TextEditingController();
 
   void _sendMessage(BuildContext context) {
+    if (_messageController.text.trim().isEmpty) return;
+
     context.read<MessagesCubit>().sendMessage(
       chatId: widget.chatId,
       type: MessageType.text,
       body: _messageController.text,
     );
+    _messageController.clear();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
@@ -68,7 +71,6 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
                   MessageBar(
                     onSend: () {
                       _sendMessage(context);
-                      _messageController.text = '';
                     },
                     messageController: _messageController,
                   ),

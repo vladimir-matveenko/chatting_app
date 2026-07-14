@@ -1,4 +1,5 @@
 import 'package:chatting_app/app/constants/app_enums.dart';
+import 'package:chatting_app/features/messages/domain/entity/message_reaction_summary_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'message_reply_entity.dart';
@@ -19,6 +20,9 @@ abstract class MessageEntity with _$MessageEntity {
     required DateTime updatedAt,
     DateTime? deletedAt,
     @JsonKey(defaultValue: false) required bool isDeleted,
+    @JsonKey(defaultValue: [])
+    required List<MessageReactionSummaryEntity> reactions,
+    ReactionType? currentUserReaction,
     MessageReplyEntity? reply,
   }) = _MessageEntity;
 

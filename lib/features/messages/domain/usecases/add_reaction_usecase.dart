@@ -14,7 +14,7 @@ class AddReactionUseCase implements UseCase<bool, AddReactionParams> {
 
   @override
   Future<Either<Failure, bool>> call(AddReactionParams params) async {
-    return await _repository.deleteReaction(params.messageId);
+    return await _repository.addReaction(params.messageId, type: params.type);
   }
 }
 
