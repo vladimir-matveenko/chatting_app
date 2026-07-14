@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
+import '../../../../core/presentation/widgets/avatar_placeholder.dart';
 import '../../../auth/presentation/cubit/cubit.dart';
 import '../profile_cubit/cubit.dart';
 import '../profile_cubit/state.dart';
@@ -37,8 +38,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
+        final username = state.profile?.displayName ?? state.profile?.username;
+        final firstName = username?.split(' ').first ?? '';
+        final lastName = username?.split(' ').last ?? '';
         return ColoredBox(
           color: theme.scaffoldBackgroundColor,
           child: state.isLoading
@@ -47,6 +52,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: .center,
                   spacing: 16.0,
                   children: [
+                    AvatarPlaceholder(
+                      size: 120.0,
+                      firstName: firstName,
+                      lastName: lastName,
+                      backgroundColor: isDark
+                          ? Colors.grey.shade200
+                          : Colors.grey.shade400,
+                    ),
                     Text(
                       state.profile?.displayName ?? '',
                       style: theme.textTheme.headlineSmall,

@@ -7,13 +7,13 @@ import '../repository/profile_repository.dart';
 
 @lazySingleton
 class ChangePasswordUseCase implements UseCase<void, ChangePasswordParams> {
-  ChangePasswordUseCase(this.repository);
+  ChangePasswordUseCase(this._repository);
 
-  final ProfileRepository repository;
+  final ProfileRepository _repository;
 
   @override
   Future<Either<Failure, void>> call(params) async {
-    return await repository.changePassword(
+    return await _repository.changePassword(
       currentPassword: params.currentPassword,
       newPassword: params.newPassword,
     );

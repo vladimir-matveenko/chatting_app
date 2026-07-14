@@ -11,10 +11,14 @@ class MainScreenUtils {
       if (location.pathSegments.last == AppRoutes.editProfile) {
         return 'editProfileScreen.screenName'.tr();
       }
+      if (location.pathSegments.first == AppRoutes.chats.replaceAll('/', '')) {
+        return 'chatScreen.screenName'.tr();
+      }
     }
     return switch (location.toString()) {
       AppRoutes.contacts => 'contactsScreen.screenName'.tr(),
       AppRoutes.chats => 'chatsScreen.screenName'.tr(),
+      AppRoutes.notifications => 'notificationsScreen.screenName'.tr(),
       AppRoutes.profile => 'profileScreen.screenName'.tr(),
       _ => '',
     };

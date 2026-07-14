@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:chatting_app/features/chats/presentation/screens/chats_screen.dart';
 import 'package:chatting_app/features/contacts/presentation/screens/contacts_screen.dart';
 import 'package:chatting_app/features/login/presentation/screens/login_screen.dart';
+import 'package:chatting_app/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +12,7 @@ import 'package:injectable/injectable.dart';
 import '../../core/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/cubit/cubit.dart';
 import '../../features/auth/presentation/cubit/state.dart';
+import '../../features/chats/presentation/screens/chat_screen.dart';
 import '../../features/main/presentation/main_screen.dart';
 import '../../features/profile/presentation/screens/create_profile_screen.dart';
 import '../../features/profile/presentation/screens/edit_profile_screen.dart';
@@ -99,6 +101,26 @@ class AppRouter {
                 path: AppRoutes.chats,
                 pageBuilder: (context, state) =>
                     const NoTransitionPage(child: ChatsScreen()),
+                routes: [
+                  GoRoute(
+                    path: ':id',
+                    pageBuilder: (context, state) {
+                      final id = state.pathParameters['id']!;
+                      return NoTransitionPage(
+                        child: ChatScreen(key: ValueKey(id), id: id),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.notifications,
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: NotificationsScreen()),
               ),
             ],
           ),

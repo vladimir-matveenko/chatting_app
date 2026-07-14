@@ -4,6 +4,7 @@
   "bottomNavBar": {
     "contacts": "Контакты",
     "chats": "Чаты",
+    "notifications": "Уведомления",
     "profile": "Профиль"
   },
   "loginScreen": {
@@ -15,7 +16,8 @@
   "createProfileScreen": {
     "screenName": "Создать аккаунт",
     "fieldUserName": "Имя пользователя",
-    "btnCreate": "Создать аккаунт"
+    "btnCreate": "Создать аккаунт",
+    "createSuccessMessage": "Поздравляем! Профиль успешно создан. Пожалуйста, войдите, чтобы начать пользоваться приложением."
   },
   "profileScreen": {
     "screenName": "Профиль",
@@ -50,6 +52,14 @@
   },
   "chatsScreen": {
     "screenName": "Чаты"
+  },
+  "chatScreen": {
+    "screenName": "Чат",
+    "deleteMessage": "Удалить сообщение",
+    "areYouSure": "Вы уверены, что Вы хотите удалить сообщение?"
+  },
+  "notificationsScreen": {
+    "screenName": "Уведомления"
   },
   "fieldValidation": {
     "fieldIsRequired": "Это поле обязательно!",

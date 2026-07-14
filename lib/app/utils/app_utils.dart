@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:chatting_app/app/constants/app_constants.dart';
+import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import '../../core/error/failure.dart';
@@ -50,5 +52,45 @@ class AppUtils {
       return 'fieldValidation.fieldIsRequired'.tr();
     }
     return null;
+  }
+
+  static List<T> parseList<T>(
+    List<dynamic> list,
+    T Function(Map<String, dynamic>) fromJson,
+  ) {
+    return list
+        .map((jsonItem) => fromJson(jsonItem as Map<String, dynamic>))
+        .toList();
+  }
+
+  /// listModelToListEntity
+  /// convert List of models to List of entities
+  /// Example:
+  /// ```dart
+  /// List<ItemModel> models = [...];
+  ///
+  /// List<ItemEntity> entities = listModelToListEntity<ItemModel,
+  /// ItemEntity>(models, (item) => item.toEntity());
+  ///```
+  static List<T> listModelToListEntity<E, T>(
+    List<E> list,
+    T Function(E) toEntity,
+  ) {
+    return list.map((item) => toEntity(item)).toList();
+  }
+
+  static String getReactionSymbol(ReactionType type) => switch (type) {
+    ReactionType.like => AppConstants.reactions[0],
+    ReactionType.dislike => AppConstants.reactions[1],
+  };
+
+  static ReactionType getReactionTypeBySymbol(String symbol) {
+    if (symbol == AppConstants.reactions[0]) {
+      return ReactionType.like;
+    }
+    if (symbol == AppConstants.reactions[1]) {
+      return ReactionType.dislike;
+    }
+    return ReactionType.like;
   }
 }

@@ -2,6 +2,7 @@ import 'package:chatting_app/features/auth/data/models/auth_model.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/error/dio_error_parser.dart';
 import '../../../../core/error/exception.dart';
 import '../models/auth_token_model.dart';
 
@@ -35,17 +36,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     try {
       final response = await dio.post(
         'auth/register',
-        queryParameters: {
-          'username': username,
-          'email': email,
-          'password': password,
-        },
+        data: {'username': username, 'email': email, 'password': password},
         options: Options(extra: {'skipAuth': true}),
       );
       if (response.statusCode == 201 && response.data != null) {
         final authResult = AuthModel.fromJson(response.data);
         return authResult.tokens;
       }
+    } on DioException catch (e) {
+      DioErrorHandler.onDioError(e);
     } catch (e) {
       throw InvalidCredentialsException();
     }
@@ -68,14 +67,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return authResult.tokens;
       }
     } on DioException catch (e) {
-      if (e.response?.statusCode == 400) {
-        final serverMessage = e.response?.data?['error']?['message'] ?? '';
-        throw UnknownException(message: serverMessage);
-      } else if (e.response?.statusCode == 401) {
-        throw InvalidCredentialsException();
-      }
+      DioErrorHandler.onDioError(e);
     } catch (e) {
-      throw UnknownException();
+      throw UnknownException(message: e.toString());
     }
 
     return null;

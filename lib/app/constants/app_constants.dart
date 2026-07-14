@@ -6,4 +6,7 @@ class AppConstants {
   /// locales
   static const enLocale = 'en-US';
   static const ruLocale = 'ru-Ru';
+
+  /// reactions
+  static const reactions = ['👍', '👎︎'];
 }

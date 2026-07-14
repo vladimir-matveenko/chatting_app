@@ -21,7 +21,7 @@ abstract class UserEntity with _$UserEntity {
 
 extension UserEntityExt on UserEntity {
   UserModel toModel() => UserModel(
-    id: int.tryParse(id) ?? 0,
+    id: id,
     username: username,
     displayName: displayName,
     email: email,

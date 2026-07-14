@@ -4,6 +4,7 @@
   "bottomNavBar": {
     "contacts": "Contacts",
     "chats": "Chats",
+    "notifications": "Notifications",
     "profile": "Profile"
   },
   "loginScreen": {
@@ -15,7 +16,8 @@
   "createProfileScreen": {
     "screenName": "Create profile",
     "fieldUserName": "User name",
-    "btnCreate": "Create profile"
+    "btnCreate": "Create profile",
+    "createSuccessMessage": "Your profile has been successfully created. Please log in to start using the app."
   },
   "profileScreen": {
     "screenName": "Profile",
@@ -50,6 +52,14 @@
   },
   "chatsScreen": {
     "screenName": "Chats"
+  },
+  "chatScreen": {
+    "screenName": "Chat",
+    "deleteMessage": "Delete message",
+    "areYouSure": "Are you sure you want to delete a message?"
+  },
+  "notificationsScreen": {
+    "screenName": "Notifications"
   },
   "fieldValidation": {
     "fieldIsRequired": "This field is required!",

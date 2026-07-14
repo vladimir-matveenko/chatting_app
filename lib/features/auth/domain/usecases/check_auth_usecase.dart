@@ -7,12 +7,12 @@ import '../repository/auth_repository.dart';
 
 @lazySingleton
 class CheckAuthUseCase implements UseCase<bool, NoParams> {
-  CheckAuthUseCase(this.repository);
+  CheckAuthUseCase(this._repository);
 
-  final AuthRepository repository;
+  final AuthRepository _repository;
 
   @override
   Future<Either<Failure, bool>> call(NoParams params) async {
-    return await repository.isAuthenticated();
+    return await _repository.isAuthenticated();
   }
 }

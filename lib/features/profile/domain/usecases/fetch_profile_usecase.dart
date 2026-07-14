@@ -8,12 +8,12 @@ import '../repository/profile_repository.dart';
 
 @lazySingleton
 class FetchProfileUseCase implements UseCase<UserEntity, NoParams> {
-  FetchProfileUseCase(this.repository);
+  FetchProfileUseCase(this._repository);
 
-  final ProfileRepository repository;
+  final ProfileRepository _repository;
 
   @override
   Future<Either<Failure, UserEntity>> call(NoParams params) async {
-    return await repository.fetchProfile();
+    return await _repository.fetchProfile();
   }
 }

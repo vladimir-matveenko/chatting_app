@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/error/dio_error_parser.dart';
 import '../../../../core/error/exception.dart';
 import '../../../auth/data/models/user_model.dart';
 
@@ -33,6 +34,8 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       if (response.statusCode == 200 && response.data != null) {
         return UserModel.fromJson(response.data);
       }
+    } on DioException catch (e) {
+      DioErrorHandler.onDioError(e);
     } catch (e) {
       throw InvalidCredentialsException();
     }
@@ -63,12 +66,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       final response = await dio.patch('users/me', data: data);
       return response.statusCode == 200;
     } on DioException catch (e) {
-      if (e.response?.statusCode == 400 || e.response?.statusCode == 409) {
-        final serverMessage = e.response?.data?['error']?['message'] ?? '';
-        throw UnknownException(message: serverMessage);
-      } else if (e.response?.statusCode == 401) {
-        throw InvalidCredentialsException();
-      }
+      DioErrorHandler.onDioError(e);
     } catch (e) {
       throw InvalidCredentialsException();
     }
@@ -87,12 +85,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       );
       return response.statusCode == 204;
     } on DioException catch (e) {
-      if (e.response?.statusCode == 400) {
-        final serverMessage = e.response?.data?['error']?['message'] ?? '';
-        throw UnknownException(message: serverMessage);
-      } else if (e.response?.statusCode == 401) {
-        throw InvalidCredentialsException();
-      }
+      DioErrorHandler.onDioError(e);
     } catch (e) {
       throw InvalidCredentialsException();
     }
