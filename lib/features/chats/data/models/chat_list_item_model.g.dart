@@ -20,6 +20,12 @@ _ChatListItemModel _$ChatListItemModelFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['lastMessageAt'] as String),
       unreadCount: (json['unreadCount'] as num?)?.toInt(),
+      participants: (json['participants'] as List<dynamic>)
+          .map(
+            (e) => ChatListParticipantModel.fromJson(e as Map<String, dynamic>),
+          )
+          .toList(),
+      participantsCount: (json['participantsCount'] as num).toInt(),
     );
 
 Map<String, dynamic> _$ChatListItemModelToJson(_ChatListItemModel instance) =>
@@ -34,6 +40,8 @@ Map<String, dynamic> _$ChatListItemModelToJson(_ChatListItemModel instance) =>
       'lastMessage': ?instance.lastMessage,
       'lastMessageAt': ?instance.lastMessageAt?.toIso8601String(),
       'unreadCount': ?instance.unreadCount,
+      'participants': instance.participants.map((e) => e.toJson()).toList(),
+      'participantsCount': instance.participantsCount,
     };
 
 const _$ChatTypeEnumMap = {

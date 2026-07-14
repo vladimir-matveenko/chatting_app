@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../app/constants/app_enums.dart';
+import '../../data/models/chat_list_participant_model.dart';
 
 part 'chat_list_item_entity.freezed.dart';
 part 'chat_list_item_entity.g.dart';
@@ -20,6 +21,8 @@ abstract class ChatListItemEntity with _$ChatListItemEntity {
     String? lastMessage,
     DateTime? lastMessageAt,
     int? unreadCount,
+    required List<ChatListParticipantModel> participants,
+    required int participantsCount,
   }) = _ChatListItemEntity;
 
   factory ChatListItemEntity.fromJson(Map<String, dynamic> json) =>

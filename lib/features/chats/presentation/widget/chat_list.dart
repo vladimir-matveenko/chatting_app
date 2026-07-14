@@ -1,4 +1,5 @@
 import 'package:chatting_app/app/router/app_routes.dart';
+import 'package:chatting_app/core/presentation/widgets/avatar_stack.dart';
 import 'package:chatting_app/features/chats/domain/entity/chat_list_item_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -44,6 +45,8 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final avatars = chat.participants.map((e) => e.avatarUrl ?? '').toList();
+    final names = chat.participants.map((e) => e.username).toList();
 
     return GestureDetector(
       onTap: onTap,
@@ -51,13 +54,19 @@ class ListItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Row(
-          spacing: 8.0,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          spacing: 4.0,
+          mainAxisAlignment: .start,
           children: [
-            Text(
-              chat.id,
-              style: textTheme.bodySmall?.copyWith(color: Colors.blueGrey),
-            ),
+            AvatarStack(avatarSize: 30.0, imageUrls: avatars, names: names),
+            if (chat.participantsCount > 2)
+              Text(
+                '+${chat.participantsCount - 1}',
+                style: textTheme.bodySmall,
+              ),
+            if (chat.title?.isNotEmpty == true)
+              Text(chat.title!)
+            else if (chat.participantsCount == 2)
+              Text(chat.participants.first.username),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:chatting_app/app/utils/app_utils.dart';
+import 'package:chatting_app/features/chats/data/models/chat_list_participant_model.dart';
 import 'package:chatting_app/features/chats/domain/entity/chat_list_item_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -22,6 +23,8 @@ abstract class ChatListItemModel with _$ChatListItemModel {
     String? lastMessage,
     DateTime? lastMessageAt,
     int? unreadCount,
+    required List<ChatListParticipantModel> participants,
+    required int participantsCount,
   }) = _ChatListItemModel;
 
   factory ChatListItemModel.fromJson(Map<String, dynamic> json) =>
@@ -47,5 +50,7 @@ extension ChatListItemModelExt on ChatListItemModel {
     lastMessage: lastMessage,
     lastMessageAt: lastMessageAt,
     unreadCount: unreadCount,
+    participants: participants,
+    participantsCount: participantsCount,
   );
 }

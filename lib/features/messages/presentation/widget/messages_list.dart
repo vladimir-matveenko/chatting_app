@@ -131,7 +131,7 @@ class ListItem extends StatelessWidget {
 
     return GestureDetector(
       key: messageKey,
-      onTap: itsMe ? onReactionTap : null,
+      onTap: onReactionTap,
       onLongPress: itsMe ? onDeleteTap : null,
       child: Row(
         spacing: 8.0,

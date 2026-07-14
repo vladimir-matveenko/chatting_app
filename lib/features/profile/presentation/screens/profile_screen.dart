@@ -41,8 +41,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final isDark = theme.brightness == Brightness.dark;
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        final firstName = state.profile?.displayName.split(' ').first ?? '';
-        final lastName = state.profile?.displayName.split(' ').last ?? '';
+        final username = state.profile?.displayName ?? state.profile?.username;
+        final firstName = username?.split(' ').first ?? '';
+        final lastName = username?.split(' ').last ?? '';
         return ColoredBox(
           color: theme.scaffoldBackgroundColor,
           child: state.isLoading
