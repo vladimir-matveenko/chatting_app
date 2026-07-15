@@ -50,7 +50,7 @@ class ListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final avatars = chat.participants.map((e) => e.avatarUrl ?? '').toList();
-    final names = chat.participants.map((e) => e.username).toList();
+    final names = chat.participants.map((e) => e.userName).toList();
 
     return GestureDetector(
       onTap: onTap,
@@ -70,7 +70,7 @@ class ListItem extends StatelessWidget {
             if (chat.title?.isNotEmpty == true)
               Text(chat.title!)
             else if (chat.participantsCount == 2)
-              Text(chat.participants.first.username),
+              Text(chat.participants.first.userName),
           ],
         ),
       ),

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ChatListParticipantEntity {
 
- String get username; String? get displayName; String? get avatarUrl;
+ String get userName; String? get displayName; String? get avatarUrl;
 /// Create a copy of ChatListParticipantEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ChatListParticipantEntityCopyWith<ChatListParticipantEntity> get copyWith => _$
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatListParticipantEntity&&(identical(other.username, username) || other.username == username)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatListParticipantEntity&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,username,displayName,avatarUrl);
+int get hashCode => Object.hash(runtimeType,userName,displayName,avatarUrl);
 
 @override
 String toString() {
-  return 'ChatListParticipantEntity(username: $username, displayName: $displayName, avatarUrl: $avatarUrl)';
+  return 'ChatListParticipantEntity(userName: $userName, displayName: $displayName, avatarUrl: $avatarUrl)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ChatListParticipantEntityCopyWith<$Res>  {
   factory $ChatListParticipantEntityCopyWith(ChatListParticipantEntity value, $Res Function(ChatListParticipantEntity) _then) = _$ChatListParticipantEntityCopyWithImpl;
 @useResult
 $Res call({
- String username, String? displayName, String? avatarUrl
+ String userName, String? displayName, String? avatarUrl
 });
 
 
@@ -65,9 +65,9 @@ class _$ChatListParticipantEntityCopyWithImpl<$Res>
 
 /// Create a copy of ChatListParticipantEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? username = null,Object? displayName = freezed,Object? avatarUrl = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userName = null,Object? displayName = freezed,Object? avatarUrl = freezed,}) {
   return _then(_self.copyWith(
-username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+userName: null == userName ? _self.userName : userName // ignore: cast_nullable_to_non_nullable
 as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -155,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String username,  String? displayName,  String? avatarUrl)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String userName,  String? displayName,  String? avatarUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatListParticipantEntity() when $default != null:
-return $default(_that.username,_that.displayName,_that.avatarUrl);case _:
+return $default(_that.userName,_that.displayName,_that.avatarUrl);case _:
   return orElse();
 
 }
@@ -176,10 +176,10 @@ return $default(_that.username,_that.displayName,_that.avatarUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String username,  String? displayName,  String? avatarUrl)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String userName,  String? displayName,  String? avatarUrl)  $default,) {final _that = this;
 switch (_that) {
 case _ChatListParticipantEntity():
-return $default(_that.username,_that.displayName,_that.avatarUrl);case _:
+return $default(_that.userName,_that.displayName,_that.avatarUrl);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +196,10 @@ return $default(_that.username,_that.displayName,_that.avatarUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String username,  String? displayName,  String? avatarUrl)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String userName,  String? displayName,  String? avatarUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatListParticipantEntity() when $default != null:
-return $default(_that.username,_that.displayName,_that.avatarUrl);case _:
+return $default(_that.userName,_that.displayName,_that.avatarUrl);case _:
   return null;
 
 }
@@ -211,10 +211,10 @@ return $default(_that.username,_that.displayName,_that.avatarUrl);case _:
 @JsonSerializable()
 
 class _ChatListParticipantEntity implements ChatListParticipantEntity {
-  const _ChatListParticipantEntity({required this.username, this.displayName, this.avatarUrl});
+  const _ChatListParticipantEntity({required this.userName, this.displayName, this.avatarUrl});
   factory _ChatListParticipantEntity.fromJson(Map<String, dynamic> json) => _$ChatListParticipantEntityFromJson(json);
 
-@override final  String username;
+@override final  String userName;
 @override final  String? displayName;
 @override final  String? avatarUrl;
 
@@ -231,16 +231,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatListParticipantEntity&&(identical(other.username, username) || other.username == username)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatListParticipantEntity&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,username,displayName,avatarUrl);
+int get hashCode => Object.hash(runtimeType,userName,displayName,avatarUrl);
 
 @override
 String toString() {
-  return 'ChatListParticipantEntity(username: $username, displayName: $displayName, avatarUrl: $avatarUrl)';
+  return 'ChatListParticipantEntity(userName: $userName, displayName: $displayName, avatarUrl: $avatarUrl)';
 }
 
 
@@ -251,7 +251,7 @@ abstract mixin class _$ChatListParticipantEntityCopyWith<$Res> implements $ChatL
   factory _$ChatListParticipantEntityCopyWith(_ChatListParticipantEntity value, $Res Function(_ChatListParticipantEntity) _then) = __$ChatListParticipantEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String username, String? displayName, String? avatarUrl
+ String userName, String? displayName, String? avatarUrl
 });
 
 
@@ -268,9 +268,9 @@ class __$ChatListParticipantEntityCopyWithImpl<$Res>
 
 /// Create a copy of ChatListParticipantEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? username = null,Object? displayName = freezed,Object? avatarUrl = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userName = null,Object? displayName = freezed,Object? avatarUrl = freezed,}) {
   return _then(_ChatListParticipantEntity(
-username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+userName: null == userName ? _self.userName : userName // ignore: cast_nullable_to_non_nullable
 as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,

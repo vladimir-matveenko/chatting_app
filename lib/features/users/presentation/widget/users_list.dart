@@ -51,7 +51,7 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final userName = user.displayName ?? user.id;
+    final userName = user.displayName ?? user.userName;
 
     return GestureDetector(
       onTap: onTap,

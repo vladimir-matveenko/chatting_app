@@ -10,7 +10,7 @@ abstract class ChatListParticipantModel with _$ChatListParticipantModel {
   const ChatListParticipantModel._();
 
   const factory ChatListParticipantModel({
-    required String username,
+    required String userName,
     String? displayName,
     String? avatarUrl,
   }) = _ChatListParticipantModel;
@@ -21,7 +21,7 @@ abstract class ChatListParticipantModel with _$ChatListParticipantModel {
 
 extension ChatListParticipantModelExt on ChatListParticipantModel {
   ChatListParticipantEntity toEntity() => ChatListParticipantEntity(
-    username: username,
+    userName: userName,
     displayName: displayName,
     avatarUrl: avatarUrl,
   );

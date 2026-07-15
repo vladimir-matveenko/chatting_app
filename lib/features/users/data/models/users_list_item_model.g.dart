@@ -9,6 +9,7 @@ part of 'users_list_item_model.dart';
 _UserListItemModel _$UserListItemModelFromJson(Map<String, dynamic> json) =>
     _UserListItemModel(
       id: json['id'] as String,
+      userName: json['userName'] as String,
       displayName: json['displayName'] as String?,
       avatarUrl: json['avatarUrl'] as String?,
     );
@@ -16,6 +17,7 @@ _UserListItemModel _$UserListItemModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$UserListItemModelToJson(_UserListItemModel instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'userName': instance.userName,
       'displayName': ?instance.displayName,
       'avatarUrl': ?instance.avatarUrl,
     };

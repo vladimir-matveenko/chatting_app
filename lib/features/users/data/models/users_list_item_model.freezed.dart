@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserListItemModel {
 
- String get id; String? get displayName; String? get avatarUrl;
+ String get id; String get userName; String? get displayName; String? get avatarUrl;
 /// Create a copy of UserListItemModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserListItemModelCopyWith<UserListItemModel> get copyWith => _$UserListItemMode
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserListItemModel&&(identical(other.id, id) || other.id == id)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserListItemModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,displayName,avatarUrl);
+int get hashCode => Object.hash(runtimeType,id,userName,displayName,avatarUrl);
 
 @override
 String toString() {
-  return 'UserListItemModel(id: $id, displayName: $displayName, avatarUrl: $avatarUrl)';
+  return 'UserListItemModel(id: $id, userName: $userName, displayName: $displayName, avatarUrl: $avatarUrl)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserListItemModelCopyWith<$Res>  {
   factory $UserListItemModelCopyWith(UserListItemModel value, $Res Function(UserListItemModel) _then) = _$UserListItemModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String? displayName, String? avatarUrl
+ String id, String userName, String? displayName, String? avatarUrl
 });
 
 
@@ -65,9 +65,10 @@ class _$UserListItemModelCopyWithImpl<$Res>
 
 /// Create a copy of UserListItemModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? displayName = freezed,Object? avatarUrl = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userName = null,Object? displayName = freezed,Object? avatarUrl = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,userName: null == userName ? _self.userName : userName // ignore: cast_nullable_to_non_nullable
 as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -155,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? displayName,  String? avatarUrl)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userName,  String? displayName,  String? avatarUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserListItemModel() when $default != null:
-return $default(_that.id,_that.displayName,_that.avatarUrl);case _:
+return $default(_that.id,_that.userName,_that.displayName,_that.avatarUrl);case _:
   return orElse();
 
 }
@@ -176,10 +177,10 @@ return $default(_that.id,_that.displayName,_that.avatarUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? displayName,  String? avatarUrl)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userName,  String? displayName,  String? avatarUrl)  $default,) {final _that = this;
 switch (_that) {
 case _UserListItemModel():
-return $default(_that.id,_that.displayName,_that.avatarUrl);case _:
+return $default(_that.id,_that.userName,_that.displayName,_that.avatarUrl);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +197,10 @@ return $default(_that.id,_that.displayName,_that.avatarUrl);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? displayName,  String? avatarUrl)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userName,  String? displayName,  String? avatarUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _UserListItemModel() when $default != null:
-return $default(_that.id,_that.displayName,_that.avatarUrl);case _:
+return $default(_that.id,_that.userName,_that.displayName,_that.avatarUrl);case _:
   return null;
 
 }
@@ -211,10 +212,11 @@ return $default(_that.id,_that.displayName,_that.avatarUrl);case _:
 @JsonSerializable()
 
 class _UserListItemModel extends UserListItemModel {
-  const _UserListItemModel({required this.id, this.displayName, this.avatarUrl}): super._();
+  const _UserListItemModel({required this.id, required this.userName, this.displayName, this.avatarUrl}): super._();
   factory _UserListItemModel.fromJson(Map<String, dynamic> json) => _$UserListItemModelFromJson(json);
 
 @override final  String id;
+@override final  String userName;
 @override final  String? displayName;
 @override final  String? avatarUrl;
 
@@ -231,16 +233,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserListItemModel&&(identical(other.id, id) || other.id == id)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserListItemModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,displayName,avatarUrl);
+int get hashCode => Object.hash(runtimeType,id,userName,displayName,avatarUrl);
 
 @override
 String toString() {
-  return 'UserListItemModel(id: $id, displayName: $displayName, avatarUrl: $avatarUrl)';
+  return 'UserListItemModel(id: $id, userName: $userName, displayName: $displayName, avatarUrl: $avatarUrl)';
 }
 
 
@@ -251,7 +253,7 @@ abstract mixin class _$UserListItemModelCopyWith<$Res> implements $UserListItemM
   factory _$UserListItemModelCopyWith(_UserListItemModel value, $Res Function(_UserListItemModel) _then) = __$UserListItemModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String? displayName, String? avatarUrl
+ String id, String userName, String? displayName, String? avatarUrl
 });
 
 
@@ -268,9 +270,10 @@ class __$UserListItemModelCopyWithImpl<$Res>
 
 /// Create a copy of UserListItemModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? displayName = freezed,Object? avatarUrl = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userName = null,Object? displayName = freezed,Object? avatarUrl = freezed,}) {
   return _then(_UserListItemModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,userName: null == userName ? _self.userName : userName // ignore: cast_nullable_to_non_nullable
 as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,

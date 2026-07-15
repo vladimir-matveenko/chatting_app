@@ -30,7 +30,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
 
     cubit.updateProfile(
-      username: profile.username == _userNameController.text.trim()
+      username: profile.userName == _userNameController.text.trim()
           ? ''
           : _userNameController.text.trim(),
       displayName: profile.displayName == _displayNameController.text.trim()
@@ -50,13 +50,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         cubit.state.profile ??
         UserEntity(
           id: '',
-          username: '',
+          userName: '',
           displayName: '',
           email: '',
           avatarUrl: '',
           createdAt: DateTime.now(),
         );
-    _userNameController.text = profile.username;
+    _userNameController.text = profile.userName;
     _displayNameController.text = profile.displayName;
     _emailController.text = profile.email;
   }

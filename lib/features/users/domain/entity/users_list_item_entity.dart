@@ -7,6 +7,7 @@ part 'users_list_item_entity.g.dart';
 abstract class UserListItemEntity with _$UserListItemEntity {
   const factory UserListItemEntity({
     required String id,
+    required String userName,
     String? displayName,
     String? avatarUrl,
   }) = _UserListItemEntity;

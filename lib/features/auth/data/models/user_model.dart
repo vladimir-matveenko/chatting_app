@@ -11,7 +11,7 @@ abstract class UserModel with _$UserModel {
 
   const factory UserModel({
     required String id,
-    String? username,
+    String? userName,
     String? displayName,
     required String email,
     String? avatarUrl,
@@ -31,7 +31,7 @@ abstract class UserModel with _$UserModel {
 extension UserModelExt on UserModel {
   UserEntity toEntity() => UserEntity(
     id: id,
-    username: username ?? '',
+    userName: userName ?? '',
     displayName: displayName ?? '',
     email: email,
     avatarUrl: avatarUrl ?? '',

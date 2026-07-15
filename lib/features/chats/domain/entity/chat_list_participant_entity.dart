@@ -6,7 +6,7 @@ part 'chat_list_participant_entity.g.dart';
 @freezed
 abstract class ChatListParticipantEntity with _$ChatListParticipantEntity {
   const factory ChatListParticipantEntity({
-    required String username,
+    required String userName,
     String? displayName,
     String? avatarUrl,
   }) = _ChatListParticipantEntity;

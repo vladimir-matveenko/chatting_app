@@ -12,6 +12,7 @@ abstract class UserListItemModel with _$UserListItemModel {
 
   const factory UserListItemModel({
     required String id,
+    required String userName,
     String? displayName,
     String? avatarUrl,
   }) = _UserListItemModel;
@@ -30,6 +31,7 @@ abstract class UserListItemModel with _$UserListItemModel {
 extension UserListItemModelExt on UserListItemModel {
   UserListItemEntity toEntity() => UserListItemEntity(
     id: id,
+    userName: userName,
     displayName: displayName,
     avatarUrl: avatarUrl,
   );
