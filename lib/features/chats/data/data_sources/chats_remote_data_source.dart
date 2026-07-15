@@ -52,15 +52,14 @@ class ChatsRemoteDataSourceImpl implements ChatsRemoteDataSource {
     required List<String> memberIds,
   }) async {
     try {
-      final response = await dio.post(
-        'chats',
-        data: {
-          'type': type.name,
-          'title': title,
-          'avatarUrl': avatarUrl,
-          'memberIds': memberIds,
-        },
-      );
+      final data = {'type': type.name, 'memberIds': memberIds};
+      if (title != null) {
+        data.addAll({'title': title});
+      }
+      if (avatarUrl != null) {
+        data.addAll({'avatarUrl': avatarUrl});
+      }
+      final response = await dio.post('chats', data: data);
 
       if (response.statusCode == 201 && response.data != null) {
         return ChatModel.fromJson(response.data);

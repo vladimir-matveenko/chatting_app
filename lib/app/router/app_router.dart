@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:chatting_app/features/chats/presentation/screens/chats_screen.dart';
-import 'package:chatting_app/features/contacts/presentation/screens/contacts_screen.dart';
 import 'package:chatting_app/features/login/presentation/screens/login_screen.dart';
 import 'package:chatting_app/features/notifications/presentation/screens/notifications_screen.dart';
+import 'package:chatting_app/features/users/presentation/screens/users_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -89,9 +89,9 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoutes.contacts,
+                path: AppRoutes.users,
                 pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: ContactsScreen()),
+                    const NoTransitionPage(child: UsersScreen()),
               ),
             ],
           ),

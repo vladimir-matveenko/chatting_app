@@ -2,7 +2,10 @@ import 'package:chatting_app/app/router/app_routes.dart';
 import 'package:chatting_app/core/presentation/widgets/avatar_stack.dart';
 import 'package:chatting_app/features/chats/domain/entity/chat_list_item_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
+import '../chat_cubit/cubit.dart';
 
 class ChatList extends StatelessWidget {
   const ChatList({super.key, required this.chats});
@@ -22,6 +25,7 @@ class ChatList extends StatelessWidget {
         return ListItem(
           key: ValueKey(chat.id),
           onTap: () {
+            context.read<ChatCubit>().getChatById(chat.id);
             context.go('${AppRoutes.chats}/${chat.id}');
           },
           chat: chat,

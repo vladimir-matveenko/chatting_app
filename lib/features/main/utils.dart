@@ -16,7 +16,7 @@ class MainScreenUtils {
       }
     }
     return switch (location.toString()) {
-      AppRoutes.contacts => 'contactsScreen.screenName'.tr(),
+      AppRoutes.users => 'contactsScreen.screenName'.tr(),
       AppRoutes.chats => 'chatsScreen.screenName'.tr(),
       AppRoutes.notifications => 'notificationsScreen.screenName'.tr(),
       AppRoutes.profile => 'profileScreen.screenName'.tr(),

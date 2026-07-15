@@ -1,21 +1,21 @@
-import 'package:chatting_app/features/chats/domain/usecases/load_chats_usecase.dart';
-import 'package:chatting_app/features/chats/presentation/chats_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../app/utils/app_utils.dart';
 import '../../../../core/usecases/usecase.dart';
+import '../../domain/usecases/load_users_usecase.dart';
+import 'state.dart';
 
 @lazySingleton
-class ChatsCubit extends Cubit<ChatsState> {
-  ChatsCubit(this._loadChatsUseCase) : super(const ChatsState());
-  final LoadChatsUseCase _loadChatsUseCase;
+class UsersCubit extends Cubit<UsersState> {
+  UsersCubit(this._loadUsersUseCase) : super(const UsersState());
+  final LoadUsersUseCase _loadUsersUseCase;
 
-  Future<void> loadChats({bool loadSilent = true}) async {
+  Future<void> loadUsers({bool loadSilent = true}) async {
     if (!loadSilent) {
       emit(state.copyWith(isLoading: true));
     }
-    final profile = await _loadChatsUseCase(NoParams());
+    final profile = await _loadUsersUseCase(NoParams());
     profile.fold(
       (l) {
         emit(
@@ -26,7 +26,7 @@ class ChatsCubit extends Cubit<ChatsState> {
         );
       },
       (r) {
-        emit(state.copyWith(chats: r, isLoading: false));
+        emit(state.copyWith(users: r, isLoading: false));
       },
     );
   }
