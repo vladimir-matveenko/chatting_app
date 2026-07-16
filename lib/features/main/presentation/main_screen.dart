@@ -1,4 +1,3 @@
-import 'package:chatting_app/features/chats/presentation/chats_cubit/cubit.dart';
 import 'package:chatting_app/features/main/presentation/widgets/bottom_nav_bar.dart';
 import 'package:chatting_app/features/users/presentation/users_cubit/cubit.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/presentation/widgets/app_back_button.dart';
+import '../../chats/presentation/cubit/cubit.dart';
 import '../utils.dart';
 
 class MainScreen extends StatefulWidget {

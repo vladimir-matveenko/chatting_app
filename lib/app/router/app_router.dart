@@ -12,7 +12,7 @@ import 'package:injectable/injectable.dart';
 import '../../core/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/cubit/cubit.dart';
 import '../../features/auth/presentation/cubit/state.dart';
-import '../../features/chats/presentation/screens/chat_screen.dart';
+import '../../features/chat/presentation/screens/chat_screen.dart';
 import '../../features/main/presentation/main_screen.dart';
 import '../../features/profile/presentation/screens/create_profile_screen.dart';
 import '../../features/profile/presentation/screens/edit_profile_screen.dart';

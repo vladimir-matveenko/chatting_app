@@ -1,14 +1,14 @@
 import 'package:chatting_app/core/presentation/widgets/app_loader.dart';
-import 'package:chatting_app/features/chats/presentation/chat_cubit/cubit.dart';
-import 'package:chatting_app/features/chats/presentation/chat_cubit/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
+import '../../../chat/presentation/cubit/cubit.dart';
+import '../../../chat/presentation/cubit/state.dart';
 import '../users_cubit/cubit.dart';
 import '../users_cubit/state.dart';
-import '../widget/users_list.dart';
+import '../widgets/users_list.dart';
 
 class UsersScreen extends StatelessWidget {
   const UsersScreen({super.key});

@@ -1,11 +1,11 @@
-import 'package:chatting_app/features/chats/domain/usecases/get_chat_members_usecase.dart';
-import 'package:chatting_app/features/chats/presentation/chat_cubit/state.dart';
+import 'package:chatting_app/features/chat/presentation/cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../app/constants/app_enums.dart';
 import '../../../../app/utils/app_utils.dart';
 import '../../domain/usecases/create_chat_usecase.dart';
+import '../../domain/usecases/get_chat_members_usecase.dart';
 import '../../domain/usecases/get_chat_usecase.dart';
 
 @lazySingleton

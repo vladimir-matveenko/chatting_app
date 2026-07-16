@@ -1,7 +1,7 @@
-import 'package:chatting_app/features/chats/domain/entity/chat_entity.dart';
-import 'package:chatting_app/features/chats/domain/entity/chat_list_item_entity.dart';
-import 'package:chatting_app/features/chats/domain/entity/chat_member_entity.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../domain/entity/chat_entity.dart';
+import '../../domain/entity/chat_member_entity.dart';
 
 class ChatState extends Equatable {
   const ChatState({
@@ -19,7 +19,6 @@ class ChatState extends Equatable {
   final bool shouldNavigate;
 
   ChatState copyWith({
-    List<ChatListItemEntity>? chats,
     List<ChatMemberEntity>? chatMembers,
     ChatEntity? chat,
     String? error,

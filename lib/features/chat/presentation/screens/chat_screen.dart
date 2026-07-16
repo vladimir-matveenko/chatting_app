@@ -1,8 +1,9 @@
-import 'package:chatting_app/features/chats/presentation/chat_cubit/cubit.dart';
-import 'package:chatting_app/features/chats/presentation/widget/chat_screen_body.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../cubit/cubit.dart';
+import '../widgets/chat_screen_body.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key, required this.id});

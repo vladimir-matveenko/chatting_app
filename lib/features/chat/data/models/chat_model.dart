@@ -1,6 +1,7 @@
 import 'package:chatting_app/app/constants/app_enums.dart';
-import 'package:chatting_app/features/chats/domain/entity/chat_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../domain/entity/chat_entity.dart';
 
 part 'chat_model.freezed.dart';
 part 'chat_model.g.dart';

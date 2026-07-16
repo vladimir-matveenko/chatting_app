@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/constants/app_enums.dart';
 import '../../../../app/router/app_routes.dart';
-import '../../../chats/presentation/chat_cubit/cubit.dart';
+import '../../../chat/presentation/cubit/cubit.dart';
 import '../../domain/entity/users_list_item_entity.dart';
 
 class UsersList extends StatelessWidget {

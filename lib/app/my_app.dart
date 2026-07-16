@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../features/auth/presentation/cubit/cubit.dart';
-import '../features/chats/presentation/chat_cubit/cubit.dart';
-import '../features/chats/presentation/chats_cubit/cubit.dart';
+import '../features/chat/presentation/cubit/cubit.dart';
+import '../features/chats/presentation/cubit/cubit.dart';
 import '../features/profile/presentation/profile_cubit/cubit.dart';
 import '../features/theme/presentation/cubit/cubit.dart';
 import '../features/theme/presentation/cubit/state.dart';

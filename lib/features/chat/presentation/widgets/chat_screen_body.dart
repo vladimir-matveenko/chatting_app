@@ -7,9 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/constants/app_enums.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
 import '../../../../core/presentation/widgets/app_message.dart';
+import '../../../chats/domain/entity/chat_list_item_entity.dart';
 import '../../../messages/presentation/widget/message_bar.dart';
 import '../../../messages/presentation/widget/messages_list.dart';
-import '../../domain/entity/chat_list_item_entity.dart';
 
 class ChatScreenBody extends StatefulWidget {
   const ChatScreenBody({super.key, required this.chatId});

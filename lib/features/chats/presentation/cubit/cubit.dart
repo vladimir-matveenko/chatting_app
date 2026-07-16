@@ -1,5 +1,5 @@
 import 'package:chatting_app/features/chats/domain/usecases/load_chats_usecase.dart';
-import 'package:chatting_app/features/chats/presentation/chats_cubit/state.dart';
+import 'package:chatting_app/features/chats/presentation/cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
