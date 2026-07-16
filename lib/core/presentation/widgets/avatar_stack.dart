@@ -9,23 +9,30 @@ class AvatarStack extends StatelessWidget {
     required this.names,
     this.avatarSize = 40.0,
     this.overlapFraction = 0.35,
+    this.borderWidth = 2.0,
+    this.placeholderBackgroundColor,
+    this.borderColor,
   });
 
   final List<String> imageUrls;
   final List<String> names;
   final double avatarSize;
   final double overlapFraction;
+  final double borderWidth;
+  final Color? placeholderBackgroundColor;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
     final double offsetAmount = avatarSize * (1 - overlapFraction);
 
     return SizedBox(
-      height: avatarSize + 6,
+      height: avatarSize,
       width: imageUrls.isEmpty
           ? 0
-          : avatarSize + (imageUrls.length - 1) * offsetAmount + 6,
+          : avatarSize + (imageUrls.length - 1) * offsetAmount,
       child: Stack(
+        alignment: .center,
         children: List.generate(imageUrls.length, (index) {
           return Positioned(
             left: index * offsetAmount,
@@ -34,12 +41,16 @@ class AvatarStack extends StatelessWidget {
               height: avatarSize,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 3),
+                border: Border.all(
+                  color: borderColor ?? Colors.white,
+                  width: borderWidth,
+                ),
               ),
               child: CachedNetworkImage(
                 imageUrl: imageUrls[index],
                 fit: BoxFit.cover,
                 errorWidget: (context, s, o) => AvatarPlaceholder(
+                  backgroundColor: placeholderBackgroundColor,
                   size: avatarSize,
                   firstName: names[index],
                   lastName: '',

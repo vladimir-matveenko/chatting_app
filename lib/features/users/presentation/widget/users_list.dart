@@ -1,8 +1,10 @@
 import 'package:chatting_app/features/profile/presentation/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../app/constants/app_enums.dart';
+import '../../../../app/router/app_routes.dart';
 import '../../../chats/presentation/chat_cubit/cubit.dart';
 import '../../domain/entity/users_list_item_entity.dart';
 
@@ -24,11 +26,15 @@ class UsersList extends StatelessWidget {
         return ListItem(
           key: ValueKey(user.id),
           onTap: () {
-            context.read<ChatCubit>().createChat(
-              type: ChatType.private,
-              memberIds: [user.id],
-              shouldNavigate: true,
-            );
+            if (user.privateChatId?.isNotEmpty == true) {
+              context.go('${AppRoutes.chats}/${user.privateChatId!}');
+            } else {
+              context.read<ChatCubit>().createChat(
+                type: ChatType.private,
+                memberIds: [user.id],
+                shouldNavigate: true,
+              );
+            }
           },
           user: user,
         );
@@ -63,9 +69,10 @@ class ListItem extends StatelessWidget {
           mainAxisAlignment: .start,
           children: [
             UserAvatar(
-              size: 20.0,
+              size: 30.0,
               avatar: user.avatarUrl ?? '',
               firstName: userName,
+              lastName: '',
             ),
             Text(userName, style: textTheme.bodyMedium),
           ],

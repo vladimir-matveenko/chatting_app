@@ -12,6 +12,7 @@ _UserListItemModel _$UserListItemModelFromJson(Map<String, dynamic> json) =>
       userName: json['userName'] as String,
       displayName: json['displayName'] as String?,
       avatarUrl: json['avatarUrl'] as String?,
+      privateChatId: json['privateChatId'] as String?,
     );
 
 Map<String, dynamic> _$UserListItemModelToJson(_UserListItemModel instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$UserListItemModelToJson(_UserListItemModel instance) =>
       'userName': instance.userName,
       'displayName': ?instance.displayName,
       'avatarUrl': ?instance.avatarUrl,
+      'privateChatId': ?instance.privateChatId,
     };

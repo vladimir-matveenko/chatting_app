@@ -1,4 +1,5 @@
 import 'package:chatting_app/app/router/app_routes.dart';
+import 'package:chatting_app/app/utils/extensions.dart';
 import 'package:chatting_app/core/presentation/widgets/avatar_stack.dart';
 import 'package:chatting_app/features/chats/domain/entity/chat_list_item_entity.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
     final avatars = chat.participants.map((e) => e.avatarUrl ?? '').toList();
     final names = chat.participants.map((e) => e.userName).toList();
 
@@ -58,19 +59,30 @@ class ListItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Row(
-          spacing: 4.0,
+          spacing: 8.0,
           mainAxisAlignment: .start,
+          crossAxisAlignment: .center,
           children: [
-            AvatarStack(avatarSize: 30.0, imageUrls: avatars, names: names),
+            AvatarStack(
+              avatarSize: 30.0,
+              imageUrls: avatars,
+              names: names,
+              placeholderBackgroundColor: theme.unselectedWidgetColor,
+              borderColor: theme.isDark() ? Colors.white : Colors.grey.shade500,
+            ),
             if (chat.participantsCount > 2)
               Text(
                 '+${chat.participantsCount - 1}',
-                style: textTheme.bodySmall,
+                style: theme.textTheme.bodyMedium,
               ),
             if (chat.title?.isNotEmpty == true)
-              Text(chat.title!)
+              Text(chat.title!, style: theme.textTheme.bodyMedium)
             else if (chat.participantsCount == 2)
-              Text(chat.participants.first.userName),
+              Text(
+                chat.participants.first.displayName ??
+                    chat.participants.first.userName,
+                style: theme.textTheme.bodyMedium,
+              ),
           ],
         ),
       ),

@@ -15,6 +15,7 @@ abstract class UserListItemModel with _$UserListItemModel {
     required String userName,
     String? displayName,
     String? avatarUrl,
+    String? privateChatId,
   }) = _UserListItemModel;
 
   factory UserListItemModel.fromJson(Map<String, dynamic> json) =>
@@ -34,5 +35,6 @@ extension UserListItemModelExt on UserListItemModel {
     userName: userName,
     displayName: displayName,
     avatarUrl: avatarUrl,
+    privateChatId: privateChatId,
   );
 }

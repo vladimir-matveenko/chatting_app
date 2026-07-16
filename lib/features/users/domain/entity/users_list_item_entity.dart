@@ -10,6 +10,7 @@ abstract class UserListItemEntity with _$UserListItemEntity {
     required String userName,
     String? displayName,
     String? avatarUrl,
+    String? privateChatId,
   }) = _UserListItemEntity;
 
   factory UserListItemEntity.fromJson(Map<String, dynamic> json) =>
