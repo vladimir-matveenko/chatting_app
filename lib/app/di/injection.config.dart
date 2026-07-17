@@ -74,6 +74,8 @@ import 'package:chatting_app/features/messages/domain/usecases/load_messages_use
     as _i882;
 import 'package:chatting_app/features/messages/domain/usecases/send_message_usecase.dart'
     as _i977;
+import 'package:chatting_app/features/messages/domain/usecases/update_message_usecase.dart'
+    as _i752;
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart'
     as _i714;
 import 'package:chatting_app/features/profile/data/data_sources/profile_local_data_source.dart'
@@ -218,20 +220,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i977.SendMessageUseCase>(
       () => _i977.SendMessageUseCase(gh<_i166.MessagesRepository>()),
     );
+    gh.lazySingleton<_i752.UpdateMessageUseCase>(
+      () => _i752.UpdateMessageUseCase(gh<_i166.MessagesRepository>()),
+    );
     gh.lazySingleton<_i509.AuthRemoteDataSource>(
       () => _i509.AuthRemoteDataSourceImpl(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i993.UsersRemoteDataSource>(
       () => _i993.UsersRemoteDataSourceImpl(gh<_i361.Dio>()),
-    );
-    gh.lazySingleton<_i714.MessagesCubit>(
-      () => _i714.MessagesCubit(
-        gh<_i882.LoadMessagesUseCase>(),
-        gh<_i977.SendMessageUseCase>(),
-        gh<_i663.DeleteMessageUseCase>(),
-        gh<_i969.AddReactionUseCase>(),
-        gh<_i0.DeleteReactionUseCase>(),
-      ),
     );
     gh.lazySingleton<_i989.ChatsRepository>(
       () => _i252.ChatsRepositoryImpl(gh<_i423.ChatsRemoteDataSource>()),
@@ -241,6 +237,16 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i321.LoadChatsUseCase>(
       () => _i321.LoadChatsUseCase(gh<_i989.ChatsRepository>()),
+    );
+    gh.lazySingleton<_i714.MessagesCubit>(
+      () => _i714.MessagesCubit(
+        gh<_i882.LoadMessagesUseCase>(),
+        gh<_i977.SendMessageUseCase>(),
+        gh<_i663.DeleteMessageUseCase>(),
+        gh<_i969.AddReactionUseCase>(),
+        gh<_i0.DeleteReactionUseCase>(),
+        gh<_i752.UpdateMessageUseCase>(),
+      ),
     );
     gh.lazySingleton<_i312.ChangePasswordUseCase>(
       () => _i312.ChangePasswordUseCase(gh<_i672.ProfileRepository>()),

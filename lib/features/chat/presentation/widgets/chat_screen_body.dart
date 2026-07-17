@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/constants/app_enums.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
 import '../../../../core/presentation/widgets/app_message.dart';
-import '../../../chats/domain/entity/chat_list_item_entity.dart';
 import '../../../messages/presentation/widget/message_bar.dart';
 import '../../../messages/presentation/widget/messages_list.dart';
 
@@ -22,32 +21,38 @@ class ChatScreenBody extends StatefulWidget {
 
 class _ChatScreenBodyState extends State<ChatScreenBody> {
   late String currentUserId;
+  late MessagesCubit cubit;
   final _scrollController = ScrollController();
   final _messageController = TextEditingController();
 
-  void _sendMessage(BuildContext context) {
+  void _sendMessage(BuildContext context, {String? messageId}) {
     if (_messageController.text.trim().isEmpty) return;
 
-    context.read<MessagesCubit>().sendMessage(
-      chatId: widget.chatId,
-      type: MessageType.text,
-      body: _messageController.text,
-    );
-    _messageController.clear();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          0.0,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
-      }
-    });
+    if (messageId != null) {
+      cubit.updateMessage(messageId: messageId, body: _messageController.text);
+    } else {
+      context.read<MessagesCubit>().sendMessage(
+        chatId: widget.chatId,
+        type: MessageType.text,
+        body: _messageController.text,
+      );
+      _messageController.clear();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            0.0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
+      });
+    }
   }
 
   @override
   void initState() {
     super.initState();
+    cubit = context.read<MessagesCubit>();
     currentUserId = context.read<ProfileCubit>().state.profile?.id ?? '';
   }
 
@@ -70,7 +75,20 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
                   ),
                   MessageBar(
                     onSend: () {
-                      _sendMessage(context);
+                      if (state.editModeActive) {
+                        _sendMessage(
+                          context,
+                          messageId: state.selectedMessage?.id,
+                        );
+                        cubit.unSelectMessage();
+                        _messageController.clear();
+                      } else {
+                        _sendMessage(context);
+                      }
+                    },
+                    onCancel: () {
+                      cubit.unSelectMessage();
+                      _messageController.clear();
                     },
                     messageController: _messageController,
                   ),
@@ -79,48 +97,21 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
       },
       listener: (context, state) {
         if (state.updateList) {
-          context.read<MessagesCubit>().loadMessages(chatId: widget.chatId);
+          cubit.loadMessages(chatId: widget.chatId);
         }
         if (state.error?.isNotEmpty == true) {
           AppMessage.error(
             context,
             message: state.error!,
             onClose: () {
-              context.read<MessagesCubit>().disableError();
+              cubit.disableError();
             },
           );
         }
+        if (state.editModeActive) {
+          _messageController.text = state.selectedMessage?.body ?? '';
+        }
       },
-    );
-  }
-}
-
-class ListItem extends StatelessWidget {
-  const ListItem({super.key, required this.onTap, required this.chat});
-
-  final ChatListItemEntity chat;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.translucent,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Row(
-          spacing: 8.0,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              chat.id,
-              style: textTheme.bodySmall?.copyWith(color: Colors.blueGrey),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

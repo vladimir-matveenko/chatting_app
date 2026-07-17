@@ -28,4 +28,19 @@ class MainScreenUtils {
     final uri = GoRouterState.of(context).uri;
     return uri.pathSegments.length > 1;
   }
+
+  static Widget? getFAB(
+    BuildContext context, {
+    required VoidCallback locationAction,
+    required GoRouterState state,
+  }) {
+    final location = state.uri.path;
+    return switch (location) {
+      AppRoutes.chats => FloatingActionButton(
+        onPressed: locationAction,
+        child: const Icon(Icons.add),
+      ),
+      _ => null,
+    };
+  }
 }

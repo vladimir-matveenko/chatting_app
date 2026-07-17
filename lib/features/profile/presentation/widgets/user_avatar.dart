@@ -30,7 +30,7 @@ class UserAvatar extends StatelessWidget {
         ? CircleAvatar(
             radius: size,
             backgroundImage: CachedNetworkImageProvider(avatar),
-            backgroundColor: theme.unselectedWidgetColor,
+            backgroundColor: theme.cardColor,
             onBackgroundImageError: (o, s) => placeholder,
           )
         : placeholder;

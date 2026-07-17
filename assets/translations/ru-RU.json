@@ -56,7 +56,9 @@
   "chatScreen": {
     "screenName": "Чат",
     "deleteMessage": "Удалить сообщение",
-    "areYouSure": "Вы уверены, что Вы хотите удалить сообщение?"
+    "areYouSure": "Вы уверены, что Вы хотите удалить сообщение?",
+    "editingMode": "Редактирование",
+    "edited": "Изменено"
   },
   "notificationsScreen": {
     "screenName": "Уведомления"

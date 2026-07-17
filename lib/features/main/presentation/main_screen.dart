@@ -1,4 +1,5 @@
 import 'package:chatting_app/features/main/presentation/widgets/bottom_nav_bar.dart';
+import 'package:chatting_app/features/main/presentation/widgets/custom_fab.dart';
 import 'package:chatting_app/features/users/presentation/users_cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,6 +59,7 @@ class _MainScreenState extends State<MainScreen> {
           widget.navigationShell.goBranch(index);
         },
       ),
+      floatingActionButton: CustomFab(state: widget.state, action: () {}),
     );
   }
 }

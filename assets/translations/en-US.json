@@ -56,7 +56,9 @@
   "chatScreen": {
     "screenName": "Chat",
     "deleteMessage": "Delete message",
-    "areYouSure": "Are you sure you want to delete a message?"
+    "areYouSure": "Are you sure you want to delete a message?",
+    "editingMode": "Editing",
+    "edited": "Edited"
   },
   "notificationsScreen": {
     "screenName": "Notifications"

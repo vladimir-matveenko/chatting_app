@@ -83,6 +83,26 @@ class ListItem extends StatelessWidget {
                     chat.participants.first.userName,
                 style: theme.textTheme.bodyMedium,
               ),
+            if (chat.unreadCount > 0) ...[
+              Chip(
+                label: Text(
+                  chat.unreadCount.toString(),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              if (chat.lastMessagePreview?.isNotEmpty == true)
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 120.0),
+                  child: Text(
+                    chat.lastMessagePreview!,
+                    style: theme.textTheme.bodySmall,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+            ],
           ],
         ),
       ),

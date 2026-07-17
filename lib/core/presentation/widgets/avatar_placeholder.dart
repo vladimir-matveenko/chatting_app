@@ -18,9 +18,10 @@ class AvatarPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(
-      context,
-    ).textTheme.bodyMedium?.copyWith(fontSize: size * 0.5);
+    final theme = Theme.of(context);
+    final textStyle = theme.textTheme.headlineMedium?.copyWith(
+      fontSize: size * 0.5,
+    );
     return Container(
       width: size,
       height: size,

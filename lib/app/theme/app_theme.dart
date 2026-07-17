@@ -224,6 +224,14 @@ class AppTheme {
             side: BorderSide(color: appColors.secondaryText, width: 1.0),
           ),
         ),
+        chipTheme: ChipThemeData(
+          backgroundColor: appColors.unselectedWidget,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          padding: const .all(4.0),
+          side: BorderSide.none,
+        ),
       );
     } else {
       return ThemeData.light(useMaterial3: true).copyWith(
@@ -441,6 +449,14 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadiusGeometry.circular(12.0),
           ),
+        ),
+        chipTheme: ChipThemeData(
+          backgroundColor: appColors.unselectedWidget,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          padding: const .all(4.0),
+          side: BorderSide.none,
         ),
       );
     }

@@ -38,7 +38,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
         final username = state.profile?.displayName ?? state.profile?.userName;
@@ -56,9 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       size: 120.0,
                       firstName: firstName,
                       lastName: lastName,
-                      backgroundColor: isDark
-                          ? Colors.grey.shade200
-                          : Colors.grey.shade400,
+                      backgroundColor: theme.cardTheme.color,
                     ),
                     Text(
                       state.profile?.displayName ?? '',
