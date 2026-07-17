@@ -20,14 +20,19 @@ class UserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return CircleAvatar(
-      radius: size,
-      backgroundImage: CachedNetworkImageProvider(avatar),
+    final placeholder = AvatarPlaceholder(
+      size: size,
+      firstName: firstName ?? '',
+      lastName: lastName ?? '',
       backgroundColor: theme.unselectedWidgetColor,
-      onBackgroundImageError: (o, s) => AvatarPlaceholder(
-        firstName: firstName ?? '',
-        lastName: lastName ?? '',
-      ),
     );
+    return avatar.isNotEmpty
+        ? CircleAvatar(
+            radius: size,
+            backgroundImage: CachedNetworkImageProvider(avatar),
+            backgroundColor: theme.cardColor,
+            onBackgroundImageError: (o, s) => placeholder,
+          )
+        : placeholder;
   }
 }

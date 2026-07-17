@@ -66,6 +66,22 @@ class MessagesRepositoryImpl implements MessagesRepository {
   }
 
   @override
+  Future<Either<Failure, MessageEntity>> updateMessage({
+    required String messageId,
+    required String body,
+  }) async {
+    try {
+      final item = await _messagesRemoteDataSource.updateMessage(
+        messageId: messageId,
+        body: body,
+      );
+      return Right(item!.toEntity());
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> deleteMessage(String messageId) async {
     try {
       final item = await _messagesRemoteDataSource.deleteMessage(messageId);

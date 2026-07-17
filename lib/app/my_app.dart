@@ -2,13 +2,14 @@ import 'package:chatting_app/app/router/app_router.dart';
 import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/profile/presentation/change_password_cubit/cubit.dart';
+import 'package:chatting_app/features/users/presentation/users_cubit/cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../features/auth/presentation/cubit/cubit.dart';
-import '../features/chats/presentation/chat_cubit/cubit.dart';
-import '../features/chats/presentation/chats_cubit/cubit.dart';
+import '../features/chat/presentation/cubit/cubit.dart';
+import '../features/chats/presentation/cubit/cubit.dart';
 import '../features/profile/presentation/profile_cubit/cubit.dart';
 import '../features/theme/presentation/cubit/cubit.dart';
 import '../features/theme/presentation/cubit/state.dart';
@@ -30,6 +31,7 @@ class _MyAppState extends State<MyApp> {
   final changePasswordCubit = getIt<ChangePasswordCubit>();
   final chatsCubit = getIt<ChatsCubit>();
   final chatCubit = getIt<ChatCubit>();
+  final usersCubit = getIt<UsersCubit>();
   final messagesCubit = getIt<MessagesCubit>();
 
   @override
@@ -42,6 +44,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => changePasswordCubit),
         BlocProvider(create: (_) => chatsCubit),
         BlocProvider(create: (_) => chatCubit),
+        BlocProvider(create: (_) => usersCubit),
         BlocProvider(create: (_) => messagesCubit),
         BlocProvider(create: (_) => themeCubit..loadTheme()),
       ],

@@ -1,8 +1,10 @@
+import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:chatting_app/features/messages/domain/usecases/add_reaction_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/delete_message_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/delete_reaction_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/load_messages_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/send_message_usecase.dart';
+import 'package:chatting_app/features/messages/domain/usecases/update_message_usecase.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -18,12 +20,14 @@ class MessagesCubit extends Cubit<MessagesState> {
     this._deleteMessageUseCase,
     this._addReactionUseCase,
     this._deleteReactionUseCase,
+    this._updateMessageUseCase,
   ) : super(const MessagesState());
   final LoadMessagesUseCase _loadMessagesUseCase;
   final SendMessageUseCase _sendMessageUseCase;
   final DeleteMessageUseCase _deleteMessageUseCase;
   final AddReactionUseCase _addReactionUseCase;
   final DeleteReactionUseCase _deleteReactionUseCase;
+  final UpdateMessageUseCase _updateMessageUseCase;
 
   Future<void> loadMessages({
     bool loadSilent = true,
@@ -64,6 +68,29 @@ class MessagesCubit extends Cubit<MessagesState> {
         type: type,
         body: body,
       ),
+    );
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+            updateList: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(isLoading: false, updateList: true));
+      },
+    );
+  }
+
+  Future<void> updateMessage({
+    required String messageId,
+    required String body,
+  }) async {
+    final result = await _updateMessageUseCase(
+      UpdateMessageParams(messageId: messageId, body: body),
     );
     result.fold(
       (l) {
@@ -142,6 +169,18 @@ class MessagesCubit extends Cubit<MessagesState> {
         emit(state.copyWith(updateList: true));
       },
     );
+  }
+
+  Future<void> selectMessage(MessageEntity selectedMessage) async {
+    emit(state.copyWith(showMenu: true, selectedMessage: selectedMessage));
+  }
+
+  Future<void> unSelectMessage() async {
+    emit(state.copyWith(editModeActive: false, showMenu: false));
+  }
+
+  Future<void> activateEditingMode() async {
+    emit(state.copyWith(editModeActive: true, showMenu: false));
   }
 
   Future<void> disableError() async {

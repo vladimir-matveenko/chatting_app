@@ -22,6 +22,7 @@ void showReactionsMenu({
   const double menuWidth = 120.0;
   const double menuHeight = 50.0;
   const double spacing = 8.0;
+  const double horizontalPadding = 16.0;
 
   /// Y-position
   double topPosition = messagePosition.dy - menuHeight - spacing;
@@ -38,13 +39,13 @@ void showReactionsMenu({
       messagePosition.dx + (messageSize.width / 2) - (menuWidth / 2);
 
   /// check left position (left padding - 12px)
-  if (leftPosition < 12.0) {
-    leftPosition = 12.0;
+  if (leftPosition < horizontalPadding) {
+    leftPosition = horizontalPadding;
   }
 
   /// check right position
-  if (leftPosition + menuWidth > screenSize.width - 12.0) {
-    leftPosition = screenSize.width - menuWidth - 12.0;
+  if (leftPosition + menuWidth > screenSize.width - horizontalPadding) {
+    leftPosition = screenSize.width - menuWidth - horizontalPadding;
   }
 
   late OverlayEntry overlayEntry;
@@ -68,7 +69,7 @@ void showReactionsMenu({
   );
 
   HapticFeedback.mediumImpact();
-  Overlay.of(context).insert(overlayEntry);
+  Overlay.of(context, rootOverlay: true).insert(overlayEntry);
 }
 
 class _ReactionsOverlay extends StatefulWidget {
@@ -139,13 +140,15 @@ class _ReactionsOverlayState extends State<_ReactionsOverlay>
               tween: Tween<double>(begin: 0.0, end: 1.0),
               duration: const Duration(milliseconds: 150),
               builder: (context, value, child) {
-                return BackdropFilter(
-                  filter: ImageFilter.blur(
-                    sigmaX: value * 4.0,
-                    sigmaY: value * 4.0,
-                  ),
-                  child: Container(
-                    color: Colors.black.withValues(alpha: value * 0.15),
+                return ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(
+                      sigmaX: value * 4.0,
+                      sigmaY: value * 4.0,
+                    ),
+                    child: Container(
+                      color: Colors.black.withValues(alpha: value * 0.15),
+                    ),
                   ),
                 );
               },
@@ -170,7 +173,7 @@ class _ReactionsOverlayState extends State<_ReactionsOverlay>
                 padding: const .symmetric(horizontal: 8),
                 decoration: BoxDecoration(
                   color: Theme.of(context).cardColor,
-                  borderRadius: .circular(30),
+                  borderRadius: .circular(16.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.15),

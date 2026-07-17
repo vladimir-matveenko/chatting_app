@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ChatListItemModel {
 
- String get id; ChatType get type; String? get title; String? get avatarUrl; String? get ownerId; DateTime get createdAt; DateTime get updatedAt; String? get lastMessage; DateTime? get lastMessageAt; int? get unreadCount; List<ChatListParticipantModel> get participants; int get participantsCount;
+ String get id; ChatType get type; String? get title; String? get avatarUrl; String? get ownerId; DateTime get createdAt; DateTime get updatedAt; String? get lastMessagePreview; DateTime? get lastMessageAt; int get unreadCount; List<ChatListParticipantModel> get participants; int get participantsCount;
 /// Create a copy of ChatListItemModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ChatListItemModelCopyWith<ChatListItemModel> get copyWith => _$ChatListItemMode
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatListItemModel&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.lastMessageAt, lastMessageAt) || other.lastMessageAt == lastMessageAt)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount)&&const DeepCollectionEquality().equals(other.participants, participants)&&(identical(other.participantsCount, participantsCount) || other.participantsCount == participantsCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatListItemModel&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.lastMessagePreview, lastMessagePreview) || other.lastMessagePreview == lastMessagePreview)&&(identical(other.lastMessageAt, lastMessageAt) || other.lastMessageAt == lastMessageAt)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount)&&const DeepCollectionEquality().equals(other.participants, participants)&&(identical(other.participantsCount, participantsCount) || other.participantsCount == participantsCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,title,avatarUrl,ownerId,createdAt,updatedAt,lastMessage,lastMessageAt,unreadCount,const DeepCollectionEquality().hash(participants),participantsCount);
+int get hashCode => Object.hash(runtimeType,id,type,title,avatarUrl,ownerId,createdAt,updatedAt,lastMessagePreview,lastMessageAt,unreadCount,const DeepCollectionEquality().hash(participants),participantsCount);
 
 @override
 String toString() {
-  return 'ChatListItemModel(id: $id, type: $type, title: $title, avatarUrl: $avatarUrl, ownerId: $ownerId, createdAt: $createdAt, updatedAt: $updatedAt, lastMessage: $lastMessage, lastMessageAt: $lastMessageAt, unreadCount: $unreadCount, participants: $participants, participantsCount: $participantsCount)';
+  return 'ChatListItemModel(id: $id, type: $type, title: $title, avatarUrl: $avatarUrl, ownerId: $ownerId, createdAt: $createdAt, updatedAt: $updatedAt, lastMessagePreview: $lastMessagePreview, lastMessageAt: $lastMessageAt, unreadCount: $unreadCount, participants: $participants, participantsCount: $participantsCount)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ChatListItemModelCopyWith<$Res>  {
   factory $ChatListItemModelCopyWith(ChatListItemModel value, $Res Function(ChatListItemModel) _then) = _$ChatListItemModelCopyWithImpl;
 @useResult
 $Res call({
- String id, ChatType type, String? title, String? avatarUrl, String? ownerId, DateTime createdAt, DateTime updatedAt, String? lastMessage, DateTime? lastMessageAt, int? unreadCount, List<ChatListParticipantModel> participants, int participantsCount
+ String id, ChatType type, String? title, String? avatarUrl, String? ownerId, DateTime createdAt, DateTime updatedAt, String? lastMessagePreview, DateTime? lastMessageAt, int unreadCount, List<ChatListParticipantModel> participants, int participantsCount
 });
 
 
@@ -65,7 +65,7 @@ class _$ChatListItemModelCopyWithImpl<$Res>
 
 /// Create a copy of ChatListItemModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? title = freezed,Object? avatarUrl = freezed,Object? ownerId = freezed,Object? createdAt = null,Object? updatedAt = null,Object? lastMessage = freezed,Object? lastMessageAt = freezed,Object? unreadCount = freezed,Object? participants = null,Object? participantsCount = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? title = freezed,Object? avatarUrl = freezed,Object? ownerId = freezed,Object? createdAt = null,Object? updatedAt = null,Object? lastMessagePreview = freezed,Object? lastMessageAt = freezed,Object? unreadCount = null,Object? participants = null,Object? participantsCount = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -74,10 +74,10 @@ as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // igno
 as String?,ownerId: freezed == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,lastMessage: freezed == lastMessage ? _self.lastMessage : lastMessage // ignore: cast_nullable_to_non_nullable
+as DateTime,lastMessagePreview: freezed == lastMessagePreview ? _self.lastMessagePreview : lastMessagePreview // ignore: cast_nullable_to_non_nullable
 as String?,lastMessageAt: freezed == lastMessageAt ? _self.lastMessageAt : lastMessageAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,unreadCount: freezed == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
-as int?,participants: null == participants ? _self.participants : participants // ignore: cast_nullable_to_non_nullable
+as DateTime?,unreadCount: null == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
+as int,participants: null == participants ? _self.participants : participants // ignore: cast_nullable_to_non_nullable
 as List<ChatListParticipantModel>,participantsCount: null == participantsCount ? _self.participantsCount : participantsCount // ignore: cast_nullable_to_non_nullable
 as int,
   ));
@@ -164,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  DateTime createdAt,  DateTime updatedAt,  String? lastMessage,  DateTime? lastMessageAt,  int? unreadCount,  List<ChatListParticipantModel> participants,  int participantsCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  DateTime createdAt,  DateTime updatedAt,  String? lastMessagePreview,  DateTime? lastMessageAt,  int unreadCount,  List<ChatListParticipantModel> participants,  int participantsCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatListItemModel() when $default != null:
-return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.createdAt,_that.updatedAt,_that.lastMessage,_that.lastMessageAt,_that.unreadCount,_that.participants,_that.participantsCount);case _:
+return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.createdAt,_that.updatedAt,_that.lastMessagePreview,_that.lastMessageAt,_that.unreadCount,_that.participants,_that.participantsCount);case _:
   return orElse();
 
 }
@@ -185,10 +185,10 @@ return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  DateTime createdAt,  DateTime updatedAt,  String? lastMessage,  DateTime? lastMessageAt,  int? unreadCount,  List<ChatListParticipantModel> participants,  int participantsCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  DateTime createdAt,  DateTime updatedAt,  String? lastMessagePreview,  DateTime? lastMessageAt,  int unreadCount,  List<ChatListParticipantModel> participants,  int participantsCount)  $default,) {final _that = this;
 switch (_that) {
 case _ChatListItemModel():
-return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.createdAt,_that.updatedAt,_that.lastMessage,_that.lastMessageAt,_that.unreadCount,_that.participants,_that.participantsCount);case _:
+return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.createdAt,_that.updatedAt,_that.lastMessagePreview,_that.lastMessageAt,_that.unreadCount,_that.participants,_that.participantsCount);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,10 +205,10 @@ return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  DateTime createdAt,  DateTime updatedAt,  String? lastMessage,  DateTime? lastMessageAt,  int? unreadCount,  List<ChatListParticipantModel> participants,  int participantsCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  DateTime createdAt,  DateTime updatedAt,  String? lastMessagePreview,  DateTime? lastMessageAt,  int unreadCount,  List<ChatListParticipantModel> participants,  int participantsCount)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatListItemModel() when $default != null:
-return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.createdAt,_that.updatedAt,_that.lastMessage,_that.lastMessageAt,_that.unreadCount,_that.participants,_that.participantsCount);case _:
+return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.createdAt,_that.updatedAt,_that.lastMessagePreview,_that.lastMessageAt,_that.unreadCount,_that.participants,_that.participantsCount);case _:
   return null;
 
 }
@@ -220,7 +220,7 @@ return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_t
 @JsonSerializable()
 
 class _ChatListItemModel extends ChatListItemModel {
-  const _ChatListItemModel({required this.id, required this.type, this.title, this.avatarUrl, this.ownerId, required this.createdAt, required this.updatedAt, this.lastMessage, this.lastMessageAt, this.unreadCount, required final  List<ChatListParticipantModel> participants, required this.participantsCount}): _participants = participants,super._();
+  const _ChatListItemModel({required this.id, required this.type, this.title, this.avatarUrl, this.ownerId, required this.createdAt, required this.updatedAt, this.lastMessagePreview, this.lastMessageAt, required this.unreadCount, required final  List<ChatListParticipantModel> participants, required this.participantsCount}): _participants = participants,super._();
   factory _ChatListItemModel.fromJson(Map<String, dynamic> json) => _$ChatListItemModelFromJson(json);
 
 @override final  String id;
@@ -230,9 +230,9 @@ class _ChatListItemModel extends ChatListItemModel {
 @override final  String? ownerId;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
-@override final  String? lastMessage;
+@override final  String? lastMessagePreview;
 @override final  DateTime? lastMessageAt;
-@override final  int? unreadCount;
+@override final  int unreadCount;
  final  List<ChatListParticipantModel> _participants;
 @override List<ChatListParticipantModel> get participants {
   if (_participants is EqualUnmodifiableListView) return _participants;
@@ -255,16 +255,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatListItemModel&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.lastMessageAt, lastMessageAt) || other.lastMessageAt == lastMessageAt)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount)&&const DeepCollectionEquality().equals(other._participants, _participants)&&(identical(other.participantsCount, participantsCount) || other.participantsCount == participantsCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatListItemModel&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.lastMessagePreview, lastMessagePreview) || other.lastMessagePreview == lastMessagePreview)&&(identical(other.lastMessageAt, lastMessageAt) || other.lastMessageAt == lastMessageAt)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount)&&const DeepCollectionEquality().equals(other._participants, _participants)&&(identical(other.participantsCount, participantsCount) || other.participantsCount == participantsCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,title,avatarUrl,ownerId,createdAt,updatedAt,lastMessage,lastMessageAt,unreadCount,const DeepCollectionEquality().hash(_participants),participantsCount);
+int get hashCode => Object.hash(runtimeType,id,type,title,avatarUrl,ownerId,createdAt,updatedAt,lastMessagePreview,lastMessageAt,unreadCount,const DeepCollectionEquality().hash(_participants),participantsCount);
 
 @override
 String toString() {
-  return 'ChatListItemModel(id: $id, type: $type, title: $title, avatarUrl: $avatarUrl, ownerId: $ownerId, createdAt: $createdAt, updatedAt: $updatedAt, lastMessage: $lastMessage, lastMessageAt: $lastMessageAt, unreadCount: $unreadCount, participants: $participants, participantsCount: $participantsCount)';
+  return 'ChatListItemModel(id: $id, type: $type, title: $title, avatarUrl: $avatarUrl, ownerId: $ownerId, createdAt: $createdAt, updatedAt: $updatedAt, lastMessagePreview: $lastMessagePreview, lastMessageAt: $lastMessageAt, unreadCount: $unreadCount, participants: $participants, participantsCount: $participantsCount)';
 }
 
 
@@ -275,7 +275,7 @@ abstract mixin class _$ChatListItemModelCopyWith<$Res> implements $ChatListItemM
   factory _$ChatListItemModelCopyWith(_ChatListItemModel value, $Res Function(_ChatListItemModel) _then) = __$ChatListItemModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, ChatType type, String? title, String? avatarUrl, String? ownerId, DateTime createdAt, DateTime updatedAt, String? lastMessage, DateTime? lastMessageAt, int? unreadCount, List<ChatListParticipantModel> participants, int participantsCount
+ String id, ChatType type, String? title, String? avatarUrl, String? ownerId, DateTime createdAt, DateTime updatedAt, String? lastMessagePreview, DateTime? lastMessageAt, int unreadCount, List<ChatListParticipantModel> participants, int participantsCount
 });
 
 
@@ -292,7 +292,7 @@ class __$ChatListItemModelCopyWithImpl<$Res>
 
 /// Create a copy of ChatListItemModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? title = freezed,Object? avatarUrl = freezed,Object? ownerId = freezed,Object? createdAt = null,Object? updatedAt = null,Object? lastMessage = freezed,Object? lastMessageAt = freezed,Object? unreadCount = freezed,Object? participants = null,Object? participantsCount = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? title = freezed,Object? avatarUrl = freezed,Object? ownerId = freezed,Object? createdAt = null,Object? updatedAt = null,Object? lastMessagePreview = freezed,Object? lastMessageAt = freezed,Object? unreadCount = null,Object? participants = null,Object? participantsCount = null,}) {
   return _then(_ChatListItemModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -301,10 +301,10 @@ as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // igno
 as String?,ownerId: freezed == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,lastMessage: freezed == lastMessage ? _self.lastMessage : lastMessage // ignore: cast_nullable_to_non_nullable
+as DateTime,lastMessagePreview: freezed == lastMessagePreview ? _self.lastMessagePreview : lastMessagePreview // ignore: cast_nullable_to_non_nullable
 as String?,lastMessageAt: freezed == lastMessageAt ? _self.lastMessageAt : lastMessageAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,unreadCount: freezed == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
-as int?,participants: null == participants ? _self._participants : participants // ignore: cast_nullable_to_non_nullable
+as DateTime?,unreadCount: null == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
+as int,participants: null == participants ? _self._participants : participants // ignore: cast_nullable_to_non_nullable
 as List<ChatListParticipantModel>,participantsCount: null == participantsCount ? _self.participantsCount : participantsCount // ignore: cast_nullable_to_non_nullable
 as int,
   ));

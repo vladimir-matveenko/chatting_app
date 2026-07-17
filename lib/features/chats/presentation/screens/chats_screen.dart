@@ -1,10 +1,10 @@
 import 'package:chatting_app/core/presentation/widgets/app_loader.dart';
-import 'package:chatting_app/features/chats/presentation/chats_cubit/cubit.dart';
-import 'package:chatting_app/features/chats/presentation/chats_cubit/state.dart';
+import 'package:chatting_app/features/chats/presentation/cubit/cubit.dart';
+import 'package:chatting_app/features/chats/presentation/cubit/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widget/chat_list.dart';
+import '../widgets/chat_list.dart';
 
 class ChatsScreen extends StatelessWidget {
   const ChatsScreen({super.key});

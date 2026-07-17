@@ -16,7 +16,7 @@ class MainScreenUtils {
       }
     }
     return switch (location.toString()) {
-      AppRoutes.contacts => 'contactsScreen.screenName'.tr(),
+      AppRoutes.users => 'contactsScreen.screenName'.tr(),
       AppRoutes.chats => 'chatsScreen.screenName'.tr(),
       AppRoutes.notifications => 'notificationsScreen.screenName'.tr(),
       AppRoutes.profile => 'profileScreen.screenName'.tr(),
@@ -27,5 +27,20 @@ class MainScreenUtils {
   static bool showBackButton(BuildContext context) {
     final uri = GoRouterState.of(context).uri;
     return uri.pathSegments.length > 1;
+  }
+
+  static Widget? getFAB(
+    BuildContext context, {
+    required VoidCallback locationAction,
+    required GoRouterState state,
+  }) {
+    final location = state.uri.path;
+    return switch (location) {
+      AppRoutes.chats => FloatingActionButton(
+        onPressed: locationAction,
+        child: const Icon(Icons.add),
+      ),
+      _ => null,
+    };
   }
 }

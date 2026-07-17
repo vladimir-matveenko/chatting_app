@@ -8,8 +8,6 @@ part 'chat_list_item_entity.g.dart';
 
 @freezed
 abstract class ChatListItemEntity with _$ChatListItemEntity {
-  const ChatListItemEntity._();
-
   const factory ChatListItemEntity({
     required String id,
     required ChatType type,
@@ -18,9 +16,9 @@ abstract class ChatListItemEntity with _$ChatListItemEntity {
     String? ownerId,
     required DateTime createdAt,
     required DateTime updatedAt,
-    String? lastMessage,
+    String? lastMessagePreview,
     DateTime? lastMessageAt,
-    int? unreadCount,
+    required int unreadCount,
     required List<ChatListParticipantModel> participants,
     required int participantsCount,
   }) = _ChatListItemEntity;

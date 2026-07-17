@@ -15,11 +15,11 @@ _ChatListItemEntity _$ChatListItemEntityFromJson(Map<String, dynamic> json) =>
       ownerId: json['ownerId'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
-      lastMessage: json['lastMessage'] as String?,
+      lastMessagePreview: json['lastMessagePreview'] as String?,
       lastMessageAt: json['lastMessageAt'] == null
           ? null
           : DateTime.parse(json['lastMessageAt'] as String),
-      unreadCount: (json['unreadCount'] as num?)?.toInt(),
+      unreadCount: (json['unreadCount'] as num).toInt(),
       participants: (json['participants'] as List<dynamic>)
           .map(
             (e) => ChatListParticipantModel.fromJson(e as Map<String, dynamic>),
@@ -37,9 +37,9 @@ Map<String, dynamic> _$ChatListItemEntityToJson(_ChatListItemEntity instance) =>
       'ownerId': ?instance.ownerId,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
-      'lastMessage': ?instance.lastMessage,
+      'lastMessagePreview': ?instance.lastMessagePreview,
       'lastMessageAt': ?instance.lastMessageAt?.toIso8601String(),
-      'unreadCount': ?instance.unreadCount,
+      'unreadCount': instance.unreadCount,
       'participants': instance.participants.map((e) => e.toJson()).toList(),
       'participantsCount': instance.participantsCount,
     };

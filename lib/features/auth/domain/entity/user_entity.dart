@@ -8,7 +8,7 @@ part 'user_entity.g.dart';
 abstract class UserEntity with _$UserEntity {
   const factory UserEntity({
     required String id,
-    required String username,
+    required String userName,
     required String displayName,
     required String email,
     required String avatarUrl,
@@ -22,7 +22,7 @@ abstract class UserEntity with _$UserEntity {
 extension UserEntityExt on UserEntity {
   UserModel toModel() => UserModel(
     id: id,
-    username: username,
+    userName: userName,
     displayName: displayName,
     email: email,
     avatarUrl: avatarUrl,

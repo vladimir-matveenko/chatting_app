@@ -18,6 +18,11 @@ abstract class MessagesRemoteDataSource {
 
   Future<MessageModel?> getMessageById(String messageId);
 
+  Future<MessageModel?> updateMessage({
+    required String messageId,
+    required String body,
+  });
+
   Future<bool> deleteMessage(String messageId);
 
   Future<bool> addReaction(String messageId, {required ReactionType type});
@@ -78,6 +83,29 @@ class MessagesRemoteDataSourceImpl implements MessagesRemoteDataSource {
       if (response.statusCode == 200 && response.data != null) {
         return MessageModel.fromJson(response.data);
       }
+    } on DioException catch (e) {
+      DioErrorHandler.onDioError(e);
+    } catch (e) {
+      throw UnknownException(message: e.toString());
+    }
+    return null;
+  }
+
+  @override
+  Future<MessageModel?> updateMessage({
+    required String messageId,
+    required String body,
+  }) async {
+    try {
+      final response = await dio.patch(
+        'messages/$messageId',
+        data: {'body': body},
+      );
+      if (response.statusCode == 200 && response.data != null) {
+        return MessageModel.fromJson(response.data);
+      }
+    } on TypeError catch (e) {
+      throw UnknownException(message: e.toString());
     } on DioException catch (e) {
       DioErrorHandler.onDioError(e);
     } catch (e) {

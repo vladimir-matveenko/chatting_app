@@ -16,6 +16,11 @@ abstract class MessagesRepository {
 
   Future<Either<Failure, MessageEntity>> getMessageById(String messageId);
 
+  Future<Either<Failure, MessageEntity>> updateMessage({
+    required String messageId,
+    required String body,
+  });
+
   Future<Either<Failure, bool>> deleteMessage(String messageId);
 
   Future<Either<Failure, bool>> addReaction(
