@@ -28,6 +28,12 @@ abstract class MessagesRemoteDataSource {
   Future<bool> addReaction(String messageId, {required ReactionType type});
 
   Future<bool> deleteReaction(String messageId);
+
+  Future<MessageModel?> pinMessage(String messageId);
+
+  Future<MessageModel?> unPinMessage(String messageId);
+
+  Future<List<MessageModel>> getPinnedMessages({required String chatId});
 }
 
 @LazySingleton(as: MessagesRemoteDataSource)
@@ -157,5 +163,54 @@ class MessagesRemoteDataSourceImpl implements MessagesRemoteDataSource {
       throw UnknownException(message: e.toString());
     }
     return false;
+  }
+
+  @override
+  Future<List<MessageModel>> getPinnedMessages({required String chatId}) async {
+    try {
+      final response = await dio.get('messages/chat/$chatId/pinned');
+      if (response.statusCode == 200 && response.data != null) {
+        return MessageModel.fromList(response.data);
+      }
+    } on DioException catch (e) {
+      DioErrorHandler.onDioError(e);
+    } catch (e) {
+      throw InvalidCredentialsException();
+    }
+    return [];
+  }
+
+  @override
+  Future<MessageModel?> pinMessage(String messageId) async {
+    try {
+      final response = await dio.put('messages/$messageId/pin');
+      if (response.statusCode == 200 && response.data != null) {
+        return MessageModel.fromJson(response.data);
+      }
+    } on TypeError catch (e) {
+      throw UnknownException(message: e.toString());
+    } on DioException catch (e) {
+      DioErrorHandler.onDioError(e);
+    } catch (e) {
+      throw UnknownException(message: e.toString());
+    }
+    return null;
+  }
+
+  @override
+  Future<MessageModel?> unPinMessage(String messageId) async {
+    try {
+      final response = await dio.delete('messages/$messageId/unpin');
+      if (response.statusCode == 200 && response.data != null) {
+        return MessageModel.fromJson(response.data);
+      }
+    } on TypeError catch (e) {
+      throw UnknownException(message: e.toString());
+    } on DioException catch (e) {
+      DioErrorHandler.onDioError(e);
+    } catch (e) {
+      throw UnknownException(message: e.toString());
+    }
+    return null;
   }
 }

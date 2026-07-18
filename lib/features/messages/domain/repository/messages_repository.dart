@@ -29,4 +29,12 @@ abstract class MessagesRepository {
   });
 
   Future<Either<Failure, bool>> deleteReaction(String messageId);
+
+  Future<Either<Failure, MessageEntity>> pinMessage(String messageId);
+
+  Future<Either<Failure, MessageEntity>> unPinMessage(String messageId);
+
+  Future<Either<Failure, List<MessageEntity>>> getPinnedMessages({
+    required String chatId,
+  });
 }

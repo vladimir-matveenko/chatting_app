@@ -18,6 +18,8 @@ class MessageBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
     final state = context.watch<MessagesCubit>().state;
     return Padding(
       padding: const .only(bottom: 16.0),
@@ -29,13 +31,16 @@ class MessageBar extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: .end,
                 children: [
-                  Text('chatScreen.editingMode'.tr()),
+                  Text(
+                    'chatScreen.editingMode'.tr(),
+                    style: textTheme.bodyMedium,
+                  ),
                   IconButton(
                     onPressed: onCancel,
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.close,
                       size: 16.0,
-                      color: Colors.white,
+                      color: textTheme.bodyMedium?.color,
                     ),
                   ),
                 ],
