@@ -1,9 +1,8 @@
+import 'package:chatting_app/core/network/base_remote_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../app/constants/app_enums.dart';
-import '../../../../core/error/dio_error_parser.dart';
-import '../../../../core/error/exception.dart';
 import '../models/chat_member_model.dart';
 import '../models/chat_model.dart';
 
@@ -21,7 +20,8 @@ abstract class ChatRemoteDataSource {
 }
 
 @LazySingleton(as: ChatRemoteDataSource)
-class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
+class ChatRemoteDataSourceImpl extends BaseRemoteDataSource
+    implements ChatRemoteDataSource {
   ChatRemoteDataSourceImpl(this.dio);
 
   final Dio dio;
@@ -33,7 +33,7 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
     String? avatarUrl,
     required List<String> memberIds,
   }) async {
-    try {
+    return makeRequest<ChatModel?>(() async {
       final data = {'type': type.name, 'memberIds': memberIds};
       if (title != null) {
         data.addAll({'title': title});
@@ -46,41 +46,29 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
       if (response.statusCode == 201 && response.data != null) {
         return ChatModel.fromJson(response.data);
       }
-    } on DioException catch (e) {
-      DioErrorHandler.onDioError(e);
-    } catch (e) {
-      throw InvalidCredentialsException();
-    }
-    return null;
+      return null;
+    });
   }
 
   @override
   Future<ChatModel?> getChatById(String chatId) async {
-    try {
+    return makeRequest<ChatModel?>(() async {
       final response = await dio.get('chats/$chatId');
       if (response.statusCode == 200 && response.data != null) {
         return ChatModel.fromJson(response.data);
       }
-    } on DioException catch (e) {
-      DioErrorHandler.onDioError(e);
-    } catch (e) {
-      throw UnknownException(message: e.toString());
-    }
-    return null;
+      return null;
+    });
   }
 
   @override
   Future<List<ChatMemberModel>> getChatMembers({required String chatId}) async {
-    try {
+    return makeRequest<List<ChatMemberModel>>(() async {
       final response = await dio.get('chats/$chatId/members');
       if (response.statusCode == 200 && response.data != null) {
         return ChatMemberModel.fromList(response.data);
       }
-    } on DioException catch (e) {
-      DioErrorHandler.onDioError(e);
-    } catch (e) {
-      throw UnknownException(message: e.toString());
-    }
-    return [];
+      return [];
+    });
   }
 }

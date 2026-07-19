@@ -1,8 +1,7 @@
+import 'package:chatting_app/core/network/base_remote_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/error/dio_error_parser.dart';
-import '../../../../core/error/exception.dart';
 import '../../../auth/data/models/user_model.dart';
 
 abstract class ProfileRemoteDataSource {
@@ -22,24 +21,21 @@ abstract class ProfileRemoteDataSource {
 }
 
 @LazySingleton(as: ProfileRemoteDataSource)
-class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
+class ProfileRemoteDataSourceImpl extends BaseRemoteDataSource
+    implements ProfileRemoteDataSource {
   ProfileRemoteDataSourceImpl(this.dio);
 
   final Dio dio;
 
   @override
   Future<UserModel?> fetchProfile() async {
-    try {
+    return makeRequest<UserModel?>(() async {
       final response = await dio.get('users/me');
       if (response.statusCode == 200 && response.data != null) {
         return UserModel.fromJson(response.data);
       }
-    } on DioException catch (e) {
-      DioErrorHandler.onDioError(e);
-    } catch (e) {
-      throw InvalidCredentialsException();
-    }
-    return null;
+      return null;
+    });
   }
 
   @override
@@ -49,7 +45,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     String? email,
     String? avatarUrl,
   }) async {
-    try {
+    return makeRequest<bool>(() async {
       Map<String, dynamic> data = {};
       if (username?.isNotEmpty == true) {
         data.addAll({'username': username});
@@ -65,12 +61,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       }
       final response = await dio.patch('users/me', data: data);
       return response.statusCode == 200;
-    } on DioException catch (e) {
-      DioErrorHandler.onDioError(e);
-    } catch (e) {
-      throw InvalidCredentialsException();
-    }
-    return false;
+    });
   }
 
   @override
@@ -78,17 +69,12 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     required String currentPassword,
     required String newPassword,
   }) async {
-    try {
+    return makeRequest<bool>(() async {
       final response = await dio.patch(
         'users/me/password',
         data: {'currentPassword': currentPassword, 'newPassword': newPassword},
       );
       return response.statusCode == 204;
-    } on DioException catch (e) {
-      DioErrorHandler.onDioError(e);
-    } catch (e) {
-      throw InvalidCredentialsException();
-    }
-    return false;
+    });
   }
 }
