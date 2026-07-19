@@ -1,4 +1,4 @@
-import 'package:chatting_app/features/profile/presentation/widgets/user_avatar.dart';
+import 'package:chatting_app/features/users/presentation/widgets/users_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -23,7 +23,7 @@ class UsersList extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         final user = users[index];
-        return ListItem(
+        return UsersListItem(
           key: ValueKey(user.id),
           onTap: () {
             if (user.privateChatId?.isNotEmpty == true) {
@@ -43,40 +43,6 @@ class UsersList extends StatelessWidget {
         height: 16.0,
         thickness: 1.0,
         color: theme.unselectedWidgetColor,
-      ),
-    );
-  }
-}
-
-class ListItem extends StatelessWidget {
-  const ListItem({super.key, required this.onTap, required this.user});
-
-  final UserListItemEntity user;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final userName = user.displayName ?? user.userName;
-
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.translucent,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Row(
-          spacing: 8.0,
-          mainAxisAlignment: .start,
-          children: [
-            UserAvatar(
-              size: 30.0,
-              avatar: user.avatarUrl ?? '',
-              firstName: userName,
-              lastName: '',
-            ),
-            Text(userName, style: textTheme.bodyMedium),
-          ],
-        ),
       ),
     );
   }

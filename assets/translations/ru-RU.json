@@ -1,6 +1,13 @@
 {
   "okText": "ОК",
   "cancelText": "Отмена",
+  "and": "и",
+  "other": {
+    "one": "{} другой",
+    "few": "{} другие",
+    "many": "{} других",
+    "other": "{} других"
+  },
   "bottomNavBar": {
     "contacts": "Контакты",
     "chats": "Чаты",
@@ -63,6 +70,17 @@
   "notificationsScreen": {
     "screenName": "Уведомления"
   },
+  "createGroupScreen": {
+    "screenName": "Создать группу",
+    "addParticipants": "Добавить участников",
+    "setName": "Задать имя группы",
+    "participants": {
+      "one": "{} участник",
+      "few": "{} участника",
+      "many": "{} участников",
+      "other": "{} участников"
+    }
+  },
   "fieldValidation": {
     "fieldIsRequired": "Это поле обязательно!",
     "enterEmail": "Введите email",
@@ -82,6 +100,9 @@
       "timeout": "Время ожидания ответа истекло",
       "sslError": "Ошибка SSL сертификата",
       "connectionError": "Ошибка соединения"
+    },
+    "chatsErrors": {
+      "addParticipants": "Добавьте хотя-бы одного участника!"
     }
   }
 }

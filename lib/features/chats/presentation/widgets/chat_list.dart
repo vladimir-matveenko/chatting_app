@@ -72,7 +72,7 @@ class ListItem extends StatelessWidget {
             ),
             if (chat.participantsCount > 2)
               Text(
-                '+${chat.participantsCount - 1}',
+                '+${chat.participantsCount - 2}',
                 style: theme.textTheme.bodyMedium,
               ),
             if (chat.title?.isNotEmpty == true)

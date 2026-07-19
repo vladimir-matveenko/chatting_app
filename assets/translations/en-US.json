@@ -1,6 +1,13 @@
 {
   "okText": "ОК",
   "cancelText": "Cancel",
+  "and": "and",
+  "other": {
+    "one": "{} other",
+    "few": "{} other",
+    "many": "{} other",
+    "other": "{} other"
+  },
   "bottomNavBar": {
     "contacts": "Contacts",
     "chats": "Chats",
@@ -63,6 +70,17 @@
   "notificationsScreen": {
     "screenName": "Notifications"
   },
+  "createGroupScreen": {
+    "screenName": "Create group",
+    "addParticipants": "Add participants",
+    "setName": "Set group name",
+    "participants": {
+      "one": "{} participant",
+      "few": "{} participants",
+      "many": "{} participants",
+      "other": "{} participants"
+    }
+  },
   "fieldValidation": {
     "fieldIsRequired": "This field is required!",
     "enterEmail": "Enter email",
@@ -82,6 +100,9 @@
       "timeout": "Connection timeout",
       "sslError": "SSL error",
       "connectionError": "Connection error"
+    },
+    "chatsErrors": {
+      "addParticipants": "Add at least 1 participant!"
     }
   }
 }

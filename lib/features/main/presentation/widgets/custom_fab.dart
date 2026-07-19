@@ -22,7 +22,7 @@ class CustomFab extends StatelessWidget {
       child: MainScreenUtils.getFAB(
         context,
         state: state,
-        locationAction: action,
+        action: action,
       ),
     );
   }

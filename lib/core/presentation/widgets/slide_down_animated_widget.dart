@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
 class SlideDownAnimatedWidget extends StatelessWidget {
-  const SlideDownAnimatedWidget({super.key, required this.child});
+  const SlideDownAnimatedWidget({
+    super.key,
+    required this.child,
+    this.duration = 300,
+  });
 
   final Widget child;
+  final int duration;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
+      duration: Duration(milliseconds: duration),
       transitionBuilder: (child, animation) {
         final curved = CurvedAnimation(
           parent: animation,
