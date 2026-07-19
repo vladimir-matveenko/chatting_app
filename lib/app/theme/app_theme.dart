@@ -232,6 +232,10 @@ class AppTheme {
           padding: const .all(4.0),
           side: BorderSide.none,
         ),
+        dividerTheme: DividerThemeData(
+          thickness: 2.0,
+          color: appColors.secondaryText,
+        ),
       );
     } else {
       return ThemeData.light(useMaterial3: true).copyWith(
@@ -457,6 +461,10 @@ class AppTheme {
           ),
           padding: const .all(4.0),
           side: BorderSide.none,
+        ),
+        dividerTheme: DividerThemeData(
+          thickness: 2.0,
+          color: appColors.secondaryText,
         ),
       );
     }

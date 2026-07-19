@@ -31,13 +31,13 @@ class MainScreenUtils {
 
   static Widget? getFAB(
     BuildContext context, {
-    required VoidCallback locationAction,
+    required VoidCallback action,
     required GoRouterState state,
   }) {
     final location = state.uri.path;
     return switch (location) {
       AppRoutes.chats => FloatingActionButton(
-        onPressed: locationAction,
+        onPressed: action,
         child: const Icon(Icons.add),
       ),
       _ => null,

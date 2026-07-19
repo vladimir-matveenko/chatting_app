@@ -2,8 +2,7 @@ import 'package:chatting_app/features/auth/data/models/auth_model.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/error/dio_error_parser.dart';
-import '../../../../core/error/exception.dart';
+import '../../../../core/network/base_remote_data_source.dart';
 import '../models/auth_token_model.dart';
 
 abstract class AuthRemoteDataSource {
@@ -22,7 +21,8 @@ abstract class AuthRemoteDataSource {
 }
 
 @LazySingleton(as: AuthRemoteDataSource)
-class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
+class AuthRemoteDataSourceImpl extends BaseRemoteDataSource
+    implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl(this.dio);
 
   final Dio dio;
@@ -33,22 +33,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String email,
     required String password,
   }) async {
-    try {
+    return makeRequest<AuthTokenModel?>(() async {
       final response = await dio.post(
         'auth/register',
         data: {'username': username, 'email': email, 'password': password},
         options: Options(extra: {'skipAuth': true}),
       );
+
       if (response.statusCode == 201 && response.data != null) {
         final authResult = AuthModel.fromJson(response.data);
         return authResult.tokens;
       }
-    } on DioException catch (e) {
-      DioErrorHandler.onDioError(e);
-    } catch (e) {
-      throw InvalidCredentialsException();
-    }
-    return null;
+      return null;
+    });
   }
 
   @override
@@ -56,7 +53,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String email,
     required String password,
   }) async {
-    try {
+    return makeRequest<AuthTokenModel?>(() async {
       final response = await dio.post(
         'auth/login',
         data: {'email': email, 'password': password},
@@ -66,22 +63,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         final authResult = AuthModel.fromJson(response.data);
         return authResult.tokens;
       }
-    } on DioException catch (e) {
-      DioErrorHandler.onDioError(e);
-    } catch (e) {
-      throw UnknownException(message: e.toString());
-    }
-
-    return null;
+      return null;
+    });
   }
 
   @override
   Future<bool> logout() async {
-    try {
+    return makeRequest<bool>(() async {
       final response = await dio.post('auth/logout');
       return response.statusCode == 204;
-    } catch (e) {
-      throw InvalidCredentialsException();
-    }
+    });
   }
 }

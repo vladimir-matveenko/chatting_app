@@ -1,16 +1,15 @@
+import 'package:chatting_app/core/network/base_remote_data_source.dart';
 import 'package:chatting_app/features/users/data/models/users_list_item_model.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../../core/error/dio_error_parser.dart';
-import '../../../../core/error/exception.dart';
 
 abstract class UsersRemoteDataSource {
   Future<List<UserListItemModel>> loadUsers();
 }
 
 @LazySingleton(as: UsersRemoteDataSource)
-class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
+class UsersRemoteDataSourceImpl extends BaseRemoteDataSource
+    implements UsersRemoteDataSource {
   UsersRemoteDataSourceImpl(this.dio);
 
   final Dio dio;
@@ -21,7 +20,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
     String? limit,
     String? offset,
   }) async {
-    try {
+    return makeRequest<List<UserListItemModel>>(() async {
       Map<String, dynamic> queryParameters = {};
       if (query != null) {
         queryParameters.addAll({'query': query});
@@ -39,11 +38,7 @@ class UsersRemoteDataSourceImpl implements UsersRemoteDataSource {
       if (response.statusCode == 200 && response.data != null) {
         return UserListItemModel.fromList(response.data);
       }
-    } on DioException catch (e) {
-      DioErrorHandler.onDioError(e);
-    } catch (e) {
-      throw UnknownException(message: e.toString());
-    }
-    return [];
+      return [];
+    });
   }
 }

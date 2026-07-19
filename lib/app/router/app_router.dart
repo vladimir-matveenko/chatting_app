@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:chatting_app/features/chat/presentation/screens/create_group_screen.dart';
 import 'package:chatting_app/features/chats/presentation/screens/chats_screen.dart';
 import 'package:chatting_app/features/login/presentation/screens/login_screen.dart';
 import 'package:chatting_app/features/notifications/presentation/screens/notifications_screen.dart';
@@ -80,6 +81,11 @@ class AppRouter {
         path: AppRoutes.licenses,
         pageBuilder: (context, state) =>
             const NoTransitionPage(child: LicensesScreen()),
+      ),
+      GoRoute(
+        path: AppRoutes.createGroup,
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: CreateGroupScreen()),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

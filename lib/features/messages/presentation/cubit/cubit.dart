@@ -2,8 +2,11 @@ import 'package:chatting_app/features/messages/domain/entity/message_entity.dart
 import 'package:chatting_app/features/messages/domain/usecases/add_reaction_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/delete_message_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/delete_reaction_usecase.dart';
+import 'package:chatting_app/features/messages/domain/usecases/get_pinned_messages_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/load_messages_usecase.dart';
+import 'package:chatting_app/features/messages/domain/usecases/pin_message_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/send_message_usecase.dart';
+import 'package:chatting_app/features/messages/domain/usecases/unpin_message_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/update_message_usecase.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +24,9 @@ class MessagesCubit extends Cubit<MessagesState> {
     this._addReactionUseCase,
     this._deleteReactionUseCase,
     this._updateMessageUseCase,
+    this._pinMessageUseCase,
+    this._unpinMessageUseCase,
+    this._getPinnedMessagesUseCase,
   ) : super(const MessagesState());
   final LoadMessagesUseCase _loadMessagesUseCase;
   final SendMessageUseCase _sendMessageUseCase;
@@ -28,6 +34,9 @@ class MessagesCubit extends Cubit<MessagesState> {
   final AddReactionUseCase _addReactionUseCase;
   final DeleteReactionUseCase _deleteReactionUseCase;
   final UpdateMessageUseCase _updateMessageUseCase;
+  final PinMessageUseCase _pinMessageUseCase;
+  final UnpinMessageUseCase _unpinMessageUseCase;
+  final GetPinnedMessagesUseCase _getPinnedMessagesUseCase;
 
   Future<void> loadMessages({
     bool loadSilent = true,
@@ -36,10 +45,10 @@ class MessagesCubit extends Cubit<MessagesState> {
     if (!loadSilent) {
       emit(state.copyWith(isLoading: true));
     }
-    final profile = await _loadMessagesUseCase(
+    final result = await _loadMessagesUseCase(
       LoadMessagesParams(chatId: chatId),
     );
-    profile.fold(
+    result.fold(
       (l) {
         emit(
           state.copyWith(
@@ -109,10 +118,10 @@ class MessagesCubit extends Cubit<MessagesState> {
   }
 
   Future<void> deleteMessage(String messageId) async {
-    final profile = await _deleteMessageUseCase(
+    final result = await _deleteMessageUseCase(
       DeleteMessageParams(messageId: messageId),
     );
-    profile.fold(
+    result.fold(
       (l) {
         emit(
           state.copyWith(
@@ -132,10 +141,10 @@ class MessagesCubit extends Cubit<MessagesState> {
     String messageId, {
     required ReactionType type,
   }) async {
-    final profile = await _addReactionUseCase(
+    final result = await _addReactionUseCase(
       AddReactionParams(messageId: messageId, type: type),
     );
-    profile.fold(
+    result.fold(
       (l) {
         emit(
           state.copyWith(
@@ -152,10 +161,10 @@ class MessagesCubit extends Cubit<MessagesState> {
   }
 
   Future<void> deleteReaction(String messageId) async {
-    final profile = await _deleteReactionUseCase(
+    final result = await _deleteReactionUseCase(
       DeleteReactionParams(messageId: messageId),
     );
-    profile.fold(
+    result.fold(
       (l) {
         emit(
           state.copyWith(
@@ -167,6 +176,68 @@ class MessagesCubit extends Cubit<MessagesState> {
       },
       (r) {
         emit(state.copyWith(updateList: true));
+      },
+    );
+  }
+
+  Future<void> getPinnedMessages({
+    bool loadSilent = true,
+    required String chatId,
+  }) async {
+    if (!loadSilent) {
+      emit(state.copyWith(isLoading: true));
+    }
+    final result = await _getPinnedMessagesUseCase(
+      GetPinnedMessagesParams(chatId: chatId),
+    );
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+            updateList: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(pinnedMessages: r, isLoading: false));
+      },
+    );
+  }
+
+  Future<void> pinMessage(String messageId) async {
+    final result = await _pinMessageUseCase(PinMessageParams(messageId));
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+            updateList: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(isLoading: false));
+      },
+    );
+  }
+
+  Future<void> unpinMessage(String messageId) async {
+    final result = await _unpinMessageUseCase(UnpinMessageParams(messageId));
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+            updateList: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(isLoading: false));
       },
     );
   }

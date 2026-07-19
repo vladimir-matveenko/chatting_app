@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 class MessagesState extends Equatable {
   const MessagesState({
     this.messages = const [],
+    this.pinnedMessages = const [],
     this.error,
     this.showMenu = false,
     this.isLoading = false,
@@ -13,6 +14,7 @@ class MessagesState extends Equatable {
   });
 
   final List<MessageEntity> messages;
+  final List<MessageEntity> pinnedMessages;
   final String? error;
   final MessageEntity? selectedMessage;
   final bool showMenu;
@@ -22,6 +24,7 @@ class MessagesState extends Equatable {
 
   MessagesState copyWith({
     List<MessageEntity>? messages,
+    List<MessageEntity>? pinnedMessages,
     String? error,
     MessageEntity? selectedMessage,
     bool? showMenu,
@@ -31,6 +34,7 @@ class MessagesState extends Equatable {
   }) {
     return MessagesState(
       messages: messages ?? this.messages,
+      pinnedMessages: pinnedMessages ?? this.pinnedMessages,
       error: error ?? this.error,
       showMenu: showMenu ?? this.showMenu,
       selectedMessage: selectedMessage ?? this.selectedMessage,
@@ -43,6 +47,7 @@ class MessagesState extends Equatable {
   @override
   List<dynamic> get props => [
     messages,
+    pinnedMessages,
     error,
     isLoading,
     updateList,

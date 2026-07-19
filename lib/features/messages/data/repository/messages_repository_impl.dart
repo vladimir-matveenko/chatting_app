@@ -116,4 +116,41 @@ class MessagesRepositoryImpl implements MessagesRepository {
       return Left(mapExceptionToFailure(e));
     }
   }
+
+  @override
+  Future<Either<Failure, List<MessageEntity>>> getPinnedMessages({
+    required String chatId,
+  }) async {
+    try {
+      final list = await _messagesRemoteDataSource.loadMessages(chatId);
+      return Right(
+        AppUtils.listModelToListEntity<MessageModel, MessageEntity>(
+          list,
+          (item) => item.toEntity(),
+        ),
+      );
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, MessageEntity>> pinMessage(String messageId) async {
+    try {
+      final item = await _messagesRemoteDataSource.pinMessage(messageId);
+      return Right(item!.toEntity());
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, MessageEntity>> unPinMessage(String messageId) async {
+    try {
+      final item = await _messagesRemoteDataSource.unPinMessage(messageId);
+      return Right(item!.toEntity());
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
 }
