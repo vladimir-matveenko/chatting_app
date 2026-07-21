@@ -72,7 +72,8 @@
       "areYouSure": "Are you sure you want to delete a participant?",
       "remove": "Remove"
     },
-    "owner": "Owner"
+    "owner": "Owner",
+    "pinnedMessage": "Pinned message"
   },
   "editChatScreen": {
     "addMember": "Add member"

@@ -67,11 +67,14 @@ class _ScrollUpButtonState extends State<ScrollUpButton> {
               child: Center(
                 child: IconButton.outlined(
                   padding: const EdgeInsets.all(8.0),
-                  style: ButtonStyle(
-                    shape: WidgetStateProperty.all(const CircleBorder()),
-                    backgroundColor: WidgetStateProperty.all(
-                      theme.unselectedWidgetColor.withValues(alpha: 0.8),
-                    ),
+                  style: IconButton.styleFrom(
+                    shape: const CircleBorder(),
+                    side: BorderSide(color: theme.colorScheme.primary),
+                    backgroundColor: theme
+                        .bottomNavigationBarTheme
+                        .backgroundColor
+                        ?.withValues(alpha: 0.8),
+                    foregroundColor: theme.colorScheme.primary,
                   ),
                   onPressed: () {
                     widget.scrollController.animateTo(

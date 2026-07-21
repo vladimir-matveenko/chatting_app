@@ -14,6 +14,8 @@ import 'package:chatting_app/app/di/modules/shared_pref_module.dart' as _i786;
 import 'package:chatting_app/app/router/app_router.dart' as _i289;
 import 'package:chatting_app/core/network/http_interceptors.dart' as _i370;
 import 'package:chatting_app/core/services/auth_session_manager.dart' as _i186;
+import 'package:chatting_app/core/websocket/socket_service.dart' as _i739;
+import 'package:chatting_app/core/websocket/socket_service_impl.dart' as _i581;
 import 'package:chatting_app/features/auth/data/data_sources/auth_local_data_source.dart'
     as _i999;
 import 'package:chatting_app/features/auth/data/data_sources/auth_remote_data_source.dart'
@@ -24,6 +26,8 @@ import 'package:chatting_app/features/auth/domain/repository/auth_repository.dar
     as _i207;
 import 'package:chatting_app/features/auth/domain/usecases/check_auth_usecase.dart'
     as _i323;
+import 'package:chatting_app/features/auth/domain/usecases/get_token_usecase.dart'
+    as _i866;
 import 'package:chatting_app/features/auth/domain/usecases/logout_usecase.dart'
     as _i844;
 import 'package:chatting_app/features/auth/presentation/cubit/cubit.dart'
@@ -32,6 +36,10 @@ import 'package:chatting_app/features/chat/data/data_sources/chat_remote_data_so
     as _i915;
 import 'package:chatting_app/features/chat/data/repository/chat_repository_impl.dart'
     as _i325;
+import 'package:chatting_app/features/chat/data/socket/chat_socket_service.dart'
+    as _i226;
+import 'package:chatting_app/features/chat/data/socket/chat_socket_service_impl.dart'
+    as _i710;
 import 'package:chatting_app/features/chat/domain/repository/chat_repository.dart'
     as _i91;
 import 'package:chatting_app/features/chat/domain/usecases/add_member_usecase.dart'
@@ -64,6 +72,10 @@ import 'package:chatting_app/features/messages/data/data_sources/messages_remote
     as _i395;
 import 'package:chatting_app/features/messages/data/repository/messages_repository_impl.dart'
     as _i2;
+import 'package:chatting_app/features/messages/data/socket/messages_socket_service.dart'
+    as _i2;
+import 'package:chatting_app/features/messages/data/socket/messages_socket_service_impl.dart'
+    as _i702;
 import 'package:chatting_app/features/messages/domain/repository/messages_repository.dart'
     as _i166;
 import 'package:chatting_app/features/messages/domain/usecases/add_reaction_usecase.dart'
@@ -164,8 +176,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i989.ProfileLocalDataSource>(
       () => _i989.ProfileLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
+    gh.lazySingleton<_i739.SocketService>(() => _i581.SocketServiceImpl());
     gh.lazySingleton<_i595.ThemeLocalDataSource>(
       () => _i595.ThemeLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
+    );
+    gh.lazySingleton<_i226.ChatSocketService>(
+      () => _i710.ChatSocketServiceImpl(gh<_i739.SocketService>()),
     );
     gh.lazySingleton<_i155.ThemeRepository>(
       () => _i352.ThemeRepositoryImpl(
@@ -177,6 +193,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i767.SetThemeUseCase>(
       () => _i767.SetThemeUseCase(gh<_i155.ThemeRepository>()),
+    );
+    gh.lazySingleton<_i2.MessagesSocketService>(
+      () => _i702.MessagesSocketServiceImpl(gh<_i739.SocketService>()),
     );
     gh.lazySingleton<_i370.AuthInterceptor>(
       () => _i370.AuthInterceptor(
@@ -271,9 +290,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i237.UpdateProfileUseCase>(
       () => _i237.UpdateProfileUseCase(gh<_i672.ProfileRepository>()),
     );
-    gh.lazySingleton<_i55.ChatsCubit>(
-      () => _i55.ChatsCubit(gh<_i321.LoadChatsUseCase>()),
-    );
     gh.lazySingleton<_i714.MessagesCubit>(
       () => _i714.MessagesCubit(
         gh<_i882.LoadMessagesUseCase>(),
@@ -285,7 +301,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i375.PinMessageUseCase>(),
         gh<_i969.UnpinMessageUseCase>(),
         gh<_i252.GetPinnedMessagesUseCase>(),
+        gh<_i2.MessagesSocketService>(),
       ),
+    );
+    gh.lazySingleton<_i55.ChatsCubit>(
+      () => _i55.ChatsCubit(gh<_i321.LoadChatsUseCase>()),
     );
     gh.lazySingleton<_i207.AuthRepository>(
       () => _i626.AuthRepositoryImpl(
@@ -298,6 +318,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i323.CheckAuthUseCase>(
       () => _i323.CheckAuthUseCase(gh<_i207.AuthRepository>()),
+    );
+    gh.lazySingleton<_i866.GetTokenUseCase>(
+      () => _i866.GetTokenUseCase(gh<_i207.AuthRepository>()),
     );
     gh.lazySingleton<_i844.LogoutUseCase>(
       () => _i844.LogoutUseCase(gh<_i207.AuthRepository>()),
@@ -318,6 +341,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i330.AuthCubit(
         gh<_i323.CheckAuthUseCase>(),
         gh<_i844.LogoutUseCase>(),
+        gh<_i866.GetTokenUseCase>(),
+        gh<_i739.SocketService>(),
       ),
     );
     gh.lazySingleton<_i643.ProfileCubit>(

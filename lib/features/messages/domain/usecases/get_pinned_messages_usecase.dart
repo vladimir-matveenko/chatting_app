@@ -15,7 +15,7 @@ class GetPinnedMessagesUseCase
 
   @override
   Future<Either<Failure, List<MessageEntity>>> call(params) async {
-    return await _repository.loadMessages(params.chatId);
+    return await _repository.getPinnedMessages(chatId: params.chatId);
   }
 }
 

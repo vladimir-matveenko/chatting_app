@@ -1,4 +1,5 @@
 import 'package:chatting_app/features/chat/presentation/widgets/chat_participants_bar.dart';
+import 'package:chatting_app/features/chat/presentation/widgets/pinned_messages_block.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +70,13 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
             : Column(
                 children: [
                   const ChatParticipantsBar(),
+                  if (state.pinnedMessages.isNotEmpty)
+                    Padding(
+                      padding: const .only(top: 16.0, left: 16.0, right: 16.0),
+                      child: PinnedMessagesBlock(
+                        pinnedMessages: state.pinnedMessages,
+                      ),
+                    ),
                   Expanded(
                     child: Padding(
                       padding: const .symmetric(horizontal: 16.0),

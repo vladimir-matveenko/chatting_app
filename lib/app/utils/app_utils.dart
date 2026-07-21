@@ -58,6 +58,9 @@ class AppUtils {
     List<dynamic> list,
     T Function(Map<String, dynamic>) fromJson,
   ) {
+    if (list.isEmpty) {
+      return [];
+    }
     return list
         .map((jsonItem) => fromJson(jsonItem as Map<String, dynamic>))
         .toList();
@@ -76,6 +79,9 @@ class AppUtils {
     List<E> list,
     T Function(E) toEntity,
   ) {
+    if (list.isEmpty) {
+      return [];
+    }
     return list.map((item) => toEntity(item)).toList();
   }
 
