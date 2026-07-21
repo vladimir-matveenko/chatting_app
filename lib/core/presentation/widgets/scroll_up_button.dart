@@ -5,10 +5,12 @@ class ScrollUpButton extends StatefulWidget {
     super.key,
     required this.scrollController,
     this.threshold = 280.0,
+    this.reverse = false,
   });
 
   final ScrollController scrollController;
   final double threshold;
+  final bool reverse;
 
   @override
   State<ScrollUpButton> createState() => _ScrollUpButtonState();
@@ -65,11 +67,14 @@ class _ScrollUpButtonState extends State<ScrollUpButton> {
               child: Center(
                 child: IconButton.outlined(
                   padding: const EdgeInsets.all(8.0),
-                  style: ButtonStyle(
-                    shape: WidgetStateProperty.all(const CircleBorder()),
-                    backgroundColor: WidgetStateProperty.all(
-                      theme.unselectedWidgetColor.withValues(alpha: 0.8),
-                    ),
+                  style: IconButton.styleFrom(
+                    shape: const CircleBorder(),
+                    side: BorderSide(color: theme.colorScheme.primary),
+                    backgroundColor: theme
+                        .bottomNavigationBarTheme
+                        .backgroundColor
+                        ?.withValues(alpha: 0.8),
+                    foregroundColor: theme.colorScheme.primary,
                   ),
                   onPressed: () {
                     widget.scrollController.animateTo(
@@ -78,7 +83,12 @@ class _ScrollUpButtonState extends State<ScrollUpButton> {
                       curve: Curves.easeOut,
                     );
                   },
-                  icon: const Icon(Icons.arrow_upward_outlined, size: 24),
+                  icon: Icon(
+                    widget.reverse
+                        ? Icons.arrow_downward_outlined
+                        : Icons.arrow_upward_outlined,
+                    size: 24,
+                  ),
                 ),
               ),
             )

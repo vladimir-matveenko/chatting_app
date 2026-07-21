@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:chatting_app/features/messages/domain/usecases/add_reaction_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/delete_message_usecase.dart';
@@ -14,6 +17,8 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../app/constants/app_enums.dart';
 import '../../../../app/utils/app_utils.dart';
+import '../../../../core/websocket/events/events.dart';
+import '../../data/socket/messages_socket_service.dart';
 
 @lazySingleton
 class MessagesCubit extends Cubit<MessagesState> {
@@ -27,7 +32,11 @@ class MessagesCubit extends Cubit<MessagesState> {
     this._pinMessageUseCase,
     this._unpinMessageUseCase,
     this._getPinnedMessagesUseCase,
-  ) : super(const MessagesState());
+    this._messagesSocketService,
+  ) : super(const MessagesState()) {
+    _subscribeSocketEvents();
+  }
+
   final LoadMessagesUseCase _loadMessagesUseCase;
   final SendMessageUseCase _sendMessageUseCase;
   final DeleteMessageUseCase _deleteMessageUseCase;
@@ -37,6 +46,88 @@ class MessagesCubit extends Cubit<MessagesState> {
   final PinMessageUseCase _pinMessageUseCase;
   final UnpinMessageUseCase _unpinMessageUseCase;
   final GetPinnedMessagesUseCase _getPinnedMessagesUseCase;
+  final MessagesSocketService _messagesSocketService;
+
+  final List<StreamSubscription> _subscriptions = [];
+
+  void _subscribeSocketEvents() {
+    _subscriptions.addAll([
+      _messagesSocketService.messageCreated.listen(
+        (event) async => _onMessageCreated(event),
+      ),
+      _messagesSocketService.messageUpdated.listen(
+        (event) async => _onMessageUpdated(event),
+      ),
+      _messagesSocketService.messageDeleted.listen(
+        (event) async => _onMessageDeleted(event),
+      ),
+      _messagesSocketService.messageRead.listen(
+        (event) async => _onMessageRead(event),
+      ),
+      _messagesSocketService.reactionUpdated.listen(
+        (event) async => _onReactionUpdated(event),
+      ),
+      _messagesSocketService.typingStarted.listen(
+        (event) async => _onTypingStarted(event),
+      ),
+      _messagesSocketService.typingStopped.listen(
+        (event) async => _onTypingStopped(event),
+      ),
+      _messagesSocketService.messagePinned.listen(
+        (event) async => _onMessagePinned(event),
+      ),
+      _messagesSocketService.messageUnpinned.listen(
+        (event) async => _onMessageUnpinned(event),
+      ),
+    ]);
+  }
+
+  @override
+  Future<void> close() async {
+    for (final subscription in _subscriptions) {
+      await subscription.cancel();
+    }
+
+    return super.close();
+  }
+
+  Future<void> _onMessageCreated(MessageCreatedSocketEvent event) async {
+    await loadMessages(chatId: event.message.chatId);
+  }
+
+  void _onMessageUpdated(MessageUpdatedSocketEvent event) async {
+    await loadMessages(chatId: event.message.chatId);
+  }
+
+  void _onMessageDeleted(MessageDeletedSocketEvent event) async {
+    await loadMessages(chatId: event.message.chatId);
+  }
+
+  void _onMessageRead(MessageReadSocketEvent event) async {
+    log('Message ${event.messageId} has read');
+  }
+
+  void _onReactionUpdated(ReactionUpdatedSocketEvent event) async {
+    await loadMessages(chatId: event.message.chatId);
+  }
+
+  void _onTypingStarted(TypingStartedSocketEvent event) {
+    // TODO(): add action
+  }
+
+  void _onTypingStopped(TypingStoppedSocketEvent event) {
+    // TODO(): add action
+  }
+
+  Future<void> _onMessagePinned(MessagePinnedSocketEvent event) async {
+    log('Message from chat ${event.message.chatId} has pinned');
+    await getPinnedMessages(chatId: event.message.chatId);
+  }
+
+  Future<void> _onMessageUnpinned(MessageUnpinnedSocketEvent event) async {
+    log('Message from chat ${event.message.chatId} has unpinned');
+    await getPinnedMessages(chatId: event.message.chatId);
+  }
 
   Future<void> loadMessages({
     bool loadSilent = true,

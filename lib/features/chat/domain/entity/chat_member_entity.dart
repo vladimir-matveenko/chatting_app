@@ -15,6 +15,9 @@ abstract class ChatMemberEntity with _$ChatMemberEntity {
     String? lastReadMessageId,
     required bool isMuted,
     required bool isArchived,
+    String? displayName,
+    required String userName,
+    String? avatarUrl,
   }) = _ChatMemberEntity;
 
   factory ChatMemberEntity.fromJson(Map<String, dynamic> json) =>

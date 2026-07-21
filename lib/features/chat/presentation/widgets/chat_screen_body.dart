@@ -1,14 +1,17 @@
+import 'package:chatting_app/features/chat/presentation/widgets/chat_participants_bar.dart';
+import 'package:chatting_app/features/chat/presentation/widgets/pinned_messages_block.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
-import 'package:chatting_app/features/profile/presentation/profile_cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/constants/app_enums.dart';
+import '../../../../app/di/injection.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
 import '../../../../core/presentation/widgets/app_message.dart';
 import '../../../messages/presentation/widget/message_bar.dart';
 import '../../../messages/presentation/widget/messages_list.dart';
+import '../../../profile/domain/repository/profile_repository.dart';
 
 class ChatScreenBody extends StatefulWidget {
   const ChatScreenBody({super.key, required this.chatId});
@@ -20,6 +23,7 @@ class ChatScreenBody extends StatefulWidget {
 }
 
 class _ChatScreenBodyState extends State<ChatScreenBody> {
+  final _userProfile = getIt<ProfileRepository>().profile;
   late String currentUserId;
   late MessagesCubit cubit;
   final _scrollController = ScrollController();
@@ -53,7 +57,7 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
   void initState() {
     super.initState();
     cubit = context.read<MessagesCubit>();
-    currentUserId = context.read<ProfileCubit>().state.profile?.id ?? '';
+    currentUserId = _userProfile?.id ?? '';
   }
 
   @override
@@ -64,33 +68,46 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
         return isLoading
             ? const Center(child: AppLoader())
             : Column(
-                mainAxisSize: .max,
                 children: [
+                  const ChatParticipantsBar(),
+                  if (state.pinnedMessages.isNotEmpty)
+                    Padding(
+                      padding: const .only(top: 16.0, left: 16.0, right: 16.0),
+                      child: PinnedMessagesBlock(
+                        pinnedMessages: state.pinnedMessages,
+                      ),
+                    ),
                   Expanded(
-                    child: MessagesList(
-                      scrollController: _scrollController,
-                      messages: state.messages,
-                      currentUserId: currentUserId,
+                    child: Padding(
+                      padding: const .symmetric(horizontal: 16.0),
+                      child: MessagesList(
+                        scrollController: _scrollController,
+                        messages: state.messages,
+                        currentUserId: currentUserId,
+                      ),
                     ),
                   ),
-                  MessageBar(
-                    onSend: () {
-                      if (state.editModeActive) {
-                        _sendMessage(
-                          context,
-                          messageId: state.selectedMessage?.id,
-                        );
+                  Padding(
+                    padding: const .symmetric(horizontal: 16.0),
+                    child: MessageBar(
+                      onSend: () {
+                        if (state.editModeActive) {
+                          _sendMessage(
+                            context,
+                            messageId: state.selectedMessage?.id,
+                          );
+                          cubit.unSelectMessage();
+                          _messageController.clear();
+                        } else {
+                          _sendMessage(context);
+                        }
+                      },
+                      onCancel: () {
                         cubit.unSelectMessage();
                         _messageController.clear();
-                      } else {
-                        _sendMessage(context);
-                      }
-                    },
-                    onCancel: () {
-                      cubit.unSelectMessage();
-                      _messageController.clear();
-                    },
-                    messageController: _messageController,
+                      },
+                      messageController: _messageController,
+                    ),
                   ),
                 ],
               );

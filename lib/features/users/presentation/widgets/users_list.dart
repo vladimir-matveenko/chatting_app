@@ -1,3 +1,4 @@
+import 'package:chatting_app/core/presentation/widgets/base_list_view.dart';
 import 'package:chatting_app/features/users/presentation/widgets/users_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,12 +16,8 @@ class UsersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return ListView.separated(
-      itemCount: users.length,
-      physics: const ClampingScrollPhysics(),
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      shrinkWrap: true,
+    return BaseListView<UserListItemEntity>(
+      items: users,
       itemBuilder: (context, index) {
         final user = users[index];
         return UsersListItem(
@@ -39,11 +36,6 @@ class UsersList extends StatelessWidget {
           user: user,
         );
       },
-      separatorBuilder: (context, index) => Divider(
-        height: 16.0,
-        thickness: 1.0,
-        color: theme.unselectedWidgetColor,
-      ),
     );
   }
 }

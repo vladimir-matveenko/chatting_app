@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/theme/app_semantic_colors.dart';
 import '../../../../app/utils/extensions.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
+import '../../../../core/presentation/widgets/base_list_view.dart';
 import '../../../../core/presentation/widgets/reaction_menu.dart';
 import '../../../../core/presentation/widgets/slide_down_animated_widget.dart';
 import '../../../chat/presentation/widgets/message_actions_menu.dart';
@@ -38,15 +39,14 @@ class MessagesList extends StatelessWidget {
 
     return Stack(
       children: [
-        ScrollUpWrapper(
+        ScrollWrapper(
           controller: scrollController,
-          child: ListView.separated(
-            controller: scrollController,
-            itemCount: messages.length,
-            physics: const ClampingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            shrinkWrap: true,
+          reverse: true,
+          child: BaseListView<MessageEntity>(
+            items: messages,
             reverse: true,
+            controller: scrollController,
+            separator: const SizedBox(height: 8.0),
             itemBuilder: (context, index) {
               final message = messages[index];
 
@@ -109,7 +109,6 @@ class MessagesList extends StatelessWidget {
                 ],
               );
             },
-            separatorBuilder: (context, index) => const SizedBox(height: 12.0),
           ),
         ),
         Positioned(

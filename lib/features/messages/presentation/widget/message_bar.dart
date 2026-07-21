@@ -22,7 +22,7 @@ class MessageBar extends StatelessWidget {
     final textTheme = theme.textTheme;
     final state = context.watch<MessagesCubit>().state;
     return Padding(
-      padding: const .only(bottom: 16.0),
+      padding: const .symmetric(vertical: 16.0),
       child: Column(
         children: [
           if (state.editModeActive)

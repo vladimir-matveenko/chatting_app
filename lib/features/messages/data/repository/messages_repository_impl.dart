@@ -122,7 +122,9 @@ class MessagesRepositoryImpl implements MessagesRepository {
     required String chatId,
   }) async {
     try {
-      final list = await _messagesRemoteDataSource.loadMessages(chatId);
+      final list = await _messagesRemoteDataSource.getPinnedMessages(
+        chatId: chatId,
+      );
       return Right(
         AppUtils.listModelToListEntity<MessageModel, MessageEntity>(
           list,

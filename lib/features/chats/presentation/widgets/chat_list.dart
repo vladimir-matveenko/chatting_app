@@ -1,12 +1,12 @@
 import 'package:chatting_app/app/router/app_routes.dart';
 import 'package:chatting_app/app/utils/extensions.dart';
 import 'package:chatting_app/core/presentation/widgets/avatar_stack.dart';
+import 'package:chatting_app/core/presentation/widgets/base_list_view.dart';
+import 'package:chatting_app/features/chat/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/chats/domain/entity/chat_list_item_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../chat/presentation/cubit/cubit.dart';
 
 class ChatList extends StatelessWidget {
   const ChatList({super.key, required this.chats});
@@ -15,28 +15,20 @@ class ChatList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return ListView.separated(
-      itemCount: chats.length,
-      physics: const ClampingScrollPhysics(),
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      shrinkWrap: true,
+    final cubit = context.read<ChatCubit>();
+    return BaseListView(
+      items: chats,
       itemBuilder: (context, index) {
         final chat = chats[index];
         return ListItem(
           key: ValueKey(chat.id),
           onTap: () {
-            context.read<ChatCubit>().getChatById(chat.id);
+            cubit.getChatById(chat.id);
             context.go('${AppRoutes.chats}/${chat.id}');
           },
           chat: chat,
         );
       },
-      separatorBuilder: (context, index) => Divider(
-        height: 16.0,
-        thickness: 1.0,
-        color: theme.unselectedWidgetColor,
-      ),
     );
   }
 }

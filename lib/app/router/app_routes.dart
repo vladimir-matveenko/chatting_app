@@ -5,6 +5,7 @@ class AppRoutes {
   static const editProfile = 'edit-profile';
   static const licenses = '/licenses';
   static const chat = '/chat';
+  static const chatSettings = '/chat-settings';
   static const createGroup = '/create-group';
 
   /// Shell routes

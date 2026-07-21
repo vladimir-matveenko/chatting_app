@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ChatMemberEntity {
 
- String get chatId; String get userId; ChatMemberRole get role; DateTime get joinedAt; String? get lastReadMessageId; bool get isMuted; bool get isArchived;
+ String get chatId; String get userId; ChatMemberRole get role; DateTime get joinedAt; String? get lastReadMessageId; bool get isMuted; bool get isArchived; String? get displayName; String get userName; String? get avatarUrl;
 /// Create a copy of ChatMemberEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ChatMemberEntityCopyWith<ChatMemberEntity> get copyWith => _$ChatMemberEntityCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatMemberEntity&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.role, role) || other.role == role)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.lastReadMessageId, lastReadMessageId) || other.lastReadMessageId == lastReadMessageId)&&(identical(other.isMuted, isMuted) || other.isMuted == isMuted)&&(identical(other.isArchived, isArchived) || other.isArchived == isArchived));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatMemberEntity&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.role, role) || other.role == role)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.lastReadMessageId, lastReadMessageId) || other.lastReadMessageId == lastReadMessageId)&&(identical(other.isMuted, isMuted) || other.isMuted == isMuted)&&(identical(other.isArchived, isArchived) || other.isArchived == isArchived)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,chatId,userId,role,joinedAt,lastReadMessageId,isMuted,isArchived);
+int get hashCode => Object.hash(runtimeType,chatId,userId,role,joinedAt,lastReadMessageId,isMuted,isArchived,displayName,userName,avatarUrl);
 
 @override
 String toString() {
-  return 'ChatMemberEntity(chatId: $chatId, userId: $userId, role: $role, joinedAt: $joinedAt, lastReadMessageId: $lastReadMessageId, isMuted: $isMuted, isArchived: $isArchived)';
+  return 'ChatMemberEntity(chatId: $chatId, userId: $userId, role: $role, joinedAt: $joinedAt, lastReadMessageId: $lastReadMessageId, isMuted: $isMuted, isArchived: $isArchived, displayName: $displayName, userName: $userName, avatarUrl: $avatarUrl)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ChatMemberEntityCopyWith<$Res>  {
   factory $ChatMemberEntityCopyWith(ChatMemberEntity value, $Res Function(ChatMemberEntity) _then) = _$ChatMemberEntityCopyWithImpl;
 @useResult
 $Res call({
- String chatId, String userId, ChatMemberRole role, DateTime joinedAt, String? lastReadMessageId, bool isMuted, bool isArchived
+ String chatId, String userId, ChatMemberRole role, DateTime joinedAt, String? lastReadMessageId, bool isMuted, bool isArchived, String? displayName, String userName, String? avatarUrl
 });
 
 
@@ -65,7 +65,7 @@ class _$ChatMemberEntityCopyWithImpl<$Res>
 
 /// Create a copy of ChatMemberEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? chatId = null,Object? userId = null,Object? role = null,Object? joinedAt = null,Object? lastReadMessageId = freezed,Object? isMuted = null,Object? isArchived = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? chatId = null,Object? userId = null,Object? role = null,Object? joinedAt = null,Object? lastReadMessageId = freezed,Object? isMuted = null,Object? isArchived = null,Object? displayName = freezed,Object? userName = null,Object? avatarUrl = freezed,}) {
   return _then(_self.copyWith(
 chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,10 @@ as ChatMemberRole,joinedAt: null == joinedAt ? _self.joinedAt : joinedAt // igno
 as DateTime,lastReadMessageId: freezed == lastReadMessageId ? _self.lastReadMessageId : lastReadMessageId // ignore: cast_nullable_to_non_nullable
 as String?,isMuted: null == isMuted ? _self.isMuted : isMuted // ignore: cast_nullable_to_non_nullable
 as bool,isArchived: null == isArchived ? _self.isArchived : isArchived // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
+as String?,userName: null == userName ? _self.userName : userName // ignore: cast_nullable_to_non_nullable
+as String,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -159,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String chatId,  String userId,  ChatMemberRole role,  DateTime joinedAt,  String? lastReadMessageId,  bool isMuted,  bool isArchived)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String chatId,  String userId,  ChatMemberRole role,  DateTime joinedAt,  String? lastReadMessageId,  bool isMuted,  bool isArchived,  String? displayName,  String userName,  String? avatarUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatMemberEntity() when $default != null:
-return $default(_that.chatId,_that.userId,_that.role,_that.joinedAt,_that.lastReadMessageId,_that.isMuted,_that.isArchived);case _:
+return $default(_that.chatId,_that.userId,_that.role,_that.joinedAt,_that.lastReadMessageId,_that.isMuted,_that.isArchived,_that.displayName,_that.userName,_that.avatarUrl);case _:
   return orElse();
 
 }
@@ -180,10 +183,10 @@ return $default(_that.chatId,_that.userId,_that.role,_that.joinedAt,_that.lastRe
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String chatId,  String userId,  ChatMemberRole role,  DateTime joinedAt,  String? lastReadMessageId,  bool isMuted,  bool isArchived)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String chatId,  String userId,  ChatMemberRole role,  DateTime joinedAt,  String? lastReadMessageId,  bool isMuted,  bool isArchived,  String? displayName,  String userName,  String? avatarUrl)  $default,) {final _that = this;
 switch (_that) {
 case _ChatMemberEntity():
-return $default(_that.chatId,_that.userId,_that.role,_that.joinedAt,_that.lastReadMessageId,_that.isMuted,_that.isArchived);case _:
+return $default(_that.chatId,_that.userId,_that.role,_that.joinedAt,_that.lastReadMessageId,_that.isMuted,_that.isArchived,_that.displayName,_that.userName,_that.avatarUrl);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +203,10 @@ return $default(_that.chatId,_that.userId,_that.role,_that.joinedAt,_that.lastRe
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String chatId,  String userId,  ChatMemberRole role,  DateTime joinedAt,  String? lastReadMessageId,  bool isMuted,  bool isArchived)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String chatId,  String userId,  ChatMemberRole role,  DateTime joinedAt,  String? lastReadMessageId,  bool isMuted,  bool isArchived,  String? displayName,  String userName,  String? avatarUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatMemberEntity() when $default != null:
-return $default(_that.chatId,_that.userId,_that.role,_that.joinedAt,_that.lastReadMessageId,_that.isMuted,_that.isArchived);case _:
+return $default(_that.chatId,_that.userId,_that.role,_that.joinedAt,_that.lastReadMessageId,_that.isMuted,_that.isArchived,_that.displayName,_that.userName,_that.avatarUrl);case _:
   return null;
 
 }
@@ -215,7 +218,7 @@ return $default(_that.chatId,_that.userId,_that.role,_that.joinedAt,_that.lastRe
 @JsonSerializable()
 
 class _ChatMemberEntity implements ChatMemberEntity {
-  const _ChatMemberEntity({required this.chatId, required this.userId, required this.role, required this.joinedAt, this.lastReadMessageId, required this.isMuted, required this.isArchived});
+  const _ChatMemberEntity({required this.chatId, required this.userId, required this.role, required this.joinedAt, this.lastReadMessageId, required this.isMuted, required this.isArchived, this.displayName, required this.userName, this.avatarUrl});
   factory _ChatMemberEntity.fromJson(Map<String, dynamic> json) => _$ChatMemberEntityFromJson(json);
 
 @override final  String chatId;
@@ -225,6 +228,9 @@ class _ChatMemberEntity implements ChatMemberEntity {
 @override final  String? lastReadMessageId;
 @override final  bool isMuted;
 @override final  bool isArchived;
+@override final  String? displayName;
+@override final  String userName;
+@override final  String? avatarUrl;
 
 /// Create a copy of ChatMemberEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -239,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatMemberEntity&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.role, role) || other.role == role)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.lastReadMessageId, lastReadMessageId) || other.lastReadMessageId == lastReadMessageId)&&(identical(other.isMuted, isMuted) || other.isMuted == isMuted)&&(identical(other.isArchived, isArchived) || other.isArchived == isArchived));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatMemberEntity&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.role, role) || other.role == role)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.lastReadMessageId, lastReadMessageId) || other.lastReadMessageId == lastReadMessageId)&&(identical(other.isMuted, isMuted) || other.isMuted == isMuted)&&(identical(other.isArchived, isArchived) || other.isArchived == isArchived)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,chatId,userId,role,joinedAt,lastReadMessageId,isMuted,isArchived);
+int get hashCode => Object.hash(runtimeType,chatId,userId,role,joinedAt,lastReadMessageId,isMuted,isArchived,displayName,userName,avatarUrl);
 
 @override
 String toString() {
-  return 'ChatMemberEntity(chatId: $chatId, userId: $userId, role: $role, joinedAt: $joinedAt, lastReadMessageId: $lastReadMessageId, isMuted: $isMuted, isArchived: $isArchived)';
+  return 'ChatMemberEntity(chatId: $chatId, userId: $userId, role: $role, joinedAt: $joinedAt, lastReadMessageId: $lastReadMessageId, isMuted: $isMuted, isArchived: $isArchived, displayName: $displayName, userName: $userName, avatarUrl: $avatarUrl)';
 }
 
 
@@ -259,7 +265,7 @@ abstract mixin class _$ChatMemberEntityCopyWith<$Res> implements $ChatMemberEnti
   factory _$ChatMemberEntityCopyWith(_ChatMemberEntity value, $Res Function(_ChatMemberEntity) _then) = __$ChatMemberEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String chatId, String userId, ChatMemberRole role, DateTime joinedAt, String? lastReadMessageId, bool isMuted, bool isArchived
+ String chatId, String userId, ChatMemberRole role, DateTime joinedAt, String? lastReadMessageId, bool isMuted, bool isArchived, String? displayName, String userName, String? avatarUrl
 });
 
 
@@ -276,7 +282,7 @@ class __$ChatMemberEntityCopyWithImpl<$Res>
 
 /// Create a copy of ChatMemberEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? chatId = null,Object? userId = null,Object? role = null,Object? joinedAt = null,Object? lastReadMessageId = freezed,Object? isMuted = null,Object? isArchived = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? chatId = null,Object? userId = null,Object? role = null,Object? joinedAt = null,Object? lastReadMessageId = freezed,Object? isMuted = null,Object? isArchived = null,Object? displayName = freezed,Object? userName = null,Object? avatarUrl = freezed,}) {
   return _then(_ChatMemberEntity(
 chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -285,7 +291,10 @@ as ChatMemberRole,joinedAt: null == joinedAt ? _self.joinedAt : joinedAt // igno
 as DateTime,lastReadMessageId: freezed == lastReadMessageId ? _self.lastReadMessageId : lastReadMessageId // ignore: cast_nullable_to_non_nullable
 as String?,isMuted: null == isMuted ? _self.isMuted : isMuted // ignore: cast_nullable_to_non_nullable
 as bool,isArchived: null == isArchived ? _self.isArchived : isArchived // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
+as String?,userName: null == userName ? _self.userName : userName // ignore: cast_nullable_to_non_nullable
+as String,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

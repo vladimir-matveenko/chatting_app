@@ -78,4 +78,17 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(mapExceptionToFailure(e));
     }
   }
+
+  @override
+  Future<Either<Failure, AuthTokenEntity?>> getToken() async {
+    try {
+      final token = await authLocalDataSource.getCachedToken();
+      if (token == null) {
+        return const Right(null);
+      }
+      return Right(token.toEntity());
+    } catch (e) {
+      return Left(CacheFailure());
+    }
+  }
 }
