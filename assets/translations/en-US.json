@@ -65,7 +65,17 @@
     "deleteMessage": "Delete message",
     "areYouSure": "Are you sure you want to delete a message?",
     "editingMode": "Editing",
-    "edited": "Edited"
+    "edited": "Edited",
+    "members": {
+      "addMember": "Add participant",
+      "removeMember": "Remove participant",
+      "areYouSure": "Are you sure you want to delete a participant?",
+      "remove": "Remove"
+    },
+    "owner": "Owner"
+  },
+  "editChatScreen": {
+    "addMember": "Add member"
   },
   "notificationsScreen": {
     "screenName": "Notifications"

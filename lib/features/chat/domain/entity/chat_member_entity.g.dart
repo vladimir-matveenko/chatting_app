@@ -15,6 +15,9 @@ _ChatMemberEntity _$ChatMemberEntityFromJson(Map<String, dynamic> json) =>
       lastReadMessageId: json['lastReadMessageId'] as String?,
       isMuted: json['isMuted'] as bool,
       isArchived: json['isArchived'] as bool,
+      displayName: json['displayName'] as String?,
+      userName: json['userName'] as String,
+      avatarUrl: json['avatarUrl'] as String?,
     );
 
 Map<String, dynamic> _$ChatMemberEntityToJson(_ChatMemberEntity instance) =>
@@ -26,6 +29,9 @@ Map<String, dynamic> _$ChatMemberEntityToJson(_ChatMemberEntity instance) =>
       'lastReadMessageId': ?instance.lastReadMessageId,
       'isMuted': instance.isMuted,
       'isArchived': instance.isArchived,
+      'displayName': ?instance.displayName,
+      'userName': instance.userName,
+      'avatarUrl': ?instance.avatarUrl,
     };
 
 const _$ChatMemberRoleEnumMap = {

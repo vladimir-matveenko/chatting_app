@@ -1,12 +1,13 @@
 import 'package:chatting_app/core/presentation/widgets/text_fields/app_text_form_field.dart';
-import 'package:chatting_app/features/auth/domain/entity/user_entity.dart';
 import 'package:chatting_app/features/chat/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/participants_list.dart';
 import 'package:chatting_app/features/chat/utils.dart';
-import 'package:chatting_app/features/profile/presentation/profile_cubit/cubit.dart';
+import 'package:chatting_app/features/profile/domain/repository/profile_repository.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../app/di/injection.dart';
 
 class SetGroupNameBlock extends StatefulWidget {
   const SetGroupNameBlock({super.key, required this.controller});
@@ -18,16 +19,15 @@ class SetGroupNameBlock extends StatefulWidget {
 }
 
 class _SetGroupNameBlockState extends State<SetGroupNameBlock> {
+  final _userProfile = getIt<ProfileRepository>().profile;
   late ChatCubit cubit;
-  UserEntity? currentUser;
 
   @override
   void initState() {
     super.initState();
     cubit = context.read<ChatCubit>();
-    currentUser = context.read<ProfileCubit>().state.profile;
     widget.controller.text = ChatUtils.buildGroupName(
-      currentUser?.displayName ?? currentUser?.userName ?? '',
+      _userProfile?.displayName ?? _userProfile?.userName ?? '',
       cubit.state.selectedParticipants,
     );
   }

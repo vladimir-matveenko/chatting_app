@@ -18,6 +18,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     context.read<ChatCubit>().disableNavigate();
+    context.read<ChatCubit>().getChatMembers(chatId: widget.id);
     context.read<MessagesCubit>().loadMessages(chatId: widget.id);
     super.initState();
   }

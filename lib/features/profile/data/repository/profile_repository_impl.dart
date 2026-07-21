@@ -13,19 +13,20 @@ class ProfileRepositoryImpl implements ProfileRepository {
   ProfileRepositoryImpl({required this.profileRemoteDataSource});
 
   final ProfileRemoteDataSource profileRemoteDataSource;
-  UserEntity? profile;
+  UserEntity? _profile;
+
+  @override
+  UserEntity? get profile => _profile;
 
   @override
   Future<Either<Failure, UserEntity>> fetchProfile() async {
     try {
-      if (profile != null) {
-        return Right(profile!);
-      }
       final model = await profileRemoteDataSource.fetchProfile();
       if (model == null) {
         return Left(CacheFailure());
       }
-      return Right(model.toEntity());
+      _profile = model.toEntity();
+      return Right(_profile!);
     } catch (e) {
       return Left(mapExceptionToFailure(e));
     }
@@ -69,6 +70,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
       }
       return Right(result);
     } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> clearCache() async {
+    try {
+      _profile = null;
+      return const Right(null);
+    } on Exception catch (e) {
       return Left(mapExceptionToFailure(e));
     }
   }

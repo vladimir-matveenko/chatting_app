@@ -34,8 +34,12 @@ import 'package:chatting_app/features/chat/data/repository/chat_repository_impl.
     as _i325;
 import 'package:chatting_app/features/chat/domain/repository/chat_repository.dart'
     as _i91;
+import 'package:chatting_app/features/chat/domain/usecases/add_member_usecase.dart'
+    as _i926;
 import 'package:chatting_app/features/chat/domain/usecases/create_chat_usecase.dart'
     as _i919;
+import 'package:chatting_app/features/chat/domain/usecases/delete_member_usecase.dart'
+    as _i334;
 import 'package:chatting_app/features/chat/domain/usecases/get_chat_members_usecase.dart'
     as _i223;
 import 'package:chatting_app/features/chat/domain/usecases/get_chat_usecase.dart'
@@ -94,6 +98,8 @@ import 'package:chatting_app/features/profile/domain/repository/profile_reposito
     as _i672;
 import 'package:chatting_app/features/profile/domain/usecases/change_password_usecase.dart'
     as _i312;
+import 'package:chatting_app/features/profile/domain/usecases/clear_cache_usecase.dart'
+    as _i209;
 import 'package:chatting_app/features/profile/domain/usecases/create_profile_usecase.dart'
     as _i605;
 import 'package:chatting_app/features/profile/domain/usecases/fetch_profile_usecase.dart'
@@ -256,6 +262,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i312.ChangePasswordUseCase>(
       () => _i312.ChangePasswordUseCase(gh<_i672.ProfileRepository>()),
     );
+    gh.lazySingleton<_i209.ClearCacheUseCase>(
+      () => _i209.ClearCacheUseCase(gh<_i672.ProfileRepository>()),
+    );
     gh.lazySingleton<_i483.FetchProfileUseCase>(
       () => _i483.FetchProfileUseCase(gh<_i672.ProfileRepository>()),
     );
@@ -330,8 +339,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i289.AppRouter>(
       () => _i289.AppRouter(gh<_i330.AuthCubit>()),
     );
+    gh.lazySingleton<_i926.AddMemberUseCase>(
+      () => _i926.AddMemberUseCase(gh<_i91.ChatRepository>()),
+    );
     gh.lazySingleton<_i919.CreateChatUseCase>(
       () => _i919.CreateChatUseCase(gh<_i91.ChatRepository>()),
+    );
+    gh.lazySingleton<_i334.DeleteMemberUseCase>(
+      () => _i334.DeleteMemberUseCase(gh<_i91.ChatRepository>()),
     );
     gh.lazySingleton<_i223.GetChatMembersUseCase>(
       () => _i223.GetChatMembersUseCase(gh<_i91.ChatRepository>()),
@@ -344,6 +359,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i415.GetChatUseCase>(),
         gh<_i223.GetChatMembersUseCase>(),
         gh<_i919.CreateChatUseCase>(),
+        gh<_i334.DeleteMemberUseCase>(),
+        gh<_i926.AddMemberUseCase>(),
       ),
     );
     return this;

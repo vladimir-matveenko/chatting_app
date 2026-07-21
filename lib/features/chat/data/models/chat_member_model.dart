@@ -17,6 +17,9 @@ abstract class ChatMemberModel with _$ChatMemberModel {
     String? lastReadMessageId,
     required bool isMuted,
     required bool isArchived,
+    String? displayName,
+    required String userName,
+    String? avatarUrl,
   }) = _ChatMemberModel;
 
   factory ChatMemberModel.fromJson(Map<String, dynamic> json) =>
@@ -36,5 +39,8 @@ extension ChatMemberModelExt on ChatMemberModel {
     lastReadMessageId: lastReadMessageId,
     isMuted: isMuted,
     isArchived: isArchived,
+    displayName: displayName,
+    userName: userName,
+    avatarUrl: avatarUrl,
   );
 }

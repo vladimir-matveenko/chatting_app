@@ -65,7 +65,17 @@
     "deleteMessage": "Удалить сообщение",
     "areYouSure": "Вы уверены, что Вы хотите удалить сообщение?",
     "editingMode": "Редактирование",
-    "edited": "Изменено"
+    "edited": "Изменено",
+    "members": {
+      "addMember": "Добавить участника",
+      "removeMember": "Удалить участника",
+      "areYouSure": "Вы уверены, что Вы хотите удалить участника?",
+      "remove": "Удалить"
+    },
+    "owner": "Владелец"
+  },
+  "editChatScreen": {
+    "addMember": "Добавить участника"
   },
   "notificationsScreen": {
     "screenName": "Уведомления"

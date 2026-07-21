@@ -17,6 +17,13 @@ abstract class ChatRemoteDataSource {
   Future<ChatModel?> getChatById(String chatId);
 
   Future<List<ChatMemberModel>> getChatMembers({required String chatId});
+
+  Future<bool> deleteChatMember({
+    required String chatId,
+    required String userId,
+  });
+
+  Future<ChatMemberModel?> addChatMember(String chatId);
 }
 
 @LazySingleton(as: ChatRemoteDataSource)
@@ -69,6 +76,28 @@ class ChatRemoteDataSourceImpl extends BaseRemoteDataSource
         return ChatMemberModel.fromList(response.data);
       }
       return [];
+    });
+  }
+
+  @override
+  Future<bool> deleteChatMember({
+    required String chatId,
+    required String userId,
+  }) async {
+    return makeRequest<bool>(() async {
+      final response = await dio.delete('chats/$chatId/members/$userId');
+      return response.statusCode == 204;
+    });
+  }
+
+  @override
+  Future<ChatMemberModel?> addChatMember(String chatId) {
+    return makeRequest<ChatMemberModel?>(() async {
+      final response = await dio.post('chats/$chatId/members');
+      if (response.statusCode == 200 && response.data != null) {
+        return ChatMemberModel.fromJson(response.data);
+      }
+      return null;
     });
   }
 }

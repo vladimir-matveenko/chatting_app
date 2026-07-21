@@ -18,4 +18,11 @@ abstract class ChatRepository {
   Future<Either<Failure, List<ChatMemberEntity>>> getChatMembers({
     required String chatId,
   });
+
+  Future<Either<Failure, bool>> deleteChatMember({
+    required String chatId,
+    required String userId,
+  });
+
+  Future<Either<Failure, ChatMemberEntity>> addChatMember(String chatId);
 }

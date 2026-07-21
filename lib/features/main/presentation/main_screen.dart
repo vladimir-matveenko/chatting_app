@@ -51,7 +51,6 @@ class _MainScreenState extends State<MainScreen> {
         bottom: true,
         left: true,
         right: true,
-        minimum: const .only(left: 16.0, right: 16.0),
         child: widget.navigationShell,
       ),
       bottomNavigationBar: BottomNavBar(

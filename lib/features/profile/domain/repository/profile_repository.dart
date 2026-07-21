@@ -4,6 +4,8 @@ import '../../../../core/error/failure.dart';
 import '../../../auth/domain/entity/user_entity.dart';
 
 abstract class ProfileRepository {
+  UserEntity? get profile;
+
   Future<Either<Failure, UserEntity>> fetchProfile();
 
   Future<Either<Failure, bool>> updateProfile({
@@ -17,4 +19,6 @@ abstract class ProfileRepository {
     required String currentPassword,
     required String newPassword,
   });
+
+  Future<Either<Failure, void>> clearCache();
 }

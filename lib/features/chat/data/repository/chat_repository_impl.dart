@@ -65,4 +65,32 @@ class ChatRepositoryImpl implements ChatRepository {
       return Left(mapExceptionToFailure(e));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> deleteChatMember({
+    required String chatId,
+    required String userId,
+  }) async {
+    try {
+      final result = await _chatsRemoteDataSource.deleteChatMember(
+        chatId: chatId,
+        userId: userId,
+      );
+
+      return Right(result);
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ChatMemberEntity>> addChatMember(String chatId) async {
+    try {
+      final result = await _chatsRemoteDataSource.addChatMember(chatId);
+
+      return Right(result!.toEntity());
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
 }

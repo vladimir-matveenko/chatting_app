@@ -5,10 +5,12 @@ class ScrollUpButton extends StatefulWidget {
     super.key,
     required this.scrollController,
     this.threshold = 280.0,
+    this.reverse = false,
   });
 
   final ScrollController scrollController;
   final double threshold;
+  final bool reverse;
 
   @override
   State<ScrollUpButton> createState() => _ScrollUpButtonState();
@@ -78,7 +80,12 @@ class _ScrollUpButtonState extends State<ScrollUpButton> {
                       curve: Curves.easeOut,
                     );
                   },
-                  icon: const Icon(Icons.arrow_upward_outlined, size: 24),
+                  icon: Icon(
+                    widget.reverse
+                        ? Icons.arrow_downward_outlined
+                        : Icons.arrow_upward_outlined,
+                    size: 24,
+                  ),
                 ),
               ),
             )

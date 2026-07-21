@@ -1,3 +1,5 @@
+import 'package:chatting_app/features/chat/domain/usecases/add_member_usecase.dart';
+import 'package:chatting_app/features/chat/domain/usecases/delete_member_usecase.dart';
 import 'package:chatting_app/features/chat/presentation/cubit/state.dart';
 import 'package:chatting_app/features/users/domain/entity/users_list_item_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,10 +19,14 @@ class ChatCubit extends Cubit<ChatState> {
     this._getChatUseCase,
     this._getChatMembersUseCase,
     this._createChatUseCase,
+    this._deleteMemberUseCase,
+    this._addMemberUseCase,
   ) : super(const ChatState());
   final GetChatUseCase _getChatUseCase;
   final GetChatMembersUseCase _getChatMembersUseCase;
   final CreateChatUseCase _createChatUseCase;
+  final DeleteMemberUseCase _deleteMemberUseCase;
+  final AddMemberUseCase _addMemberUseCase;
 
   Future<void> createChat({
     required ChatType type,
@@ -161,7 +167,52 @@ class ChatCubit extends Cubit<ChatState> {
         );
       },
       (r) {
-        emit(state.copyWith(isLoading: false));
+        emit(
+          state.copyWith(
+            isLoading: false,
+            chatMembers: r,
+            updateMembers: false,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> deleteChatMember({
+    required String chatId,
+    required String userId,
+  }) async {
+    final result = await _deleteMemberUseCase(
+      DeleteMemberParams(chatId: chatId, userId: userId),
+    );
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(isLoading: false, updateMembers: r));
+      },
+    );
+  }
+
+  Future<void> addChatMember(String chatId) async {
+    final result = await _addMemberUseCase(AddMemberParams(chatId));
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(isLoading: false, updateMembers: true));
       },
     );
   }
