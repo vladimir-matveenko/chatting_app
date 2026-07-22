@@ -1,6 +1,6 @@
-import 'package:chatting_app/core/presentation/widgets/text_fields/app_text_form_field.dart';
 import 'package:chatting_app/features/chat/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/participants_list.dart';
+import 'package:chatting_app/features/chat/presentation/widgets/set_group_name_widget.dart';
 import 'package:chatting_app/features/chat/utils.dart';
 import 'package:chatting_app/features/profile/domain/repository/profile_repository.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -42,21 +42,7 @@ class _SetGroupNameBlockState extends State<SetGroupNameBlock> {
         spacing: 16.0,
         crossAxisAlignment: .start,
         children: [
-          Row(
-            spacing: 8.0,
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                  fixedSize: const Size(48.0, 48.0),
-                  padding: const .all(10.0),
-                ),
-                child: const Icon(Icons.add_a_photo),
-              ),
-              Expanded(child: AppTextFormField(controller: widget.controller)),
-            ],
-          ),
+          SetGroupNameWidget(controller: widget.controller, onTap: () {}),
           Container(
             padding: const .all(16.0),
             decoration: BoxDecoration(

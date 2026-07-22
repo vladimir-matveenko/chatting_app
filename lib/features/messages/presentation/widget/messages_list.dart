@@ -21,11 +21,13 @@ class MessagesList extends StatelessWidget {
     required this.messages,
     required this.scrollController,
     required this.currentUserId,
+    required this.chatId,
   });
 
   final List<MessageEntity> messages;
   final ScrollController scrollController;
   final String currentUserId;
+  final String chatId;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +97,8 @@ class MessagesList extends StatelessWidget {
                           reactions: AppConstants.reactions,
                           onReactionSelected: (reaction) {
                             cubit.addReaction(
-                              message.id,
+                              chatId: chatId,
+                              messageId: message.id,
                               type: AppUtils.getReactionTypeBySymbol(reaction),
                             );
                           },
@@ -103,7 +106,10 @@ class MessagesList extends StatelessWidget {
                       }
                     },
                     onDeleteReactionTap: () {
-                      cubit.deleteReaction(message.id);
+                      cubit.deleteReaction(
+                        chatId: chatId,
+                        messageId: message.id,
+                      );
                     },
                   ),
                 ],
@@ -128,7 +134,10 @@ class MessagesList extends StatelessWidget {
                         okText: 'okText'.tr(),
                       );
                       if (result) {
-                        cubit.deleteMessage(state.selectedMessage?.id ?? '');
+                        cubit.deleteMessage(
+                          chatId: chatId,
+                          messageId: state.selectedMessage?.id ?? '',
+                        );
                       }
                     },
                   )

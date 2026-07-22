@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:chatting_app/app/router/app_routes.dart';
 import 'package:chatting_app/features/chat/domain/entity/chat_member_entity.dart';
@@ -29,7 +27,7 @@ class _ChatParticipantsBarState extends State<ChatParticipantsBar> {
   List<ChatMemberEntity> getShortMembersList(List<ChatMemberEntity> members) {
     final tmp = List<ChatMemberEntity>.from(members);
     tmp.removeWhere((e) => e.userId == (_userProfile?.id ?? ''));
-    final end = min(2, tmp.length);
+    final end = tmp.length.min(2);
     return tmp.getRange(0, end).toList();
   }
 

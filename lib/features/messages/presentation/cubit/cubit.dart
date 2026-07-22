@@ -120,12 +120,10 @@ class MessagesCubit extends Cubit<MessagesState> {
   }
 
   Future<void> _onMessagePinned(MessagePinnedSocketEvent event) async {
-    log('Message from chat ${event.message.chatId} has pinned');
     await getPinnedMessages(chatId: event.message.chatId);
   }
 
   Future<void> _onMessageUnpinned(MessageUnpinnedSocketEvent event) async {
-    log('Message from chat ${event.message.chatId} has unpinned');
     await getPinnedMessages(chatId: event.message.chatId);
   }
 
@@ -145,12 +143,11 @@ class MessagesCubit extends Cubit<MessagesState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
-            updateList: false,
           ),
         );
       },
       (r) {
-        emit(state.copyWith(messages: r, isLoading: false, updateList: false));
+        emit(state.copyWith(messages: r, isLoading: false));
       },
     );
   }
@@ -175,17 +172,17 @@ class MessagesCubit extends Cubit<MessagesState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
-            updateList: false,
           ),
         );
       },
       (r) {
-        emit(state.copyWith(isLoading: false, updateList: true));
+        loadMessages(chatId: chatId);
       },
     );
   }
 
   Future<void> updateMessage({
+    required String chatId,
     required String messageId,
     required String body,
   }) async {
@@ -198,17 +195,19 @@ class MessagesCubit extends Cubit<MessagesState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
-            updateList: false,
           ),
         );
       },
       (r) {
-        emit(state.copyWith(isLoading: false, updateList: true));
+        loadMessages(chatId: chatId);
       },
     );
   }
 
-  Future<void> deleteMessage(String messageId) async {
+  Future<void> deleteMessage({
+    required String chatId,
+    required String messageId,
+  }) async {
     final result = await _deleteMessageUseCase(
       DeleteMessageParams(messageId: messageId),
     );
@@ -218,18 +217,18 @@ class MessagesCubit extends Cubit<MessagesState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
-            updateList: false,
           ),
         );
       },
       (r) {
-        emit(state.copyWith(updateList: true));
+        loadMessages(chatId: chatId);
       },
     );
   }
 
-  Future<void> addReaction(
-    String messageId, {
+  Future<void> addReaction({
+    required String chatId,
+    required String messageId,
     required ReactionType type,
   }) async {
     final result = await _addReactionUseCase(
@@ -241,17 +240,19 @@ class MessagesCubit extends Cubit<MessagesState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
-            updateList: false,
           ),
         );
       },
       (r) {
-        emit(state.copyWith(updateList: true));
+        loadMessages(chatId: chatId);
       },
     );
   }
 
-  Future<void> deleteReaction(String messageId) async {
+  Future<void> deleteReaction({
+    required String chatId,
+    required String messageId,
+  }) async {
     final result = await _deleteReactionUseCase(
       DeleteReactionParams(messageId: messageId),
     );
@@ -261,12 +262,11 @@ class MessagesCubit extends Cubit<MessagesState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
-            updateList: false,
           ),
         );
       },
       (r) {
-        emit(state.copyWith(updateList: true));
+        loadMessages(chatId: chatId);
       },
     );
   }
@@ -287,7 +287,6 @@ class MessagesCubit extends Cubit<MessagesState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
-            updateList: false,
           ),
         );
       },
@@ -305,7 +304,6 @@ class MessagesCubit extends Cubit<MessagesState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
-            updateList: false,
           ),
         );
       },
@@ -323,7 +321,6 @@ class MessagesCubit extends Cubit<MessagesState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
-            updateList: false,
           ),
         );
       },

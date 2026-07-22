@@ -17,6 +17,8 @@ abstract class AuthRepository {
 
   Future<Either<Failure, void>> logout();
 
+  Future<Either<Failure, void>> clearCache();
+
   Future<Either<Failure, bool>> isAuthenticated();
 
   Future<Either<Failure, AuthTokenEntity?>> getToken();

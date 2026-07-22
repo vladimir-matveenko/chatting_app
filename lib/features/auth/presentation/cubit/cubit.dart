@@ -1,3 +1,4 @@
+import 'package:chatting_app/features/auth/domain/usecases/clear_cache_usecase.dart';
 import 'package:chatting_app/features/auth/domain/usecases/get_token_usecase.dart';
 import 'package:chatting_app/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:chatting_app/features/auth/presentation/cubit/state.dart';
@@ -15,10 +16,12 @@ class AuthCubit extends Cubit<AuthState> {
     this._logoutUseCase,
     this._getTokenUseCase,
     this._socketService,
+    this._clearCacheUseCase,
   ) : super(const AuthState());
   final CheckAuthUseCase _checkAuthUseCase;
   final LogoutUseCase _logoutUseCase;
   final GetTokenUseCase _getTokenUseCase;
+  final ClearCacheUseCase _clearCacheUseCase;
   final SocketService _socketService;
 
   Future<void> checkAuth() async {
@@ -45,6 +48,12 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logout() async {
     await _socketService.disconnect();
     await _logoutUseCase.call(NoParams());
+    emit(state.copyWith(status: AuthStatus.unauthenticated));
+  }
+
+  Future<void> clearCache() async {
+    await _socketService.disconnect();
+    await _clearCacheUseCase.call(NoParams());
     emit(state.copyWith(status: AuthStatus.unauthenticated));
   }
 }

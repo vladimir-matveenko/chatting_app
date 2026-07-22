@@ -33,7 +33,11 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
     if (_messageController.text.trim().isEmpty) return;
 
     if (messageId != null) {
-      cubit.updateMessage(messageId: messageId, body: _messageController.text);
+      cubit.updateMessage(
+        chatId: widget.chatId,
+        messageId: messageId,
+        body: _messageController.text,
+      );
     } else {
       context.read<MessagesCubit>().sendMessage(
         chatId: widget.chatId,
@@ -69,7 +73,7 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
             ? const Center(child: AppLoader())
             : Column(
                 children: [
-                  const ChatParticipantsBar(),
+                  ChatParticipantsBar(key: ValueKey(widget.chatId)),
                   if (state.pinnedMessages.isNotEmpty)
                     Padding(
                       padding: const .only(top: 16.0, left: 16.0, right: 16.0),
@@ -81,6 +85,7 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
                     child: Padding(
                       padding: const .symmetric(horizontal: 16.0),
                       child: MessagesList(
+                        chatId: widget.chatId,
                         scrollController: _scrollController,
                         messages: state.messages,
                         currentUserId: currentUserId,
@@ -113,9 +118,6 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
               );
       },
       listener: (context, state) {
-        if (state.updateList) {
-          cubit.loadMessages(chatId: widget.chatId);
-        }
         if (state.error?.isNotEmpty == true) {
           AppMessage.error(
             context,

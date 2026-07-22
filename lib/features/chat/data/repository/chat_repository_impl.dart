@@ -49,6 +49,24 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
+  Future<Either<Failure, ChatEntity>> updateChat({
+    required String chatId,
+    String? title,
+    String? avatarUrl,
+  }) async {
+    try {
+      final chat = await _chatsRemoteDataSource.updateChat(
+        chatId: chatId,
+        title: title,
+        avatarUrl: avatarUrl,
+      );
+      return Right(chat!.toEntity());
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
   Future<Either<Failure, List<ChatMemberEntity>>> getChatMembers({
     required String chatId,
   }) async {
@@ -84,11 +102,17 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
-  Future<Either<Failure, ChatMemberEntity>> addChatMember(String chatId) async {
+  Future<Either<Failure, bool>> addChatMember({
+    required String chatId,
+    required List<String> memberIds,
+  }) async {
     try {
-      final result = await _chatsRemoteDataSource.addChatMember(chatId);
+      final result = await _chatsRemoteDataSource.addChatMember(
+        chatId: chatId,
+        memberIds: memberIds,
+      );
 
-      return Right(result!.toEntity());
+      return Right(result);
     } catch (e) {
       return Left(mapExceptionToFailure(e));
     }
