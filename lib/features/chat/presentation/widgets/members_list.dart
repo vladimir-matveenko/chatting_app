@@ -1,4 +1,5 @@
 import 'package:chatting_app/app/constants/app_enums.dart';
+import 'package:chatting_app/app/utils/extensions.dart';
 import 'package:chatting_app/core/presentation/widgets/base_list_view.dart';
 import 'package:chatting_app/features/chat/domain/entity/chat_member_entity.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -55,12 +56,14 @@ class MembersListItem extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
     final userName = user.displayName ?? user.userName;
+    final isLandscape = context.isLandscape();
 
     return Slidable(
       key: ValueKey(user.userId),
+      enabled: !isOwner,
       endActionPane: ActionPane(
         motion: const BehindMotion(),
-        extentRatio: 0.3,
+        extentRatio: isLandscape ? 0.2 : 0.3,
         children: [
           SlidableAction(
             onPressed: (context) async {

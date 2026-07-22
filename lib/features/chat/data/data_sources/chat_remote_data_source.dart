@@ -16,6 +16,12 @@ abstract class ChatRemoteDataSource {
 
   Future<ChatModel?> getChatById(String chatId);
 
+  Future<ChatModel?> updateChat({
+    required String chatId,
+    String? title,
+    String? avatarUrl,
+  });
+
   Future<List<ChatMemberModel>> getChatMembers({required String chatId});
 
   Future<bool> deleteChatMember({
@@ -23,7 +29,10 @@ abstract class ChatRemoteDataSource {
     required String userId,
   });
 
-  Future<ChatMemberModel?> addChatMember(String chatId);
+  Future<bool> addChatMember({
+    required String chatId,
+    required List<String> memberIds,
+  });
 }
 
 @LazySingleton(as: ChatRemoteDataSource)
@@ -69,6 +78,30 @@ class ChatRemoteDataSourceImpl extends BaseRemoteDataSource
   }
 
   @override
+  Future<ChatModel?> updateChat({
+    required String chatId,
+    String? title,
+    String? avatarUrl,
+  }) async {
+    return makeRequest<ChatModel?>(() async {
+      final Map<String, dynamic> data = {};
+      if (title != null) {
+        data.addAll({'title': title});
+      }
+      if (avatarUrl != null) {
+        data.addAll({'avatarUrl': avatarUrl});
+      }
+      if (title?.isNotEmpty == true || avatarUrl?.isNotEmpty == true) {
+        final response = await dio.patch('chats/$chatId', data: data);
+        if (response.statusCode == 200 && response.data != null) {
+          return ChatModel.fromJson(response.data);
+        }
+      }
+      return null;
+    });
+  }
+
+  @override
   Future<List<ChatMemberModel>> getChatMembers({required String chatId}) async {
     return makeRequest<List<ChatMemberModel>>(() async {
       final response = await dio.get('chats/$chatId/members');
@@ -91,13 +124,16 @@ class ChatRemoteDataSourceImpl extends BaseRemoteDataSource
   }
 
   @override
-  Future<ChatMemberModel?> addChatMember(String chatId) {
-    return makeRequest<ChatMemberModel?>(() async {
-      final response = await dio.post('chats/$chatId/members');
-      if (response.statusCode == 200 && response.data != null) {
-        return ChatMemberModel.fromJson(response.data);
-      }
-      return null;
+  Future<bool> addChatMember({
+    required String chatId,
+    required List<String> memberIds,
+  }) {
+    return makeRequest<bool>(() async {
+      final response = await dio.post(
+        'chats/$chatId/members',
+        data: {'memberIds': memberIds},
+      );
+      return response.statusCode == 204;
     });
   }
 }

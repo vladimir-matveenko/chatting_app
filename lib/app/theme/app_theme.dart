@@ -18,6 +18,7 @@ class AppTheme {
           onPrimary: appColors.onPrimary,
           surfaceTint: appColors.surfaceTint,
           error: appColors.error,
+          onError: appColors.onError,
         ),
         textTheme: TextTheme(
           headlineLarge: TextStyle(color: appColors.primaryText),
@@ -250,6 +251,7 @@ class AppTheme {
           onPrimary: appColors.onPrimary,
           surfaceTint: appColors.surfaceTint,
           error: appColors.error,
+          onError: appColors.onError,
         ),
         textTheme: TextTheme(
           headlineLarge: TextStyle(color: appColors.primaryText),

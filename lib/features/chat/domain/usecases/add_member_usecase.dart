@@ -1,4 +1,3 @@
-import 'package:chatting_app/features/chat/domain/entity/chat_member_entity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -7,19 +6,23 @@ import '../../../../core/usecases/usecase.dart';
 import '../repository/chat_repository.dart';
 
 @lazySingleton
-class AddMemberUseCase implements UseCase<ChatMemberEntity, AddMemberParams> {
+class AddMemberUseCase implements UseCase<bool, AddMemberParams> {
   AddMemberUseCase(this._repository);
 
   final ChatRepository _repository;
 
   @override
-  Future<Either<Failure, ChatMemberEntity>> call(params) async {
-    return await _repository.addChatMember(params.chatId);
+  Future<Either<Failure, bool>> call(params) async {
+    return await _repository.addChatMember(
+      chatId: params.chatId,
+      memberIds: params.memberIds,
+    );
   }
 }
 
 class AddMemberParams {
-  AddMemberParams(this.chatId);
+  AddMemberParams({required this.chatId, required this.memberIds});
 
   final String chatId;
+  final List<String> memberIds;
 }

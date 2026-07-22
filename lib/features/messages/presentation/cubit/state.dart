@@ -8,7 +8,6 @@ class MessagesState extends Equatable {
     this.error,
     this.showMenu = false,
     this.isLoading = false,
-    this.updateList = false,
     this.editModeActive = false,
     this.selectedMessage,
   });
@@ -19,7 +18,6 @@ class MessagesState extends Equatable {
   final MessageEntity? selectedMessage;
   final bool showMenu;
   final bool isLoading;
-  final bool updateList;
   final bool editModeActive;
 
   MessagesState copyWith({
@@ -29,7 +27,6 @@ class MessagesState extends Equatable {
     MessageEntity? selectedMessage,
     bool? showMenu,
     bool? isLoading,
-    bool? updateList,
     bool? editModeActive,
   }) {
     return MessagesState(
@@ -39,7 +36,6 @@ class MessagesState extends Equatable {
       showMenu: showMenu ?? this.showMenu,
       selectedMessage: selectedMessage ?? this.selectedMessage,
       isLoading: isLoading ?? this.isLoading,
-      updateList: updateList ?? this.updateList,
       editModeActive: editModeActive ?? this.editModeActive,
     );
   }
@@ -50,7 +46,6 @@ class MessagesState extends Equatable {
     pinnedMessages,
     error,
     isLoading,
-    updateList,
     showMenu,
     selectedMessage,
     editModeActive,

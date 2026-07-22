@@ -5,6 +5,10 @@ extension StringX on String {
   String normalize() => trim().toLowerCase();
 }
 
+extension IntegerX on int {
+  int min(int other) => this < other ? this : other;
+}
+
 extension DateX on DateTime {
   bool isSameDay(DateTime other) {
     return year == other.year && month == other.month && day == other.day;

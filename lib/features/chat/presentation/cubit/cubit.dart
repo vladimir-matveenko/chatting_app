@@ -1,5 +1,6 @@
 import 'package:chatting_app/features/chat/domain/usecases/add_member_usecase.dart';
 import 'package:chatting_app/features/chat/domain/usecases/delete_member_usecase.dart';
+import 'package:chatting_app/features/chat/domain/usecases/update_chat_usecase.dart';
 import 'package:chatting_app/features/chat/presentation/cubit/state.dart';
 import 'package:chatting_app/features/users/domain/entity/users_list_item_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,12 +18,14 @@ enum CreateGroupStatus { initial, setName, created }
 class ChatCubit extends Cubit<ChatState> {
   ChatCubit(
     this._getChatUseCase,
+    this._updateChatUseCase,
     this._getChatMembersUseCase,
     this._createChatUseCase,
     this._deleteMemberUseCase,
     this._addMemberUseCase,
   ) : super(const ChatState());
   final GetChatUseCase _getChatUseCase;
+  final UpdateChatUseCase _updateChatUseCase;
   final GetChatMembersUseCase _getChatMembersUseCase;
   final CreateChatUseCase _createChatUseCase;
   final DeleteMemberUseCase _deleteMemberUseCase;
@@ -85,7 +88,7 @@ class ChatCubit extends Cubit<ChatState> {
     emit(state.copyWith(selectedParticipants: selectedParticipants));
   }
 
-  Future<void> setGroupName() async {
+  Future<void> setGroupNameStatus() async {
     emit(state.copyWith(status: CreateGroupStatus.setName));
   }
 
@@ -94,6 +97,7 @@ class ChatCubit extends Cubit<ChatState> {
       state.copyWith(
         status: CreateGroupStatus.initial,
         selectedParticipants: [],
+        error: '',
       ),
     );
   }
@@ -152,6 +156,30 @@ class ChatCubit extends Cubit<ChatState> {
     );
   }
 
+  Future<void> updateChat({
+    required String chatId,
+    String? title,
+    String? avatarUrl,
+  }) async {
+    final result = await _updateChatUseCase(
+      UpdateChatParams(chatId: chatId, title: title, avatarUrl: avatarUrl),
+    );
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+            closeModal: true,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(isLoading: false, chat: r, closeModal: true));
+      },
+    );
+  }
+
   Future<void> getChatMembers({required String chatId}) async {
     emit(state.copyWith(isLoading: true));
     final result = await _getChatMembersUseCase(
@@ -167,13 +195,7 @@ class ChatCubit extends Cubit<ChatState> {
         );
       },
       (r) {
-        emit(
-          state.copyWith(
-            isLoading: false,
-            chatMembers: r,
-            updateMembers: false,
-          ),
-        );
+        emit(state.copyWith(isLoading: false, chatMembers: r));
       },
     );
   }
@@ -195,13 +217,21 @@ class ChatCubit extends Cubit<ChatState> {
         );
       },
       (r) {
-        emit(state.copyWith(isLoading: false, updateMembers: r));
+        if (r) {
+          getChatMembers(chatId: chatId);
+        }
+        emit(state.copyWith(isLoading: false));
       },
     );
   }
 
-  Future<void> addChatMember(String chatId) async {
-    final result = await _addMemberUseCase(AddMemberParams(chatId));
+  Future<void> addChatMember({
+    required String chatId,
+    required List<String> memberIds,
+  }) async {
+    final result = await _addMemberUseCase(
+      AddMemberParams(chatId: chatId, memberIds: memberIds),
+    );
     result.fold(
       (l) {
         emit(
@@ -212,7 +242,10 @@ class ChatCubit extends Cubit<ChatState> {
         );
       },
       (r) {
-        emit(state.copyWith(isLoading: false, updateMembers: true));
+        if (r) {
+          getChatMembers(chatId: chatId);
+        }
+        emit(state.copyWith(isLoading: false));
       },
     );
   }
@@ -223,5 +256,9 @@ class ChatCubit extends Cubit<ChatState> {
 
   Future<void> disableNavigate() async {
     emit(state.copyWith(shouldNavigate: false));
+  }
+
+  Future<void> disableCloseModal() async {
+    emit(state.copyWith(closeModal: false));
   }
 }

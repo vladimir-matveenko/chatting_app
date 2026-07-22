@@ -39,4 +39,8 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> onLogout() async {
     emit(state.copyWith(error: '', status: LoginStatus.unknown));
   }
+
+  Future<void> disableError() async {
+    emit(state.copyWith(error: ''));
+  }
 }

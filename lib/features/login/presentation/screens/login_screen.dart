@@ -121,7 +121,13 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) {
           if (state.status == LoginStatus.failure &&
               state.error?.isNotEmpty == true) {
-            AppMessage.error(context, message: state.error!);
+            AppMessage.error(
+              context,
+              message: state.error!,
+              onClose: () {
+                context.read<LoginCubit>().disableError();
+              },
+            );
           }
           if (state.status == LoginStatus.success) {
             context.read<AuthCubit>().checkAuth();

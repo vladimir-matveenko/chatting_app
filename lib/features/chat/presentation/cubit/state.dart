@@ -13,7 +13,7 @@ class ChatState extends Equatable {
     this.error,
     this.isLoading = false,
     this.shouldNavigate = false,
-    this.updateMembers = false,
+    this.closeModal = false,
     this.status = CreateGroupStatus.initial,
   });
 
@@ -23,7 +23,7 @@ class ChatState extends Equatable {
   final String? error;
   final bool isLoading;
   final bool shouldNavigate;
-  final bool updateMembers;
+  final bool closeModal;
   final CreateGroupStatus status;
 
   ChatState copyWith({
@@ -33,7 +33,7 @@ class ChatState extends Equatable {
     String? error,
     bool? isLoading,
     bool? shouldNavigate,
-    bool? updateMembers,
+    bool? closeModal,
     CreateGroupStatus? status,
   }) {
     return ChatState(
@@ -44,7 +44,7 @@ class ChatState extends Equatable {
       isLoading: isLoading ?? this.isLoading,
       shouldNavigate: shouldNavigate ?? this.shouldNavigate,
       status: status ?? this.status,
-      updateMembers: updateMembers ?? this.updateMembers,
+      closeModal: closeModal ?? this.closeModal,
     );
   }
 
@@ -57,6 +57,6 @@ class ChatState extends Equatable {
     isLoading,
     shouldNavigate,
     status,
-    updateMembers,
+    closeModal,
   ];
 }

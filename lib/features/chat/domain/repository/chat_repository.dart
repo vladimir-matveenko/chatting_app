@@ -15,6 +15,12 @@ abstract class ChatRepository {
 
   Future<Either<Failure, ChatEntity>> getChatById(String chatId);
 
+  Future<Either<Failure, ChatEntity>> updateChat({
+    required String chatId,
+    String? title,
+    String? avatarUrl,
+  });
+
   Future<Either<Failure, List<ChatMemberEntity>>> getChatMembers({
     required String chatId,
   });
@@ -24,5 +30,8 @@ abstract class ChatRepository {
     required String userId,
   });
 
-  Future<Either<Failure, ChatMemberEntity>> addChatMember(String chatId);
+  Future<Either<Failure, bool>> addChatMember({
+    required String chatId,
+    required List<String> memberIds,
+  });
 }

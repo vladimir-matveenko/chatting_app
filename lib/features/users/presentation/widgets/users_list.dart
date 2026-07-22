@@ -16,6 +16,7 @@ class UsersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<ChatCubit>();
     return BaseListView<UserListItemEntity>(
       items: users,
       itemBuilder: (context, index) {
@@ -24,6 +25,7 @@ class UsersList extends StatelessWidget {
           key: ValueKey(user.id),
           onTap: () {
             if (user.privateChatId?.isNotEmpty == true) {
+              cubit.getChatById(user.privateChatId!);
               context.go('${AppRoutes.chats}/${user.privateChatId!}');
             } else {
               context.read<ChatCubit>().createChat(

@@ -65,11 +65,14 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
             onPressed: () {
               if (state.status == CreateGroupStatus.initial) {
                 if (state.selectedParticipants.isNotEmpty) {
-                  chatCubit.setGroupName();
+                  chatCubit.setGroupNameStatus();
                 } else {
                   AppMessage.error(
                     context,
                     message: 'errors.chatsErrors.addParticipants'.tr(),
+                    onClose: () {
+                      chatCubit.disableError();
+                    },
                   );
                 }
               } else {

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chatting_app/app/router/app_router.dart';
 import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
@@ -7,6 +9,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../core/services/auth_session_manager.dart';
+import '../features/auth/domain/repository/auth_repository.dart';
 import '../features/auth/presentation/cubit/cubit.dart';
 import '../features/chat/presentation/cubit/cubit.dart';
 import '../features/chats/presentation/cubit/cubit.dart';
@@ -23,6 +27,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late final StreamSubscription _sessionSub;
   final appRouter = getIt<AppRouter>();
   final themeCubit = getIt<ThemeCubit>();
   final authCubit = getIt<AuthCubit>();
@@ -33,6 +38,22 @@ class _MyAppState extends State<MyApp> {
   final chatCubit = getIt<ChatCubit>();
   final usersCubit = getIt<UsersCubit>();
   final messagesCubit = getIt<MessagesCubit>();
+  final sessionManager = getIt<AuthSessionManager>();
+  final authRepo = getIt<AuthRepository>();
+
+  @override
+  void initState() {
+    super.initState();
+    _sessionSub = sessionManager.onSessionExpired.listen((_) async {
+      authCubit.clearCache();
+    });
+  }
+
+  @override
+  void dispose() {
+    _sessionSub.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
