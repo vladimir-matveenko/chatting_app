@@ -14,7 +14,7 @@ class ApiErrorHandler {
         throw InvalidCredentialsException();
       default:
         throw UnknownException(
-          message: serverMessage ?? e.message ?? 'Network error + $statusCode',
+          message: serverMessage ?? e.message ?? 'Network error',
         );
     }
   }

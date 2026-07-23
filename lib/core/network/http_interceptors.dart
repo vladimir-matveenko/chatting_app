@@ -116,10 +116,9 @@ class AuthInterceptor extends Interceptor {
         log('token refreshed');
       }
 
-      final queuedRequests = List.of(_queue);
-      _queue.clear();
+      while (_queue.isNotEmpty) {
+        final item = _queue.removeAt(0);
 
-      for (final item in queuedRequests) {
         try {
           final request = item.request.copyWith(
             headers: {
@@ -147,10 +146,9 @@ class AuthInterceptor extends Interceptor {
         sessionManager.notifySessionExpired();
       }
 
-      final queuedRequests = List.of(_queue);
-      _queue.clear();
+      while (_queue.isNotEmpty) {
+        final item = _queue.removeAt(0);
 
-      for (final item in queuedRequests) {
         item.completer.completeError(
           e is DioException
               ? e
@@ -197,23 +195,26 @@ class AuthInterceptor extends Interceptor {
 class ErrorInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    final message = switch (err.type) {
-      DioExceptionType.connectionTimeout => 'Connection timeout',
-      DioExceptionType.sendTimeout => 'Send timeout',
-      DioExceptionType.receiveTimeout => 'Receive timeout',
-      DioExceptionType.cancel => 'Request cancelled',
-      _ =>
-        err.response != null
-            ? switch (err.response!.statusCode) {
-                400 => 'Bad request',
-                401 => 'Unauthorized',
-                403 => 'Forbidden',
-                404 => 'Not found',
-                500 => 'Server error',
-                _ => 'Unexpected error',
-              }
-            : 'Unexpected error',
-    };
+    final serverMessage = err.response?.data?['message'];
+    final message =
+        serverMessage ??
+        switch (err.type) {
+          DioExceptionType.connectionTimeout => 'Connection timeout',
+          DioExceptionType.sendTimeout => 'Send timeout',
+          DioExceptionType.receiveTimeout => 'Receive timeout',
+          DioExceptionType.cancel => 'Request cancelled',
+          _ =>
+            err.response != null
+                ? switch (err.response!.statusCode) {
+                    400 => 'Bad request',
+                    401 => 'Unauthorized',
+                    403 => 'Forbidden',
+                    404 => 'Not found',
+                    500 => 'Server error',
+                    _ => 'Unexpected error',
+                  }
+                : 'Unexpected error',
+        };
 
     handler.next(err.copyWith(message: message));
   }
