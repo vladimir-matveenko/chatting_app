@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/utils/extensions.dart';
 import '../../../../core/presentation/widgets/app_back_button.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
-import '../../../../app/utils/extensions.dart';
 import '../profile_cubit/cubit.dart';
 import '../widgets/create_profile_form.dart';
 import '../widgets/profile_screen_wrapper.dart';
@@ -28,7 +28,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
   void _handleCreateProfile() {
     if (_formKey.currentState!.validate()) {
       context.read<ProfileCubit>().createProfile(
-        username: _userNameController.text,
+        userName: _userNameController.text,
         email: _emailController.text,
         password: _passwordController.text,
       );

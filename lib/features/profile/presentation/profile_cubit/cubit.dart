@@ -38,13 +38,13 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> createProfile({
-    required String username,
+    required String userName,
     required String email,
     required String password,
   }) async {
     emit(state.copyWith(isLoading: true));
     final result = await _createProfileUseCase(
-      CreateProfileParams(username: username, email: email, password: password),
+      CreateProfileParams(userName: userName, email: email, password: password),
     );
     result.fold(
       (l) {

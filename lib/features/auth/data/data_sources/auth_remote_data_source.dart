@@ -7,7 +7,7 @@ import '../models/auth_token_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<AuthTokenModel?> register({
-    required String username,
+    required String userName,
     required String email,
     required String password,
   });
@@ -29,14 +29,14 @@ class AuthRemoteDataSourceImpl extends BaseRemoteDataSource
 
   @override
   Future<AuthTokenModel?> register({
-    required String username,
+    required String userName,
     required String email,
     required String password,
   }) async {
     return makeRequest<AuthTokenModel?>(() async {
       final response = await dio.post(
         'auth/register',
-        data: {'username': username, 'email': email, 'password': password},
+        data: {'userName': userName, 'email': email, 'password': password},
         options: Options(extra: {'skipAuth': true}),
       );
 

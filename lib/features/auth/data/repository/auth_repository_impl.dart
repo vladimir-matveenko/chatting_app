@@ -21,13 +21,13 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, AuthTokenEntity?>> register({
-    required String username,
+    required String userName,
     required String email,
     required String password,
   }) async {
     try {
       final token = await authRemoteDataSource.register(
-        username: username,
+        userName: userName,
         email: email,
         password: password,
       );

@@ -14,7 +14,7 @@ class CreateProfileUseCase implements UseCase<void, CreateProfileParams> {
   @override
   Future<Either<Failure, void>> call(params) async {
     return await _repository.register(
-      username: params.username,
+      userName: params.userName,
       email: params.email,
       password: params.password,
     );
@@ -23,12 +23,12 @@ class CreateProfileUseCase implements UseCase<void, CreateProfileParams> {
 
 class CreateProfileParams {
   CreateProfileParams({
-    required this.username,
+    required this.userName,
     required this.email,
     required this.password,
   });
 
-  final String username;
+  final String userName;
   final String email;
   final String password;
 }
