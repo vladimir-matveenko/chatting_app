@@ -5,7 +5,7 @@ import '../entity/auth_token_entity.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, AuthTokenEntity?>> register({
-    required String username,
+    required String userName,
     required String email,
     required String password,
   });

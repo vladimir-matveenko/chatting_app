@@ -35,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    context.read<LoginCubit>().setInitialParameters();
     _emailController.text = 'email@email.com';
     _passwordController.text = '1234567890';
     super.initState();

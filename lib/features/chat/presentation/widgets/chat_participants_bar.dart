@@ -48,7 +48,9 @@ class _ChatParticipantsBarState extends State<ChatParticipantsBar> {
             ? const SizedBox()
             : GestureDetector(
                 onTap: () {
-                  context.push(AppRoutes.chatSettings);
+                  final route =
+                      '${AppRoutes.chats}/${state.chat?.id}${AppRoutes.chatSettings}';
+                  context.go(route);
                 },
                 child: Container(
                   padding: const .all(16.0),
