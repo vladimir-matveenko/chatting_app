@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chatting_app/features/main/presentation/widgets/bottom_nav_bar.dart';
 import 'package:chatting_app/features/main/presentation/widgets/custom_fab.dart';
 import 'package:chatting_app/features/users/presentation/users_cubit/cubit.dart';
@@ -45,6 +47,10 @@ class _MainScreenState extends State<MainScreen> {
         leading: MainScreenUtils.showBackButton(context)
             ? const AppBackButton()
             : null,
+        actions: MainScreenUtils.getActions(
+          context,
+          state: widget.state,
+        ),
       ),
       body: SafeArea(
         top: true,
@@ -63,6 +69,9 @@ class _MainScreenState extends State<MainScreen> {
         state: widget.state,
         action: () {
           context.push(AppRoutes.createGroup);
+          final router = GoRouter.of(context);
+
+          log(router.state.uri.toString());
         },
       ),
     );

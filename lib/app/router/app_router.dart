@@ -74,24 +74,22 @@ class AppRouter {
             const NoTransitionPage(child: LoginScreen()),
       ),
       GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
         path: AppRoutes.createProfile,
         pageBuilder: (context, state) =>
             const NoTransitionPage(child: CreateProfileScreen()),
       ),
       GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
         path: AppRoutes.licenses,
         pageBuilder: (context, state) =>
             const NoTransitionPage(child: LicensesScreen()),
       ),
       GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
         path: AppRoutes.createGroup,
         pageBuilder: (context, state) =>
             const NoTransitionPage(child: CreateGroupScreen()),
-      ),
-      GoRoute(
-        path: AppRoutes.chatSettings,
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: ChatSettingsScreen()),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
@@ -122,6 +120,13 @@ class AppRouter {
                         child: ChatScreen(key: ValueKey(id), id: id),
                       );
                     },
+                    routes: [
+                      GoRoute(
+                        path: AppRoutes.chatSettings,
+                        pageBuilder: (context, state) =>
+                            const NoTransitionPage(child: ChatSettingsScreen()),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -3,27 +3,27 @@ import 'package:dio/dio.dart';
 import 'exception.dart';
 
 class ApiErrorHandler {
-  static void onDioError(DioException e) {
+  static Exception onDioError(DioException e) {
     final statusCode = e.response?.statusCode;
     final serverMessage = e.response?.data?['error']?['message']?.toString();
 
     switch (statusCode) {
       case 400:
-        throw UnknownException(message: serverMessage ?? 'Bad Request');
+        return UnknownException(message: serverMessage ?? 'Bad Request');
       case 401:
-        throw InvalidCredentialsException();
+        return InvalidCredentialsException();
       default:
-        throw UnknownException(
+        return UnknownException(
           message: serverMessage ?? e.message ?? 'Network error',
         );
     }
   }
 
-  static void onError(Object e) {
+  static Exception onError(Object e) {
     if (e is DioException) {
-      onDioError(e);
+      return onDioError(e);
     } else {
-      throw UnknownException(message: e.toString());
+      return UnknownException(message: e.toString());
     }
   }
 }
