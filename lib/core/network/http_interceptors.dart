@@ -165,7 +165,7 @@ class AuthInterceptor extends Interceptor {
     final token = await localDataSource.getCachedToken();
 
     if (token?.refreshToken == null) {
-      throw InvalidCredentialsException();
+      throw const InvalidCredentialsException();
     }
 
     final response = await refreshDio.post(
@@ -184,38 +184,5 @@ class AuthInterceptor extends Interceptor {
     );
 
     return accessToken;
-  }
-}
-
-// ========================
-// ERROR INTERCEPTOR
-// ========================
-
-@lazySingleton
-class ErrorInterceptor extends Interceptor {
-  @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
-    final serverMessage = err.response?.data?['message'];
-    final message =
-        serverMessage ??
-        switch (err.type) {
-          DioExceptionType.connectionTimeout => 'Connection timeout',
-          DioExceptionType.sendTimeout => 'Send timeout',
-          DioExceptionType.receiveTimeout => 'Receive timeout',
-          DioExceptionType.cancel => 'Request cancelled',
-          _ =>
-            err.response != null
-                ? switch (err.response!.statusCode) {
-                    400 => 'Bad request',
-                    401 => 'Unauthorized',
-                    403 => 'Forbidden',
-                    404 => 'Not found',
-                    500 => 'Server error',
-                    _ => 'Unexpected error',
-                  }
-                : 'Unexpected error',
-        };
-
-    handler.next(err.copyWith(message: message));
   }
 }

@@ -7,10 +7,10 @@ import '../../../core/network/http_interceptors.dart';
 @module
 abstract class NetworkModule {
   @lazySingleton
-  Dio dio(AuthInterceptor authInterceptor, ErrorInterceptor errorInterceptor) {
+  Dio dio(AuthInterceptor authInterceptor) {
     final dio = Dio(_baseOptions);
 
-    dio.interceptors.addAll([authInterceptor, errorInterceptor]);
+    dio.interceptors.addAll([authInterceptor]);
 
     return dio;
   }

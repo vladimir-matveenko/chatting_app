@@ -9,7 +9,7 @@ abstract class BaseRemoteDataSource {
     try {
       return await request();
     } catch (e) {
-      throw ApiErrorHandler.onError(e);
+      throw DioErrorParser.parse(e);
     }
   }
 }

@@ -166,7 +166,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPrefModule.prefs,
       preResolve: true,
     );
-    gh.lazySingleton<_i370.ErrorInterceptor>(() => _i370.ErrorInterceptor());
     gh.lazySingleton<_i186.AuthSessionManager>(
       () => _i186.AuthSessionManager(),
     );
@@ -208,17 +207,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i361.Dio>(instanceName: 'refresh_dio'),
       ),
     );
-    gh.lazySingleton<_i58.ThemeCubit>(
-      () => _i58.ThemeCubit(
-        gh<_i678.GetThemeUseCase>(),
-        gh<_i767.SetThemeUseCase>(),
-      ),
-    );
     gh.lazySingleton<_i361.Dio>(
-      () => networkModule.dio(
-        gh<_i370.AuthInterceptor>(),
-        gh<_i370.ErrorInterceptor>(),
-      ),
+      () => networkModule.dio(gh<_i370.AuthInterceptor>()),
     );
     gh.lazySingleton<_i125.ProfileRemoteDataSource>(
       () => _i125.ProfileRemoteDataSourceImpl(gh<_i361.Dio>()),
@@ -235,6 +225,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i672.ProfileRepository>(
       () => _i557.ProfileRepositoryImpl(
         profileRemoteDataSource: gh<_i125.ProfileRemoteDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i58.ThemeCubit>(
+      () => _i58.ThemeCubit(
+        gh<_i678.GetThemeUseCase>(),
+        gh<_i767.SetThemeUseCase>(),
       ),
     );
     gh.lazySingleton<_i969.AddReactionUseCase>(

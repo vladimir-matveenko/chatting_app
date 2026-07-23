@@ -43,4 +43,8 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> disableError() async {
     emit(state.copyWith(error: ''));
   }
+
+  Future<void> setInitialParameters() async {
+    emit(state.copyWith(error: '', status: LoginStatus.unknown));
+  }
 }
