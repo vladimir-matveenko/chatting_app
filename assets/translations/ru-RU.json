@@ -74,7 +74,9 @@
       "remove": "Удалить"
     },
     "owner": "Владелец",
-    "pinnedMessage": "Закрепленное сообщение"
+    "pinnedMessage": "Закрепленное сообщение",
+    "online": "В сети",
+    "offline": "Не в сети"
   },
   "editChatScreen": {
     "addMember": "Добавить участника"
@@ -100,6 +102,7 @@
     "minPasLength": "Минимальная длина 8 символов"
   },
   "errors": {
+    "somethingWentWrong": "Ой! Что-то пошло не так",
     "authError": "Ошибка аутентификации",
     "wrongEmailOrPassword": "Неверный email или пароль",
     "serverError": "Ошибка сервера",

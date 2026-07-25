@@ -84,6 +84,15 @@ class _ChatParticipantsBarState extends State<ChatParticipantsBar> {
                                 state.chatMembers.length,
                               ),
                               style: theme.textTheme.bodySmall,
+                            )
+                          else
+                            ChatUtils.buildMemberStatusWidget(
+                              yourId: _userProfile?.id ?? '',
+                              members: state.chatMembers,
+                              onlineStyle: theme.textTheme.bodySmall!.copyWith(
+                                color: theme.colorScheme.primary,
+                              ),
+                              offlineStyle: theme.textTheme.bodySmall!,
                             ),
                         ],
                       ),

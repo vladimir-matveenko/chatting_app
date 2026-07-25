@@ -43,10 +43,7 @@ class ChatSocketServiceImpl implements ChatSocketService {
   }
 
   @override
-  void markRead({required String chatId, required String messageId}) {
-    _socket.emit(SocketEvents.messageRead, {
-      'chatId': chatId,
-      'messageId': messageId,
-    });
+  void markRead(String messageId) {
+    _socket.emit(SocketEvents.messageRead, {'messageId': messageId});
   }
 }

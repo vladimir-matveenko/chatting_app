@@ -10,7 +10,9 @@ _MessageEntity _$MessageEntityFromJson(Map<String, dynamic> json) =>
     _MessageEntity(
       id: json['id'] as String,
       chatId: json['chatId'] as String,
-      senderId: json['senderId'] as String,
+      sender: MessageSenderEntity.fromJson(
+        json['sender'] as Map<String, dynamic>,
+      ),
       type: $enumDecode(_$MessageTypeEnumMap, json['type']),
       body: json['body'] as String?,
       replyToId: json['replyToId'] as String?,
@@ -36,6 +38,7 @@ _MessageEntity _$MessageEntityFromJson(Map<String, dynamic> json) =>
       reply: json['reply'] == null
           ? null
           : MessageReplyEntity.fromJson(json['reply'] as Map<String, dynamic>),
+      readCount: (json['readCount'] as num).toInt(),
     );
 
 Map<String, dynamic> _$MessageEntityToJson(
@@ -43,7 +46,7 @@ Map<String, dynamic> _$MessageEntityToJson(
 ) => <String, dynamic>{
   'id': instance.id,
   'chatId': instance.chatId,
-  'senderId': instance.senderId,
+  'sender': instance.sender.toJson(),
   'type': _$MessageTypeEnumMap[instance.type]!,
   'body': ?instance.body,
   'replyToId': ?instance.replyToId,
@@ -54,6 +57,7 @@ Map<String, dynamic> _$MessageEntityToJson(
   'reactions': instance.reactions.map((e) => e.toJson()).toList(),
   'currentUserReaction': ?_$ReactionTypeEnumMap[instance.currentUserReaction],
   'reply': ?instance.reply?.toJson(),
+  'readCount': instance.readCount,
 };
 
 const _$MessageTypeEnumMap = {

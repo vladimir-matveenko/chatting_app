@@ -11,5 +11,5 @@ abstract interface class ChatSocketService {
 
   void stopTyping(String chatId);
 
-  void markRead({required String chatId, required String messageId});
+  void markRead(String messageId);
 }

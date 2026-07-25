@@ -1,3 +1,4 @@
+import 'package:chatting_app/features/messages/domain/entity/message_sender_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../app/constants/app_enums.dart';
@@ -9,7 +10,7 @@ part 'message_reply_entity.g.dart';
 abstract class MessageReplyEntity with _$MessageReplyEntity {
   const factory MessageReplyEntity({
     required String id,
-    required String senderId,
+    required MessageSenderEntity sender,
     required MessageType type,
     String? body,
     DateTime? deletedAt,

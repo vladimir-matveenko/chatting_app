@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MessageReplyEntity {
 
- String get id; String get senderId; MessageType get type; String? get body; DateTime? get deletedAt;
+ String get id; MessageSenderEntity get sender; MessageType get type; String? get body; DateTime? get deletedAt;
 /// Create a copy of MessageReplyEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $MessageReplyEntityCopyWith<MessageReplyEntity> get copyWith => _$MessageReplyEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageReplyEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageReplyEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.sender, sender) || other.sender == sender)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,senderId,type,body,deletedAt);
+int get hashCode => Object.hash(runtimeType,id,sender,type,body,deletedAt);
 
 @override
 String toString() {
-  return 'MessageReplyEntity(id: $id, senderId: $senderId, type: $type, body: $body, deletedAt: $deletedAt)';
+  return 'MessageReplyEntity(id: $id, sender: $sender, type: $type, body: $body, deletedAt: $deletedAt)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $MessageReplyEntityCopyWith<$Res>  {
   factory $MessageReplyEntityCopyWith(MessageReplyEntity value, $Res Function(MessageReplyEntity) _then) = _$MessageReplyEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String senderId, MessageType type, String? body, DateTime? deletedAt
+ String id, MessageSenderEntity sender, MessageType type, String? body, DateTime? deletedAt
 });
 
 
-
+$MessageSenderEntityCopyWith<$Res> get sender;
 
 }
 /// @nodoc
@@ -65,17 +65,26 @@ class _$MessageReplyEntityCopyWithImpl<$Res>
 
 /// Create a copy of MessageReplyEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? senderId = null,Object? type = null,Object? body = freezed,Object? deletedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? sender = null,Object? type = null,Object? body = freezed,Object? deletedAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,senderId: null == senderId ? _self.senderId : senderId // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,sender: null == sender ? _self.sender : sender // ignore: cast_nullable_to_non_nullable
+as MessageSenderEntity,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as MessageType,body: freezed == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
 as String?,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
 }
-
+/// Create a copy of MessageReplyEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MessageSenderEntityCopyWith<$Res> get sender {
+  
+  return $MessageSenderEntityCopyWith<$Res>(_self.sender, (value) {
+    return _then(_self.copyWith(sender: value));
+  });
+}
 }
 
 
@@ -157,10 +166,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String senderId,  MessageType type,  String? body,  DateTime? deletedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  MessageSenderEntity sender,  MessageType type,  String? body,  DateTime? deletedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MessageReplyEntity() when $default != null:
-return $default(_that.id,_that.senderId,_that.type,_that.body,_that.deletedAt);case _:
+return $default(_that.id,_that.sender,_that.type,_that.body,_that.deletedAt);case _:
   return orElse();
 
 }
@@ -178,10 +187,10 @@ return $default(_that.id,_that.senderId,_that.type,_that.body,_that.deletedAt);c
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String senderId,  MessageType type,  String? body,  DateTime? deletedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  MessageSenderEntity sender,  MessageType type,  String? body,  DateTime? deletedAt)  $default,) {final _that = this;
 switch (_that) {
 case _MessageReplyEntity():
-return $default(_that.id,_that.senderId,_that.type,_that.body,_that.deletedAt);case _:
+return $default(_that.id,_that.sender,_that.type,_that.body,_that.deletedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +207,10 @@ return $default(_that.id,_that.senderId,_that.type,_that.body,_that.deletedAt);c
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String senderId,  MessageType type,  String? body,  DateTime? deletedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  MessageSenderEntity sender,  MessageType type,  String? body,  DateTime? deletedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _MessageReplyEntity() when $default != null:
-return $default(_that.id,_that.senderId,_that.type,_that.body,_that.deletedAt);case _:
+return $default(_that.id,_that.sender,_that.type,_that.body,_that.deletedAt);case _:
   return null;
 
 }
@@ -213,11 +222,11 @@ return $default(_that.id,_that.senderId,_that.type,_that.body,_that.deletedAt);c
 @JsonSerializable()
 
 class _MessageReplyEntity implements MessageReplyEntity {
-  const _MessageReplyEntity({required this.id, required this.senderId, required this.type, this.body, this.deletedAt});
+  const _MessageReplyEntity({required this.id, required this.sender, required this.type, this.body, this.deletedAt});
   factory _MessageReplyEntity.fromJson(Map<String, dynamic> json) => _$MessageReplyEntityFromJson(json);
 
 @override final  String id;
-@override final  String senderId;
+@override final  MessageSenderEntity sender;
 @override final  MessageType type;
 @override final  String? body;
 @override final  DateTime? deletedAt;
@@ -235,16 +244,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageReplyEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageReplyEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.sender, sender) || other.sender == sender)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,senderId,type,body,deletedAt);
+int get hashCode => Object.hash(runtimeType,id,sender,type,body,deletedAt);
 
 @override
 String toString() {
-  return 'MessageReplyEntity(id: $id, senderId: $senderId, type: $type, body: $body, deletedAt: $deletedAt)';
+  return 'MessageReplyEntity(id: $id, sender: $sender, type: $type, body: $body, deletedAt: $deletedAt)';
 }
 
 
@@ -255,11 +264,11 @@ abstract mixin class _$MessageReplyEntityCopyWith<$Res> implements $MessageReply
   factory _$MessageReplyEntityCopyWith(_MessageReplyEntity value, $Res Function(_MessageReplyEntity) _then) = __$MessageReplyEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String senderId, MessageType type, String? body, DateTime? deletedAt
+ String id, MessageSenderEntity sender, MessageType type, String? body, DateTime? deletedAt
 });
 
 
-
+@override $MessageSenderEntityCopyWith<$Res> get sender;
 
 }
 /// @nodoc
@@ -272,18 +281,27 @@ class __$MessageReplyEntityCopyWithImpl<$Res>
 
 /// Create a copy of MessageReplyEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? senderId = null,Object? type = null,Object? body = freezed,Object? deletedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? sender = null,Object? type = null,Object? body = freezed,Object? deletedAt = freezed,}) {
   return _then(_MessageReplyEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,senderId: null == senderId ? _self.senderId : senderId // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,sender: null == sender ? _self.sender : sender // ignore: cast_nullable_to_non_nullable
+as MessageSenderEntity,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as MessageType,body: freezed == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
 as String?,deletedAt: freezed == deletedAt ? _self.deletedAt : deletedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
 }
 
-
+/// Create a copy of MessageReplyEntity
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MessageSenderEntityCopyWith<$Res> get sender {
+  
+  return $MessageSenderEntityCopyWith<$Res>(_self.sender, (value) {
+    return _then(_self.copyWith(sender: value));
+  });
+}
 }
 
 // dart format on
