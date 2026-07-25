@@ -76,7 +76,13 @@
     "owner": "Владелец",
     "pinnedMessage": "Закрепленное сообщение",
     "online": "В сети",
-    "offline": "Не в сети"
+    "offline": "Не в сети",
+    "muted": "Звук выкл.",
+    "unmuted": "Звук вкл.",
+    "leavingChat": {
+      "leaveChat": "Выйти из чата",
+      "areYouSure": "Вы уверены, что Вы хотите покинуть чат?"
+    }
   },
   "editChatScreen": {
     "addMember": "Добавить участника"

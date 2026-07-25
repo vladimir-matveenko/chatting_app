@@ -76,7 +76,13 @@
     "owner": "Owner",
     "pinnedMessage": "Pinned message",
     "online": "Online",
-    "offline": "Offline"
+    "offline": "Offline",
+    "muted": "Muted",
+    "unmuted": "Unmuted",
+    "leavingChat": {
+      "leaveChat": "Leave chat",
+      "areYouSure": "Are you sure you want to leave chat?"
+    }
   },
   "editChatScreen": {
     "addMember": "Add member"

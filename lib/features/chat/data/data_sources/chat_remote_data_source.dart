@@ -33,6 +33,10 @@ abstract class ChatRemoteDataSource {
     required String chatId,
     required List<String> memberIds,
   });
+
+  Future<bool> muteChat({required String chatId, required bool isMuted});
+
+  Future<bool> leaveChat(String chatId);
 }
 
 @LazySingleton(as: ChatRemoteDataSource)
@@ -133,6 +137,25 @@ class ChatRemoteDataSourceImpl extends BaseRemoteDataSource
         'chats/$chatId/members',
         data: {'memberIds': memberIds},
       );
+      return response.statusCode == 204;
+    });
+  }
+
+  @override
+  Future<bool> muteChat({required String chatId, required bool isMuted}) async {
+    return makeRequest<bool>(() async {
+      final response = await dio.patch(
+        'chats/$chatId/mute',
+        data: {'isMuted': isMuted},
+      );
+      return response.statusCode == 204;
+    });
+  }
+
+  @override
+  Future<bool> leaveChat(String chatId) async {
+    return makeRequest<bool>(() async {
+      final response = await dio.delete('chats/$chatId/members/me');
       return response.statusCode == 204;
     });
   }

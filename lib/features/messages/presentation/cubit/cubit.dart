@@ -66,12 +66,7 @@ class MessagesCubit extends Cubit<MessagesState> {
       _messagesSocketService.reactionUpdated.listen(
         (event) async => _onReactionUpdated(event),
       ),
-      _messagesSocketService.typingStarted.listen(
-        (event) async => _onTypingStarted(event),
-      ),
-      _messagesSocketService.typingStopped.listen(
-        (event) async => _onTypingStopped(event),
-      ),
+
       _messagesSocketService.messagePinned.listen(
         (event) async => _onMessagePinned(event),
       ),
@@ -108,14 +103,6 @@ class MessagesCubit extends Cubit<MessagesState> {
 
   void _onReactionUpdated(ReactionUpdatedSocketEvent event) async {
     await loadMessages(chatId: event.message.chatId);
-  }
-
-  void _onTypingStarted(TypingStartedSocketEvent event) {
-    // TODO(): add action
-  }
-
-  void _onTypingStopped(TypingStoppedSocketEvent event) {
-    // TODO(): add action
   }
 
   Future<void> _onMessagePinned(MessagePinnedSocketEvent event) async {

@@ -34,7 +34,7 @@ class _ChatScreenState extends State<ChatScreen> {
     chatCubit = context.read<ChatCubit>();
     messagesCubit = context.read<MessagesCubit>();
     chatCubit.disableNavigate();
-    chatCubit.getChatMembers(chatId: widget.id);
+    chatCubit.getChatMembers(chatId: widget.id, loadSilent: false);
     messagesCubit.loadMessages(chatId: widget.id, loadSilent: false);
     messagesCubit.getPinnedMessages(chatId: widget.id);
     getIt<ChatSocketService>().joinChat(widget.id);

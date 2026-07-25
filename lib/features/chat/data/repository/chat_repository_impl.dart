@@ -117,4 +117,32 @@ class ChatRepositoryImpl implements ChatRepository {
       return Left(mapExceptionToFailure(e));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> leaveChat(String chatId) async {
+    try {
+      final result = await _chatsRemoteDataSource.leaveChat(chatId);
+
+      return Right(result);
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> muteChat({
+    required String chatId,
+    required bool isMuted,
+  }) async {
+    try {
+      final result = await _chatsRemoteDataSource.muteChat(
+        chatId: chatId,
+        isMuted: isMuted,
+      );
+
+      return Right(result);
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
 }

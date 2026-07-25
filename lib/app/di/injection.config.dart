@@ -54,6 +54,10 @@ import 'package:chatting_app/features/chat/domain/usecases/get_chat_members_usec
     as _i223;
 import 'package:chatting_app/features/chat/domain/usecases/get_chat_usecase.dart'
     as _i415;
+import 'package:chatting_app/features/chat/domain/usecases/leave_chat_usecase.dart'
+    as _i618;
+import 'package:chatting_app/features/chat/domain/usecases/mute_chat_usecase.dart'
+    as _i481;
 import 'package:chatting_app/features/chat/domain/usecases/update_chat_usecase.dart'
     as _i998;
 import 'package:chatting_app/features/chat/presentation/cubit/cubit.dart'
@@ -62,6 +66,10 @@ import 'package:chatting_app/features/chats/data/data_sources/chats_remote_data_
     as _i423;
 import 'package:chatting_app/features/chats/data/repository/chats_repository_impl.dart'
     as _i252;
+import 'package:chatting_app/features/chats/data/socket/chats_socket_service.dart'
+    as _i156;
+import 'package:chatting_app/features/chats/data/socket/chats_socket_service_impl.dart'
+    as _i4;
 import 'package:chatting_app/features/chats/domain/repository/chats_repository.dart'
     as _i989;
 import 'package:chatting_app/features/chats/domain/usecases/load_chats_usecase.dart'
@@ -185,6 +193,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i226.ChatSocketService>(
       () => _i710.ChatSocketServiceImpl(gh<_i739.SocketService>()),
+    );
+    gh.lazySingleton<_i156.ChatsSocketService>(
+      () => _i4.ChatSocketServiceImpl(gh<_i739.SocketService>()),
     );
     gh.lazySingleton<_i155.ThemeRepository>(
       () => _i352.ThemeRepositoryImpl(
@@ -383,6 +394,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i415.GetChatUseCase>(
       () => _i415.GetChatUseCase(gh<_i91.ChatRepository>()),
     );
+    gh.lazySingleton<_i618.LeaveChatUseCase>(
+      () => _i618.LeaveChatUseCase(gh<_i91.ChatRepository>()),
+    );
+    gh.lazySingleton<_i481.MuteChatUseCase>(
+      () => _i481.MuteChatUseCase(gh<_i91.ChatRepository>()),
+    );
     gh.lazySingleton<_i998.UpdateChatUseCase>(
       () => _i998.UpdateChatUseCase(gh<_i91.ChatRepository>()),
     );
@@ -394,6 +411,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i919.CreateChatUseCase>(),
         gh<_i334.DeleteMemberUseCase>(),
         gh<_i926.AddMemberUseCase>(),
+        gh<_i226.ChatSocketService>(),
+        gh<_i481.MuteChatUseCase>(),
+        gh<_i618.LeaveChatUseCase>(),
       ),
     );
     return this;

@@ -1,4 +1,4 @@
-import '../../../../core/websocket/events/socket_event.dart';
+import '../../../../core/websocket/events/events.dart';
 
 abstract interface class ChatSocketService {
   Stream<SocketEvent> get events;
@@ -11,5 +11,13 @@ abstract interface class ChatSocketService {
 
   void stopTyping(String chatId);
 
-  void markRead(String messageId);
+  Stream<PresenceOnlineSocketEvent> get userOnline;
+
+  Stream<PresenceOfflineSocketEvent> get userOffline;
+
+  Stream<TypingStartedSocketEvent> get typingStarted;
+
+  Stream<TypingStoppedSocketEvent> get typingStopped;
+
+  Stream<ChatChangedSocketEvent> get chatChanged;
 }

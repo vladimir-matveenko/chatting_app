@@ -8,6 +8,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../../core/presentation/widgets/app_dialog.dart';
 import '../../../profile/presentation/widgets/user_avatar.dart';
+import 'user_online_indicator.dart';
 
 class MembersList extends StatelessWidget {
   const MembersList({
@@ -91,7 +92,6 @@ class MembersListItem extends StatelessWidget {
           mainAxisAlignment: .spaceBetween,
           children: [
             Row(
-              spacing: 8.0,
               mainAxisAlignment: .start,
               children: [
                 UserAvatar(
@@ -100,6 +100,9 @@ class MembersListItem extends StatelessWidget {
                   firstName: userName,
                   lastName: '',
                 ),
+                if (user.isOnline)
+                  const UserOnlineIndicator(baseUserAvatarSize: 30.0),
+                SizedBox(width: user.isOnline ? 4 : 12),
                 Text(userName, style: textTheme.bodyMedium),
               ],
             ),
