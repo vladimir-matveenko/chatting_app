@@ -18,6 +18,7 @@ _ChatMemberModel _$ChatMemberModelFromJson(Map<String, dynamic> json) =>
       displayName: json['displayName'] as String?,
       userName: json['userName'] as String,
       avatarUrl: json['avatarUrl'] as String?,
+      isOnline: json['isOnline'] as bool,
     );
 
 Map<String, dynamic> _$ChatMemberModelToJson(_ChatMemberModel instance) =>
@@ -32,6 +33,7 @@ Map<String, dynamic> _$ChatMemberModelToJson(_ChatMemberModel instance) =>
       'displayName': ?instance.displayName,
       'userName': instance.userName,
       'avatarUrl': ?instance.avatarUrl,
+      'isOnline': instance.isOnline,
     };
 
 const _$ChatMemberRoleEnumMap = {

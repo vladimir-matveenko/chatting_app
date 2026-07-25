@@ -1,8 +1,11 @@
 import 'package:chatting_app/app/constants/app_constants.dart';
+import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/core/presentation/widgets/scroll_up_wrapper.dart';
+import 'package:chatting_app/features/chat/domain/entity/chat_entity.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
+import 'package:chatting_app/features/profile/presentation/widgets/user_avatar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,13 +24,13 @@ class MessagesList extends StatelessWidget {
     required this.messages,
     required this.scrollController,
     required this.currentUserId,
-    required this.chatId,
+    required this.chat,
   });
 
   final List<MessageEntity> messages;
   final ScrollController scrollController;
   final String currentUserId;
-  final String chatId;
+  final ChatEntity chat;
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +81,7 @@ class MessagesList extends StatelessWidget {
                     isSelected:
                         state.showMenu &&
                         state.selectedMessage?.id == message.id,
+                    chatType: chat.type,
                     messageKey: messageKey,
                     message: message,
                     timeFormatter: timeFormatter,
@@ -97,7 +101,7 @@ class MessagesList extends StatelessWidget {
                           reactions: AppConstants.reactions,
                           onReactionSelected: (reaction) {
                             cubit.addReaction(
-                              chatId: chatId,
+                              chatId: chat.id,
                               messageId: message.id,
                               type: AppUtils.getReactionTypeBySymbol(reaction),
                             );
@@ -107,7 +111,7 @@ class MessagesList extends StatelessWidget {
                     },
                     onDeleteReactionTap: () {
                       cubit.deleteReaction(
-                        chatId: chatId,
+                        chatId: chat.id,
                         messageId: message.id,
                       );
                     },
@@ -135,7 +139,7 @@ class MessagesList extends StatelessWidget {
                       );
                       if (result) {
                         cubit.deleteMessage(
-                          chatId: chatId,
+                          chatId: chat.id,
                           messageId: state.selectedMessage?.id ?? '',
                         );
                       }
@@ -162,6 +166,8 @@ class ListItem extends StatelessWidget {
     required this.onDeleteReactionTap,
     this.isSelected = false,
     required this.timeFormatter,
+    required this.chatType,
+    this.markAsRead = false,
   });
 
   final GlobalKey messageKey;
@@ -174,12 +180,14 @@ class ListItem extends StatelessWidget {
   final VoidCallback onDeleteReactionTap;
   final bool isSelected;
   final DateFormat timeFormatter;
+  final ChatType chatType;
+  final bool markAsRead;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    final itsMe = currentUserId == message.senderId;
+    final itsMe = currentUserId == message.sender.id;
     final colors = theme.extension<AppSemanticColors>()!;
     final wasMessageChanged = message.createdAt != message.updatedAt;
 
@@ -203,48 +211,83 @@ class ListItem extends StatelessWidget {
                 Column(
                   spacing: 4.0,
                   children: [
-                    GestureDetector(
-                      key: messageKey,
-                      onTap: onReactionTap,
-                      onLongPress: itsMe ? onSelectMessageTap : null,
-                      child: Container(
-                        padding: const .all(8.0),
-                        decoration: BoxDecoration(
-                          border: itsMe
-                              ? null
-                              : .all(color: messageColor, width: 2.0),
-                          borderRadius: .circular(12.0),
-                          color: itsMe ? messageColor : null,
-                        ),
-                        child: Column(
-                          spacing: 8.0,
-                          crossAxisAlignment: .start,
-                          children: [
-                            if (wasMessageChanged)
-                              Text(
-                                'chatScreen.edited'.tr(),
-                                style: textTheme.bodySmall?.copyWith(
-                                  fontSize: 10,
-                                ),
-                              ),
-                            if (message.isDeleted)
-                              Icon(
-                                Icons.close,
-                                size: 16.0,
-                                color: theme.colorScheme.error,
-                              )
-                            else
-                              Text(
-                                message.body ?? '',
-                                style: textTheme.bodyMedium,
-                              ),
-                            Text(
-                              timeFormatter.format(message.updatedAt.toLocal()),
-                              style: textTheme.bodySmall,
+                    Row(
+                      mainAxisSize: .min,
+                      spacing: 8.0,
+                      children: [
+                        if (chatType == ChatType.group)
+                          UserAvatar(
+                            avatar: message.sender.avatarUrl ?? '',
+                            firstName:
+                                message.sender.displayName ??
+                                message.sender.userName,
+                          ),
+                        GestureDetector(
+                          key: messageKey,
+                          onTap: onReactionTap,
+                          onLongPress: itsMe ? onSelectMessageTap : null,
+                          child: Container(
+                            padding: const .all(8.0),
+                            decoration: BoxDecoration(
+                              border: itsMe
+                                  ? null
+                                  : .all(color: messageColor, width: 2.0),
+                              borderRadius: .circular(12.0),
+                              color: itsMe ? messageColor : null,
                             ),
-                          ],
+                            child: Column(
+                              spacing: 8.0,
+                              crossAxisAlignment: .start,
+                              children: [
+                                if (chatType == ChatType.group)
+                                  Text(
+                                    message.sender.displayName ??
+                                        message.sender.userName,
+                                    style: textTheme.bodyMedium?.copyWith(
+                                      color: theme.colorScheme.primary,
+                                    ),
+                                  ),
+                                if (message.isDeleted)
+                                  Icon(
+                                    Icons.close,
+                                    size: 16.0,
+                                    color: theme.colorScheme.error,
+                                  )
+                                else
+                                  Text(
+                                    message.body ?? '',
+                                    style: textTheme.bodyMedium,
+                                  ),
+                                Row(
+                                  mainAxisAlignment: .spaceBetween,
+                                  spacing: 8.0,
+                                  children: [
+                                    if (wasMessageChanged)
+                                      Text(
+                                        'chatScreen.edited'.tr(),
+                                        style: textTheme.bodySmall?.copyWith(
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    Text(
+                                      timeFormatter.format(
+                                        message.updatedAt.toLocal(),
+                                      ),
+                                      style: textTheme.bodySmall,
+                                    ),
+                                    if (markAsRead)
+                                      Icon(
+                                        Icons.done_all,
+                                        size: 12.0,
+                                        color: colors.success,
+                                      ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                     if (message.currentUserReaction != null)
                       GestureDetector(

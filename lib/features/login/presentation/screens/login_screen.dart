@@ -19,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late LoginCubit cubit;
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -35,7 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    context.read<LoginCubit>().setInitialParameters();
+    cubit = context.read<LoginCubit>();
+    cubit.setInitialParameters();
     _emailController.text = 'email@email.com';
     _passwordController.text = '1234567890';
     super.initState();
@@ -126,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
               context,
               message: state.error!,
               onClose: () {
-                context.read<LoginCubit>().disableError();
+                cubit.disableError();
               },
             );
           }

@@ -7,8 +7,6 @@ import 'package:chatting_app/core/websocket/events/message_read_socket_event.dar
 import 'package:chatting_app/core/websocket/events/message_unpinned_socket_event.dart';
 import 'package:chatting_app/core/websocket/events/message_updated_socket_event.dart';
 import 'package:chatting_app/core/websocket/events/reaction_updated_socket_event.dart';
-import 'package:chatting_app/core/websocket/events/typing_started_socket_event.dart';
-import 'package:chatting_app/core/websocket/events/typing_stopped_socket_event.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/websocket/events/socket_event.dart';
@@ -54,14 +52,6 @@ class MessagesSocketServiceImpl implements MessagesSocketService {
       _events<MessageUnpinnedSocketEvent>();
 
   @override
-  Stream<TypingStartedSocketEvent> get typingStarted =>
-      _events<TypingStartedSocketEvent>();
-
-  @override
-  Stream<TypingStoppedSocketEvent> get typingStopped =>
-      _events<TypingStoppedSocketEvent>();
-
-  @override
   void createMessage({required String chatId, required String messageId}) {
     _socket.emit(SocketEvents.messageCreated, chatId);
   }
@@ -82,16 +72,6 @@ class MessagesSocketServiceImpl implements MessagesSocketService {
       'chatId': chatId,
       'messageId': messageId,
     });
-  }
-
-  @override
-  void startTyping(String chatId) {
-    _socket.emit(SocketEvents.typingStart, chatId);
-  }
-
-  @override
-  void stopTyping(String chatId) {
-    _socket.emit(SocketEvents.typingStop, chatId);
   }
 
   @override

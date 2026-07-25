@@ -34,4 +34,11 @@ abstract class ChatRepository {
     required String chatId,
     required List<String> memberIds,
   });
+
+  Future<Either<Failure, bool>> muteChat({
+    required String chatId,
+    required bool isMuted,
+  });
+
+  Future<Either<Failure, bool>> leaveChat(String chatId);
 }

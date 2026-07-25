@@ -74,7 +74,15 @@
       "remove": "Remove"
     },
     "owner": "Owner",
-    "pinnedMessage": "Pinned message"
+    "pinnedMessage": "Pinned message",
+    "online": "Online",
+    "offline": "Offline",
+    "muted": "Muted",
+    "unmuted": "Unmuted",
+    "leavingChat": {
+      "leaveChat": "Leave chat",
+      "areYouSure": "Are you sure you want to leave chat?"
+    }
   },
   "editChatScreen": {
     "addMember": "Add member"
@@ -100,6 +108,7 @@
     "minPasLength": "Min length is 8 chars"
   },
   "errors": {
+    "somethingWentWrong": "Oops! Something went wrong",
     "authError": "Auth error",
     "wrongEmailOrPassword": "Wrong email or password",
     "serverError": "Server error",

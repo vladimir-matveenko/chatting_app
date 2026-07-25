@@ -1,3 +1,4 @@
+import 'package:chatting_app/features/messages/data/models/message_sender_model.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_reply_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -10,7 +11,7 @@ part 'message_reply_model.g.dart';
 abstract class MessageReplyModel with _$MessageReplyModel {
   const factory MessageReplyModel({
     required String id,
-    required String senderId,
+    required MessageSenderModel sender,
     required MessageType type,
     String? body,
     DateTime? deletedAt,
@@ -23,7 +24,7 @@ abstract class MessageReplyModel with _$MessageReplyModel {
 extension MessageReplyModelExt on MessageReplyModel {
   MessageReplyEntity toEntity() => MessageReplyEntity(
     id: id,
-    senderId: senderId,
+    sender: sender.toEntity(),
     type: type,
     body: body,
     deletedAt: deletedAt,

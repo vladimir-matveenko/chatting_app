@@ -23,7 +23,7 @@ class ChatList extends StatelessWidget {
         return ListItem(
           key: ValueKey(chat.id),
           onTap: () {
-            cubit.getChatById(chat.id);
+            cubit.getChatById(chat.id, loadSilent: false);
             context.go('${AppRoutes.chats}/${chat.id}');
           },
           chat: chat,

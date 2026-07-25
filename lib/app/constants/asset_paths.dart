@@ -7,4 +7,5 @@ class AssetPaths {
   static const congratsAnimation = 'assets/images/congrats_animation.gif';
   static const flagRu = 'assets/svg_icons/flag_ru.svg';
   static const flagUs = 'assets/svg_icons/flag_us.svg';
+  static const somethingWentWrong = 'assets/images/something_went_wrong.png';
 }

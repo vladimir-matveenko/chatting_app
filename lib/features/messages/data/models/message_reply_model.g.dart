@@ -9,7 +9,9 @@ part of 'message_reply_model.dart';
 _MessageReplyModel _$MessageReplyModelFromJson(Map<String, dynamic> json) =>
     _MessageReplyModel(
       id: json['id'] as String,
-      senderId: json['senderId'] as String,
+      sender: MessageSenderModel.fromJson(
+        json['sender'] as Map<String, dynamic>,
+      ),
       type: $enumDecode(_$MessageTypeEnumMap, json['type']),
       body: json['body'] as String?,
       deletedAt: json['deletedAt'] == null
@@ -20,7 +22,7 @@ _MessageReplyModel _$MessageReplyModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$MessageReplyModelToJson(_MessageReplyModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'senderId': instance.senderId,
+      'sender': instance.sender.toJson(),
       'type': _$MessageTypeEnumMap[instance.type]!,
       'body': ?instance.body,
       'deletedAt': ?instance.deletedAt?.toIso8601String(),

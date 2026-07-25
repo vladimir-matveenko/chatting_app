@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:chatting_app/features/messages/domain/usecases/add_reaction_usecase.dart';
@@ -67,12 +66,7 @@ class MessagesCubit extends Cubit<MessagesState> {
       _messagesSocketService.reactionUpdated.listen(
         (event) async => _onReactionUpdated(event),
       ),
-      _messagesSocketService.typingStarted.listen(
-        (event) async => _onTypingStarted(event),
-      ),
-      _messagesSocketService.typingStopped.listen(
-        (event) async => _onTypingStopped(event),
-      ),
+
       _messagesSocketService.messagePinned.listen(
         (event) async => _onMessagePinned(event),
       ),
@@ -104,19 +98,11 @@ class MessagesCubit extends Cubit<MessagesState> {
   }
 
   void _onMessageRead(MessageReadSocketEvent event) async {
-    log('Message ${event.messageId} has read');
+    await loadMessages(chatId: event.chatId);
   }
 
   void _onReactionUpdated(ReactionUpdatedSocketEvent event) async {
     await loadMessages(chatId: event.message.chatId);
-  }
-
-  void _onTypingStarted(TypingStartedSocketEvent event) {
-    // TODO(): add action
-  }
-
-  void _onTypingStopped(TypingStoppedSocketEvent event) {
-    // TODO(): add action
   }
 
   Future<void> _onMessagePinned(MessagePinnedSocketEvent event) async {
@@ -131,9 +117,7 @@ class MessagesCubit extends Cubit<MessagesState> {
     bool loadSilent = true,
     required String chatId,
   }) async {
-    if (!loadSilent) {
-      emit(state.copyWith(isLoading: true));
-    }
+    emit(state.copyWith(isLoading: !loadSilent, error: ''));
     final result = await _loadMessagesUseCase(
       LoadMessagesParams(chatId: chatId),
     );
@@ -141,7 +125,7 @@ class MessagesCubit extends Cubit<MessagesState> {
       (l) {
         emit(
           state.copyWith(
-            error: AppUtils.parseFailureMessage(l),
+            error: AppUtils.parseFailureMessage(l) ?? DateTime.now().toString(),
             isLoading: false,
           ),
         );
@@ -166,19 +150,14 @@ class MessagesCubit extends Cubit<MessagesState> {
         body: body,
       ),
     );
-    result.fold(
-      (l) {
-        emit(
-          state.copyWith(
-            error: AppUtils.parseFailureMessage(l),
-            isLoading: false,
-          ),
-        );
-      },
-      (r) {
-        loadMessages(chatId: chatId);
-      },
-    );
+    result.fold((l) {
+      emit(
+        state.copyWith(
+          error: AppUtils.parseFailureMessage(l),
+          isLoading: false,
+        ),
+      );
+    }, (r) {});
   }
 
   Future<void> updateMessage({
@@ -189,19 +168,14 @@ class MessagesCubit extends Cubit<MessagesState> {
     final result = await _updateMessageUseCase(
       UpdateMessageParams(messageId: messageId, body: body),
     );
-    result.fold(
-      (l) {
-        emit(
-          state.copyWith(
-            error: AppUtils.parseFailureMessage(l),
-            isLoading: false,
-          ),
-        );
-      },
-      (r) {
-        loadMessages(chatId: chatId);
-      },
-    );
+    result.fold((l) {
+      emit(
+        state.copyWith(
+          error: AppUtils.parseFailureMessage(l),
+          isLoading: false,
+        ),
+      );
+    }, (r) {});
   }
 
   Future<void> deleteMessage({
@@ -211,19 +185,14 @@ class MessagesCubit extends Cubit<MessagesState> {
     final result = await _deleteMessageUseCase(
       DeleteMessageParams(messageId: messageId),
     );
-    result.fold(
-      (l) {
-        emit(
-          state.copyWith(
-            error: AppUtils.parseFailureMessage(l),
-            isLoading: false,
-          ),
-        );
-      },
-      (r) {
-        loadMessages(chatId: chatId);
-      },
-    );
+    result.fold((l) {
+      emit(
+        state.copyWith(
+          error: AppUtils.parseFailureMessage(l),
+          isLoading: false,
+        ),
+      );
+    }, (r) {});
   }
 
   Future<void> addReaction({
@@ -234,19 +203,14 @@ class MessagesCubit extends Cubit<MessagesState> {
     final result = await _addReactionUseCase(
       AddReactionParams(messageId: messageId, type: type),
     );
-    result.fold(
-      (l) {
-        emit(
-          state.copyWith(
-            error: AppUtils.parseFailureMessage(l),
-            isLoading: false,
-          ),
-        );
-      },
-      (r) {
-        loadMessages(chatId: chatId);
-      },
-    );
+    result.fold((l) {
+      emit(
+        state.copyWith(
+          error: AppUtils.parseFailureMessage(l),
+          isLoading: false,
+        ),
+      );
+    }, (r) {});
   }
 
   Future<void> deleteReaction({
@@ -256,19 +220,14 @@ class MessagesCubit extends Cubit<MessagesState> {
     final result = await _deleteReactionUseCase(
       DeleteReactionParams(messageId: messageId),
     );
-    result.fold(
-      (l) {
-        emit(
-          state.copyWith(
-            error: AppUtils.parseFailureMessage(l),
-            isLoading: false,
-          ),
-        );
-      },
-      (r) {
-        loadMessages(chatId: chatId);
-      },
-    );
+    result.fold((l) {
+      emit(
+        state.copyWith(
+          error: AppUtils.parseFailureMessage(l),
+          isLoading: false,
+        ),
+      );
+    }, (r) {});
   }
 
   Future<void> getPinnedMessages({
@@ -298,36 +257,26 @@ class MessagesCubit extends Cubit<MessagesState> {
 
   Future<void> pinMessage(String messageId) async {
     final result = await _pinMessageUseCase(PinMessageParams(messageId));
-    result.fold(
-      (l) {
-        emit(
-          state.copyWith(
-            error: AppUtils.parseFailureMessage(l),
-            isLoading: false,
-          ),
-        );
-      },
-      (r) {
-        emit(state.copyWith(isLoading: false));
-      },
-    );
+    result.fold((l) {
+      emit(
+        state.copyWith(
+          error: AppUtils.parseFailureMessage(l),
+          isLoading: false,
+        ),
+      );
+    }, (r) {});
   }
 
   Future<void> unpinMessage(String messageId) async {
     final result = await _unpinMessageUseCase(UnpinMessageParams(messageId));
-    result.fold(
-      (l) {
-        emit(
-          state.copyWith(
-            error: AppUtils.parseFailureMessage(l),
-            isLoading: false,
-          ),
-        );
-      },
-      (r) {
-        emit(state.copyWith(isLoading: false));
-      },
-    );
+    result.fold((l) {
+      emit(
+        state.copyWith(
+          error: AppUtils.parseFailureMessage(l),
+          isLoading: false,
+        ),
+      );
+    }, (r) {});
   }
 
   Future<void> selectMessage(MessageEntity selectedMessage) async {

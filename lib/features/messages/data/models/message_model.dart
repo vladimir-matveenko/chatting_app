@@ -1,5 +1,6 @@
 import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/features/messages/data/models/message_reaction_summary_model.dart';
+import 'package:chatting_app/features/messages/data/models/message_sender_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../app/constants/app_enums.dart';
@@ -16,7 +17,7 @@ abstract class MessageModel with _$MessageModel {
   const factory MessageModel({
     required String id,
     required String chatId,
-    required String senderId,
+    required MessageSenderModel sender,
     required MessageType type,
     String? body,
     String? replyToId,
@@ -28,6 +29,7 @@ abstract class MessageModel with _$MessageModel {
     required List<MessageReactionSummaryModel> reactions,
     MessageReplyModel? reply,
     ReactionType? currentUserReaction,
+    required String readCount,
   }) = _MessageModel;
 
   factory MessageModel.fromJson(Map<String, dynamic> json) =>
@@ -42,7 +44,7 @@ extension MessageModelExt on MessageModel {
   MessageEntity toEntity() => MessageEntity(
     id: id,
     chatId: chatId,
-    senderId: senderId,
+    sender: sender.toEntity(),
     type: type,
     body: body,
     replyToId: replyToId,
@@ -53,5 +55,6 @@ extension MessageModelExt on MessageModel {
     reactions: reactions.map((e) => e.toEntity()).toList(),
     currentUserReaction: currentUserReaction,
     reply: reply?.toEntity(),
+    readCount: int.tryParse(readCount) ?? 0,
   );
 }

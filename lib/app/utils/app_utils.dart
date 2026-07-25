@@ -11,8 +11,14 @@ class AppUtils {
     if (failure is CacheFailure) {
       return 'errors.cacheError'.tr();
     }
-    if (failure is CacheFailure) {
-      return 'errors.assetError'.tr();
+    if (failure is ServerFailure) {
+      return 'errors.serverError'.tr();
+    }
+    if (failure is TimeoutFailure) {
+      return 'errors.timeout'.tr();
+    }
+    if (failure is TimeoutFailure) {
+      return 'errors.timeout'.tr();
     }
     if (failure is UnknownFailure) {
       return failure.message;

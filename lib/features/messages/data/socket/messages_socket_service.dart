@@ -17,10 +17,6 @@ abstract interface class MessagesSocketService {
 
   void unpinMessage({required String chatId, required String messageId});
 
-  void startTyping(String chatId);
-
-  void stopTyping(String chatId);
-
   Stream<MessageCreatedSocketEvent> get messageCreated;
 
   Stream<MessageUpdatedSocketEvent> get messageUpdated;
@@ -34,8 +30,4 @@ abstract interface class MessagesSocketService {
   Stream<MessagePinnedSocketEvent> get messagePinned;
 
   Stream<MessageUnpinnedSocketEvent> get messageUnpinned;
-
-  Stream<TypingStartedSocketEvent> get typingStarted;
-
-  Stream<TypingStoppedSocketEvent> get typingStopped;
 }

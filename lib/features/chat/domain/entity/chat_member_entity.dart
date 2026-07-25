@@ -18,6 +18,7 @@ abstract class ChatMemberEntity with _$ChatMemberEntity {
     String? displayName,
     required String userName,
     String? avatarUrl,
+    required bool isOnline,
   }) = _ChatMemberEntity;
 
   factory ChatMemberEntity.fromJson(Map<String, dynamic> json) =>

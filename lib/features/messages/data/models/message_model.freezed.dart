@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MessageModel {
 
- String get id; String get chatId; String get senderId; MessageType get type; String? get body; String? get replyToId; DateTime get createdAt; DateTime get updatedAt; DateTime? get deletedAt;@JsonKey(defaultValue: false) bool get isDeleted;@JsonKey(defaultValue: []) List<MessageReactionSummaryModel> get reactions; MessageReplyModel? get reply; ReactionType? get currentUserReaction;
+ String get id; String get chatId; MessageSenderModel get sender; MessageType get type; String? get body; String? get replyToId; DateTime get createdAt; DateTime get updatedAt; DateTime? get deletedAt;@JsonKey(defaultValue: false) bool get isDeleted;@JsonKey(defaultValue: []) List<MessageReactionSummaryModel> get reactions; MessageReplyModel? get reply; ReactionType? get currentUserReaction; String get readCount;
 /// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $MessageModelCopyWith<MessageModel> get copyWith => _$MessageModelCopyWithImpl<M
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.replyToId, replyToId) || other.replyToId == replyToId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.isDeleted, isDeleted) || other.isDeleted == isDeleted)&&const DeepCollectionEquality().equals(other.reactions, reactions)&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.currentUserReaction, currentUserReaction) || other.currentUserReaction == currentUserReaction));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.sender, sender) || other.sender == sender)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.replyToId, replyToId) || other.replyToId == replyToId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.isDeleted, isDeleted) || other.isDeleted == isDeleted)&&const DeepCollectionEquality().equals(other.reactions, reactions)&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.currentUserReaction, currentUserReaction) || other.currentUserReaction == currentUserReaction)&&(identical(other.readCount, readCount) || other.readCount == readCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,chatId,senderId,type,body,replyToId,createdAt,updatedAt,deletedAt,isDeleted,const DeepCollectionEquality().hash(reactions),reply,currentUserReaction);
+int get hashCode => Object.hash(runtimeType,id,chatId,sender,type,body,replyToId,createdAt,updatedAt,deletedAt,isDeleted,const DeepCollectionEquality().hash(reactions),reply,currentUserReaction,readCount);
 
 @override
 String toString() {
-  return 'MessageModel(id: $id, chatId: $chatId, senderId: $senderId, type: $type, body: $body, replyToId: $replyToId, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, isDeleted: $isDeleted, reactions: $reactions, reply: $reply, currentUserReaction: $currentUserReaction)';
+  return 'MessageModel(id: $id, chatId: $chatId, sender: $sender, type: $type, body: $body, replyToId: $replyToId, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, isDeleted: $isDeleted, reactions: $reactions, reply: $reply, currentUserReaction: $currentUserReaction, readCount: $readCount)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $MessageModelCopyWith<$Res>  {
   factory $MessageModelCopyWith(MessageModel value, $Res Function(MessageModel) _then) = _$MessageModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String chatId, String senderId, MessageType type, String? body, String? replyToId, DateTime createdAt, DateTime updatedAt, DateTime? deletedAt,@JsonKey(defaultValue: false) bool isDeleted,@JsonKey(defaultValue: []) List<MessageReactionSummaryModel> reactions, MessageReplyModel? reply, ReactionType? currentUserReaction
+ String id, String chatId, MessageSenderModel sender, MessageType type, String? body, String? replyToId, DateTime createdAt, DateTime updatedAt, DateTime? deletedAt,@JsonKey(defaultValue: false) bool isDeleted,@JsonKey(defaultValue: []) List<MessageReactionSummaryModel> reactions, MessageReplyModel? reply, ReactionType? currentUserReaction, String readCount
 });
 
 
-$MessageReplyModelCopyWith<$Res>? get reply;
+$MessageSenderModelCopyWith<$Res> get sender;$MessageReplyModelCopyWith<$Res>? get reply;
 
 }
 /// @nodoc
@@ -65,12 +65,12 @@ class _$MessageModelCopyWithImpl<$Res>
 
 /// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? chatId = null,Object? senderId = null,Object? type = null,Object? body = freezed,Object? replyToId = freezed,Object? createdAt = null,Object? updatedAt = null,Object? deletedAt = freezed,Object? isDeleted = null,Object? reactions = null,Object? reply = freezed,Object? currentUserReaction = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? chatId = null,Object? sender = null,Object? type = null,Object? body = freezed,Object? replyToId = freezed,Object? createdAt = null,Object? updatedAt = null,Object? deletedAt = freezed,Object? isDeleted = null,Object? reactions = null,Object? reply = freezed,Object? currentUserReaction = freezed,Object? readCount = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
-as String,senderId: null == senderId ? _self.senderId : senderId // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,sender: null == sender ? _self.sender : sender // ignore: cast_nullable_to_non_nullable
+as MessageSenderModel,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as MessageType,body: freezed == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
 as String?,replyToId: freezed == replyToId ? _self.replyToId : replyToId // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -80,10 +80,20 @@ as DateTime?,isDeleted: null == isDeleted ? _self.isDeleted : isDeleted // ignor
 as bool,reactions: null == reactions ? _self.reactions : reactions // ignore: cast_nullable_to_non_nullable
 as List<MessageReactionSummaryModel>,reply: freezed == reply ? _self.reply : reply // ignore: cast_nullable_to_non_nullable
 as MessageReplyModel?,currentUserReaction: freezed == currentUserReaction ? _self.currentUserReaction : currentUserReaction // ignore: cast_nullable_to_non_nullable
-as ReactionType?,
+as ReactionType?,readCount: null == readCount ? _self.readCount : readCount // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 /// Create a copy of MessageModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MessageSenderModelCopyWith<$Res> get sender {
+  
+  return $MessageSenderModelCopyWith<$Res>(_self.sender, (value) {
+    return _then(_self.copyWith(sender: value));
+  });
+}/// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -177,10 +187,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String chatId,  String senderId,  MessageType type,  String? body,  String? replyToId,  DateTime createdAt,  DateTime updatedAt,  DateTime? deletedAt, @JsonKey(defaultValue: false)  bool isDeleted, @JsonKey(defaultValue: [])  List<MessageReactionSummaryModel> reactions,  MessageReplyModel? reply,  ReactionType? currentUserReaction)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String chatId,  MessageSenderModel sender,  MessageType type,  String? body,  String? replyToId,  DateTime createdAt,  DateTime updatedAt,  DateTime? deletedAt, @JsonKey(defaultValue: false)  bool isDeleted, @JsonKey(defaultValue: [])  List<MessageReactionSummaryModel> reactions,  MessageReplyModel? reply,  ReactionType? currentUserReaction,  String readCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MessageModel() when $default != null:
-return $default(_that.id,_that.chatId,_that.senderId,_that.type,_that.body,_that.replyToId,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.isDeleted,_that.reactions,_that.reply,_that.currentUserReaction);case _:
+return $default(_that.id,_that.chatId,_that.sender,_that.type,_that.body,_that.replyToId,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.isDeleted,_that.reactions,_that.reply,_that.currentUserReaction,_that.readCount);case _:
   return orElse();
 
 }
@@ -198,10 +208,10 @@ return $default(_that.id,_that.chatId,_that.senderId,_that.type,_that.body,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String chatId,  String senderId,  MessageType type,  String? body,  String? replyToId,  DateTime createdAt,  DateTime updatedAt,  DateTime? deletedAt, @JsonKey(defaultValue: false)  bool isDeleted, @JsonKey(defaultValue: [])  List<MessageReactionSummaryModel> reactions,  MessageReplyModel? reply,  ReactionType? currentUserReaction)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String chatId,  MessageSenderModel sender,  MessageType type,  String? body,  String? replyToId,  DateTime createdAt,  DateTime updatedAt,  DateTime? deletedAt, @JsonKey(defaultValue: false)  bool isDeleted, @JsonKey(defaultValue: [])  List<MessageReactionSummaryModel> reactions,  MessageReplyModel? reply,  ReactionType? currentUserReaction,  String readCount)  $default,) {final _that = this;
 switch (_that) {
 case _MessageModel():
-return $default(_that.id,_that.chatId,_that.senderId,_that.type,_that.body,_that.replyToId,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.isDeleted,_that.reactions,_that.reply,_that.currentUserReaction);case _:
+return $default(_that.id,_that.chatId,_that.sender,_that.type,_that.body,_that.replyToId,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.isDeleted,_that.reactions,_that.reply,_that.currentUserReaction,_that.readCount);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -218,10 +228,10 @@ return $default(_that.id,_that.chatId,_that.senderId,_that.type,_that.body,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String chatId,  String senderId,  MessageType type,  String? body,  String? replyToId,  DateTime createdAt,  DateTime updatedAt,  DateTime? deletedAt, @JsonKey(defaultValue: false)  bool isDeleted, @JsonKey(defaultValue: [])  List<MessageReactionSummaryModel> reactions,  MessageReplyModel? reply,  ReactionType? currentUserReaction)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String chatId,  MessageSenderModel sender,  MessageType type,  String? body,  String? replyToId,  DateTime createdAt,  DateTime updatedAt,  DateTime? deletedAt, @JsonKey(defaultValue: false)  bool isDeleted, @JsonKey(defaultValue: [])  List<MessageReactionSummaryModel> reactions,  MessageReplyModel? reply,  ReactionType? currentUserReaction,  String readCount)?  $default,) {final _that = this;
 switch (_that) {
 case _MessageModel() when $default != null:
-return $default(_that.id,_that.chatId,_that.senderId,_that.type,_that.body,_that.replyToId,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.isDeleted,_that.reactions,_that.reply,_that.currentUserReaction);case _:
+return $default(_that.id,_that.chatId,_that.sender,_that.type,_that.body,_that.replyToId,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.isDeleted,_that.reactions,_that.reply,_that.currentUserReaction,_that.readCount);case _:
   return null;
 
 }
@@ -233,12 +243,12 @@ return $default(_that.id,_that.chatId,_that.senderId,_that.type,_that.body,_that
 @JsonSerializable()
 
 class _MessageModel extends MessageModel {
-  const _MessageModel({required this.id, required this.chatId, required this.senderId, required this.type, this.body, this.replyToId, required this.createdAt, required this.updatedAt, this.deletedAt, @JsonKey(defaultValue: false) required this.isDeleted, @JsonKey(defaultValue: []) required final  List<MessageReactionSummaryModel> reactions, this.reply, this.currentUserReaction}): _reactions = reactions,super._();
+  const _MessageModel({required this.id, required this.chatId, required this.sender, required this.type, this.body, this.replyToId, required this.createdAt, required this.updatedAt, this.deletedAt, @JsonKey(defaultValue: false) required this.isDeleted, @JsonKey(defaultValue: []) required final  List<MessageReactionSummaryModel> reactions, this.reply, this.currentUserReaction, required this.readCount}): _reactions = reactions,super._();
   factory _MessageModel.fromJson(Map<String, dynamic> json) => _$MessageModelFromJson(json);
 
 @override final  String id;
 @override final  String chatId;
-@override final  String senderId;
+@override final  MessageSenderModel sender;
 @override final  MessageType type;
 @override final  String? body;
 @override final  String? replyToId;
@@ -255,6 +265,7 @@ class _MessageModel extends MessageModel {
 
 @override final  MessageReplyModel? reply;
 @override final  ReactionType? currentUserReaction;
+@override final  String readCount;
 
 /// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
@@ -269,16 +280,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.replyToId, replyToId) || other.replyToId == replyToId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.isDeleted, isDeleted) || other.isDeleted == isDeleted)&&const DeepCollectionEquality().equals(other._reactions, _reactions)&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.currentUserReaction, currentUserReaction) || other.currentUserReaction == currentUserReaction));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.sender, sender) || other.sender == sender)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.replyToId, replyToId) || other.replyToId == replyToId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.isDeleted, isDeleted) || other.isDeleted == isDeleted)&&const DeepCollectionEquality().equals(other._reactions, _reactions)&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.currentUserReaction, currentUserReaction) || other.currentUserReaction == currentUserReaction)&&(identical(other.readCount, readCount) || other.readCount == readCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,chatId,senderId,type,body,replyToId,createdAt,updatedAt,deletedAt,isDeleted,const DeepCollectionEquality().hash(_reactions),reply,currentUserReaction);
+int get hashCode => Object.hash(runtimeType,id,chatId,sender,type,body,replyToId,createdAt,updatedAt,deletedAt,isDeleted,const DeepCollectionEquality().hash(_reactions),reply,currentUserReaction,readCount);
 
 @override
 String toString() {
-  return 'MessageModel(id: $id, chatId: $chatId, senderId: $senderId, type: $type, body: $body, replyToId: $replyToId, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, isDeleted: $isDeleted, reactions: $reactions, reply: $reply, currentUserReaction: $currentUserReaction)';
+  return 'MessageModel(id: $id, chatId: $chatId, sender: $sender, type: $type, body: $body, replyToId: $replyToId, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, isDeleted: $isDeleted, reactions: $reactions, reply: $reply, currentUserReaction: $currentUserReaction, readCount: $readCount)';
 }
 
 
@@ -289,11 +300,11 @@ abstract mixin class _$MessageModelCopyWith<$Res> implements $MessageModelCopyWi
   factory _$MessageModelCopyWith(_MessageModel value, $Res Function(_MessageModel) _then) = __$MessageModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String chatId, String senderId, MessageType type, String? body, String? replyToId, DateTime createdAt, DateTime updatedAt, DateTime? deletedAt,@JsonKey(defaultValue: false) bool isDeleted,@JsonKey(defaultValue: []) List<MessageReactionSummaryModel> reactions, MessageReplyModel? reply, ReactionType? currentUserReaction
+ String id, String chatId, MessageSenderModel sender, MessageType type, String? body, String? replyToId, DateTime createdAt, DateTime updatedAt, DateTime? deletedAt,@JsonKey(defaultValue: false) bool isDeleted,@JsonKey(defaultValue: []) List<MessageReactionSummaryModel> reactions, MessageReplyModel? reply, ReactionType? currentUserReaction, String readCount
 });
 
 
-@override $MessageReplyModelCopyWith<$Res>? get reply;
+@override $MessageSenderModelCopyWith<$Res> get sender;@override $MessageReplyModelCopyWith<$Res>? get reply;
 
 }
 /// @nodoc
@@ -306,12 +317,12 @@ class __$MessageModelCopyWithImpl<$Res>
 
 /// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? chatId = null,Object? senderId = null,Object? type = null,Object? body = freezed,Object? replyToId = freezed,Object? createdAt = null,Object? updatedAt = null,Object? deletedAt = freezed,Object? isDeleted = null,Object? reactions = null,Object? reply = freezed,Object? currentUserReaction = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? chatId = null,Object? sender = null,Object? type = null,Object? body = freezed,Object? replyToId = freezed,Object? createdAt = null,Object? updatedAt = null,Object? deletedAt = freezed,Object? isDeleted = null,Object? reactions = null,Object? reply = freezed,Object? currentUserReaction = freezed,Object? readCount = null,}) {
   return _then(_MessageModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
-as String,senderId: null == senderId ? _self.senderId : senderId // ignore: cast_nullable_to_non_nullable
-as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
+as String,sender: null == sender ? _self.sender : sender // ignore: cast_nullable_to_non_nullable
+as MessageSenderModel,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as MessageType,body: freezed == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
 as String?,replyToId: freezed == replyToId ? _self.replyToId : replyToId // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -321,11 +332,21 @@ as DateTime?,isDeleted: null == isDeleted ? _self.isDeleted : isDeleted // ignor
 as bool,reactions: null == reactions ? _self._reactions : reactions // ignore: cast_nullable_to_non_nullable
 as List<MessageReactionSummaryModel>,reply: freezed == reply ? _self.reply : reply // ignore: cast_nullable_to_non_nullable
 as MessageReplyModel?,currentUserReaction: freezed == currentUserReaction ? _self.currentUserReaction : currentUserReaction // ignore: cast_nullable_to_non_nullable
-as ReactionType?,
+as ReactionType?,readCount: null == readCount ? _self.readCount : readCount // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
 /// Create a copy of MessageModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$MessageSenderModelCopyWith<$Res> get sender {
+  
+  return $MessageSenderModelCopyWith<$Res>(_self.sender, (value) {
+    return _then(_self.copyWith(sender: value));
+  });
+}/// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')

@@ -20,6 +20,7 @@ abstract class ChatMemberModel with _$ChatMemberModel {
     String? displayName,
     required String userName,
     String? avatarUrl,
+    required bool isOnline,
   }) = _ChatMemberModel;
 
   factory ChatMemberModel.fromJson(Map<String, dynamic> json) =>
@@ -42,5 +43,6 @@ extension ChatMemberModelExt on ChatMemberModel {
     displayName: displayName,
     userName: userName,
     avatarUrl: avatarUrl,
+    isOnline: isOnline,
   );
 }

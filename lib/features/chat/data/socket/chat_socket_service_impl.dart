@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/websocket/events/socket_event.dart';
+import '../../../../core/websocket/events/events.dart';
 import '../../../../core/websocket/socket_events.dart';
 import '../../../../core/websocket/socket_service.dart';
 import 'chat_socket_service.dart';
@@ -21,6 +21,7 @@ class ChatSocketServiceImpl implements ChatSocketService {
     if (_currentChatId == chatId) {
       return;
     }
+    _currentChatId = chatId;
     _socket.emit(SocketEvents.joinChat, chatId);
   }
 
@@ -43,10 +44,26 @@ class ChatSocketServiceImpl implements ChatSocketService {
   }
 
   @override
-  void markRead({required String chatId, required String messageId}) {
-    _socket.emit(SocketEvents.messageRead, {
-      'chatId': chatId,
-      'messageId': messageId,
-    });
+  Stream<TypingStartedSocketEvent> get typingStarted =>
+      _events<TypingStartedSocketEvent>();
+
+  @override
+  Stream<TypingStoppedSocketEvent> get typingStopped =>
+      _events<TypingStoppedSocketEvent>();
+
+  @override
+  Stream<PresenceOnlineSocketEvent> get userOnline =>
+      _events<PresenceOnlineSocketEvent>();
+
+  @override
+  Stream<PresenceOfflineSocketEvent> get userOffline =>
+      _events<PresenceOfflineSocketEvent>();
+
+  @override
+  Stream<ChatChangedSocketEvent> get chatChanged =>
+      _events<ChatChangedSocketEvent>();
+
+  Stream<T> _events<T extends SocketEvent>() {
+    return _socket.socketEvents.where((event) => event is T).cast<T>();
   }
 }

@@ -74,7 +74,15 @@
       "remove": "Удалить"
     },
     "owner": "Владелец",
-    "pinnedMessage": "Закрепленное сообщение"
+    "pinnedMessage": "Закрепленное сообщение",
+    "online": "В сети",
+    "offline": "Не в сети",
+    "muted": "Звук выкл.",
+    "unmuted": "Звук вкл.",
+    "leavingChat": {
+      "leaveChat": "Выйти из чата",
+      "areYouSure": "Вы уверены, что Вы хотите покинуть чат?"
+    }
   },
   "editChatScreen": {
     "addMember": "Добавить участника"
@@ -100,6 +108,7 @@
     "minPasLength": "Минимальная длина 8 символов"
   },
   "errors": {
+    "somethingWentWrong": "Ой! Что-то пошло не так",
     "authError": "Ошибка аутентификации",
     "wrongEmailOrPassword": "Неверный email или пароль",
     "serverError": "Ошибка сервера",

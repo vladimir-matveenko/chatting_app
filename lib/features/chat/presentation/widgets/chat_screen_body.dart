@@ -1,3 +1,4 @@
+import 'package:chatting_app/features/chat/domain/entity/chat_entity.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/chat_participants_bar.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/pinned_messages_block.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
@@ -6,48 +7,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/constants/app_enums.dart';
-import '../../../../app/di/injection.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
-import '../../../../core/presentation/widgets/app_message.dart';
 import '../../../messages/presentation/widget/message_bar.dart';
 import '../../../messages/presentation/widget/messages_list.dart';
-import '../../../profile/domain/repository/profile_repository.dart';
 
-class ChatScreenBody extends StatefulWidget {
-  const ChatScreenBody({super.key, required this.chatId});
+class ChatScreenBody extends StatelessWidget {
+  const ChatScreenBody({
+    super.key,
+    required this.chat,
+    required this.scrollController,
+    required this.messageController,
+    required this.currentUserId,
+  });
 
-  final String chatId;
-
-  @override
-  State<ChatScreenBody> createState() => _ChatScreenBodyState();
-}
-
-class _ChatScreenBodyState extends State<ChatScreenBody> {
-  final _userProfile = getIt<ProfileRepository>().profile;
-  late String currentUserId;
-  late MessagesCubit cubit;
-  final _scrollController = ScrollController();
-  final _messageController = TextEditingController();
+  final ChatEntity chat;
+  final ScrollController scrollController;
+  final TextEditingController messageController;
+  final String currentUserId;
 
   void _sendMessage(BuildContext context, {String? messageId}) {
-    if (_messageController.text.trim().isEmpty) return;
+    if (messageController.text.trim().isEmpty) return;
 
     if (messageId != null) {
-      cubit.updateMessage(
-        chatId: widget.chatId,
+      context.read<MessagesCubit>().updateMessage(
+        chatId: chat.id,
         messageId: messageId,
-        body: _messageController.text,
+        body: messageController.text,
       );
     } else {
       context.read<MessagesCubit>().sendMessage(
-        chatId: widget.chatId,
+        chatId: chat.id,
         type: MessageType.text,
-        body: _messageController.text,
+        body: messageController.text,
       );
-      _messageController.clear();
+      messageController.clear();
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (_scrollController.hasClients) {
-          _scrollController.animateTo(
+        if (scrollController.hasClients) {
+          scrollController.animateTo(
             0.0,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeOut,
@@ -58,22 +54,16 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    cubit = context.read<MessagesCubit>();
-    currentUserId = _userProfile?.id ?? '';
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MessagesCubit, MessagesState>(
+    final cubit = context.read<MessagesCubit>();
+    return BlocBuilder<MessagesCubit, MessagesState>(
       builder: (context, state) {
         final isLoading = state.isLoading;
         return isLoading
             ? const Center(child: AppLoader())
             : Column(
                 children: [
-                  ChatParticipantsBar(key: ValueKey(widget.chatId)),
+                  ChatParticipantsBar(key: ValueKey(chat.id)),
                   if (state.pinnedMessages.isNotEmpty)
                     Padding(
                       padding: const .only(top: 16.0, left: 16.0, right: 16.0),
@@ -85,8 +75,8 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
                     child: Padding(
                       padding: const .symmetric(horizontal: 16.0),
                       child: MessagesList(
-                        chatId: widget.chatId,
-                        scrollController: _scrollController,
+                        chat: chat,
+                        scrollController: scrollController,
                         messages: state.messages,
                         currentUserId: currentUserId,
                       ),
@@ -102,34 +92,20 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
                             messageId: state.selectedMessage?.id,
                           );
                           cubit.unSelectMessage();
-                          _messageController.clear();
+                          messageController.clear();
                         } else {
                           _sendMessage(context);
                         }
                       },
                       onCancel: () {
                         cubit.unSelectMessage();
-                        _messageController.clear();
+                        messageController.clear();
                       },
-                      messageController: _messageController,
+                      messageController: messageController,
                     ),
                   ),
                 ],
               );
-      },
-      listener: (context, state) {
-        if (state.error?.isNotEmpty == true) {
-          AppMessage.error(
-            context,
-            message: state.error!,
-            onClose: () {
-              cubit.disableError();
-            },
-          );
-        }
-        if (state.editModeActive) {
-          _messageController.text = state.selectedMessage?.body ?? '';
-        }
       },
     );
   }
