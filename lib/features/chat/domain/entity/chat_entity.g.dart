@@ -12,6 +12,7 @@ _ChatEntity _$ChatEntityFromJson(Map<String, dynamic> json) => _ChatEntity(
   title: json['title'] as String?,
   avatarUrl: json['avatarUrl'] as String?,
   ownerId: json['ownerId'] as String?,
+  lastReadMessageId: json['lastReadMessageId'] as String?,
   createdAt: DateTime.parse(json['createdAt'] as String),
   updatedAt: DateTime.parse(json['updatedAt'] as String),
 );
@@ -23,6 +24,7 @@ Map<String, dynamic> _$ChatEntityToJson(_ChatEntity instance) =>
       'title': ?instance.title,
       'avatarUrl': ?instance.avatarUrl,
       'ownerId': ?instance.ownerId,
+      'lastReadMessageId': ?instance.lastReadMessageId,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
     };

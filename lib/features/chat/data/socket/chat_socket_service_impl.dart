@@ -21,6 +21,10 @@ class ChatSocketServiceImpl implements ChatSocketService {
     if (_currentChatId == chatId) {
       return;
     }
+    if (_currentChatId != null) {
+      _socket.emit(SocketEvents.leaveChat, _currentChatId!);
+    }
+
     _currentChatId = chatId;
     _socket.emit(SocketEvents.joinChat, chatId);
   }
@@ -30,7 +34,9 @@ class ChatSocketServiceImpl implements ChatSocketService {
     if (_currentChatId != chatId) {
       return;
     }
+
     _socket.emit(SocketEvents.leaveChat, chatId);
+    _currentChatId = null;
   }
 
   @override

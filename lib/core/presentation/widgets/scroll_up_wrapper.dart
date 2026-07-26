@@ -5,19 +5,19 @@ class ScrollWrapper extends StatelessWidget {
   const ScrollWrapper({
     super.key,
     required this.controller,
-    required this.child,
+    required this.list,
     this.reverse = false,
   });
 
   final ScrollController controller;
-  final Widget child;
+  final Widget list;
   final bool reverse;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        child,
+        list,
         Positioned(
           top: 0,
           left: 0,

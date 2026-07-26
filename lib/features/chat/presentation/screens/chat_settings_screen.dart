@@ -1,10 +1,12 @@
 import 'package:chatting_app/app/constants/app_enums.dart';
+import 'package:chatting_app/features/chat/presentation/widgets/add_members_modal.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/chat_action_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/di/injection.dart';
+import '../../../../core/presentation/widgets/app_dialog.dart';
 import '../../../../core/presentation/widgets/app_message.dart';
 import '../../../profile/domain/repository/profile_repository.dart';
 import '../../utils.dart';
@@ -66,7 +68,13 @@ class _ChatSettingsScreenState extends State<ChatSettingsScreen> {
               ChatActionBar(currentUserId: _userProfile?.id ?? ''),
               if (state.chat?.type == ChatType.group) ...[
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    AppDialog.empty(
+                      context,
+                      content: const AddMembersModal(),
+                      onClose: cubit.disableCloseModal,
+                    );
+                  },
                   child: Row(
                     spacing: 8.0,
                     mainAxisSize: .min,

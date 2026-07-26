@@ -11,13 +11,19 @@ import '../cubit/cubit.dart';
 import 'added_participants_list.dart';
 
 class AddParticipantsBlock extends StatelessWidget {
-  const AddParticipantsBlock({super.key});
+  const AddParticipantsBlock({super.key, this.title});
+
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
     final chatCubit = context.read<ChatCubit>();
     final chatState = context.watch<ChatCubit>().state;
+    final blockTitle = chatState.status == CreateGroupStatus.setName
+        ? 'createGroupScreen.setName'.tr()
+        : 'createGroupScreen.addParticipants'.tr();
     return Column(
+      mainAxisSize: .min,
       children: [
         const SizedBox(height: 16.0),
         Column(
@@ -25,14 +31,7 @@ class AddParticipantsBlock extends StatelessWidget {
           spacing: 8.0,
           children: [
             Row(
-              children: [
-                Text(
-                  chatState.status == CreateGroupStatus.setName
-                      ? 'createGroupScreen.setName'.tr()
-                      : 'createGroupScreen.addParticipants'.tr(),
-                  textAlign: TextAlign.start,
-                ),
-              ],
+              children: [Text(title ?? blockTitle, textAlign: TextAlign.start)],
             ),
             SlideDownAnimatedWidget(
               duration: 500,

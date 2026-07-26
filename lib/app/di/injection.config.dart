@@ -316,7 +316,10 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.lazySingleton<_i55.ChatsCubit>(
-      () => _i55.ChatsCubit(gh<_i321.LoadChatsUseCase>()),
+      () => _i55.ChatsCubit(
+        gh<_i321.LoadChatsUseCase>(),
+        gh<_i156.ChatsSocketService>(),
+      ),
     );
     gh.lazySingleton<_i207.AuthRepository>(
       () => _i626.AuthRepositoryImpl(
