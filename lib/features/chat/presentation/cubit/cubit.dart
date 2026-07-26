@@ -249,7 +249,7 @@ class ChatCubit extends Cubit<ChatState> {
         );
       },
       (r) {
-        emit(state.copyWith(isLoading: false, chat: r, closeModal: true));
+        emit(state.copyWith(isLoading: false, closeModal: true));
       },
     );
   }
@@ -284,14 +284,19 @@ class ChatCubit extends Cubit<ChatState> {
     final result = await _deleteMemberUseCase(
       DeleteMemberParams(chatId: chatId, userId: userId),
     );
-    result.fold((l) {
-      emit(
-        state.copyWith(
-          error: AppUtils.parseFailureMessage(l),
-          isLoading: false,
-        ),
-      );
-    }, (r) {});
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(error: ''));
+      },
+    );
   }
 
   Future<void> addChatMember({
@@ -301,14 +306,21 @@ class ChatCubit extends Cubit<ChatState> {
     final result = await _addMemberUseCase(
       AddMemberParams(chatId: chatId, memberIds: memberIds),
     );
-    result.fold((l) {
-      emit(
-        state.copyWith(
-          error: AppUtils.parseFailureMessage(l),
-          isLoading: false,
-        ),
-      );
-    }, (r) {});
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+          ),
+        );
+      },
+      (r) {
+        emit(
+          state.copyWith(error: '', selectedParticipants: [], closeModal: true),
+        );
+      },
+    );
   }
 
   Future<void> muteChat({required String chatId, required isMuted}) async {

@@ -102,9 +102,11 @@ class _MessagesListState extends State<MessagesList> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 10), () {
-      if (widget.chat.lastReadMessageId != widget.messages.first.id) {
-        final id = int.tryParse(widget.messages.first.id) ?? 0;
-        _onMessageSeen(id);
+      if (mounted) {
+        if (widget.chat.lastReadMessageId != widget.messages.first.id) {
+          final id = int.tryParse(widget.messages.first.id) ?? 0;
+          _onMessageSeen(id);
+        }
       }
     });
   }
@@ -152,16 +154,16 @@ class _MessagesListState extends State<MessagesList> {
                 final shouldShowDate = next == null || !current.isSameDay(next);
                 final messageKey = GlobalKey();
 
-                final incomingMessage =
+                final isIncomingMessage =
                     message.sender.id == widget.currentUserId;
                 final markAsRead =
-                    !incomingMessage &&
+                    !isIncomingMessage &&
                         (int.tryParse(message.id) ?? 0) <=
                             (int.tryParse(
                                   widget.chat.lastReadMessageId ?? '0',
                                 ) ??
                                 0) ||
-                    incomingMessage && message.readCount > 0;
+                    isIncomingMessage && message.readCount > 0;
 
                 return Column(
                   children: [

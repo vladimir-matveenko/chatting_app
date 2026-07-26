@@ -1,10 +1,9 @@
 import 'package:chatting_app/app/constants/app_enums.dart';
-import 'package:chatting_app/app/utils/extensions.dart';
+import 'package:chatting_app/features/chat/presentation/widgets/add_members_modal.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/chat_action_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../app/di/injection.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
@@ -13,7 +12,6 @@ import '../../../profile/domain/repository/profile_repository.dart';
 import '../../utils.dart';
 import '../cubit/cubit.dart';
 import '../cubit/state.dart';
-import '../widgets/add_participants_block.dart';
 import '../widgets/chat_info_widget.dart';
 import '../widgets/members_list.dart';
 
@@ -30,8 +28,6 @@ class _ChatSettingsScreenState extends State<ChatSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ChatCubit>();
-    final screenSize = MediaQuery.sizeOf(context);
-    final isLandscape = context.isLandscape();
 
     return BlocConsumer<ChatCubit, ChatState>(
       builder: (context, state) {
@@ -75,43 +71,7 @@ class _ChatSettingsScreenState extends State<ChatSettingsScreen> {
                   onPressed: () {
                     AppDialog.empty(
                       context,
-                      content: Container(
-                        constraints: BoxConstraints(
-                          maxHeight: isLandscape
-                              ? screenSize.height - 32.0
-                              : screenSize.height * 0.7,
-                          maxWidth: isLandscape
-                              ? screenSize.height - 32.0
-                              : screenSize.width - 32.0,
-                        ),
-                        padding: const .all(16.0),
-                        child: Column(
-                          mainAxisSize: .min,
-                          children: [
-                            AddParticipantsBlock(
-                              title: 'createGroupScreen.addParticipants'.tr(),
-                            ),
-                            Row(
-                              mainAxisAlignment: .end,
-                              children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: const CircleBorder(),
-                                    padding: const .all(8.0),
-                                    fixedSize: const Size(48.0, 48.0),
-                                  ),
-                                  onPressed: () {
-                                    if (context.canPop()) {
-                                      context.pop();
-                                    }
-                                  },
-                                  child: const Icon(Icons.check, size: 24.0),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      content: const AddMembersModal(),
                       onClose: cubit.disableCloseModal,
                     );
                   },
