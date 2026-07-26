@@ -3,13 +3,16 @@ import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/core/presentation/widgets/scroll_up_wrapper.dart';
 import 'package:chatting_app/features/chat/domain/entity/chat_entity.dart';
+import 'package:chatting_app/features/messages/data/socket/messages_socket_service.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/profile/presentation/widgets/user_avatar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../app/di/injection.dart';
 import '../../../../app/theme/app_semantic_colors.dart';
 import '../../../../app/utils/extensions.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
@@ -18,7 +21,7 @@ import '../../../../core/presentation/widgets/reaction_menu.dart';
 import '../../../../core/presentation/widgets/slide_down_animated_widget.dart';
 import '../../../chat/presentation/widgets/message_actions_menu.dart';
 
-class MessagesList extends StatelessWidget {
+class MessagesList extends StatefulWidget {
   const MessagesList({
     super.key,
     required this.messages,
@@ -33,6 +36,80 @@ class MessagesList extends StatelessWidget {
   final ChatEntity chat;
 
   @override
+  State<MessagesList> createState() => _MessagesListState();
+}
+
+class _MessagesListState extends State<MessagesList> {
+  final GlobalKey _listViewKey = GlobalKey();
+
+  void _checkVisibleItems() {
+    final BuildContext? listViewContext = _listViewKey.currentContext;
+    if (listViewContext == null) return;
+
+    final rootObject = listViewContext.findRenderObject();
+    final renderObject = AppUtils.findSliverAdapter(rootObject);
+
+    if (renderObject == null) return;
+
+    RenderBox? child = renderObject.firstChild;
+    if (child == null) return;
+
+    int maxVisibleId = 0;
+
+    while (child != null) {
+      final parentData = child.parentData;
+
+      if (parentData is SliverMultiBoxAdaptorParentData) {
+        final index = parentData.index;
+
+        if (index != null && index >= 0 && index < widget.messages.length) {
+          final message = widget.messages[index];
+          final id = int.tryParse(message.id) ?? 0;
+
+          final isIncoming = message.sender.id != widget.currentUserId;
+
+          final lastReadMessageId =
+              int.tryParse(widget.chat.lastReadMessageId ?? '0') ?? 0;
+
+          if (isIncoming && id < lastReadMessageId) {
+            break;
+          }
+
+          if (isIncoming) {
+            if (id > maxVisibleId) {
+              maxVisibleId = id;
+            }
+          }
+        }
+      }
+
+      child = renderObject.childAfter(child);
+    }
+
+    if (maxVisibleId > 0) {
+      _onMessageSeen(maxVisibleId);
+    }
+  }
+
+  void _onMessageSeen(int maxReadId) {
+    getIt<MessagesSocketService>().markRead(
+      chatId: widget.chat.id,
+      messageId: maxReadId.toString(),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 10), () {
+      if (widget.chat.lastReadMessageId != widget.messages.first.id) {
+        final id = int.tryParse(widget.messages.first.id) ?? 0;
+        _onMessageSeen(id);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
@@ -45,80 +122,104 @@ class MessagesList extends StatelessWidget {
     return Stack(
       children: [
         ScrollWrapper(
-          controller: scrollController,
+          controller: widget.scrollController,
           reverse: true,
-          child: BaseListView<MessageEntity>(
-            items: messages,
-            reverse: true,
-            controller: scrollController,
-            separator: const SizedBox(height: 8.0),
-            itemBuilder: (context, index) {
-              final message = messages[index];
-
-              final current = message.createdAt.toLocal();
-
-              final nextIndex = index + 1;
-              final hasNext = nextIndex < messages.length;
-              final next = hasNext
-                  ? messages[nextIndex].createdAt.toLocal()
-                  : null;
-
-              final shouldShowDate = next == null || !current.isSameDay(next);
-              final messageKey = GlobalKey();
-
-              return Column(
-                children: [
-                  if (shouldShowDate)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
-                      child: Align(
-                        alignment: .center,
-                        child: Text(dateFormatter.format(current)),
-                      ),
-                    ),
-                  ListItem(
-                    key: ValueKey(message.id),
-                    isSelected:
-                        state.showMenu &&
-                        state.selectedMessage?.id == message.id,
-                    chatType: chat.type,
-                    messageKey: messageKey,
-                    message: message,
-                    timeFormatter: timeFormatter,
-                    currentUserId: currentUserId,
-                    messageColor: messageColor!,
-                    onSelectMessageTap: () async {
-                      cubit.selectMessage(message);
-                    },
-                    onUnselectMessageTap: cubit.unSelectMessage,
-                    onReactionTap: () {
-                      if (state.showMenu) {
-                        cubit.unSelectMessage();
-                      } else {
-                        showReactionsMenu(
-                          context: context,
-                          messageKey: messageKey,
-                          reactions: AppConstants.reactions,
-                          onReactionSelected: (reaction) {
-                            cubit.addReaction(
-                              chatId: chat.id,
-                              messageId: message.id,
-                              type: AppUtils.getReactionTypeBySymbol(reaction),
-                            );
-                          },
-                        );
-                      }
-                    },
-                    onDeleteReactionTap: () {
-                      cubit.deleteReaction(
-                        chatId: chat.id,
-                        messageId: message.id,
-                      );
-                    },
-                  ),
-                ],
-              );
+          list: NotificationListener<ScrollNotification>(
+            onNotification: (scrollNotification) {
+              if (scrollNotification is ScrollUpdateNotification ||
+                  scrollNotification is ScrollEndNotification) {
+                _checkVisibleItems();
+              }
+              return false;
             },
+            child: BaseListView<MessageEntity>(
+              listViewKey: _listViewKey,
+              items: widget.messages,
+              reverse: true,
+              controller: widget.scrollController,
+              separator: const SizedBox(height: 8.0),
+              itemBuilder: (context, index) {
+                final message = widget.messages[index];
+
+                final current = message.createdAt.toLocal();
+
+                final nextIndex = index + 1;
+                final hasNext = nextIndex < widget.messages.length;
+                final next = hasNext
+                    ? widget.messages[nextIndex].createdAt.toLocal()
+                    : null;
+
+                final shouldShowDate = next == null || !current.isSameDay(next);
+                final messageKey = GlobalKey();
+
+                final incomingMessage =
+                    message.sender.id == widget.currentUserId;
+                final markAsRead =
+                    !incomingMessage &&
+                        (int.tryParse(message.id) ?? 0) <=
+                            (int.tryParse(
+                                  widget.chat.lastReadMessageId ?? '0',
+                                ) ??
+                                0) ||
+                    incomingMessage && message.readCount > 0;
+
+                return Column(
+                  children: [
+                    if (shouldShowDate)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
+                        child: Align(
+                          alignment: .center,
+                          child: Text(dateFormatter.format(current)),
+                        ),
+                      ),
+                    ListItem(
+                      key: ValueKey(message.id),
+                      isSelected:
+                          state.showMenu &&
+                          state.selectedMessage?.id == message.id,
+                      chatType: widget.chat.type,
+                      messageKey: messageKey,
+                      message: message,
+                      markAsRead: markAsRead,
+                      timeFormatter: timeFormatter,
+                      currentUserId: widget.currentUserId,
+                      messageColor: messageColor!,
+                      onSelectMessageTap: () async {
+                        cubit.selectMessage(message);
+                      },
+                      onUnselectMessageTap: cubit.unSelectMessage,
+                      onReactionTap: () {
+                        if (state.showMenu) {
+                          cubit.unSelectMessage();
+                        } else {
+                          showReactionsMenu(
+                            context: context,
+                            messageKey: messageKey,
+                            reactions: AppConstants.reactions,
+                            onReactionSelected: (reaction) {
+                              cubit.addReaction(
+                                chatId: widget.chat.id,
+                                messageId: message.id,
+                                type: AppUtils.getReactionTypeBySymbol(
+                                  reaction,
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
+                      onDeleteReactionTap: () {
+                        cubit.deleteReaction(
+                          chatId: widget.chat.id,
+                          messageId: message.id,
+                        );
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
         Positioned(
@@ -139,7 +240,7 @@ class MessagesList extends StatelessWidget {
                       );
                       if (result) {
                         cubit.deleteMessage(
-                          chatId: chat.id,
+                          chatId: widget.chat.id,
                           messageId: state.selectedMessage?.id ?? '',
                         );
                       }

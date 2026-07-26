@@ -15,6 +15,8 @@ _ChatListItemEntity _$ChatListItemEntityFromJson(Map<String, dynamic> json) =>
       ownerId: json['ownerId'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
+      lastReadMessageId: json['lastReadMessageId'] as String?,
+      lastMessageId: json['lastMessageId'] as String?,
       lastMessagePreview: json['lastMessagePreview'] as String?,
       lastMessageAt: json['lastMessageAt'] == null
           ? null
@@ -37,6 +39,8 @@ Map<String, dynamic> _$ChatListItemEntityToJson(_ChatListItemEntity instance) =>
       'ownerId': ?instance.ownerId,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
+      'lastReadMessageId': ?instance.lastReadMessageId,
+      'lastMessageId': ?instance.lastMessageId,
       'lastMessagePreview': ?instance.lastMessagePreview,
       'lastMessageAt': ?instance.lastMessageAt?.toIso8601String(),
       'unreadCount': instance.unreadCount,

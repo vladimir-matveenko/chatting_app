@@ -42,9 +42,9 @@ class ChatCubit extends Cubit<ChatState> {
   final CreateChatUseCase _createChatUseCase;
   final DeleteMemberUseCase _deleteMemberUseCase;
   final AddMemberUseCase _addMemberUseCase;
-  final ChatSocketService _chatSocketService;
   final MuteChatUseCase _muteChatUseCase;
   final LeaveChatUseCase _leaveChatUseCase;
+  final ChatSocketService _chatSocketService;
 
   final List<StreamSubscription> _subscriptions = [];
 

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:chatting_app/app/constants/app_constants.dart';
 import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/rendering.dart';
 
 import '../../core/error/failure.dart';
 
@@ -104,5 +105,20 @@ class AppUtils {
       return ReactionType.dislike;
     }
     return ReactionType.like;
+  }
+
+  static RenderSliverMultiBoxAdaptor? findSliverAdapter(
+    RenderObject? renderObject,
+  ) {
+    if (renderObject == null) return null;
+    if (renderObject is RenderSliverMultiBoxAdaptor) return renderObject;
+
+    RenderSliverMultiBoxAdaptor? result;
+    renderObject.visitChildren((child) {
+      if (result != null) return;
+      result = findSliverAdapter(child);
+    });
+
+    return result;
   }
 }

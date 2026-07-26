@@ -14,6 +14,7 @@ abstract class ChatModel with _$ChatModel {
     String? title,
     String? avatarUrl,
     String? ownerId,
+    String? lastReadMessageId,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _ChatModel;
@@ -29,6 +30,7 @@ extension ChatModelExt on ChatModel {
     title: title,
     avatarUrl: avatarUrl,
     ownerId: ownerId,
+    lastReadMessageId: lastReadMessageId,
     createdAt: createdAt,
     updatedAt: updatedAt,
   );

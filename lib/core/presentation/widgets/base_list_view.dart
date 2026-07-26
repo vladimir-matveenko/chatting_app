@@ -9,8 +9,10 @@ class BaseListView<T> extends StatelessWidget {
     this.controller,
     required this.itemBuilder,
     this.reverse = false,
+    this.listViewKey,
   });
 
+  final GlobalKey? listViewKey;
   final EdgeInsets? padding;
   final List<T> items;
   final Widget? separator;
@@ -22,6 +24,7 @@ class BaseListView<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ListView.separated(
+      key: listViewKey,
       controller: controller,
       itemCount: items.length,
       physics: const ClampingScrollPhysics(),

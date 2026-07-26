@@ -68,7 +68,7 @@ class MessagesSocketServiceImpl implements MessagesSocketService {
 
   @override
   void markRead({required String chatId, required String messageId}) {
-    _socket.emit(SocketEvents.messageRead, {
+    _socket.emit(SocketEvents.readMessage, {
       'chatId': chatId,
       'messageId': messageId,
     });

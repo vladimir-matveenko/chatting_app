@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ChatModel {
 
- String get id; ChatType get type; String? get title; String? get avatarUrl; String? get ownerId; DateTime get createdAt; DateTime get updatedAt;
+ String get id; ChatType get type; String? get title; String? get avatarUrl; String? get ownerId; String? get lastReadMessageId; DateTime get createdAt; DateTime get updatedAt;
 /// Create a copy of ChatModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ChatModelCopyWith<ChatModel> get copyWith => _$ChatModelCopyWithImpl<ChatModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatModel&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatModel&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.lastReadMessageId, lastReadMessageId) || other.lastReadMessageId == lastReadMessageId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,title,avatarUrl,ownerId,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,type,title,avatarUrl,ownerId,lastReadMessageId,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'ChatModel(id: $id, type: $type, title: $title, avatarUrl: $avatarUrl, ownerId: $ownerId, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'ChatModel(id: $id, type: $type, title: $title, avatarUrl: $avatarUrl, ownerId: $ownerId, lastReadMessageId: $lastReadMessageId, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ChatModelCopyWith<$Res>  {
   factory $ChatModelCopyWith(ChatModel value, $Res Function(ChatModel) _then) = _$ChatModelCopyWithImpl;
 @useResult
 $Res call({
- String id, ChatType type, String? title, String? avatarUrl, String? ownerId, DateTime createdAt, DateTime updatedAt
+ String id, ChatType type, String? title, String? avatarUrl, String? ownerId, String? lastReadMessageId, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -65,13 +65,14 @@ class _$ChatModelCopyWithImpl<$Res>
 
 /// Create a copy of ChatModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? title = freezed,Object? avatarUrl = freezed,Object? ownerId = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? title = freezed,Object? avatarUrl = freezed,Object? ownerId = freezed,Object? lastReadMessageId = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ChatType,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,ownerId: freezed == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
+as String?,lastReadMessageId: freezed == lastReadMessageId ? _self.lastReadMessageId : lastReadMessageId // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
@@ -159,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  String? lastReadMessageId,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatModel() when $default != null:
-return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.lastReadMessageId,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -180,10 +181,10 @@ return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  String? lastReadMessageId,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _ChatModel():
-return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.lastReadMessageId,_that.createdAt,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +201,10 @@ return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  String? lastReadMessageId,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatModel() when $default != null:
-return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.lastReadMessageId,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -215,7 +216,7 @@ return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_t
 @JsonSerializable()
 
 class _ChatModel implements ChatModel {
-  const _ChatModel({required this.id, required this.type, this.title, this.avatarUrl, this.ownerId, required this.createdAt, required this.updatedAt});
+  const _ChatModel({required this.id, required this.type, this.title, this.avatarUrl, this.ownerId, this.lastReadMessageId, required this.createdAt, required this.updatedAt});
   factory _ChatModel.fromJson(Map<String, dynamic> json) => _$ChatModelFromJson(json);
 
 @override final  String id;
@@ -223,6 +224,7 @@ class _ChatModel implements ChatModel {
 @override final  String? title;
 @override final  String? avatarUrl;
 @override final  String? ownerId;
+@override final  String? lastReadMessageId;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
 
@@ -239,16 +241,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatModel&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatModel&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.lastReadMessageId, lastReadMessageId) || other.lastReadMessageId == lastReadMessageId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,title,avatarUrl,ownerId,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,type,title,avatarUrl,ownerId,lastReadMessageId,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'ChatModel(id: $id, type: $type, title: $title, avatarUrl: $avatarUrl, ownerId: $ownerId, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'ChatModel(id: $id, type: $type, title: $title, avatarUrl: $avatarUrl, ownerId: $ownerId, lastReadMessageId: $lastReadMessageId, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -259,7 +261,7 @@ abstract mixin class _$ChatModelCopyWith<$Res> implements $ChatModelCopyWith<$Re
   factory _$ChatModelCopyWith(_ChatModel value, $Res Function(_ChatModel) _then) = __$ChatModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, ChatType type, String? title, String? avatarUrl, String? ownerId, DateTime createdAt, DateTime updatedAt
+ String id, ChatType type, String? title, String? avatarUrl, String? ownerId, String? lastReadMessageId, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -276,13 +278,14 @@ class __$ChatModelCopyWithImpl<$Res>
 
 /// Create a copy of ChatModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? title = freezed,Object? avatarUrl = freezed,Object? ownerId = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? type = null,Object? title = freezed,Object? avatarUrl = freezed,Object? ownerId = freezed,Object? lastReadMessageId = freezed,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_ChatModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ChatType,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,ownerId: freezed == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
+as String?,lastReadMessageId: freezed == lastReadMessageId ? _self.lastReadMessageId : lastReadMessageId // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,

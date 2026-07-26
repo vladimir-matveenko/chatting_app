@@ -104,8 +104,13 @@ class ChatActionButton extends StatelessWidget {
         padding: const .symmetric(vertical: 8.0),
         child: Column(
           children: [
-            Icon(icon, size: 24.0),
-            Text(text, style: theme.textTheme.bodySmall),
+            Icon(icon, size: 24.0, color: theme.colorScheme.primary),
+            Text(
+              text,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.primary,
+              ),
+            ),
           ],
         ),
       ),

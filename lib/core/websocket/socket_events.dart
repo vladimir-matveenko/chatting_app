@@ -1,4 +1,5 @@
 abstract final class SocketEvents {
+  /// Client to Server
   static const joinChat = 'chat:join';
 
   static const leaveChat = 'chat:leave';
@@ -7,6 +8,9 @@ abstract final class SocketEvents {
 
   static const typingStop = 'typing:stop';
 
+  static const readMessage = 'message:mark-read';
+
+  /// Server to Client
   static const messageCreated = 'message:created';
 
   static const messageUpdated = 'message:updated';

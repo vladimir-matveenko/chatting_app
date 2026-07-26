@@ -16,6 +16,8 @@ abstract class ChatListItemEntity with _$ChatListItemEntity {
     String? ownerId,
     required DateTime createdAt,
     required DateTime updatedAt,
+    String? lastReadMessageId,
+    String? lastMessageId,
     String? lastMessagePreview,
     DateTime? lastMessageAt,
     required int unreadCount,
