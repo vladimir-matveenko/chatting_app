@@ -6,10 +6,14 @@ class MessageActionsMenu extends StatelessWidget {
     super.key,
     required this.onEdit,
     required this.onDelete,
+    required this.onPin,
+    required this.pinIcon,
   });
 
   final VoidCallback onEdit;
   final VoidCallback onDelete;
+  final VoidCallback onPin;
+  final IconData pinIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +33,10 @@ class MessageActionsMenu extends StatelessWidget {
         mainAxisSize: .min,
         spacing: 8.0,
         children: [
+          IconButton(
+            onPressed: onPin,
+            icon: Icon(pinIcon, size: isonSize, color: iconColor),
+          ),
           IconButton(
             onPressed: onEdit,
             icon: Icon(Icons.edit, size: isonSize, color: iconColor),

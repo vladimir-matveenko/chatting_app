@@ -1,6 +1,8 @@
+import 'package:chatting_app/core/presentation/widgets/app_dialog.dart';
 import 'package:chatting_app/features/chat/domain/entity/chat_entity.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/chat_participants_bar.dart';
-import 'package:chatting_app/features/chat/presentation/widgets/pinned_messages_block.dart';
+import 'package:chatting_app/features/chat/presentation/widgets/pinned_message_item.dart';
+import 'package:chatting_app/features/chat/presentation/widgets/pinned_messages_modal.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
 import 'package:flutter/material.dart';
@@ -67,8 +69,22 @@ class ChatScreenBody extends StatelessWidget {
                   if (state.pinnedMessages.isNotEmpty)
                     Padding(
                       padding: const .only(top: 16.0, left: 16.0, right: 16.0),
-                      child: PinnedMessagesBlock(
-                        pinnedMessages: state.pinnedMessages,
+                      child: PinnedMessageItem(
+                        onShowModalTap: () {
+                          AppDialog.empty(
+                            context,
+                            content: const PinnedMessagesModal(),
+                            onClose: cubit.disableCloseModal,
+                          );
+                        },
+                        onUnpinTap: () {
+                          cubit.unpinMessage(
+                            state.pinnedMessages.first.id.toString(),
+                          );
+                        },
+                        onNavigateTap: () {},
+                        itemsCount: state.pinnedMessages.length,
+                        message: state.pinnedMessages.last,
                       ),
                     ),
                   Expanded(

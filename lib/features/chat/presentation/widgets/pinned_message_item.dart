@@ -1,0 +1,86 @@
+import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+
+class PinnedMessageItem extends StatelessWidget {
+  const PinnedMessageItem({
+    super.key,
+    required this.itemsCount,
+    required this.message,
+    required this.onUnpinTap,
+    required this.onNavigateTap,
+    required this.onShowModalTap,
+  });
+
+  final int itemsCount;
+  final MessageEntity message;
+  final VoidCallback onUnpinTap;
+  final VoidCallback onNavigateTap;
+  final VoidCallback onShowModalTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: .circular(12.0),
+        color: theme.bottomNavigationBarTheme.backgroundColor,
+      ),
+      padding: const .all(8.0),
+      child: itemsCount < 2
+          ? GestureDetector(
+              onTap: onNavigateTap,
+              child: Row(
+                mainAxisAlignment: .spaceBetween,
+                children: [
+                  Row(
+                    spacing: 4.0,
+                    crossAxisAlignment: .start,
+                    children: [
+                      Icon(
+                        Icons.push_pin_rounded,
+                        color: theme.colorScheme.primary,
+                      ),
+                      Column(
+                        spacing: 4.0,
+                        crossAxisAlignment: .start,
+                        children: [
+                          Text(
+                            'chatScreen.pinnedMessage'.tr(),
+                            style: theme.textTheme.bodyMedium,
+                          ),
+                          Text(
+                            message.body ?? '',
+                            style: theme.textTheme.bodyMedium,
+                            maxLines: 4,
+                            overflow: .ellipsis,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    onPressed: onUnpinTap,
+                    icon: Icon(Icons.close, color: theme.colorScheme.error),
+                  ),
+                ],
+              ),
+            )
+          : GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: onShowModalTap,
+              child: Row(
+                spacing: 4.0,
+                crossAxisAlignment: .start,
+                children: [
+                  Icon(
+                    Icons.push_pin_rounded,
+                    color: theme.colorScheme.primary,
+                  ),
+                  Text('chatScreen.showPinnedMessages'.tr()),
+                ],
+              ),
+            ),
+    );
+  }
+}

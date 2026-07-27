@@ -269,16 +269,23 @@ class MessagesCubit extends Cubit<MessagesState> {
     }, (r) {});
   }
 
-  Future<void> unpinMessage(String messageId) async {
+  Future<void> unpinMessage(String messageId, {closeModal = false}) async {
     final result = await _unpinMessageUseCase(UnpinMessageParams(messageId));
-    result.fold((l) {
-      emit(
-        state.copyWith(
-          error: AppUtils.parseFailureMessage(l),
-          isLoading: false,
-        ),
-      );
-    }, (r) {});
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+          ),
+        );
+      },
+      (r) {
+        if (closeModal) {
+          emit(state.copyWith(closeModal: closeModal));
+        }
+      },
+    );
   }
 
   Future<void> selectMessage(MessageEntity selectedMessage) async {
@@ -295,5 +302,9 @@ class MessagesCubit extends Cubit<MessagesState> {
 
   Future<void> disableError() async {
     emit(state.copyWith(error: ''));
+  }
+
+  Future<void> disableCloseModal() async {
+    emit(state.copyWith(closeModal: false));
   }
 }

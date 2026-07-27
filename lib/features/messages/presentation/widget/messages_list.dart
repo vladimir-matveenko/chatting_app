@@ -118,6 +118,9 @@ class _MessagesListState extends State<MessagesList> {
     final timeFormatter = DateFormat('H:mm', context.locale.languageCode);
     final cubit = context.read<MessagesCubit>();
     final state = context.watch<MessagesCubit>().state;
+    final isPinnedMessageSelected = state.pinnedMessages.any(
+      (e) => e.id == state.selectedMessage?.id,
+    );
 
     return Stack(
       children: [
@@ -241,6 +244,19 @@ class _MessagesListState extends State<MessagesList> {
           child: SlideDownAnimatedWidget(
             child: state.showMenu
                 ? MessageActionsMenu(
+                    pinIcon: isPinnedMessageSelected
+                        ? Icons.push_pin_outlined
+                        : Icons.push_pin_rounded,
+                    onPin: () {
+                      cubit.unSelectMessage();
+                      isPinnedMessageSelected
+                          ? cubit.unpinMessage(
+                              state.selectedMessage?.id.toString() ?? '',
+                            )
+                          : cubit.pinMessage(
+                              state.selectedMessage?.id.toString() ?? '',
+                            );
+                    },
                     onEdit: cubit.activateEditingMode,
                     onDelete: () async {
                       final result = await AppDialog.show(

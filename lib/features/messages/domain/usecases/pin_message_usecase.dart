@@ -14,7 +14,7 @@ class PinMessageUseCase implements UseCase<MessageEntity, PinMessageParams> {
 
   @override
   Future<Either<Failure, MessageEntity>> call(params) async {
-    return await _repository.getMessageById(params.messageId);
+    return await _repository.pinMessage(params.messageId);
   }
 }
 
