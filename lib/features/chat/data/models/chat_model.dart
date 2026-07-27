@@ -30,7 +30,9 @@ extension ChatModelExt on ChatModel {
     title: title,
     avatarUrl: avatarUrl,
     ownerId: ownerId,
-    lastReadMessageId: lastReadMessageId,
+    lastReadMessageId: lastReadMessageId != null
+        ? int.tryParse(lastReadMessageId!)
+        : null,
     createdAt: createdAt,
     updatedAt: updatedAt,
   );

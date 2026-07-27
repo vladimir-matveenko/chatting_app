@@ -17,10 +17,6 @@ extension DateX on DateTime {
   String format({required String format, required String locale}) {
     return DateFormat(format, locale).format(this);
   }
-
-  String formatAsLocal({required String format, required String locale}) {
-    return DateFormat(format, locale).format(toLocal());
-  }
 }
 
 extension ThemeDataX on ThemeData {

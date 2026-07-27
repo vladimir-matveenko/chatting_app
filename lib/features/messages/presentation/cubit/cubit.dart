@@ -117,7 +117,9 @@ class MessagesCubit extends Cubit<MessagesState> {
     bool loadSilent = true,
     required String chatId,
   }) async {
-    emit(state.copyWith(isLoading: !loadSilent, error: ''));
+    final isChatTheSame =
+        state.messages.isNotEmpty && state.messages.first.chatId == chatId;
+    emit(state.copyWith(isLoading: !isChatTheSame || !loadSilent, error: ''));
     final result = await _loadMessagesUseCase(
       LoadMessagesParams(chatId: chatId),
     );

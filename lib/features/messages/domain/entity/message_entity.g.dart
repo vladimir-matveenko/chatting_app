@@ -8,7 +8,7 @@ part of 'message_entity.dart';
 
 _MessageEntity _$MessageEntityFromJson(Map<String, dynamic> json) =>
     _MessageEntity(
-      id: json['id'] as String,
+      id: (json['id'] as num).toInt(),
       chatId: json['chatId'] as String,
       sender: MessageSenderEntity.fromJson(
         json['sender'] as Map<String, dynamic>,

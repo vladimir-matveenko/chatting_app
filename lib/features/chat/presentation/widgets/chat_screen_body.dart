@@ -89,7 +89,7 @@ class ChatScreenBody extends StatelessWidget {
                         if (state.editModeActive) {
                           _sendMessage(
                             context,
-                            messageId: state.selectedMessage?.id,
+                            messageId: state.selectedMessage?.id.toString(),
                           );
                           cubit.unSelectMessage();
                           messageController.clear();

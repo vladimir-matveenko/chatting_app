@@ -23,7 +23,7 @@ class ChatList extends StatelessWidget {
         return ListItem(
           key: ValueKey(chat.id),
           onTap: () {
-            cubit.getChatById(chat.id, loadSilent: false);
+            cubit.getChatById(chat.id);
             context.go('${AppRoutes.chats}/${chat.id}');
           },
           chat: chat,
@@ -79,9 +79,7 @@ class ListItem extends StatelessWidget {
               Chip(
                 label: Text(
                   chat.unreadCount.toString(),
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: Colors.white,
-                  ),
+                  style: theme.textTheme.titleLarge?.copyWith(fontSize: 12.0),
                 ),
               ),
               if (chat.lastMessagePreview?.isNotEmpty == true)

@@ -82,7 +82,8 @@
     "leavingChat": {
       "leaveChat": "Leave chat",
       "areYouSure": "Are you sure you want to leave chat?"
-    }
+    },
+    "unreadMessages": "Unread messages"
   },
   "editChatScreen": {
     "addMember": "Add member"

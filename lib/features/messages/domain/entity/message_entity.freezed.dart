@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MessageEntity {
 
- String get id; String get chatId; MessageSenderEntity get sender; MessageType get type; String? get body; String? get replyToId; DateTime get createdAt; DateTime get updatedAt; DateTime? get deletedAt;@JsonKey(defaultValue: false) bool get isDeleted;@JsonKey(defaultValue: []) List<MessageReactionSummaryEntity> get reactions; ReactionType? get currentUserReaction; MessageReplyEntity? get reply; int get readCount;
+ int get id; String get chatId; MessageSenderEntity get sender; MessageType get type; String? get body; String? get replyToId; DateTime get createdAt; DateTime get updatedAt; DateTime? get deletedAt;@JsonKey(defaultValue: false) bool get isDeleted;@JsonKey(defaultValue: []) List<MessageReactionSummaryEntity> get reactions; ReactionType? get currentUserReaction; MessageReplyEntity? get reply; int get readCount;
 /// Create a copy of MessageEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $MessageEntityCopyWith<$Res>  {
   factory $MessageEntityCopyWith(MessageEntity value, $Res Function(MessageEntity) _then) = _$MessageEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String chatId, MessageSenderEntity sender, MessageType type, String? body, String? replyToId, DateTime createdAt, DateTime updatedAt, DateTime? deletedAt,@JsonKey(defaultValue: false) bool isDeleted,@JsonKey(defaultValue: []) List<MessageReactionSummaryEntity> reactions, ReactionType? currentUserReaction, MessageReplyEntity? reply, int readCount
+ int id, String chatId, MessageSenderEntity sender, MessageType type, String? body, String? replyToId, DateTime createdAt, DateTime updatedAt, DateTime? deletedAt,@JsonKey(defaultValue: false) bool isDeleted,@JsonKey(defaultValue: []) List<MessageReactionSummaryEntity> reactions, ReactionType? currentUserReaction, MessageReplyEntity? reply, int readCount
 });
 
 
@@ -68,7 +68,7 @@ class _$MessageEntityCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? chatId = null,Object? sender = null,Object? type = null,Object? body = freezed,Object? replyToId = freezed,Object? createdAt = null,Object? updatedAt = null,Object? deletedAt = freezed,Object? isDeleted = null,Object? reactions = null,Object? currentUserReaction = freezed,Object? reply = freezed,Object? readCount = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
+as int,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
 as String,sender: null == sender ? _self.sender : sender // ignore: cast_nullable_to_non_nullable
 as MessageSenderEntity,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as MessageType,body: freezed == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
@@ -187,7 +187,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String chatId,  MessageSenderEntity sender,  MessageType type,  String? body,  String? replyToId,  DateTime createdAt,  DateTime updatedAt,  DateTime? deletedAt, @JsonKey(defaultValue: false)  bool isDeleted, @JsonKey(defaultValue: [])  List<MessageReactionSummaryEntity> reactions,  ReactionType? currentUserReaction,  MessageReplyEntity? reply,  int readCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String chatId,  MessageSenderEntity sender,  MessageType type,  String? body,  String? replyToId,  DateTime createdAt,  DateTime updatedAt,  DateTime? deletedAt, @JsonKey(defaultValue: false)  bool isDeleted, @JsonKey(defaultValue: [])  List<MessageReactionSummaryEntity> reactions,  ReactionType? currentUserReaction,  MessageReplyEntity? reply,  int readCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MessageEntity() when $default != null:
 return $default(_that.id,_that.chatId,_that.sender,_that.type,_that.body,_that.replyToId,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.isDeleted,_that.reactions,_that.currentUserReaction,_that.reply,_that.readCount);case _:
@@ -208,7 +208,7 @@ return $default(_that.id,_that.chatId,_that.sender,_that.type,_that.body,_that.r
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String chatId,  MessageSenderEntity sender,  MessageType type,  String? body,  String? replyToId,  DateTime createdAt,  DateTime updatedAt,  DateTime? deletedAt, @JsonKey(defaultValue: false)  bool isDeleted, @JsonKey(defaultValue: [])  List<MessageReactionSummaryEntity> reactions,  ReactionType? currentUserReaction,  MessageReplyEntity? reply,  int readCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String chatId,  MessageSenderEntity sender,  MessageType type,  String? body,  String? replyToId,  DateTime createdAt,  DateTime updatedAt,  DateTime? deletedAt, @JsonKey(defaultValue: false)  bool isDeleted, @JsonKey(defaultValue: [])  List<MessageReactionSummaryEntity> reactions,  ReactionType? currentUserReaction,  MessageReplyEntity? reply,  int readCount)  $default,) {final _that = this;
 switch (_that) {
 case _MessageEntity():
 return $default(_that.id,_that.chatId,_that.sender,_that.type,_that.body,_that.replyToId,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.isDeleted,_that.reactions,_that.currentUserReaction,_that.reply,_that.readCount);case _:
@@ -228,7 +228,7 @@ return $default(_that.id,_that.chatId,_that.sender,_that.type,_that.body,_that.r
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String chatId,  MessageSenderEntity sender,  MessageType type,  String? body,  String? replyToId,  DateTime createdAt,  DateTime updatedAt,  DateTime? deletedAt, @JsonKey(defaultValue: false)  bool isDeleted, @JsonKey(defaultValue: [])  List<MessageReactionSummaryEntity> reactions,  ReactionType? currentUserReaction,  MessageReplyEntity? reply,  int readCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String chatId,  MessageSenderEntity sender,  MessageType type,  String? body,  String? replyToId,  DateTime createdAt,  DateTime updatedAt,  DateTime? deletedAt, @JsonKey(defaultValue: false)  bool isDeleted, @JsonKey(defaultValue: [])  List<MessageReactionSummaryEntity> reactions,  ReactionType? currentUserReaction,  MessageReplyEntity? reply,  int readCount)?  $default,) {final _that = this;
 switch (_that) {
 case _MessageEntity() when $default != null:
 return $default(_that.id,_that.chatId,_that.sender,_that.type,_that.body,_that.replyToId,_that.createdAt,_that.updatedAt,_that.deletedAt,_that.isDeleted,_that.reactions,_that.currentUserReaction,_that.reply,_that.readCount);case _:
@@ -246,7 +246,7 @@ class _MessageEntity implements MessageEntity {
   const _MessageEntity({required this.id, required this.chatId, required this.sender, required this.type, this.body, this.replyToId, required this.createdAt, required this.updatedAt, this.deletedAt, @JsonKey(defaultValue: false) required this.isDeleted, @JsonKey(defaultValue: []) required final  List<MessageReactionSummaryEntity> reactions, this.currentUserReaction, this.reply, required this.readCount}): _reactions = reactions;
   factory _MessageEntity.fromJson(Map<String, dynamic> json) => _$MessageEntityFromJson(json);
 
-@override final  String id;
+@override final  int id;
 @override final  String chatId;
 @override final  MessageSenderEntity sender;
 @override final  MessageType type;
@@ -300,7 +300,7 @@ abstract mixin class _$MessageEntityCopyWith<$Res> implements $MessageEntityCopy
   factory _$MessageEntityCopyWith(_MessageEntity value, $Res Function(_MessageEntity) _then) = __$MessageEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String chatId, MessageSenderEntity sender, MessageType type, String? body, String? replyToId, DateTime createdAt, DateTime updatedAt, DateTime? deletedAt,@JsonKey(defaultValue: false) bool isDeleted,@JsonKey(defaultValue: []) List<MessageReactionSummaryEntity> reactions, ReactionType? currentUserReaction, MessageReplyEntity? reply, int readCount
+ int id, String chatId, MessageSenderEntity sender, MessageType type, String? body, String? replyToId, DateTime createdAt, DateTime updatedAt, DateTime? deletedAt,@JsonKey(defaultValue: false) bool isDeleted,@JsonKey(defaultValue: []) List<MessageReactionSummaryEntity> reactions, ReactionType? currentUserReaction, MessageReplyEntity? reply, int readCount
 });
 
 
@@ -320,7 +320,7 @@ class __$MessageEntityCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? chatId = null,Object? sender = null,Object? type = null,Object? body = freezed,Object? replyToId = freezed,Object? createdAt = null,Object? updatedAt = null,Object? deletedAt = freezed,Object? isDeleted = null,Object? reactions = null,Object? currentUserReaction = freezed,Object? reply = freezed,Object? readCount = null,}) {
   return _then(_MessageEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
+as int,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
 as String,sender: null == sender ? _self.sender : sender // ignore: cast_nullable_to_non_nullable
 as MessageSenderEntity,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as MessageType,body: freezed == body ? _self.body : body // ignore: cast_nullable_to_non_nullable

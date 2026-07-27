@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ChatEntity {
 
- String get id; ChatType get type; String? get title; String? get avatarUrl; String? get ownerId; String? get lastReadMessageId; DateTime get createdAt; DateTime get updatedAt;
+ String get id; ChatType get type; String? get title; String? get avatarUrl; String? get ownerId; int? get lastReadMessageId; DateTime get createdAt; DateTime get updatedAt;
 /// Create a copy of ChatEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $ChatEntityCopyWith<$Res>  {
   factory $ChatEntityCopyWith(ChatEntity value, $Res Function(ChatEntity) _then) = _$ChatEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, ChatType type, String? title, String? avatarUrl, String? ownerId, String? lastReadMessageId, DateTime createdAt, DateTime updatedAt
+ String id, ChatType type, String? title, String? avatarUrl, String? ownerId, int? lastReadMessageId, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -73,7 +73,7 @@ as ChatType,title: freezed == title ? _self.title : title // ignore: cast_nullab
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,ownerId: freezed == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
 as String?,lastReadMessageId: freezed == lastReadMessageId ? _self.lastReadMessageId : lastReadMessageId // ignore: cast_nullable_to_non_nullable
-as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as int?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -160,7 +160,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  String? lastReadMessageId,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  int? lastReadMessageId,  DateTime createdAt,  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatEntity() when $default != null:
 return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.lastReadMessageId,_that.createdAt,_that.updatedAt);case _:
@@ -181,7 +181,7 @@ return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  String? lastReadMessageId,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  int? lastReadMessageId,  DateTime createdAt,  DateTime updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _ChatEntity():
 return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.lastReadMessageId,_that.createdAt,_that.updatedAt);case _:
@@ -201,7 +201,7 @@ return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  String? lastReadMessageId,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  ChatType type,  String? title,  String? avatarUrl,  String? ownerId,  int? lastReadMessageId,  DateTime createdAt,  DateTime updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatEntity() when $default != null:
 return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_that.lastReadMessageId,_that.createdAt,_that.updatedAt);case _:
@@ -224,7 +224,7 @@ class _ChatEntity implements ChatEntity {
 @override final  String? title;
 @override final  String? avatarUrl;
 @override final  String? ownerId;
-@override final  String? lastReadMessageId;
+@override final  int? lastReadMessageId;
 @override final  DateTime createdAt;
 @override final  DateTime updatedAt;
 
@@ -261,7 +261,7 @@ abstract mixin class _$ChatEntityCopyWith<$Res> implements $ChatEntityCopyWith<$
   factory _$ChatEntityCopyWith(_ChatEntity value, $Res Function(_ChatEntity) _then) = __$ChatEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, ChatType type, String? title, String? avatarUrl, String? ownerId, String? lastReadMessageId, DateTime createdAt, DateTime updatedAt
+ String id, ChatType type, String? title, String? avatarUrl, String? ownerId, int? lastReadMessageId, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -286,7 +286,7 @@ as ChatType,title: freezed == title ? _self.title : title // ignore: cast_nullab
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,ownerId: freezed == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
 as String?,lastReadMessageId: freezed == lastReadMessageId ? _self.lastReadMessageId : lastReadMessageId // ignore: cast_nullable_to_non_nullable
-as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as int?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));

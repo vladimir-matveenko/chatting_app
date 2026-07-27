@@ -82,7 +82,8 @@
     "leavingChat": {
       "leaveChat": "Выйти из чата",
       "areYouSure": "Вы уверены, что Вы хотите покинуть чат?"
-    }
+    },
+    "unreadMessages": "Непрочитанные сообщения"
   },
   "editChatScreen": {
     "addMember": "Добавить участника"

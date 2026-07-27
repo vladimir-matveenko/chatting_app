@@ -3,7 +3,6 @@ import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/core/presentation/widgets/scroll_up_wrapper.dart';
 import 'package:chatting_app/features/chat/domain/entity/chat_entity.dart';
-import 'package:chatting_app/features/messages/data/socket/messages_socket_service.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/profile/presentation/widgets/user_avatar.dart';
@@ -13,13 +12,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/di/injection.dart';
-import '../../../../app/theme/app_semantic_colors.dart';
 import '../../../../app/utils/extensions.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
 import '../../../../core/presentation/widgets/base_list_view.dart';
 import '../../../../core/presentation/widgets/reaction_menu.dart';
 import '../../../../core/presentation/widgets/slide_down_animated_widget.dart';
 import '../../../chat/presentation/widgets/message_actions_menu.dart';
+import '../../data/socket/messages_socket_service.dart';
 
 class MessagesList extends StatefulWidget {
   const MessagesList({
@@ -64,12 +63,11 @@ class _MessagesListState extends State<MessagesList> {
 
         if (index != null && index >= 0 && index < widget.messages.length) {
           final message = widget.messages[index];
-          final id = int.tryParse(message.id) ?? 0;
+          final id = message.id;
 
           final isIncoming = message.sender.id != widget.currentUserId;
 
-          final lastReadMessageId =
-              int.tryParse(widget.chat.lastReadMessageId ?? '0') ?? 0;
+          final lastReadMessageId = widget.chat.lastReadMessageId ?? -1;
 
           if (isIncoming && id < lastReadMessageId) {
             break;
@@ -104,7 +102,7 @@ class _MessagesListState extends State<MessagesList> {
     Future.delayed(const Duration(seconds: 10), () {
       if (mounted) {
         if (widget.chat.lastReadMessageId != widget.messages.first.id) {
-          final id = int.tryParse(widget.messages.first.id) ?? 0;
+          final id = widget.messages.first.id;
           _onMessageSeen(id);
         }
       }
@@ -143,36 +141,48 @@ class _MessagesListState extends State<MessagesList> {
               itemBuilder: (context, index) {
                 final message = widget.messages[index];
 
-                final current = message.createdAt.toLocal();
-
                 final nextIndex = index + 1;
                 final hasNext = nextIndex < widget.messages.length;
-                final next = hasNext
-                    ? widget.messages[nextIndex].createdAt.toLocal()
-                    : null;
+                final next = hasNext ? widget.messages[nextIndex] : null;
 
-                final shouldShowDate = next == null || !current.isSameDay(next);
+                final shouldShowDate =
+                    next == null ||
+                    !message.createdAt.isSameDay(next.createdAt);
                 final messageKey = GlobalKey();
 
                 final isIncomingMessage =
                     message.sender.id == widget.currentUserId;
                 final markAsRead =
                     !isIncomingMessage &&
-                        (int.tryParse(message.id) ?? 0) <=
-                            (int.tryParse(
-                                  widget.chat.lastReadMessageId ?? '0',
-                                ) ??
-                                0) ||
+                        message.id <= (widget.chat.lastReadMessageId ?? -1) ||
                     isIncomingMessage && message.readCount > 0;
+
+                final isCurrentUnRead =
+                    message.id > (widget.chat.lastReadMessageId ?? -1);
+
+                final isNextRead = hasNext
+                    ? next!.id < (widget.chat.lastReadMessageId ?? -1)
+                    : true;
+
+                final isNextMine = hasNext
+                    ? next!.sender.id == widget.currentUserId
+                    : true;
+
+                final isCurrentNotMine =
+                    message.sender.id != widget.currentUserId;
 
                 return Column(
                   children: [
+                    if (isCurrentUnRead &&
+                        (isNextRead || isNextMine) &&
+                        isCurrentNotMine)
+                      Chip(label: Text('chatScreen.unreadMessages'.tr())),
                     if (shouldShowDate)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
                         child: Align(
                           alignment: .center,
-                          child: Text(dateFormatter.format(current)),
+                          child: Text(dateFormatter.format(message.createdAt)),
                         ),
                       ),
                     ListItem(
@@ -202,7 +212,7 @@ class _MessagesListState extends State<MessagesList> {
                             onReactionSelected: (reaction) {
                               cubit.addReaction(
                                 chatId: widget.chat.id,
-                                messageId: message.id,
+                                messageId: message.id.toString(),
                                 type: AppUtils.getReactionTypeBySymbol(
                                   reaction,
                                 ),
@@ -214,7 +224,7 @@ class _MessagesListState extends State<MessagesList> {
                       onDeleteReactionTap: () {
                         cubit.deleteReaction(
                           chatId: widget.chat.id,
-                          messageId: message.id,
+                          messageId: message.id.toString(),
                         );
                       },
                     ),
@@ -243,7 +253,7 @@ class _MessagesListState extends State<MessagesList> {
                       if (result) {
                         cubit.deleteMessage(
                           chatId: widget.chat.id,
-                          messageId: state.selectedMessage?.id ?? '',
+                          messageId: state.selectedMessage?.id.toString() ?? '',
                         );
                       }
                     },
@@ -291,7 +301,6 @@ class ListItem extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final itsMe = currentUserId == message.sender.id;
-    final colors = theme.extension<AppSemanticColors>()!;
     final wasMessageChanged = message.createdAt != message.updatedAt;
 
     return Stack(
@@ -299,7 +308,9 @@ class ListItem extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: isSelected
-                ? Colors.lightBlueAccent.withValues(alpha: 0.2)
+                ? theme.isDark()
+                      ? theme.bottomNavigationBarTheme.backgroundColor
+                      : const Color(0xFFC8E6C9)
                 : null,
             borderRadius: BorderRadius.circular(12.0),
           ),
@@ -373,16 +384,14 @@ class ListItem extends StatelessWidget {
                                         ),
                                       ),
                                     Text(
-                                      timeFormatter.format(
-                                        message.updatedAt.toLocal(),
-                                      ),
+                                      timeFormatter.format(message.updatedAt),
                                       style: textTheme.bodySmall,
                                     ),
                                     if (markAsRead)
                                       Icon(
                                         Icons.done_all,
                                         size: 12.0,
-                                        color: colors.success,
+                                        color: theme.colorScheme.primary,
                                       ),
                                   ],
                                 ),
@@ -415,7 +424,7 @@ class ListItem extends StatelessWidget {
             bottom: 0,
             child: Icon(
               Icons.check_circle_outline_outlined,
-              color: colors.success,
+              color: theme.colorScheme.primary,
             ),
           ),
       ],

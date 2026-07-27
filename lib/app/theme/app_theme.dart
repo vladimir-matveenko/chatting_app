@@ -225,12 +225,13 @@ class AppTheme {
           ),
         ),
         chipTheme: ChipThemeData(
-          backgroundColor: appColors.unselectedWidget,
+          backgroundColor: appColors.bottomBarBackground,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
           padding: const .all(4.0),
           side: BorderSide.none,
+          labelStyle: TextStyle(color: appColors.secondaryText),
         ),
         dividerTheme: DividerThemeData(
           thickness: 2.0,
@@ -456,10 +457,11 @@ class AppTheme {
           ),
         ),
         chipTheme: ChipThemeData(
-          backgroundColor: appColors.unselectedWidget,
+          backgroundColor: const Color(0xFFC8E6C9),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
+          labelStyle: TextStyle(color: appColors.secondaryText),
           padding: const .all(4.0),
           side: BorderSide.none,
         ),
