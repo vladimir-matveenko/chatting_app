@@ -4,6 +4,7 @@ import 'package:chatting_app/features/messages/domain/entity/message_entity.dart
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/widgets/messages_list/controllers/chat_scroll_controller.dart';
 import 'package:chatting_app/features/messages/presentation/widgets/messages_list/widgets/chat_scroll_wrapper.dart';
+import 'package:chatting_app/features/messages/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,68 +45,17 @@ class _MessagesListState extends State<MessagesList> {
   final GlobalKey _listViewKey = GlobalKey();
   int? _lastMarkedMessageId;
 
-  bool _isEnoughVisible(ItemPosition position) {
-    const visibleThreshold = 0.5;
-
-    final visibleTop = position.itemLeadingEdge.clamp(0.0, 1.0);
-    final visibleBottom = position.itemTrailingEdge.clamp(0.0, 1.0);
-
-    final visibleFraction = visibleBottom - visibleTop;
-
-    return visibleFraction >= visibleThreshold;
-  }
-
   void _onVisibleItemsChanged() {
-    if (widget.scrollController.isJumping) {
-      return;
-    }
+    final maxReadId = MessagesUtils.getMaxVisibleUnreadMessageId(
+      scrollController: widget.scrollController,
+      chat: widget.chat,
+      messages: widget.messages,
+      currentUserId: widget.currentUserId,
+    );
 
-    final positions =
-        widget.scrollController.itemPositionsListener.itemPositions.value;
-
-    if (positions.isEmpty) {
-      return;
-    }
-
-    final lastReadMessageId = widget.chat.lastReadMessageId ?? -1;
-
-    int maxVisibleId = 0;
-
-    for (final position in positions) {
-      if (!_isEnoughVisible(position)) {
-        continue;
-      }
-
-      final index = position.index;
-
-      if (index < 0 || index >= widget.messages.length) {
-        continue;
-      }
-
-      final message = widget.messages[index];
-
-      final isIncoming = message.sender.id != widget.currentUserId;
-
-      if (!isIncoming) {
-        continue;
-      }
-
-      if (message.id <= lastReadMessageId) {
-        continue;
-      }
-
-      if (message.id > maxVisibleId) {
-        maxVisibleId = message.id;
-      }
-    }
-
-    if (maxVisibleId > 0) {
-      if (_lastMarkedMessageId == maxVisibleId) {
-        return;
-      }
-
-      _lastMarkedMessageId = maxVisibleId;
-      _onMessageSeen(maxVisibleId);
+    if (maxReadId != null && maxReadId != _lastMarkedMessageId) {
+      _lastMarkedMessageId = maxReadId;
+      _onMessageSeen(maxReadId);
     }
   }
 
