@@ -12,7 +12,7 @@ _ChatEntity _$ChatEntityFromJson(Map<String, dynamic> json) => _ChatEntity(
   title: json['title'] as String?,
   avatarUrl: json['avatarUrl'] as String?,
   ownerId: json['ownerId'] as String?,
-  lastReadMessageId: json['lastReadMessageId'] as String?,
+  lastReadMessageId: (json['lastReadMessageId'] as num?)?.toInt(),
   createdAt: DateTime.parse(json['createdAt'] as String),
   updatedAt: DateTime.parse(json['updatedAt'] as String),
 );

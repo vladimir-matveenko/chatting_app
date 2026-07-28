@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/utils/extensions.dart';
+import '../../../../app/utils/app_utils.dart';
 import '../../../../core/presentation/widgets/app_back_button.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
 import '../profile_cubit/cubit.dart';
@@ -45,8 +45,6 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.sizeOf(context);
-    final isLandscape = context.isLandscape();
     return Scaffold(
       appBar: AppBar(
         title: Text('createProfileScreen.screenName'.tr()),
@@ -85,14 +83,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
             },
             content: Container(
               padding: const .all(32.0),
-              constraints: BoxConstraints(
-                maxHeight: isLandscape
-                    ? screenSize.height - 32.0
-                    : screenSize.height * 0.8,
-                maxWidth: isLandscape
-                    ? screenSize.height * 0.8
-                    : screenSize.width - 32.0,
-              ),
+              constraints: AppUtils.getModalDialogConstraints(context),
               child: Column(
                 crossAxisAlignment: .center,
                 mainAxisSize: .min,

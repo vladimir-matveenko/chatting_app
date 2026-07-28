@@ -213,7 +213,7 @@ class ChatCubit extends Cubit<ChatState> {
   ///
 
   Future<void> getChatById(String chatId, {bool loadSilent = true}) async {
-    emit(state.copyWith(isLoading: !loadSilent));
+    emit(state.copyWith(isLoading: state.chat?.id != chatId || !loadSilent));
     final result = await _getChatUseCase(GetChatParams(chatId));
     result.fold(
       (l) {
@@ -258,7 +258,7 @@ class ChatCubit extends Cubit<ChatState> {
     required String chatId,
     bool loadSilent = true,
   }) async {
-    emit(state.copyWith(isLoading: !loadSilent));
+    emit(state.copyWith(isLoading: state.chat?.id != chatId || !loadSilent));
     final result = await _getChatMembersUseCase(
       GetChatMembersParams(chatId: chatId),
     );

@@ -1,5 +1,6 @@
 import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/features/messages/data/models/message_model.dart';
+import 'package:chatting_app/features/messages/domain/entity/around_context_entity.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -9,6 +10,7 @@ import '../../../../core/error/failure.dart';
 import '../../../../core/error/mapper.dart';
 import '../../domain/repository/messages_repository.dart';
 import '../data_sources/messages_remote_data_source.dart';
+import '../models/around_context_model.dart';
 
 @LazySingleton(as: MessagesRepository)
 class MessagesRepositoryImpl implements MessagesRepository {
@@ -150,6 +152,26 @@ class MessagesRepositoryImpl implements MessagesRepository {
   Future<Either<Failure, MessageEntity>> unPinMessage(String messageId) async {
     try {
       final item = await _messagesRemoteDataSource.unPinMessage(messageId);
+      return Right(item!.toEntity());
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, AroundContextEntity>> getAroundContext({
+    required String chatId,
+    required String messageId,
+    int? before,
+    int? after,
+  }) async {
+    try {
+      final item = await _messagesRemoteDataSource.getAroundContext(
+        chatId: chatId,
+        messageId: messageId,
+        before: before,
+        after: after,
+      );
       return Right(item!.toEntity());
     } catch (e) {
       return Left(mapExceptionToFailure(e));

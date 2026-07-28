@@ -11,7 +11,7 @@ part 'message_entity.g.dart';
 @freezed
 abstract class MessageEntity with _$MessageEntity {
   const factory MessageEntity({
-    required String id,
+    required int id,
     required String chatId,
     required MessageSenderEntity sender,
     required MessageType type,

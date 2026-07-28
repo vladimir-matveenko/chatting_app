@@ -1,4 +1,3 @@
-import 'package:chatting_app/features/auth/data/models/user_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_entity.freezed.dart';
@@ -9,7 +8,7 @@ abstract class UserEntity with _$UserEntity {
   const factory UserEntity({
     required String id,
     required String userName,
-    required String displayName,
+    String? displayName,
     required String email,
     required String avatarUrl,
     required DateTime createdAt,
@@ -17,15 +16,4 @@ abstract class UserEntity with _$UserEntity {
 
   factory UserEntity.fromJson(Map<String, dynamic> json) =>
       _$UserEntityFromJson(json);
-}
-
-extension UserEntityExt on UserEntity {
-  UserModel toModel() => UserModel(
-    id: id,
-    userName: userName,
-    displayName: displayName,
-    email: email,
-    avatarUrl: avatarUrl,
-    createdAt: createdAt,
-  );
 }

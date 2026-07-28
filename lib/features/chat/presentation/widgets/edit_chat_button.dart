@@ -5,7 +5,7 @@ import '../../../../app/constants/app_enums.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
 import '../cubit/cubit.dart';
 import '../cubit/state.dart';
-import 'edit_group_block.dart';
+import 'edit_group_modal.dart';
 
 class EditChatButton extends StatelessWidget {
   const EditChatButton({super.key});
@@ -22,7 +22,7 @@ class EditChatButton extends StatelessWidget {
                   onPressed: () {
                     AppDialog.empty(
                       context,
-                      content: const EditGroupBlock(),
+                      content: const EditGroupModal(),
                       onClose: cubit.disableCloseModal,
                     );
                   },

@@ -35,7 +35,7 @@ class AuthCubit extends Cubit<AuthState> {
         if (r) {
           final token = await _getTokenUseCase(NoParams());
           token.fold((l) {}, (r) async {
-            await _socketService.connect(r!.accessToken);
+            await _socketService.connect();
           });
           emit(state.copyWith(status: AuthStatus.authenticated));
         } else {
@@ -46,14 +46,14 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logout() async {
-    await _socketService.disconnect();
     await _logoutUseCase.call(NoParams());
+    await _socketService.disconnect();
     emit(state.copyWith(status: AuthStatus.unauthenticated));
   }
 
   Future<void> clearCache() async {
-    await _socketService.disconnect();
     await _clearCacheUseCase.call(NoParams());
+    await _socketService.disconnect();
     emit(state.copyWith(status: AuthStatus.unauthenticated));
   }
 }

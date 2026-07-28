@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/utils/extensions.dart';
+import '../../../../app/utils/app_utils.dart';
 import '../cubit/cubit.dart';
 import '../cubit/state.dart';
 import 'add_participants_block.dart';
@@ -13,19 +13,10 @@ class AddMembersModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.sizeOf(context);
-    final isLandscape = context.isLandscape();
     final cubit = context.read<ChatCubit>();
 
     return Container(
-      constraints: BoxConstraints(
-        maxHeight: isLandscape
-            ? screenSize.height - 32.0
-            : screenSize.height * 0.7,
-        maxWidth: isLandscape
-            ? screenSize.height - 32.0
-            : screenSize.width - 32.0,
-      ),
+      constraints: AppUtils.getModalDialogConstraints(context),
       padding: const .all(16.0),
       child: BlocConsumer<ChatCubit, ChatState>(
         listener: (context, state) {

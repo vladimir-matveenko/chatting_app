@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:chatting_app/app/constants/app_constants.dart';
 import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../core/error/failure.dart';
+import 'extensions.dart';
 
 class AppUtils {
   static String? parseFailureMessage(Failure failure) {
@@ -120,5 +122,18 @@ class AppUtils {
     });
 
     return result;
+  }
+
+  static BoxConstraints getModalDialogConstraints(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final isLandscape = context.isLandscape();
+    return BoxConstraints(
+      maxHeight: isLandscape
+          ? screenSize.height - 32.0
+          : screenSize.height * 0.7,
+      maxWidth: isLandscape
+          ? screenSize.height - 32.0
+          : screenSize.width - 32.0,
+    );
   }
 }

@@ -57,7 +57,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           createdAt: DateTime.now(),
         );
     _userNameController.text = profile.userName;
-    _displayNameController.text = profile.displayName;
+    _displayNameController.text = profile.displayName ?? '';
     _emailController.text = profile.email;
   }
 

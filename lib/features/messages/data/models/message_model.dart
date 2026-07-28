@@ -42,14 +42,14 @@ abstract class MessageModel with _$MessageModel {
 
 extension MessageModelExt on MessageModel {
   MessageEntity toEntity() => MessageEntity(
-    id: id,
+    id: int.tryParse(id) ?? 0,
     chatId: chatId,
     sender: sender.toEntity(),
     type: type,
     body: body,
     replyToId: replyToId,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
+    createdAt: createdAt.toLocal(),
+    updatedAt: updatedAt.toLocal(),
     deletedAt: deletedAt,
     isDeleted: isDeleted,
     reactions: reactions.map((e) => e.toEntity()).toList(),

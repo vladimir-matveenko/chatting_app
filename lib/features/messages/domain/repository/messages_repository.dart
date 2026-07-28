@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../app/constants/app_enums.dart';
 import '../../../../core/error/failure.dart';
+import '../entity/around_context_entity.dart';
 import '../entity/message_entity.dart';
 
 abstract class MessagesRepository {
@@ -36,5 +37,12 @@ abstract class MessagesRepository {
 
   Future<Either<Failure, List<MessageEntity>>> getPinnedMessages({
     required String chatId,
+  });
+
+  Future<Either<Failure, AroundContextEntity>> getAroundContext({
+    required String chatId,
+    required String messageId,
+    int? before,
+    int? after,
   });
 }

@@ -12,7 +12,7 @@ abstract class ChatEntity with _$ChatEntity {
     String? title,
     String? avatarUrl,
     String? ownerId,
-    String? lastReadMessageId,
+    int? lastReadMessageId,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _ChatEntity;

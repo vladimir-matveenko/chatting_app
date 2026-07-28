@@ -1,4 +1,3 @@
-import 'package:chatting_app/app/utils/extensions.dart';
 import 'package:chatting_app/core/presentation/widgets/app_back_button.dart';
 import 'package:chatting_app/features/chat/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/set_group_name_widget.dart';
@@ -7,16 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/utils/app_utils.dart';
 import '../cubit/state.dart';
 
-class EditGroupBlock extends StatefulWidget {
-  const EditGroupBlock({super.key});
+class EditGroupModal extends StatefulWidget {
+  const EditGroupModal({super.key});
 
   @override
-  State<EditGroupBlock> createState() => _EditGroupBlockState();
+  State<EditGroupModal> createState() => _EditGroupModalState();
 }
 
-class _EditGroupBlockState extends State<EditGroupBlock> {
+class _EditGroupModalState extends State<EditGroupModal> {
   late ChatCubit cubit;
   final _controller = TextEditingController();
   String oldName = '';
@@ -38,8 +38,6 @@ class _EditGroupBlockState extends State<EditGroupBlock> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final screenSize = MediaQuery.sizeOf(context);
-    final isLandscape = context.isLandscape();
 
     return BlocListener<ChatCubit, ChatState>(
       listenWhen: (previous, current) =>
@@ -55,9 +53,7 @@ class _EditGroupBlockState extends State<EditGroupBlock> {
       },
       child: Container(
         padding: const .all(16.0),
-        constraints: BoxConstraints(
-          maxWidth: (isLandscape ? screenSize.height : screenSize.width) - 32.0,
-        ),
+        constraints: AppUtils.getModalDialogConstraints(context),
         child: Column(
           spacing: 16.0,
           mainAxisSize: .min,

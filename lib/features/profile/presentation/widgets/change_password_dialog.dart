@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/utils/extensions.dart';
+import '../../../../app/utils/app_utils.dart';
 import 'change_password_form.dart';
 
 class ChangePasswordDialog extends StatefulWidget {
@@ -50,8 +50,6 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final screenSize = MediaQuery.sizeOf(context);
-    final isLandscape = context.isLandscape();
     return Container(
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
@@ -64,14 +62,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
           final isBlocked = jobDone;
           return Container(
             padding: const .all(32.0),
-            constraints: BoxConstraints(
-              maxHeight: isLandscape
-                  ? screenSize.height - 32.0
-                  : screenSize.height * 0.8,
-              maxWidth: isLandscape
-                  ? screenSize.height * 0.8
-                  : screenSize.width - 32.0,
-            ),
+            constraints: AppUtils.getModalDialogConstraints(context),
             child: ChangePasswordForm(
               isFormActive: !isLoading && !isBlocked,
               isLoading: isLoading,

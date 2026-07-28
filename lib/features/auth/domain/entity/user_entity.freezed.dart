@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserEntity {
 
- String get id; String get userName; String get displayName; String get email; String get avatarUrl; DateTime get createdAt;
+ String get id; String get userName; String? get displayName; String get email; String get avatarUrl; DateTime get createdAt;
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $UserEntityCopyWith<$Res>  {
   factory $UserEntityCopyWith(UserEntity value, $Res Function(UserEntity) _then) = _$UserEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, String userName, String displayName, String email, String avatarUrl, DateTime createdAt
+ String id, String userName, String? displayName, String email, String avatarUrl, DateTime createdAt
 });
 
 
@@ -65,12 +65,12 @@ class _$UserEntityCopyWithImpl<$Res>
 
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userName = null,Object? displayName = null,Object? email = null,Object? avatarUrl = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userName = null,Object? displayName = freezed,Object? email = null,Object? avatarUrl = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userName: null == userName ? _self.userName : userName // ignore: cast_nullable_to_non_nullable
-as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,avatarUrl: null == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
@@ -158,7 +158,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userName,  String displayName,  String email,  String avatarUrl,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userName,  String? displayName,  String email,  String avatarUrl,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserEntity() when $default != null:
 return $default(_that.id,_that.userName,_that.displayName,_that.email,_that.avatarUrl,_that.createdAt);case _:
@@ -179,7 +179,7 @@ return $default(_that.id,_that.userName,_that.displayName,_that.email,_that.avat
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userName,  String displayName,  String email,  String avatarUrl,  DateTime createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userName,  String? displayName,  String email,  String avatarUrl,  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _UserEntity():
 return $default(_that.id,_that.userName,_that.displayName,_that.email,_that.avatarUrl,_that.createdAt);case _:
@@ -199,7 +199,7 @@ return $default(_that.id,_that.userName,_that.displayName,_that.email,_that.avat
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userName,  String displayName,  String email,  String avatarUrl,  DateTime createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userName,  String? displayName,  String email,  String avatarUrl,  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _UserEntity() when $default != null:
 return $default(_that.id,_that.userName,_that.displayName,_that.email,_that.avatarUrl,_that.createdAt);case _:
@@ -214,12 +214,12 @@ return $default(_that.id,_that.userName,_that.displayName,_that.email,_that.avat
 @JsonSerializable()
 
 class _UserEntity implements UserEntity {
-  const _UserEntity({required this.id, required this.userName, required this.displayName, required this.email, required this.avatarUrl, required this.createdAt});
+  const _UserEntity({required this.id, required this.userName, this.displayName, required this.email, required this.avatarUrl, required this.createdAt});
   factory _UserEntity.fromJson(Map<String, dynamic> json) => _$UserEntityFromJson(json);
 
 @override final  String id;
 @override final  String userName;
-@override final  String displayName;
+@override final  String? displayName;
 @override final  String email;
 @override final  String avatarUrl;
 @override final  DateTime createdAt;
@@ -257,7 +257,7 @@ abstract mixin class _$UserEntityCopyWith<$Res> implements $UserEntityCopyWith<$
   factory _$UserEntityCopyWith(_UserEntity value, $Res Function(_UserEntity) _then) = __$UserEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String userName, String displayName, String email, String avatarUrl, DateTime createdAt
+ String id, String userName, String? displayName, String email, String avatarUrl, DateTime createdAt
 });
 
 
@@ -274,12 +274,12 @@ class __$UserEntityCopyWithImpl<$Res>
 
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userName = null,Object? displayName = null,Object? email = null,Object? avatarUrl = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userName = null,Object? displayName = freezed,Object? email = null,Object? avatarUrl = null,Object? createdAt = null,}) {
   return _then(_UserEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userName: null == userName ? _self.userName : userName // ignore: cast_nullable_to_non_nullable
-as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,avatarUrl: null == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
