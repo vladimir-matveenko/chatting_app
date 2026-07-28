@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:chatting_app/core/websocket/socket_token_provider.dart';
 import 'package:injectable/injectable.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
@@ -11,6 +12,10 @@ import 'socket_service.dart';
 
 @LazySingleton(as: SocketService)
 class SocketServiceImpl implements SocketService {
+  SocketServiceImpl(this._tokenProvider);
+
+  final SocketTokenProvider _tokenProvider;
+
   io.Socket? _socket;
   String? _currentToken;
 
@@ -23,7 +28,13 @@ class SocketServiceImpl implements SocketService {
   bool get isConnected => _socket?.connected ?? false;
 
   @override
-  Future<void> connect(String token) async {
+  Future<void> connect() async {
+    final token = await _tokenProvider();
+
+    if (token == null) {
+      return;
+    }
+
     if (_currentToken == token && isConnected) {
       return;
     }
@@ -36,13 +47,20 @@ class SocketServiceImpl implements SocketService {
       'http://localhost:3000',
       io.OptionBuilder()
           .setTransports(['websocket'])
-          .disableAutoConnect()
           .enableForceNew()
+          .enableReconnection()
+          .setReconnectionAttempts(10)
+          .setReconnectionDelay(2000)
+          .disableAutoConnect()
           .setAuth({'token': token})
           .build(),
     );
 
     _registerEvents();
+
+    _socket!.onReconnectAttempt((_) async {
+      _socket!.auth = {'token': token};
+    });
 
     _socket!.connect();
   }
