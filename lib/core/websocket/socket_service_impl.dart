@@ -43,6 +43,7 @@ class SocketServiceImpl implements SocketService {
 
   @override
   Future<void> disconnect() async {
+    _socket?.disconnect();
     _socket?.dispose();
 
     _socket = null;

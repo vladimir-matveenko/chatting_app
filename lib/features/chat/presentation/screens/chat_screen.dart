@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/di/injection.dart';
 import '../../../../core/presentation/widgets/app_message.dart';
 import '../../../messages/presentation/cubit/state.dart';
+import '../../../messages/presentation/widgets/messages_list/controllers/chat_scroll_controller.dart';
 import '../../../profile/domain/repository/profile_repository.dart';
 import '../../data/socket/chat_socket_service.dart';
 import '../cubit/cubit.dart';
@@ -26,7 +27,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final _userProfile = getIt<ProfileRepository>().profile;
   late ChatCubit chatCubit;
   late MessagesCubit messagesCubit;
-  final _scrollController = ScrollController();
+  final _scrollController = ChatScrollController();
   final _messageController = TextEditingController();
 
   @override

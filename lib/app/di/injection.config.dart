@@ -96,6 +96,8 @@ import 'package:chatting_app/features/messages/domain/usecases/delete_message_us
     as _i663;
 import 'package:chatting_app/features/messages/domain/usecases/delete_reaction_usecase.dart'
     as _i0;
+import 'package:chatting_app/features/messages/domain/usecases/get_around_context_usecase.dart'
+    as _i564;
 import 'package:chatting_app/features/messages/domain/usecases/get_message_usecase.dart'
     as _i507;
 import 'package:chatting_app/features/messages/domain/usecases/get_pinned_messages_usecase.dart'
@@ -253,6 +255,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i0.DeleteReactionUseCase>(
       () => _i0.DeleteReactionUseCase(gh<_i166.MessagesRepository>()),
     );
+    gh.lazySingleton<_i564.GetAroundContextUseCase>(
+      () => _i564.GetAroundContextUseCase(gh<_i166.MessagesRepository>()),
+    );
     gh.lazySingleton<_i507.GetMessageUseCase>(
       () => _i507.GetMessageUseCase(gh<_i166.MessagesRepository>()),
     );
@@ -301,20 +306,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i237.UpdateProfileUseCase>(
       () => _i237.UpdateProfileUseCase(gh<_i672.ProfileRepository>()),
     );
-    gh.lazySingleton<_i714.MessagesCubit>(
-      () => _i714.MessagesCubit(
-        gh<_i882.LoadMessagesUseCase>(),
-        gh<_i977.SendMessageUseCase>(),
-        gh<_i663.DeleteMessageUseCase>(),
-        gh<_i969.AddReactionUseCase>(),
-        gh<_i0.DeleteReactionUseCase>(),
-        gh<_i752.UpdateMessageUseCase>(),
-        gh<_i375.PinMessageUseCase>(),
-        gh<_i969.UnpinMessageUseCase>(),
-        gh<_i252.GetPinnedMessagesUseCase>(),
-        gh<_i2.MessagesSocketService>(),
-      ),
-    );
     gh.lazySingleton<_i55.ChatsCubit>(
       () => _i55.ChatsCubit(
         gh<_i321.LoadChatsUseCase>(),
@@ -359,6 +350,21 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i483.FetchProfileUseCase>(),
         gh<_i605.CreateProfileUseCase>(),
         gh<_i237.UpdateProfileUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i714.MessagesCubit>(
+      () => _i714.MessagesCubit(
+        gh<_i882.LoadMessagesUseCase>(),
+        gh<_i977.SendMessageUseCase>(),
+        gh<_i663.DeleteMessageUseCase>(),
+        gh<_i969.AddReactionUseCase>(),
+        gh<_i0.DeleteReactionUseCase>(),
+        gh<_i752.UpdateMessageUseCase>(),
+        gh<_i375.PinMessageUseCase>(),
+        gh<_i969.UnpinMessageUseCase>(),
+        gh<_i252.GetPinnedMessagesUseCase>(),
+        gh<_i2.MessagesSocketService>(),
+        gh<_i564.GetAroundContextUseCase>(),
       ),
     );
     gh.lazySingleton<_i126.ChangePasswordCubit>(

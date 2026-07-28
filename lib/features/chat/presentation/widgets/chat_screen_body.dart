@@ -10,8 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/constants/app_enums.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
-import '../../../messages/presentation/widget/message_bar.dart';
-import '../../../messages/presentation/widget/messages_list.dart';
+import '../../../messages/presentation/widgets/message_bar.dart';
+import '../../../messages/presentation/widgets/messages_list/controllers/chat_scroll_controller.dart';
+import '../../../messages/presentation/widgets/messages_list/widgets/messages_list.dart';
 
 class ChatScreenBody extends StatelessWidget {
   const ChatScreenBody({
@@ -23,7 +24,7 @@ class ChatScreenBody extends StatelessWidget {
   });
 
   final ChatEntity chat;
-  final ScrollController scrollController;
+  final ChatScrollController scrollController;
   final TextEditingController messageController;
   final String currentUserId;
 
@@ -44,12 +45,8 @@ class ChatScreenBody extends StatelessWidget {
       );
       messageController.clear();
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (scrollController.hasClients) {
-          scrollController.animateTo(
-            0.0,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOut,
-          );
+        if (scrollController.itemScrollController.isAttached) {
+          scrollController.animateToLatest();
         }
       });
     }
@@ -82,7 +79,14 @@ class ChatScreenBody extends StatelessWidget {
                             state.pinnedMessages.first.id.toString(),
                           );
                         },
-                        onNavigateTap: () {},
+                        onNavigateTap: () {
+                          cubit.getAroundContext(
+                            chatId: state.pinnedMessages.first.chatId,
+                            messageId: state.pinnedMessages.first.id.toString(),
+                            after: 1,
+                            before: 1,
+                          );
+                        },
                         itemsCount: state.pinnedMessages.length,
                         message: state.pinnedMessages.last,
                       ),

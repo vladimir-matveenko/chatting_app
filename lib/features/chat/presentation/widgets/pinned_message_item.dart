@@ -29,6 +29,7 @@ class PinnedMessageItem extends StatelessWidget {
       padding: const .all(8.0),
       child: itemsCount < 2
           ? GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: onNavigateTap,
               child: Row(
                 mainAxisAlignment: .spaceBetween,

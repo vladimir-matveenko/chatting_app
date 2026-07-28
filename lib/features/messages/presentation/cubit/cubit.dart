@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:chatting_app/features/messages/domain/usecases/add_reaction_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/delete_message_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/delete_reaction_usecase.dart';
+import 'package:chatting_app/features/messages/domain/usecases/get_around_context_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/get_pinned_messages_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/load_messages_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/pin_message_usecase.dart';
@@ -32,6 +34,7 @@ class MessagesCubit extends Cubit<MessagesState> {
     this._unpinMessageUseCase,
     this._getPinnedMessagesUseCase,
     this._messagesSocketService,
+    this._getAroundContextUseCase,
   ) : super(const MessagesState()) {
     _subscribeSocketEvents();
   }
@@ -45,6 +48,8 @@ class MessagesCubit extends Cubit<MessagesState> {
   final PinMessageUseCase _pinMessageUseCase;
   final UnpinMessageUseCase _unpinMessageUseCase;
   final GetPinnedMessagesUseCase _getPinnedMessagesUseCase;
+  final GetAroundContextUseCase _getAroundContextUseCase;
+
   final MessagesSocketService _messagesSocketService;
 
   final List<StreamSubscription> _subscriptions = [];
@@ -78,6 +83,8 @@ class MessagesCubit extends Cubit<MessagesState> {
 
   @override
   Future<void> close() async {
+    log('MessagesCubit closed: ${identityHashCode(this)}');
+
     for (final subscription in _subscriptions) {
       await subscription.cancel();
     }
@@ -253,6 +260,35 @@ class MessagesCubit extends Cubit<MessagesState> {
       },
       (r) {
         emit(state.copyWith(pinnedMessages: r, isLoading: false));
+      },
+    );
+  }
+
+  Future<void> getAroundContext({
+    required String chatId,
+    required String messageId,
+    int? before,
+    int? after,
+  }) async {
+    final result = await _getAroundContextUseCase(
+      GetAroundContextParams(
+        chatId: chatId,
+        messageId: messageId,
+        before: before,
+        after: after,
+      ),
+    );
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(aroundContext: r, isLoading: false));
       },
     );
   }
