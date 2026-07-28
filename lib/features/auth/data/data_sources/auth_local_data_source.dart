@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,7 +34,11 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   @override
   Future<void> clearToken() async {
     _tokenModel = null;
-    await sharedPreferences.remove(cachedToken);
+    final result = await sharedPreferences.remove(cachedToken);
+    if (kDebugMode) {
+      log('Cached token removed: $result');
+      log('Cached _tokenModel removed: ${_tokenModel == null}');
+    }
   }
 
   @override

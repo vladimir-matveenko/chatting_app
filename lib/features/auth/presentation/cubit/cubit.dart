@@ -46,14 +46,14 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logout() async {
-    await _socketService.disconnect();
     await _logoutUseCase.call(NoParams());
+    await _socketService.disconnect();
     emit(state.copyWith(status: AuthStatus.unauthenticated));
   }
 
   Future<void> clearCache() async {
-    await _socketService.disconnect();
     await _clearCacheUseCase.call(NoParams());
+    await _socketService.disconnect();
     emit(state.copyWith(status: AuthStatus.unauthenticated));
   }
 }

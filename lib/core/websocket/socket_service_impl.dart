@@ -12,6 +12,7 @@ import 'socket_service.dart';
 @LazySingleton(as: SocketService)
 class SocketServiceImpl implements SocketService {
   io.Socket? _socket;
+  String? _currentToken;
 
   final _controller = StreamController<SocketEvent>.broadcast();
 
@@ -23,15 +24,20 @@ class SocketServiceImpl implements SocketService {
 
   @override
   Future<void> connect(String token) async {
-    if (isConnected) {
+    if (_currentToken == token && isConnected) {
       return;
     }
+
+    await disconnect();
+
+    _currentToken = token;
 
     _socket = io.io(
       'http://localhost:3000',
       io.OptionBuilder()
           .setTransports(['websocket'])
           .disableAutoConnect()
+          .enableForceNew()
           .setAuth({'token': token})
           .build(),
     );
@@ -43,10 +49,19 @@ class SocketServiceImpl implements SocketService {
 
   @override
   Future<void> disconnect() async {
-    _socket?.disconnect();
-    _socket?.dispose();
+    final socket = _socket;
+
+    if (socket == null) {
+      return;
+    }
+
+    socket.clearListeners();
+    socket.disconnect();
+    socket.close();
+    socket.dispose();
 
     _socket = null;
+    _currentToken = null;
   }
 
   @override
