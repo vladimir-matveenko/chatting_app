@@ -2,11 +2,18 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../app/constants/app_enums.dart';
 import '../../../../core/error/failure.dart';
-import '../entity/around_context_entity.dart';
 import '../entity/message_entity.dart';
+import '../entity/message_page_entity.dart';
 
 abstract class MessagesRepository {
-  Future<Either<Failure, List<MessageEntity>>> loadMessages(String chatId);
+  Future<Either<Failure, MessagesPageEntity>> loadMessages({
+    required String chatId,
+    int? before,
+    int? after,
+    String? aroundMessageId,
+    String? beforeMessageId,
+    String? afterMessageId,
+  });
 
   Future<Either<Failure, MessageEntity>> sendMessage({
     required String chatId,
@@ -37,12 +44,5 @@ abstract class MessagesRepository {
 
   Future<Either<Failure, List<MessageEntity>>> getPinnedMessages({
     required String chatId,
-  });
-
-  Future<Either<Failure, AroundContextEntity>> getAroundContext({
-    required String chatId,
-    required String messageId,
-    int? before,
-    int? after,
   });
 }

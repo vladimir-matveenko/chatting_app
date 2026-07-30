@@ -1,6 +1,6 @@
 import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/features/messages/data/models/message_model.dart';
-import 'package:chatting_app/features/messages/domain/entity/around_context_entity.dart';
+import 'package:chatting_app/features/messages/data/models/message_page_model.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -8,9 +8,9 @@ import 'package:injectable/injectable.dart';
 import '../../../../app/constants/app_enums.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/error/mapper.dart';
+import '../../domain/entity/message_page_entity.dart';
 import '../../domain/repository/messages_repository.dart';
 import '../data_sources/messages_remote_data_source.dart';
-import '../models/around_context_model.dart';
 
 @LazySingleton(as: MessagesRepository)
 class MessagesRepositoryImpl implements MessagesRepository {
@@ -19,17 +19,24 @@ class MessagesRepositoryImpl implements MessagesRepository {
   final MessagesRemoteDataSource _messagesRemoteDataSource;
 
   @override
-  Future<Either<Failure, List<MessageEntity>>> loadMessages(
-    String chatId,
-  ) async {
+  Future<Either<Failure, MessagesPageEntity>> loadMessages({
+    required String chatId,
+    int? before,
+    int? after,
+    String? aroundMessageId,
+    String? beforeMessageId,
+    String? afterMessageId,
+  }) async {
     try {
-      final list = await _messagesRemoteDataSource.loadMessages(chatId);
-      return Right(
-        AppUtils.listModelToListEntity<MessageModel, MessageEntity>(
-          list,
-          (item) => item.toEntity(),
-        ),
+      final result = await _messagesRemoteDataSource.loadMessages(
+        chatId: chatId,
+        before: before,
+        after: after,
+        aroundMessageId: aroundMessageId,
+        beforeMessageId: beforeMessageId,
+        afterMessageId: afterMessageId,
       );
+      return Right(result.toEntity());
     } catch (e) {
       return Left(mapExceptionToFailure(e));
     }
@@ -152,26 +159,6 @@ class MessagesRepositoryImpl implements MessagesRepository {
   Future<Either<Failure, MessageEntity>> unPinMessage(String messageId) async {
     try {
       final item = await _messagesRemoteDataSource.unPinMessage(messageId);
-      return Right(item!.toEntity());
-    } catch (e) {
-      return Left(mapExceptionToFailure(e));
-    }
-  }
-
-  @override
-  Future<Either<Failure, AroundContextEntity>> getAroundContext({
-    required String chatId,
-    required String messageId,
-    int? before,
-    int? after,
-  }) async {
-    try {
-      final item = await _messagesRemoteDataSource.getAroundContext(
-        chatId: chatId,
-        messageId: messageId,
-        before: before,
-        after: after,
-      );
       return Right(item!.toEntity());
     } catch (e) {
       return Left(mapExceptionToFailure(e));

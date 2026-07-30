@@ -55,7 +55,7 @@ class ChatScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<MessagesCubit>();
-    return BlocBuilder<MessagesCubit, MessagesState>(
+    return BlocConsumer<MessagesCubit, MessagesState>(
       builder: (context, state) {
         final isLoading = state.isLoading;
         return isLoading
@@ -75,16 +75,12 @@ class ChatScreenBody extends StatelessWidget {
                           );
                         },
                         onUnpinTap: () {
-                          cubit.unpinMessage(
-                            state.pinnedMessages.first.id.toString(),
-                          );
+                          cubit.unpinMessage(state.pinnedMessages.first.id);
                         },
                         onNavigateTap: () {
                           cubit.getAroundContext(
                             chatId: state.pinnedMessages.first.chatId,
-                            messageId: state.pinnedMessages.first.id.toString(),
-                            after: 1,
-                            before: 1,
+                            messageId: state.pinnedMessages.first.id,
                           );
                         },
                         itemsCount: state.pinnedMessages.length,
@@ -94,12 +90,17 @@ class ChatScreenBody extends StatelessWidget {
                   Expanded(
                     child: Padding(
                       padding: const .symmetric(horizontal: 16.0),
-                      child: MessagesList(
-                        chat: chat,
-                        scrollController: scrollController,
-                        messages: state.messages,
-                        currentUserId: currentUserId,
-                      ),
+                      child:
+                          (state.messagesPageEntity?.messages.isNotEmpty ==
+                              true)
+                          ? MessagesList(
+                              key: ValueKey(state.status),
+                              chat: chat,
+                              scrollController: scrollController,
+                              messages: state.messagesPageEntity!.messages,
+                              currentUserId: currentUserId,
+                            )
+                          : const SizedBox(),
                     ),
                   ),
                   Padding(
@@ -126,6 +127,20 @@ class ChatScreenBody extends StatelessWidget {
                   ),
                 ],
               );
+      },
+      listenWhen: (prev, current) => prev.status != current.status,
+      listener: (context, state) {
+        if (state.status == MessagesListStatus.aroundContext) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            final index = state.messagesPageEntity!.messages.indexOf(
+              state.pinnedMessages.first,
+            );
+            scrollController.centerOnIndex(index);
+            context.read<MessagesCubit>().highlightMessage(
+              state.pinnedMessages.first.id,
+            );
+          });
+        }
       },
     );
   }

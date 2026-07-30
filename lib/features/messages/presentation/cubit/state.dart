@@ -1,64 +1,81 @@
-import 'package:chatting_app/features/messages/domain/entity/around_context_entity.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
+import 'package:chatting_app/features/messages/domain/entity/message_page_entity.dart';
 import 'package:equatable/equatable.dart';
+
+import 'cubit.dart';
 
 class MessagesState extends Equatable {
   const MessagesState({
-    this.messages = const [],
+    this.status = MessagesListStatus.list,
     this.pinnedMessages = const [],
-    this.aroundContext,
+    this.messagesPageEntity,
     this.error,
     this.showMenu = false,
     this.isLoading = false,
+    this.showNewerLoader = false,
+    this.showOlderLoader = false,
     this.editModeActive = false,
     this.closeModal = false,
     this.selectedMessage,
+    this.highlightedMessageId,
   });
 
-  final List<MessageEntity> messages;
+  final MessagesListStatus status;
   final List<MessageEntity> pinnedMessages;
-  final AroundContextEntity? aroundContext;
+  final MessagesPageEntity? messagesPageEntity;
   final String? error;
   final MessageEntity? selectedMessage;
+  final int? highlightedMessageId;
   final bool showMenu;
   final bool isLoading;
+  final bool showNewerLoader;
+  final bool showOlderLoader;
   final bool editModeActive;
   final bool closeModal;
 
   MessagesState copyWith({
-    List<MessageEntity>? messages,
+    MessagesListStatus? status,
     List<MessageEntity>? pinnedMessages,
-    AroundContextEntity? aroundContext,
+    MessagesPageEntity? messagesPageEntity,
     String? error,
     MessageEntity? selectedMessage,
+    int? highlightedMessageId,
     bool? showMenu,
     bool? isLoading,
+    bool? showNewerLoader,
+    bool? showOlderLoader,
     bool? editModeActive,
     bool? closeModal,
   }) {
     return MessagesState(
-      messages: messages ?? this.messages,
+      status: status ?? this.status,
       pinnedMessages: pinnedMessages ?? this.pinnedMessages,
-      aroundContext: aroundContext ?? this.aroundContext,
+      messagesPageEntity: messagesPageEntity ?? this.messagesPageEntity,
       error: error ?? this.error,
       showMenu: showMenu ?? this.showMenu,
       selectedMessage: selectedMessage ?? this.selectedMessage,
       isLoading: isLoading ?? this.isLoading,
+      showNewerLoader: showNewerLoader ?? this.showNewerLoader,
+      showOlderLoader: showOlderLoader ?? this.showOlderLoader,
       editModeActive: editModeActive ?? this.editModeActive,
       closeModal: closeModal ?? this.closeModal,
+      highlightedMessageId: highlightedMessageId ?? this.highlightedMessageId,
     );
   }
 
   @override
   List<dynamic> get props => [
-    messages,
+    status,
     pinnedMessages,
-    aroundContext,
+    messagesPageEntity,
     error,
     isLoading,
+    showNewerLoader,
+    showOlderLoader,
     showMenu,
     selectedMessage,
     editModeActive,
     closeModal,
+    highlightedMessageId,
   ];
 }

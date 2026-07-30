@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:chatting_app/app/utils/app_utils.dart';
+import 'package:chatting_app/core/presentation/widgets/app_loader.dart';
 import 'package:chatting_app/features/chat/domain/entity/chat_entity.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
@@ -42,8 +45,16 @@ class MessagesList extends StatefulWidget {
 }
 
 class _MessagesListState extends State<MessagesList> {
-  final GlobalKey _listViewKey = GlobalKey();
+  late MessagesCubit cubit;
+  Timer? _timer;
   int? _lastMarkedMessageId;
+  bool _hasPrevious = false;
+  bool _hasNext = false;
+  bool _loadingTriggered = false;
+
+  void _onPositionsChanged() {
+    _onVisibleItemsChanged();
+  }
 
   void _onVisibleItemsChanged() {
     final maxReadId = MessagesUtils.getMaxVisibleUnreadMessageId(
@@ -69,23 +80,26 @@ class _MessagesListState extends State<MessagesList> {
   @override
   void initState() {
     super.initState();
+    cubit = context.read<MessagesCubit>();
     widget.scrollController.itemPositionsListener.itemPositions.addListener(
-      _onVisibleItemsChanged,
+      _onPositionsChanged,
     );
-    Future.delayed(const Duration(seconds: 10), () {
-      if (mounted) {
-        if (widget.chat.lastReadMessageId != widget.messages.first.id) {
+    _timer = Timer(
+      const Duration(seconds: 10),
+      () => WidgetsBinding.instance.addPostFrameCallback((_) {
+        if ((widget.chat.lastReadMessageId ?? 0) < widget.messages.first.id) {
           final id = widget.messages.first.id;
           _onMessageSeen(id);
         }
-      }
-    });
+      }),
+    );
   }
 
   @override
   void dispose() {
+    _timer?.cancel();
     widget.scrollController.itemPositionsListener.itemPositions.removeListener(
-      _onVisibleItemsChanged,
+      _onPositionsChanged,
     );
     super.dispose();
   }
@@ -97,148 +111,186 @@ class _MessagesListState extends State<MessagesList> {
     final messageColor = isDark ? Colors.grey.shade200 : theme.cardTheme.color;
     final dateFormatter = DateFormat('yyyy.MM.dd', context.locale.languageCode);
     final timeFormatter = DateFormat('H:mm', context.locale.languageCode);
-    final cubit = context.read<MessagesCubit>();
     final state = context.watch<MessagesCubit>().state;
     final isPinnedMessageSelected = state.pinnedMessages.any(
       (e) => e.id == state.selectedMessage?.id,
     );
+    _hasPrevious = state.messagesPageEntity?.hasPrevious ?? false;
+    _hasNext = state.messagesPageEntity?.hasNext ?? false;
 
     return Stack(
       children: [
         ChatScrollWrapper(
           controller: widget.scrollController,
-          child: ScrollablePositionedList.separated(
-            key: _listViewKey,
-            reverse: true,
-            itemCount: widget.messages.length,
-            itemScrollController: widget.scrollController.itemScrollController,
-            itemPositionsListener:
-                widget.scrollController.itemPositionsListener,
-            physics: const ClampingScrollPhysics(),
-            separatorBuilder: (context, index) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              final message = widget.messages[index];
+          child: NotificationListener(
+            onNotification: (ScrollNotification notification) {
+              if (notification is ScrollUpdateNotification) {
+                final metrics = notification.metrics;
 
-              final nextIndex = index + 1;
-              final hasNext = nextIndex < widget.messages.length;
-              final next = hasNext ? widget.messages[nextIndex] : null;
+                if (!_loadingTriggered &&
+                    metrics.extentAfter < 100 &&
+                    _hasPrevious &&
+                    !cubit.state.showOlderLoader) {
+                  cubit.loadOlderMessages(widget.chat.id);
+                }
 
-              final shouldShowDate =
-                  next == null || !message.createdAt.isSameDay(next.createdAt);
+                if (!_loadingTriggered &&
+                    metrics.extentBefore < 100 &&
+                    _hasNext &&
+                    !cubit.state.showNewerLoader) {
+                  cubit.loadNewerMessages(widget.chat.id);
+                }
 
-              final bubbleKey = GlobalKey();
-
-              final isIncomingMessage =
-                  message.sender.id == widget.currentUserId;
-              final showReadIndicator =
-                  !isIncomingMessage &&
-                      message.id <= (widget.chat.lastReadMessageId ?? -1) ||
-                  isIncomingMessage && message.readCount > 0;
-
-              final isCurrentUnRead =
-                  message.id > (widget.chat.lastReadMessageId ?? -1);
-
-              final isNextRead = hasNext
-                  ? next!.id < (widget.chat.lastReadMessageId ?? -1)
-                  : true;
-
-              final isNextMine = hasNext
-                  ? next!.sender.id == widget.currentUserId
-                  : true;
-
-              final isCurrentMine = message.sender.id == widget.currentUserId;
-
-              final isSelected =
-                  state.showMenu && state.selectedMessage?.id == message.id;
-
-              final wasMessageChanged = message.createdAt != message.updatedAt;
-
-              return Column(
-                children: [
-                  if (isCurrentUnRead &&
-                      (isNextRead || isNextMine) &&
-                      !isCurrentMine)
-                    Chip(label: Text('chatScreen.unreadMessages'.tr())),
-                  if (shouldShowDate)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0, top: 12.0),
-                      child: Align(
-                        alignment: .center,
-                        child: Text(dateFormatter.format(message.createdAt)),
-                      ),
-                    ),
-                  MessageItem(
-                    key: ValueKey(message.id),
-                    isSelected: isSelected,
-                    avatar: (widget.chat.type == ChatType.group)
-                        ? UserAvatar(
-                            avatar: message.sender.avatarUrl ?? '',
-                            firstName:
-                                message.sender.displayName ??
-                                message.sender.userName,
-                          )
-                        : null,
-                    bubble: MessageBubble(
-                      bubbleKey: bubbleKey,
-                      text: message.body,
-                      updatedAt: message.updatedAt,
-                      timeFormatter: timeFormatter,
-                      bubbleColor: isCurrentMine ? messageColor! : null,
-                      border: isCurrentMine
-                          ? null
-                          : .all(color: messageColor!, width: 2.0),
-                      showSender: widget.chat.type == ChatType.group,
-                      sender: message.sender,
-                      isEdited: wasMessageChanged,
-                      showReadIndicator: showReadIndicator,
-                      onTap: () {
-                        if (state.showMenu) {
-                          cubit.unSelectMessage();
-                        } else {
-                          showReactionsMenu(
-                            context: context,
-                            messageKey: bubbleKey,
-                            reactions: AppConstants.reactions,
-                            onReactionSelected: (reaction) {
-                              cubit.addReaction(
-                                chatId: widget.chat.id,
-                                messageId: message.id.toString(),
-                                type: AppUtils.getReactionTypeBySymbol(
-                                  reaction,
-                                ),
-                              );
-                            },
-                          );
-                        }
-                      },
-                      onLongPress: isCurrentMine
-                          ? () {
-                              cubit.selectMessage(message);
-                            }
-                          : null,
-                    ),
-                    reaction: message.currentUserReaction != null
-                        ? GestureDetector(
-                            onTap: () {
-                              cubit.deleteReaction(
-                                chatId: widget.chat.id,
-                                messageId: message.id.toString(),
-                              );
-                            },
-                            child: Text(
-                              AppUtils.getReactionSymbol(
-                                message.currentUserReaction!,
-                              ),
-                              style: const TextStyle(fontSize: 18.0),
-                            ),
-                          )
-                        : null,
-                    onTap: isSelected ? cubit.unSelectMessage : null,
-                    bubbleAlignment: isCurrentMine ? .end : .start,
-                  ),
-                ],
-              );
+                if (metrics.extentAfter > 200) {
+                  _loadingTriggered = false;
+                }
+              }
+              return false;
             },
+            child: ScrollablePositionedList.separated(
+              reverse: true,
+              itemCount: widget.messages.length,
+              itemScrollController:
+                  widget.scrollController.itemScrollController,
+              itemPositionsListener:
+                  widget.scrollController.itemPositionsListener,
+              physics: const ClampingScrollPhysics(),
+              separatorBuilder: (context, index) => const SizedBox(height: 8),
+              itemBuilder: (context, index) {
+                final message = widget.messages[index];
+
+                final nextIndex = index + 1;
+                final hasNext = nextIndex < widget.messages.length;
+                final next = hasNext ? widget.messages[nextIndex] : null;
+
+                final shouldShowDate =
+                    next == null ||
+                    !message.createdAt.isSameDay(next.createdAt);
+
+                final bubbleKey = GlobalKey();
+
+                final isIncomingMessage =
+                    message.sender.id == widget.currentUserId;
+                final showReadIndicator =
+                    !isIncomingMessage &&
+                        message.id <= (widget.chat.lastReadMessageId ?? -1) ||
+                    isIncomingMessage && message.readCount > 0;
+
+                final isCurrentUnRead =
+                    message.id > (widget.chat.lastReadMessageId ?? -1);
+
+                final isNextRead = hasNext
+                    ? next!.id < (widget.chat.lastReadMessageId ?? -1)
+                    : true;
+
+                final isNextMine = hasNext
+                    ? next!.sender.id == widget.currentUserId
+                    : true;
+
+                final isCurrentMine = message.sender.id == widget.currentUserId;
+
+                final isSelected =
+                    state.showMenu && state.selectedMessage?.id == message.id;
+
+                final wasMessageChanged =
+                    message.createdAt != message.updatedAt;
+
+                return KeyedSubtree(
+                  key: ValueKey(message.id),
+                  child: Column(
+                    children: [
+                      if (isCurrentUnRead &&
+                          (isNextRead || isNextMine) &&
+                          !isCurrentMine)
+                        Chip(label: Text('chatScreen.unreadMessages'.tr())),
+                      if (shouldShowDate)
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: 12.0,
+                            top: 12.0,
+                          ),
+                          child: Align(
+                            alignment: .center,
+                            child: Text(
+                              dateFormatter.format(message.createdAt),
+                            ),
+                          ),
+                        ),
+                      MessageItem(
+                        isSelected: isSelected,
+                        avatar: (widget.chat.type == ChatType.group)
+                            ? UserAvatar(
+                                avatar: message.sender.avatarUrl ?? '',
+                                firstName:
+                                    message.sender.displayName ??
+                                    message.sender.userName,
+                              )
+                            : null,
+                        bubble: MessageBubble(
+                          bubbleKey: bubbleKey,
+                          text: message.body,
+                          updatedAt: message.updatedAt,
+                          timeFormatter: timeFormatter,
+                          bubbleColor: isCurrentMine ? messageColor! : null,
+                          border: isCurrentMine
+                              ? null
+                              : .all(color: messageColor!, width: 2.0),
+                          showSender: widget.chat.type == ChatType.group,
+                          sender: message.sender,
+                          isEdited: wasMessageChanged,
+                          showReadIndicator: showReadIndicator,
+                          isHighlighted:
+                              state.highlightedMessageId == message.id,
+                          onTap: () {
+                            if (state.showMenu) {
+                              cubit.unSelectMessage();
+                            } else {
+                              showReactionsMenu(
+                                context: context,
+                                messageKey: bubbleKey,
+                                reactions: AppConstants.reactions,
+                                onReactionSelected: (reaction) {
+                                  cubit.addReaction(
+                                    chatId: widget.chat.id,
+                                    messageId: message.id.toString(),
+                                    type: AppUtils.getReactionTypeBySymbol(
+                                      reaction,
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                          },
+                          onLongPress: isCurrentMine
+                              ? () {
+                                  cubit.selectMessage(message);
+                                }
+                              : null,
+                        ),
+                        reaction: message.currentUserReaction != null
+                            ? GestureDetector(
+                                onTap: () {
+                                  cubit.deleteReaction(
+                                    chatId: widget.chat.id,
+                                    messageId: message.id.toString(),
+                                  );
+                                },
+                                child: Text(
+                                  AppUtils.getReactionSymbol(
+                                    message.currentUserReaction!,
+                                  ),
+                                  style: const TextStyle(fontSize: 18.0),
+                                ),
+                              )
+                            : null,
+                        onTap: isSelected ? cubit.unSelectMessage : null,
+                        bubbleAlignment: isCurrentMine ? .end : .start,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
         Positioned(
@@ -254,12 +306,8 @@ class _MessagesListState extends State<MessagesList> {
                     onPin: () {
                       cubit.unSelectMessage();
                       isPinnedMessageSelected
-                          ? cubit.unpinMessage(
-                              state.selectedMessage?.id.toString() ?? '',
-                            )
-                          : cubit.pinMessage(
-                              state.selectedMessage?.id.toString() ?? '',
-                            );
+                          ? cubit.unpinMessage(state.selectedMessage?.id ?? -1)
+                          : cubit.pinMessage(state.selectedMessage?.id ?? -1);
                     },
                     onEdit: cubit.activateEditingMode,
                     onDelete: () async {
@@ -280,6 +328,15 @@ class _MessagesListState extends State<MessagesList> {
                   )
                 : const SizedBox(),
           ),
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          top: state.showOlderLoader ? 0 : null,
+          bottom: state.showNewerLoader ? 0 : null,
+          child: state.showNewerLoader || state.showOlderLoader
+              ? const AppLoader(size: 20.0)
+              : const SizedBox(),
         ),
       ],
     );

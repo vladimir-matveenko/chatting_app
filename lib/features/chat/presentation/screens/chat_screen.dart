@@ -72,7 +72,7 @@ class _ChatScreenState extends State<ChatScreen> {
         BlocListener<MessagesCubit, MessagesState>(
           listenWhen: (previous, current) =>
               previous.error != current.error ||
-              previous.editModeActive != current.editModeActive,
+              previous.status != current.status,
           listener: (context, state) {
             if (state.error?.isNotEmpty == true) {
               AppMessage.error(
