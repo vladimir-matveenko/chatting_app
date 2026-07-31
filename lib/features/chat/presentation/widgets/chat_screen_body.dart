@@ -1,7 +1,7 @@
 import 'package:chatting_app/core/presentation/widgets/app_dialog.dart';
 import 'package:chatting_app/features/chat/domain/entity/chat_entity.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/chat_participants_bar.dart';
-import 'package:chatting_app/features/chat/presentation/widgets/pinned_message_item.dart';
+import 'package:chatting_app/features/chat/presentation/widgets/pinned_message_widget.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/pinned_messages_modal.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
@@ -64,29 +64,26 @@ class ChatScreenBody extends StatelessWidget {
                 children: [
                   ChatParticipantsBar(key: ValueKey(chat.id)),
                   if (state.pinnedMessages.isNotEmpty)
-                    Padding(
-                      padding: const .only(top: 16.0, left: 16.0, right: 16.0),
-                      child: PinnedMessageItem(
-                        onShowModalTap: () {
-                          AppDialog.empty(
-                            context,
-                            content: const PinnedMessagesModal(),
-                            onClose: cubit.disableCloseModal,
-                          );
-                        },
-                        onUnpinTap: () {
-                          cubit.unpinMessage(state.pinnedMessages.first.id);
-                        },
-                        onNavigateTap: () {
-                          cubit.getAroundContext(
-                            chatId: state.pinnedMessages.first.chatId,
-                            messageId: state.pinnedMessages.first.id,
-                          );
-                        },
-                        itemsCount: state.pinnedMessages.length,
-                        message: state.pinnedMessages.last,
-                      ),
+                    PinnedMessageWidget(
+                      messages: state.pinnedMessages,
+                      onUnpinTap: (id) {
+                        cubit.unpinMessage(id);
+                      },
+                      onNavigateTap: (message) {
+                        cubit.getAroundContext(
+                          chatId: message.chatId,
+                          message: message,
+                        );
+                      },
+                      onShowModalTap: () {
+                        AppDialog.empty(
+                          context,
+                          content: const PinnedMessagesModal(),
+                          onClose: cubit.disableCloseModal,
+                        );
+                      },
                     ),
+
                   Expanded(
                     child: Padding(
                       padding: const .symmetric(horizontal: 16.0),
@@ -128,16 +125,17 @@ class ChatScreenBody extends StatelessWidget {
                 ],
               );
       },
-      listenWhen: (prev, current) => prev.status != current.status,
+      listenWhen: (prev, current) =>
+          prev.shouldScroll != current.shouldScroll && current.shouldScroll,
       listener: (context, state) {
-        if (state.status == MessagesListStatus.aroundContext) {
+        if (state.selectedPinnedMessage != null) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             final index = state.messagesPageEntity!.messages.indexOf(
-              state.pinnedMessages.first,
+              state.selectedPinnedMessage!,
             );
             scrollController.centerOnIndex(index);
             context.read<MessagesCubit>().highlightMessage(
-              state.pinnedMessages.first.id,
+              state.selectedPinnedMessage!.id,
             );
           });
         }

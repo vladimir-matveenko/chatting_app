@@ -30,16 +30,15 @@ class PinnedMessagesModal extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final item = state.pinnedMessages[index];
                     return PinnedMessageItem(
-                      itemsCount: 1,
                       message: item,
-                      onNavigateTap: () {
+                      onNavigateTap: (message) {
                         cubit.getAroundContext(
                           chatId: item.chatId,
-                          messageId: item.id,
+                          message: item,
+                          closeModal: true,
                         );
                       },
-                      onShowModalTap: () {},
-                      onUnpinTap: () {
+                      onUnpinTap: (message) {
                         cubit.unpinMessage(
                           item.id,
                           closeModal: state.pinnedMessages.length == 1,

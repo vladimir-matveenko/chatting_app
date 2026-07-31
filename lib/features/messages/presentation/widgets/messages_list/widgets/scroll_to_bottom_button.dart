@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '../controllers/chat_scroll_controller.dart';
 
 class ScrollToBottomButton extends StatelessWidget {
-  const ScrollToBottomButton({super.key, required this.controller});
+  const ScrollToBottomButton({super.key, required this.controller, this.onTap});
 
   final ChatScrollController controller;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class ScrollToBottomButton extends StatelessWidget {
                             ?.withValues(alpha: 0.8),
                         foregroundColor: theme.colorScheme.primary,
                       ),
-                      onPressed: controller.animateToLatest,
+                      onPressed: onTap ?? controller.animateToLatest,
                       icon: const Icon(Icons.arrow_downward_outlined),
                     ),
                   ),

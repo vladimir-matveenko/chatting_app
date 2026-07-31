@@ -17,7 +17,9 @@ class MessagesState extends Equatable {
     this.editModeActive = false,
     this.closeModal = false,
     this.selectedMessage,
+    this.selectedPinnedMessage,
     this.highlightedMessageId,
+    this.shouldScroll = false,
   });
 
   final MessagesListStatus status;
@@ -25,6 +27,7 @@ class MessagesState extends Equatable {
   final MessagesPageEntity? messagesPageEntity;
   final String? error;
   final MessageEntity? selectedMessage;
+  final MessageEntity? selectedPinnedMessage;
   final int? highlightedMessageId;
   final bool showMenu;
   final bool isLoading;
@@ -32,6 +35,7 @@ class MessagesState extends Equatable {
   final bool showOlderLoader;
   final bool editModeActive;
   final bool closeModal;
+  final bool shouldScroll;
 
   MessagesState copyWith({
     MessagesListStatus? status,
@@ -39,6 +43,7 @@ class MessagesState extends Equatable {
     MessagesPageEntity? messagesPageEntity,
     String? error,
     MessageEntity? selectedMessage,
+    MessageEntity? selectedPinnedMessage,
     int? highlightedMessageId,
     bool? showMenu,
     bool? isLoading,
@@ -46,6 +51,7 @@ class MessagesState extends Equatable {
     bool? showOlderLoader,
     bool? editModeActive,
     bool? closeModal,
+    bool? shouldScroll,
   }) {
     return MessagesState(
       status: status ?? this.status,
@@ -54,12 +60,15 @@ class MessagesState extends Equatable {
       error: error ?? this.error,
       showMenu: showMenu ?? this.showMenu,
       selectedMessage: selectedMessage ?? this.selectedMessage,
+      selectedPinnedMessage:
+          selectedPinnedMessage ?? this.selectedPinnedMessage,
       isLoading: isLoading ?? this.isLoading,
       showNewerLoader: showNewerLoader ?? this.showNewerLoader,
       showOlderLoader: showOlderLoader ?? this.showOlderLoader,
       editModeActive: editModeActive ?? this.editModeActive,
       closeModal: closeModal ?? this.closeModal,
       highlightedMessageId: highlightedMessageId ?? this.highlightedMessageId,
+      shouldScroll: shouldScroll ?? this.shouldScroll,
     );
   }
 
@@ -74,8 +83,10 @@ class MessagesState extends Equatable {
     showOlderLoader,
     showMenu,
     selectedMessage,
+    selectedPinnedMessage,
     editModeActive,
     closeModal,
     highlightedMessageId,
+    shouldScroll,
   ];
 }

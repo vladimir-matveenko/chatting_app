@@ -122,6 +122,11 @@ class _MessagesListState extends State<MessagesList> {
       children: [
         ChatScrollWrapper(
           controller: widget.scrollController,
+          onTap: state.status == MessagesListStatus.aroundContext
+              ? () {
+                  cubit.loadMessages(chatId: widget.chat.id);
+                }
+              : null,
           child: NotificationListener(
             onNotification: (ScrollNotification notification) {
               if (notification is ScrollUpdateNotification) {

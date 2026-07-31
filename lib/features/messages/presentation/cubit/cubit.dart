@@ -145,11 +145,18 @@ class MessagesCubit extends Cubit<MessagesState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
+            status: MessagesListStatus.list,
           ),
         );
       },
       (r) {
-        emit(state.copyWith(isLoading: false, messagesPageEntity: r));
+        emit(
+          state.copyWith(
+            isLoading: false,
+            messagesPageEntity: r,
+            status: MessagesListStatus.list,
+          ),
+        );
       },
     );
   }
@@ -260,15 +267,23 @@ class MessagesCubit extends Cubit<MessagesState> {
 
   Future<void> getAroundContext({
     required String chatId,
-    required int messageId,
+    required MessageEntity message,
+    bool closeModal = false,
   }) async {
-    if (state.messagesPageEntity!.messages.any((e) => e.id == messageId)) {
+    if (state.messagesPageEntity!.messages.any((e) => e.id == message.id)) {
+      emit(
+        state.copyWith(
+          shouldScroll: true,
+          selectedPinnedMessage: message,
+          closeModal: closeModal,
+        ),
+      );
       return;
     }
     final result = await _getAroundContextUseCase(
       GetAroundContextParams(
         chatId: chatId,
-        aroundMessageId: messageId.toString(),
+        aroundMessageId: message.id.toString(),
         before: 1,
         after: 1,
       ),
@@ -279,6 +294,7 @@ class MessagesCubit extends Cubit<MessagesState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
+            closeModal: closeModal,
           ),
         );
       },
@@ -287,7 +303,10 @@ class MessagesCubit extends Cubit<MessagesState> {
           state.copyWith(
             messagesPageEntity: r,
             isLoading: false,
+            shouldScroll: true,
             status: MessagesListStatus.aroundContext,
+            selectedPinnedMessage: message,
+            closeModal: closeModal,
           ),
         );
       },
@@ -468,11 +487,16 @@ class MessagesCubit extends Cubit<MessagesState> {
     emit(state.copyWith(closeModal: false));
   }
 
+  Future<void> disableShouldScroll() async {
+    emit(state.copyWith(shouldScroll: false));
+  }
+
   Future<void> highlightMessage(int id) async {
     emit(state.copyWith(highlightedMessageId: id));
     Future.delayed(const Duration(seconds: 1), () async {
       if (!isClosed) {
         await disableHighlightMessage();
+        await disableShouldScroll();
       }
     });
   }
