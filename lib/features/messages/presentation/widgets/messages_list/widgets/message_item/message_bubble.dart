@@ -51,7 +51,7 @@ class MessageBubble extends StatelessWidget {
       onLongPress: onLongPress,
       child: AnimatedContainer(
         key: bubbleKey,
-        duration: const Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 500),
         curve: Curves.easeOut,
         padding: padding,
         decoration: BoxDecoration(

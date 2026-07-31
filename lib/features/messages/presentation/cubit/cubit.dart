@@ -21,6 +21,8 @@ import '../../../../app/utils/app_utils.dart';
 import '../../../../core/websocket/events/events.dart';
 import '../../data/socket/messages_socket_service.dart';
 
+enum MessagesListStatus { list, aroundContext }
+
 @lazySingleton
 class MessagesCubit extends Cubit<MessagesState> {
   MessagesCubit(
@@ -125,8 +127,15 @@ class MessagesCubit extends Cubit<MessagesState> {
     required String chatId,
   }) async {
     final isChatTheSame =
-        state.messages.isNotEmpty && state.messages.first.chatId == chatId;
-    emit(state.copyWith(isLoading: !isChatTheSame || !loadSilent, error: ''));
+        (state.messagesPageEntity?.messages.isNotEmpty ?? false) &&
+        state.messagesPageEntity?.messages.first.chatId == chatId;
+    emit(
+      state.copyWith(
+        isLoading: !isChatTheSame || !loadSilent,
+        error: '',
+        status: MessagesListStatus.list,
+      ),
+    );
     final result = await _loadMessagesUseCase(
       LoadMessagesParams(chatId: chatId),
     );
@@ -134,13 +143,172 @@ class MessagesCubit extends Cubit<MessagesState> {
       (l) {
         emit(
           state.copyWith(
-            error: AppUtils.parseFailureMessage(l) ?? DateTime.now().toString(),
+            error: AppUtils.parseFailureMessage(l),
             isLoading: false,
+            status: MessagesListStatus.list,
           ),
         );
       },
       (r) {
-        emit(state.copyWith(messages: r, isLoading: false));
+        emit(
+          state.copyWith(
+            isLoading: false,
+            messagesPageEntity: r,
+            status: MessagesListStatus.list,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> loadOlderMessages(String chatId) async {
+    if (state.showOlderLoader ||
+        !state.messagesPageEntity!.hasPrevious ||
+        state.showNewerLoader) {
+      return;
+    }
+
+    emit(state.copyWith(showOlderLoader: true));
+
+    final result = await _loadMessagesUseCase(
+      LoadMessagesParams(
+        chatId: chatId,
+        beforeMessageId: state.messagesPageEntity?.messages.last.id.toString(),
+      ),
+    );
+
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            showOlderLoader: false,
+          ),
+        );
+      },
+      (r) {
+        if (r.messages.isEmpty) {
+          emit(state.copyWith(showOlderLoader: false));
+          return;
+        }
+
+        final existingIds = state.messagesPageEntity!.messages
+            .map((e) => e.id)
+            .toSet();
+
+        final messages = [
+          ...state.messagesPageEntity!.messages,
+          ...r.messages.where((m) => !existingIds.contains(m.id)),
+        ];
+
+        emit(
+          state.copyWith(
+            messagesPageEntity: state.messagesPageEntity?.copyWith(
+              messages: messages,
+            ),
+            showOlderLoader: false,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> loadNewerMessages(String chatId) async {
+    if (state.showNewerLoader ||
+        !state.messagesPageEntity!.hasNext ||
+        state.showOlderLoader) {
+      return;
+    }
+
+    emit(state.copyWith(showNewerLoader: true));
+
+    final result = await _loadMessagesUseCase(
+      LoadMessagesParams(
+        chatId: chatId,
+        afterMessageId: state.messagesPageEntity?.messages.first.id.toString(),
+      ),
+    );
+
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            showNewerLoader: false,
+          ),
+        );
+      },
+      (r) {
+        if (r.messages.isEmpty) {
+          emit(state.copyWith(showNewerLoader: false));
+          return;
+        }
+
+        final existingIds = state.messagesPageEntity!.messages
+            .map((e) => e.id)
+            .toSet();
+
+        final messages = [
+          ...state.messagesPageEntity!.messages,
+          ...r.messages.where((m) => !existingIds.contains(m.id)),
+        ];
+
+        emit(
+          state.copyWith(
+            messagesPageEntity: state.messagesPageEntity?.copyWith(
+              messages: messages,
+            ),
+            showNewerLoader: false,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> getAroundContext({
+    required String chatId,
+    required MessageEntity message,
+    bool closeModal = false,
+  }) async {
+    if (state.messagesPageEntity!.messages.any((e) => e.id == message.id)) {
+      emit(
+        state.copyWith(
+          shouldScroll: true,
+          selectedPinnedMessage: message,
+          closeModal: closeModal,
+        ),
+      );
+      return;
+    }
+    final result = await _getAroundContextUseCase(
+      GetAroundContextParams(
+        chatId: chatId,
+        aroundMessageId: message.id.toString(),
+        before: 1,
+        after: 1,
+      ),
+    );
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+            closeModal: closeModal,
+          ),
+        );
+      },
+      (r) {
+        emit(
+          state.copyWith(
+            messagesPageEntity: r,
+            isLoading: false,
+            shouldScroll: true,
+            status: MessagesListStatus.aroundContext,
+            selectedPinnedMessage: message,
+            closeModal: closeModal,
+          ),
+        );
       },
     );
   }
@@ -264,37 +432,10 @@ class MessagesCubit extends Cubit<MessagesState> {
     );
   }
 
-  Future<void> getAroundContext({
-    required String chatId,
-    required String messageId,
-    int? before,
-    int? after,
-  }) async {
-    final result = await _getAroundContextUseCase(
-      GetAroundContextParams(
-        chatId: chatId,
-        messageId: messageId,
-        before: before,
-        after: after,
-      ),
+  Future<void> pinMessage(int messageId) async {
+    final result = await _pinMessageUseCase(
+      PinMessageParams(messageId.toString()),
     );
-    result.fold(
-      (l) {
-        emit(
-          state.copyWith(
-            error: AppUtils.parseFailureMessage(l),
-            isLoading: false,
-          ),
-        );
-      },
-      (r) {
-        emit(state.copyWith(aroundContext: r, isLoading: false));
-      },
-    );
-  }
-
-  Future<void> pinMessage(String messageId) async {
-    final result = await _pinMessageUseCase(PinMessageParams(messageId));
     result.fold((l) {
       emit(
         state.copyWith(
@@ -305,8 +446,10 @@ class MessagesCubit extends Cubit<MessagesState> {
     }, (r) {});
   }
 
-  Future<void> unpinMessage(String messageId, {closeModal = false}) async {
-    final result = await _unpinMessageUseCase(UnpinMessageParams(messageId));
+  Future<void> unpinMessage(int messageId, {closeModal = false}) async {
+    final result = await _unpinMessageUseCase(
+      UnpinMessageParams(messageId.toString()),
+    );
     result.fold(
       (l) {
         emit(
@@ -342,5 +485,23 @@ class MessagesCubit extends Cubit<MessagesState> {
 
   Future<void> disableCloseModal() async {
     emit(state.copyWith(closeModal: false));
+  }
+
+  Future<void> disableShouldScroll() async {
+    emit(state.copyWith(shouldScroll: false));
+  }
+
+  Future<void> highlightMessage(int id) async {
+    emit(state.copyWith(highlightedMessageId: id));
+    Future.delayed(const Duration(seconds: 1), () async {
+      if (!isClosed) {
+        await disableHighlightMessage();
+        await disableShouldScroll();
+      }
+    });
+  }
+
+  Future<void> disableHighlightMessage() async {
+    emit(state.copyWith(highlightedMessageId: -1));
   }
 }

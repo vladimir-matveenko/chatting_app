@@ -48,10 +48,14 @@ class AddMembersModal extends StatelessWidget {
                       final ids = state.selectedParticipants
                           .map((e) => e.id)
                           .toList();
-                      cubit.addChatMember(
-                        chatId: state.chat?.id ?? '',
-                        memberIds: ids,
-                      );
+                      if (ids.isNotEmpty) {
+                        cubit.addChatMember(
+                          chatId: state.chat?.id ?? '',
+                          memberIds: ids,
+                        );
+                      } else {
+                        context.pop();
+                      }
                     },
                     child: const Icon(Icons.check, size: 24.0),
                   ),

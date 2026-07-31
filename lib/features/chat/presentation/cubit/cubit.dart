@@ -312,6 +312,7 @@ class ChatCubit extends Cubit<ChatState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
+            closeModal: true,
           ),
         );
       },

@@ -1,13 +1,21 @@
 import 'package:chatting_app/core/network/base_remote_data_source.dart';
-import 'package:chatting_app/features/messages/data/models/around_context_model.dart';
 import 'package:chatting_app/features/messages/data/models/message_model.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../app/constants/app_enums.dart';
+import '../models/message_page_model.dart';
 
 abstract class MessagesRemoteDataSource {
-  Future<List<MessageModel>> loadMessages(String chatId);
+  Future<MessagesPageModel> loadMessages({
+    required String chatId,
+    int? limit,
+    int? before,
+    int? after,
+    String? aroundMessageId,
+    String? beforeMessageId,
+    String? afterMessageId,
+  });
 
   Future<MessageModel?> sendMessage({
     required String chatId,
@@ -34,13 +42,6 @@ abstract class MessagesRemoteDataSource {
   Future<MessageModel?> unPinMessage(String messageId);
 
   Future<List<MessageModel>> getPinnedMessages({required String chatId});
-
-  Future<AroundContextModel?> getAroundContext({
-    required String chatId,
-    required String messageId,
-    int? before,
-    int? after,
-  });
 }
 
 @LazySingleton(as: MessagesRemoteDataSource)
@@ -51,13 +52,40 @@ class MessagesRemoteDataSourceImpl extends BaseRemoteDataSource
   final Dio dio;
 
   @override
-  Future<List<MessageModel>> loadMessages(String chatId) async {
-    return makeRequest<List<MessageModel>>(() async {
-      final response = await dio.get('messages/chat/$chatId');
-      if (response.statusCode == 200 && response.data != null) {
-        return MessageModel.fromList(response.data);
+  Future<MessagesPageModel> loadMessages({
+    required String chatId,
+    int? limit,
+    int? before,
+    int? after,
+    String? aroundMessageId,
+    String? beforeMessageId,
+    String? afterMessageId,
+  }) async {
+    return makeRequest<MessagesPageModel>(() async {
+      final Map<String, dynamic> queryParameters = {};
+      if (limit != null) {
+        queryParameters.addAll({'limit': limit});
       }
-      return [];
+      if (aroundMessageId != null) {
+        queryParameters.addAll({'aroundMessageId': aroundMessageId});
+      }
+      if (before != null) {
+        queryParameters.addAll({'before': before});
+      }
+      if (after != null) {
+        queryParameters.addAll({'after': after});
+      }
+      if (beforeMessageId != null) {
+        queryParameters.addAll({'beforeMessageId': beforeMessageId});
+      }
+      if (afterMessageId != null) {
+        queryParameters.addAll({'afterMessageId': afterMessageId});
+      }
+      final response = await dio.get(
+        'messages/chat/$chatId',
+        queryParameters: queryParameters,
+      );
+      return MessagesPageModel.fromJson(response.data);
     });
   }
 
@@ -168,32 +196,6 @@ class MessagesRemoteDataSourceImpl extends BaseRemoteDataSource
       final response = await dio.delete('messages/$messageId/unpin');
       if (response.statusCode == 200 && response.data != null) {
         return MessageModel.fromJson(response.data);
-      }
-      return null;
-    });
-  }
-
-  @override
-  Future<AroundContextModel?> getAroundContext({
-    required String chatId,
-    required String messageId,
-    int? before,
-    int? after,
-  }) async {
-    return makeRequest<AroundContextModel?>(() async {
-      final Map<String, dynamic> queryParameters = {};
-      if (before != null) {
-        queryParameters.addAll({'before': before});
-      }
-      if (after != null) {
-        queryParameters.addAll({'after': after});
-      }
-      final response = await dio.get(
-        'messages/$chatId/message/$messageId/context',
-        queryParameters: queryParameters,
-      );
-      if (response.statusCode == 200 && response.data != null) {
-        return AroundContextModel.fromJson(response.data);
       }
       return null;
     });

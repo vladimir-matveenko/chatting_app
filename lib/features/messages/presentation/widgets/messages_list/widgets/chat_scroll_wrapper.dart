@@ -8,11 +8,12 @@ class ChatScrollWrapper extends StatelessWidget {
     super.key,
     required this.controller,
     required this.child,
+    this.onTap,
   });
 
   final ChatScrollController controller;
-
   final Widget child;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class ChatScrollWrapper extends StatelessWidget {
           top: 0,
           left: 0,
           right: 0,
-          child: ScrollToBottomButton(controller: controller),
+          child: ScrollToBottomButton(controller: controller, onTap: onTap),
         ),
       ],
     );

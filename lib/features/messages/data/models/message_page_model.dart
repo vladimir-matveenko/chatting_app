@@ -3,27 +3,25 @@ import 'package:chatting_app/features/messages/data/models/message_model.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../domain/entity/around_context_entity.dart';
+import '../../domain/entity/message_page_entity.dart';
 
-part 'around_context_model.freezed.dart';
-part 'around_context_model.g.dart';
+part 'message_page_model.freezed.dart';
+part 'message_page_model.g.dart';
 
 @freezed
-abstract class AroundContextModel with _$AroundContextModel {
-  const factory AroundContextModel({
-    required String targetMessageId,
+abstract class MessagesPageModel with _$MessagesPageModel {
+  const factory MessagesPageModel({
     required bool hasPrevious,
     required bool hasNext,
     required List<MessageModel> messages,
-  }) = _AroundContextModel;
+  }) = _MessagesPageModel;
 
-  factory AroundContextModel.fromJson(Map<String, dynamic> json) =>
-      _$AroundContextModelFromJson(json);
+  factory MessagesPageModel.fromJson(Map<String, dynamic> json) =>
+      _$MessagesPageModelFromJson(json);
 }
 
-extension AroundContextModelExt on AroundContextModel {
-  AroundContextEntity toEntity() => AroundContextEntity(
-    targetMessageId: targetMessageId,
+extension MessagesPageModelExt on MessagesPageModel {
+  MessagesPageEntity toEntity() => MessagesPageEntity(
     hasPrevious: hasPrevious,
     hasNext: hasNext,
     messages: AppUtils.listModelToListEntity<MessageModel, MessageEntity>(

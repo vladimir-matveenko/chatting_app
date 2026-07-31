@@ -3,23 +3,21 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../entity/around_context_entity.dart';
+import '../entity/message_page_entity.dart';
 import '../repository/messages_repository.dart';
 
 @lazySingleton
 class GetAroundContextUseCase
-    implements UseCase<AroundContextEntity, GetAroundContextParams> {
+    implements UseCase<MessagesPageEntity, GetAroundContextParams> {
   GetAroundContextUseCase(this._repository);
 
   final MessagesRepository _repository;
 
   @override
-  Future<Either<Failure, AroundContextEntity>> call(params) async {
-    return await _repository.getAroundContext(
+  Future<Either<Failure, MessagesPageEntity>> call(params) async {
+    return await _repository.loadMessages(
       chatId: params.chatId,
-      messageId: params.messageId,
-      before: params.before,
-      after: params.after,
+      aroundMessageId: params.aroundMessageId,
     );
   }
 }
@@ -27,13 +25,19 @@ class GetAroundContextUseCase
 class GetAroundContextParams {
   GetAroundContextParams({
     required this.chatId,
-    required this.messageId,
     this.before,
     this.after,
+    required this.aroundMessageId,
   });
 
   final String chatId;
-  final String messageId;
+
+  /// Number of messages before aroundMessageId. Default = 10
   final int? before;
+
+  /// Number of messages after aroundMessageId. Default = 10
   final int? after;
+
+  /// Message ID for getting around context
+  final String aroundMessageId;
 }

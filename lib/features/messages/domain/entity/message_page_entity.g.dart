@@ -1,24 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'around_context_model.dart';
+part of 'message_page_entity.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_AroundContextModel _$AroundContextModelFromJson(Map<String, dynamic> json) =>
-    _AroundContextModel(
-      targetMessageId: json['targetMessageId'] as String,
+_MessagesPageEntity _$MessagesPageEntityFromJson(Map<String, dynamic> json) =>
+    _MessagesPageEntity(
       hasPrevious: json['hasPrevious'] as bool,
       hasNext: json['hasNext'] as bool,
       messages: (json['messages'] as List<dynamic>)
-          .map((e) => MessageModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => MessageEntity.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$AroundContextModelToJson(_AroundContextModel instance) =>
+Map<String, dynamic> _$MessagesPageEntityToJson(_MessagesPageEntity instance) =>
     <String, dynamic>{
-      'targetMessageId': instance.targetMessageId,
       'hasPrevious': instance.hasPrevious,
       'hasNext': instance.hasNext,
       'messages': instance.messages.map((e) => e.toJson()).toList(),

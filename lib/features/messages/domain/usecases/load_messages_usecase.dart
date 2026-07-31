@@ -1,4 +1,4 @@
-import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
+import 'package:chatting_app/features/messages/domain/entity/message_page_entity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,19 +8,33 @@ import '../repository/messages_repository.dart';
 
 @lazySingleton
 class LoadMessagesUseCase
-    implements UseCase<List<MessageEntity>, LoadMessagesParams> {
+    implements UseCase<MessagesPageEntity, LoadMessagesParams> {
   LoadMessagesUseCase(this._repository);
 
   final MessagesRepository _repository;
 
   @override
-  Future<Either<Failure, List<MessageEntity>>> call(params) async {
-    return await _repository.loadMessages(params.chatId);
+  Future<Either<Failure, MessagesPageEntity>> call(params) async {
+    return await _repository.loadMessages(
+      chatId: params.chatId,
+      beforeMessageId: params.beforeMessageId,
+      afterMessageId: params.afterMessageId,
+    );
   }
 }
 
 class LoadMessagesParams {
-  LoadMessagesParams({required this.chatId});
+  LoadMessagesParams({
+    required this.chatId,
+    this.beforeMessageId,
+    this.afterMessageId,
+  });
 
   final String chatId;
+
+  /// Message ID for getting older messages
+  final String? beforeMessageId;
+
+  /// Message ID for getting newer messages
+  final String? afterMessageId;
 }
