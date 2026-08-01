@@ -7,13 +7,17 @@ class MessageActionsMenu extends StatelessWidget {
     required this.onEdit,
     required this.onDelete,
     required this.onPin,
+    required this.onReply,
     required this.pinIcon,
+    this.isMessageMine = false,
   });
 
   final VoidCallback onEdit;
   final VoidCallback onDelete;
   final VoidCallback onPin;
+  final VoidCallback onReply;
   final IconData pinIcon;
+  final bool isMessageMine;
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +37,23 @@ class MessageActionsMenu extends StatelessWidget {
         mainAxisSize: .min,
         spacing: 8.0,
         children: [
+          if (isMessageMine) ...[
+            IconButton(
+              onPressed: onPin,
+              icon: Icon(pinIcon, size: isonSize, color: iconColor),
+            ),
+            IconButton(
+              onPressed: onEdit,
+              icon: Icon(Icons.edit, size: isonSize, color: iconColor),
+            ),
+            IconButton(
+              onPressed: onDelete,
+              icon: Icon(Icons.close, size: isonSize, color: iconColor),
+            ),
+          ],
           IconButton(
-            onPressed: onPin,
-            icon: Icon(pinIcon, size: isonSize, color: iconColor),
-          ),
-          IconButton(
-            onPressed: onEdit,
-            icon: Icon(Icons.edit, size: isonSize, color: iconColor),
-          ),
-          IconButton(
-            onPressed: onDelete,
-            icon: Icon(Icons.close, size: isonSize, color: iconColor),
+            onPressed: onReply,
+            icon: Icon(Icons.reply_rounded, size: isonSize, color: iconColor),
           ),
         ],
       ),

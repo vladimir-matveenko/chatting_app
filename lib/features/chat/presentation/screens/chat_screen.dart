@@ -29,6 +29,7 @@ class _ChatScreenState extends State<ChatScreen> {
   late MessagesCubit messagesCubit;
   final _scrollController = ChatScrollController();
   final _messageController = TextEditingController();
+  final messageFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -72,7 +73,9 @@ class _ChatScreenState extends State<ChatScreen> {
         BlocListener<MessagesCubit, MessagesState>(
           listenWhen: (previous, current) =>
               previous.error != current.error ||
-              previous.status != current.status,
+              previous.status != current.status ||
+              current.editModeActive ||
+              current.replyModeActive,
           listener: (context, state) {
             if (state.error?.isNotEmpty == true) {
               AppMessage.error(
@@ -85,6 +88,9 @@ class _ChatScreenState extends State<ChatScreen> {
             }
             if (state.editModeActive) {
               _messageController.text = state.selectedMessage?.body ?? '';
+            }
+            if(state.replyModeActive){
+              messageFocusNode.requestFocus();
             }
           },
         ),
@@ -100,6 +106,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   scrollController: _scrollController,
                   messageController: _messageController,
                   currentUserId: _userProfile?.id ?? '',
+                  messageFocusNode: messageFocusNode,
                 )
               : const SomethingWentWrongWidget();
         },

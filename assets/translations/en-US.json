@@ -84,7 +84,8 @@
       "areYouSure": "Are you sure you want to leave chat?"
     },
     "unreadMessages": "Unread messages",
-    "showPinnedMessages": "Show pinned messages"
+    "showPinnedMessages": "Show pinned messages",
+    "replyTo": "Reply to"
   },
   "editChatScreen": {
     "addMember": "Add member"
