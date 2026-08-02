@@ -97,7 +97,9 @@ class ChatActionButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-        backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
+        backgroundColor: theme.isDark()
+            ? const Color(0x2638BDF8)
+            : theme.scaffoldBackgroundColor,
         padding: const .all(8.0),
       ),
       child: Padding(

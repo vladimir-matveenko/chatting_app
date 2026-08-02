@@ -37,18 +37,20 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isSettings = widget.state.uri.path.contains(AppRoutes.chatSettings);
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        title: Text(MainScreenUtils.getAppBarTitle(context)),
-        centerTitle: true,
-        leading: MainScreenUtils.showBackButton(context)
-            ? const AppBackButton()
-            : null,
-        actions: MainScreenUtils.getActions(context, state: widget.state),
-      ),
+      appBar: isSettings
+          ? null
+          : AppBar(
+              title: Text(MainScreenUtils.getAppBarTitle(context)),
+              centerTitle: true,
+              leading: MainScreenUtils.showBackButton(context)
+                  ? const AppBackButton()
+                  : null,
+            ),
       body: SafeArea(
-        top: true,
+        top: !isSettings,
         bottom: true,
         left: true,
         right: true,

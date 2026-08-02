@@ -1,6 +1,5 @@
 import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/add_members_modal.dart';
-import 'package:chatting_app/features/chat/presentation/widgets/chat_action_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,12 +7,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../app/di/injection.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
 import '../../../../core/presentation/widgets/app_message.dart';
+import '../../../../core/presentation/widgets/sliver_separated_list.dart';
 import '../../../profile/domain/repository/profile_repository.dart';
 import '../../utils.dart';
 import '../cubit/cubit.dart';
 import '../cubit/state.dart';
-import '../widgets/chat_info_widget.dart';
-import '../widgets/members_list.dart';
+import '../widgets/chat_action_bar.dart';
+import '../widgets/chat_header/chat_details_sliver_app_bar.dart';
+import '../widgets/edit_chat_button.dart';
+import '../widgets/member_list_item.dart';
 
 class ChatSettingsScreen extends StatefulWidget {
   const ChatSettingsScreen({super.key});
@@ -38,64 +40,85 @@ class _ChatSettingsScreenState extends State<ChatSettingsScreen> {
                   )?.isOnline ??
                   false
             : false;
-        return Padding(
-          padding: const .symmetric(horizontal: 16.0),
-          child: Column(
-            spacing: 16.0,
-            children: [
-              Padding(
-                padding: const .only(top: 16.0),
-                child: Row(
-                  mainAxisAlignment: .center,
-                  children: [
-                    ChatInfoWidget(
-                      chatType: state.chat?.type ?? ChatType.private,
-                      isOnline: isOnline,
-                      avatar: state.chat?.avatarUrl ?? '',
-                      title: ChatUtils.buildChatTitle(
-                        chatTitle: state.chat?.title ?? '',
-                        members: state.chatMembers,
-                      ),
-                      membersCount: state.chat?.type == ChatType.group
-                          ? 'createGroupScreen.participants'.plural(
-                              state.chatMembers.length,
-                            )
-                          : null,
+
+        final title = ChatUtils.buildChatTitle(
+          chatTitle: state.chat?.title ?? '',
+          members: state.chatMembers,
+        );
+
+        final subtitle = state.chat?.type == ChatType.group
+            ? 'createGroupScreen.participants'.plural(state.chatMembers.length)
+            : (isOnline ? 'chatScreen.online'.tr() : 'chatScreen.offline'.tr());
+
+        return CustomScrollView(
+          slivers: [
+            ChatDetailsSliverAppBar(
+              avatar: state.chat?.avatarUrl ?? '',
+              title: title,
+              subtitle: subtitle,
+              chatType: state.chat?.type ?? ChatType.private,
+              isOnline: isOnline,
+              actions: const [EditChatButton()],
+              actionBar: ChatActionBar(currentUserId: _userProfile?.id ?? ''),
+            ),
+
+            if (state.chat?.type == ChatType.group)
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                  child: OutlinedButton(
+                    onPressed: () {
+                      AppDialog.empty(
+                        context,
+                        content: const AddMembersModal(),
+                        onClose: cubit.disableCloseModal,
+                      );
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.person_add_outlined),
+                        const SizedBox(width: 8),
+                        Text('editChatScreen.addMember'.tr()),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              ChatActionBar(currentUserId: _userProfile?.id ?? ''),
-              if (state.chat?.type == ChatType.group) ...[
-                OutlinedButton(
-                  onPressed: () {
-                    AppDialog.empty(
-                      context,
-                      content: const AddMembersModal(),
-                      onClose: cubit.disableCloseModal,
-                    );
-                  },
-                  child: Row(
-                    spacing: 8.0,
-                    mainAxisSize: .min,
-                    children: [
-                      const Icon(Icons.person_add_outlined),
-                      Text('editChatScreen.addMember'.tr()),
-                    ],
                   ),
                 ),
-                MembersList(
-                  participants: state.chatMembers,
-                  onDeleteTap: (member) {
-                    cubit.deleteChatMember(
-                      chatId: state.chat?.id ?? '',
-                      userId: member.userId,
-                    );
-                  },
-                ),
-              ],
-            ],
-          ),
+              )
+            else
+              const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
+
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverSeparatedList(
+                itemCount: state.chatMembers.length,
+                itemBuilder: (context, index) {
+                  final member = state.chatMembers[index];
+
+                  return MembersListItem(
+                    key: ValueKey(member.userId),
+                    user: member,
+                    isOwner: member.role == ChatMemberRole.owner,
+                    action: () {
+                      cubit.deleteChatMember(
+                        chatId: state.chat?.id ?? '',
+                        userId: member.userId,
+                      );
+                    },
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return Divider(
+                    height: 16,
+                    thickness: 1,
+                    color: Theme.of(context).unselectedWidgetColor,
+                  );
+                },
+              ),
+            ),
+
+            const SliverPadding(padding: EdgeInsets.only(bottom: 24)),
+          ],
         );
       },
       listener: (context, state) {
