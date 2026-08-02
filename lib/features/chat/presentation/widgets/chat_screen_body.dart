@@ -44,6 +44,7 @@ class ChatScreenBody extends StatelessWidget {
         messageId: messageId,
         body: messageController.text,
       );
+      messageController.clear();
     } else {
       cubit.sendMessage(
         chatId: chat.id,
@@ -59,6 +60,7 @@ class ChatScreenBody extends StatelessWidget {
       });
     }
     if (replyToId != null) {
+      FocusScope.of(context).unfocus();
       cubit.disableReplyMode();
       messageController.clear();
     }
