@@ -472,11 +472,25 @@ class MessagesCubit extends Cubit<MessagesState> {
   }
 
   Future<void> unSelectMessage() async {
-    emit(state.copyWith(editModeActive: false, showMenu: false));
+    emit(
+      state.copyWith(
+        editModeActive: false,
+        showMenu: false,
+        replyModeActive: false,
+      ),
+    );
   }
 
   Future<void> activateEditingMode() async {
     emit(state.copyWith(editModeActive: true, showMenu: false));
+  }
+
+  Future<void> activateReplyMode() async {
+    emit(state.copyWith(replyModeActive: true, showMenu: false));
+  }
+
+  Future<void> disableReplyMode() async {
+    emit(state.copyWith(replyModeActive: false));
   }
 
   Future<void> disableError() async {

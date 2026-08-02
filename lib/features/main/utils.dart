@@ -1,4 +1,3 @@
-import 'package:chatting_app/features/chat/presentation/widgets/edit_chat_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -43,16 +42,5 @@ class MainScreenUtils {
       ),
       _ => null,
     };
-  }
-
-  static List<Widget> getActions(
-    BuildContext context, {
-    required GoRouterState state,
-  }) {
-    final location = state.uri.path;
-    if (location.contains(AppRoutes.chatSettings)) {
-      return [const EditChatButton()];
-    }
-    return [];
   }
 }

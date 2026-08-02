@@ -15,6 +15,7 @@ class MessagesState extends Equatable {
     this.showNewerLoader = false,
     this.showOlderLoader = false,
     this.editModeActive = false,
+    this.replyModeActive = false,
     this.closeModal = false,
     this.selectedMessage,
     this.selectedPinnedMessage,
@@ -34,6 +35,7 @@ class MessagesState extends Equatable {
   final bool showNewerLoader;
   final bool showOlderLoader;
   final bool editModeActive;
+  final bool replyModeActive;
   final bool closeModal;
   final bool shouldScroll;
 
@@ -50,6 +52,7 @@ class MessagesState extends Equatable {
     bool? showNewerLoader,
     bool? showOlderLoader,
     bool? editModeActive,
+    bool? replyModeActive,
     bool? closeModal,
     bool? shouldScroll,
   }) {
@@ -66,6 +69,7 @@ class MessagesState extends Equatable {
       showNewerLoader: showNewerLoader ?? this.showNewerLoader,
       showOlderLoader: showOlderLoader ?? this.showOlderLoader,
       editModeActive: editModeActive ?? this.editModeActive,
+      replyModeActive: replyModeActive ?? this.replyModeActive,
       closeModal: closeModal ?? this.closeModal,
       highlightedMessageId: highlightedMessageId ?? this.highlightedMessageId,
       shouldScroll: shouldScroll ?? this.shouldScroll,
@@ -85,6 +89,7 @@ class MessagesState extends Equatable {
     selectedMessage,
     selectedPinnedMessage,
     editModeActive,
+    replyModeActive,
     closeModal,
     highlightedMessageId,
     shouldScroll,

@@ -10,6 +10,7 @@ class BaseListView<T> extends StatelessWidget {
     required this.itemBuilder,
     this.reverse = false,
     this.listViewKey,
+    this.scrollable = true,
   });
 
   final GlobalKey? listViewKey;
@@ -19,6 +20,7 @@ class BaseListView<T> extends StatelessWidget {
   final ScrollController? controller;
   final Widget Function(BuildContext, int) itemBuilder;
   final bool reverse;
+  final bool scrollable;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +29,11 @@ class BaseListView<T> extends StatelessWidget {
       key: listViewKey,
       controller: controller,
       itemCount: items.length,
-      physics: const ClampingScrollPhysics(),
+      physics: scrollable
+          ? const ClampingScrollPhysics()
+          : const NeverScrollableScrollPhysics(),
       padding: padding ?? const .symmetric(vertical: 16.0),
-      shrinkWrap: true,
+      shrinkWrap: !scrollable,
       reverse: reverse,
       itemBuilder: itemBuilder,
       separatorBuilder: (context, index) =>

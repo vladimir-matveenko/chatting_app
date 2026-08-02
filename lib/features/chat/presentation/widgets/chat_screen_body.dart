@@ -21,27 +21,36 @@ class ChatScreenBody extends StatelessWidget {
     required this.scrollController,
     required this.messageController,
     required this.currentUserId,
+    required this.messageFocusNode,
   });
 
   final ChatEntity chat;
   final ChatScrollController scrollController;
   final TextEditingController messageController;
   final String currentUserId;
+  final FocusNode messageFocusNode;
 
-  void _sendMessage(BuildContext context, {String? messageId}) {
+  void _sendMessage(
+    BuildContext context, {
+    String? messageId,
+    String? replyToId,
+  }) {
     if (messageController.text.trim().isEmpty) return;
+    final cubit = context.read<MessagesCubit>();
 
     if (messageId != null) {
-      context.read<MessagesCubit>().updateMessage(
+      cubit.updateMessage(
         chatId: chat.id,
         messageId: messageId,
         body: messageController.text,
       );
+      messageController.clear();
     } else {
-      context.read<MessagesCubit>().sendMessage(
+      cubit.sendMessage(
         chatId: chat.id,
         type: MessageType.text,
         body: messageController.text,
+        replyToId: replyToId,
       );
       messageController.clear();
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -49,6 +58,11 @@ class ChatScreenBody extends StatelessWidget {
           scrollController.animateToLatest();
         }
       });
+    }
+    if (replyToId != null) {
+      FocusScope.of(context).unfocus();
+      cubit.disableReplyMode();
+      messageController.clear();
     }
   }
 
@@ -103,6 +117,7 @@ class ChatScreenBody extends StatelessWidget {
                   Padding(
                     padding: const .symmetric(horizontal: 16.0),
                     child: MessageBar(
+                      messageFocusNode: messageFocusNode,
                       onSend: () {
                         if (state.editModeActive) {
                           _sendMessage(
@@ -112,7 +127,10 @@ class ChatScreenBody extends StatelessWidget {
                           cubit.unSelectMessage();
                           messageController.clear();
                         } else {
-                          _sendMessage(context);
+                          final replyToId = state.replyModeActive
+                              ? state.selectedMessage?.id.toString()
+                              : null;
+                          _sendMessage(context, replyToId: replyToId);
                         }
                       },
                       onCancel: () {

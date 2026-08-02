@@ -1,43 +1,12 @@
-import 'package:chatting_app/app/constants/app_enums.dart';
-import 'package:chatting_app/app/utils/extensions.dart';
-import 'package:chatting_app/core/presentation/widgets/base_list_view.dart';
-import 'package:chatting_app/features/chat/domain/entity/chat_member_entity.dart';
+import 'package:chatting_app/features/chat/presentation/widgets/user_online_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '../../../../app/utils/extensions.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
 import '../../../profile/presentation/widgets/user_avatar.dart';
-import 'user_online_indicator.dart';
-
-class MembersList extends StatelessWidget {
-  const MembersList({
-    super.key,
-    required this.participants,
-    required this.onDeleteTap,
-  });
-
-  final List<ChatMemberEntity> participants;
-  final Function(ChatMemberEntity) onDeleteTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return BaseListView<ChatMemberEntity>(
-      items: participants,
-      itemBuilder: (context, index) {
-        final user = participants[index];
-        return MembersListItem(
-          key: ValueKey(user.userId),
-          action: () {
-            onDeleteTap(user);
-          },
-          user: user,
-          isOwner: user.role == ChatMemberRole.owner,
-        );
-      },
-    );
-  }
-}
+import '../../domain/entity/chat_member_entity.dart';
 
 class MembersListItem extends StatelessWidget {
   const MembersListItem({

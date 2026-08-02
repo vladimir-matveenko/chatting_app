@@ -223,6 +223,7 @@ class _MessagesListState extends State<MessagesList> {
                         ),
                       MessageItem(
                         isSelected: isSelected,
+                        isMessageMine: isCurrentMine,
                         avatar: (widget.chat.type == ChatType.group)
                             ? UserAvatar(
                                 avatar: message.sender.avatarUrl ?? '',
@@ -242,6 +243,7 @@ class _MessagesListState extends State<MessagesList> {
                               : .all(color: messageColor!, width: 2.0),
                           showSender: widget.chat.type == ChatType.group,
                           sender: message.sender,
+                          reply: message.reply,
                           isEdited: wasMessageChanged,
                           showReadIndicator: showReadIndicator,
                           isHighlighted:
@@ -266,11 +268,9 @@ class _MessagesListState extends State<MessagesList> {
                               );
                             }
                           },
-                          onLongPress: isCurrentMine
-                              ? () {
-                                  cubit.selectMessage(message);
-                                }
-                              : null,
+                          onLongPress: () {
+                            cubit.selectMessage(message);
+                          },
                         ),
                         reaction: message.currentUserReaction != null
                             ? GestureDetector(
@@ -305,6 +305,9 @@ class _MessagesListState extends State<MessagesList> {
           child: SlideDownAnimatedWidget(
             child: state.showMenu
                 ? MessageActionsMenu(
+                    isMessageMine:
+                        state.selectedMessage?.sender.id ==
+                        widget.currentUserId,
                     pinIcon: isPinnedMessageSelected
                         ? Icons.push_pin_outlined
                         : Icons.push_pin_rounded,
@@ -328,6 +331,11 @@ class _MessagesListState extends State<MessagesList> {
                           chatId: widget.chat.id,
                           messageId: state.selectedMessage?.id.toString() ?? '',
                         );
+                      }
+                    },
+                    onReply: () {
+                      if (state.selectedMessage != null) {
+                        cubit.activateReplyMode();
                       }
                     },
                   )

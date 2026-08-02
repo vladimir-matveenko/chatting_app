@@ -84,7 +84,8 @@
       "areYouSure": "Вы уверены, что Вы хотите покинуть чат?"
     },
     "unreadMessages": "Непрочитанные сообщения",
-    "showPinnedMessages": "Посмотреть закрепленные сообщения"
+    "showPinnedMessages": "Посмотреть закрепленные сообщения",
+    "replyTo": "В ответ"
   },
   "editChatScreen": {
     "addMember": "Добавить участника"

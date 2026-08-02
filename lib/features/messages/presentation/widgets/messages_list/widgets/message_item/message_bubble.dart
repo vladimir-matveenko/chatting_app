@@ -2,6 +2,7 @@ import 'package:chatting_app/features/messages/domain/entity/message_sender_enti
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../domain/entity/message_reply_entity.dart';
 import 'message_content.dart';
 import 'message_sender.dart';
 import 'message_status.dart';
@@ -16,6 +17,7 @@ class MessageBubble extends StatelessWidget {
     this.bubbleColor,
     required this.showSender,
     required this.sender,
+    this.reply,
     required this.isEdited,
     required this.showReadIndicator,
     required this.onTap,
@@ -31,6 +33,7 @@ class MessageBubble extends StatelessWidget {
   final DateTime updatedAt;
   final DateFormat timeFormatter;
   final MessageSenderEntity sender;
+  final MessageReplyEntity? reply;
   final bool showSender;
   final bool isEdited;
   final bool showReadIndicator;
@@ -44,7 +47,9 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
 
     return GestureDetector(
       onTap: onTap,
@@ -62,6 +67,34 @@ class MessageBubble extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if (reply != null)
+              Container(
+                padding: const .all(8.0),
+                margin: const .only(bottom: 8.0),
+                decoration: BoxDecoration(
+                  borderRadius: .circular(8.0),
+                  color: theme.bottomNavigationBarTheme.backgroundColor,
+                ),
+                child: Column(
+                  spacing: 4.0,
+                  crossAxisAlignment: .start,
+                  children: [
+                    Text(
+                      reply?.sender.displayName ?? reply?.sender.userName ?? '',
+                      style: textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.primary,
+                      ),
+                    ),
+                    Text(
+                      reply?.body ?? '',
+                      style: textTheme.bodySmall,
+                      maxLines: 1,
+                      overflow: .ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+
             if (showSender) MessageSender(sender: sender),
 
             MessageContent(text: text),

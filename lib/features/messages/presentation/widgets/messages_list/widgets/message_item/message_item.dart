@@ -11,6 +11,7 @@ class MessageItem extends StatelessWidget {
     this.isSelected = false,
     this.onTap,
     required this.bubbleAlignment,
+    this.isMessageMine = false,
   });
 
   final Widget? avatar;
@@ -19,6 +20,7 @@ class MessageItem extends StatelessWidget {
   final bool isSelected;
   final VoidCallback? onTap;
   final MainAxisAlignment bubbleAlignment;
+  final bool isMessageMine;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,8 @@ class MessageItem extends StatelessWidget {
         ),
         if (isSelected)
           Positioned(
-            left: 16.0,
+            left: isMessageMine ? 16.0 : null,
+            right: isMessageMine ? null : 16.0,
             top: 0,
             bottom: 0,
             child: Icon(

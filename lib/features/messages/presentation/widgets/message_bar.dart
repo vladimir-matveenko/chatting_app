@@ -10,11 +10,13 @@ class MessageBar extends StatelessWidget {
     required this.onSend,
     required this.messageController,
     required this.onCancel,
+    required this.messageFocusNode,
   });
 
   final TextEditingController messageController;
   final VoidCallback onSend;
   final VoidCallback onCancel;
+  final FocusNode messageFocusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,66 @@ class MessageBar extends StatelessWidget {
       padding: const .symmetric(vertical: 16.0),
       child: Column(
         children: [
+          if (state.replyModeActive)
+            Padding(
+              padding: const .only(bottom: 12.0),
+              child: Row(
+                mainAxisAlignment: .end,
+                crossAxisAlignment: .center,
+                children: [
+                  Icon(
+                    Icons.reply_rounded,
+                    size: 24.0,
+                    color: theme.colorScheme.primary,
+                  ),
+                  const SizedBox(width: 8.0),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: .circular(8.0),
+                      color: theme.bottomNavigationBarTheme.backgroundColor,
+                    ),
+                    padding: const .all(8.0),
+                    child: Column(
+                      spacing: 4.0,
+                      crossAxisAlignment: .start,
+                      children: [
+                        Row(
+                          spacing: 2.0,
+                          children: [
+                            Text(
+                              'chatScreen.replyTo'.tr(),
+                              style: textTheme.bodyMedium,
+                            ),
+                            Text(
+                              (state.selectedMessage?.sender.displayName ??
+                                  state.selectedMessage?.sender.userName ??
+                                  ''),
+                              style: textTheme.bodyMedium?.copyWith(
+                                color: theme.colorScheme.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          state.selectedMessage?.body ?? '',
+                          style: textTheme.bodyMedium,
+                          maxLines: 1,
+                          overflow: .ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: onCancel,
+                    icon: Icon(
+                      Icons.close,
+                      size: 16.0,
+                      color: textTheme.bodyMedium?.color,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           if (state.editModeActive)
             Padding(
               padding: const .only(bottom: 12.0),
@@ -52,6 +114,7 @@ class MessageBar extends StatelessWidget {
             children: [
               Expanded(
                 child: AppTextFormField(
+                  focusNode: messageFocusNode,
                   controller: messageController,
                   keyboardType: TextInputType.multiline,
                   maxLines: 5,
