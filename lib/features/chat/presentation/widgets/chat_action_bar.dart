@@ -67,7 +67,9 @@ class ChatActionBar extends StatelessWidget {
                     cancelText: 'cancelText'.tr(),
                     okText: 'okText'.tr(),
                   );
-                  if (result) {}
+                  if (result) {
+                    cubit.leaveChat(state.chat?.id ?? '');
+                  }
                 },
                 icon: Icons.logout_outlined,
                 text: 'chatScreen.leavingChat.leaveChat'.tr(),
