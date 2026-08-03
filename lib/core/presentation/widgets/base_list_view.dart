@@ -33,7 +33,7 @@ class BaseListView<T> extends StatelessWidget {
           ? const ClampingScrollPhysics()
           : const NeverScrollableScrollPhysics(),
       padding: padding ?? const .symmetric(vertical: 16.0),
-      shrinkWrap: !scrollable,
+      shrinkWrap: scrollable,
       reverse: reverse,
       itemBuilder: itemBuilder,
       separatorBuilder: (context, index) =>
