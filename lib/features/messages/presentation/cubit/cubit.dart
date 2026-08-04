@@ -9,10 +9,13 @@ import 'package:chatting_app/features/messages/domain/usecases/get_around_contex
 import 'package:chatting_app/features/messages/domain/usecases/get_pinned_messages_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/load_messages_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/pin_message_usecase.dart';
+import 'package:chatting_app/features/messages/domain/usecases/search_messages_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/send_message_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/unpin_message_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/update_message_usecase.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
+import 'package:chatting_app/features/messages/utils.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -37,6 +40,7 @@ class MessagesCubit extends Cubit<MessagesState> {
     this._getPinnedMessagesUseCase,
     this._messagesSocketService,
     this._getAroundContextUseCase,
+    this._searchMessagesUseCase,
   ) : super(const MessagesState()) {
     _subscribeSocketEvents();
   }
@@ -51,6 +55,7 @@ class MessagesCubit extends Cubit<MessagesState> {
   final UnpinMessageUseCase _unpinMessageUseCase;
   final GetPinnedMessagesUseCase _getPinnedMessagesUseCase;
   final GetAroundContextUseCase _getAroundContextUseCase;
+  final SearchMessagesUseCase _searchMessagesUseCase;
 
   final MessagesSocketService _messagesSocketService;
 
@@ -161,6 +166,23 @@ class MessagesCubit extends Cubit<MessagesState> {
     );
   }
 
+  Future<void> searchMessages({
+    required String chatId,
+    required String query,
+  }) async {
+    final result = await _searchMessagesUseCase(
+      SearchMessagesParams(chatId: chatId, query: query),
+    );
+    result.fold(
+      (l) {
+        emit(state.copyWith(error: AppUtils.parseFailureMessage(l)));
+      },
+      (r) {
+        emit(state.copyWith(searchResults: r));
+      },
+    );
+  }
+
   Future<void> loadOlderMessages(String chatId) async {
     if (state.showOlderLoader ||
         !state.messagesPageEntity!.hasPrevious ||
@@ -196,10 +218,10 @@ class MessagesCubit extends Cubit<MessagesState> {
             .map((e) => e.id)
             .toSet();
 
-        final messages = [
-          ...state.messagesPageEntity!.messages,
-          ...r.messages.where((m) => !existingIds.contains(m.id)),
-        ];
+        final messages = MessagesUtils.mergeMessages(
+          state.messagesPageEntity!.messages,
+          r.messages.where((m) => !existingIds.contains(m.id)).toList(),
+        );
 
         emit(
           state.copyWith(
@@ -248,10 +270,10 @@ class MessagesCubit extends Cubit<MessagesState> {
             .map((e) => e.id)
             .toSet();
 
-        final messages = [
-          ...state.messagesPageEntity!.messages,
-          ...r.messages.where((m) => !existingIds.contains(m.id)),
-        ];
+        final messages = MessagesUtils.mergeMessages(
+          state.messagesPageEntity!.messages,
+          r.messages.where((m) => !existingIds.contains(m.id)).toList(),
+        );
 
         emit(
           state.copyWith(
@@ -267,15 +289,20 @@ class MessagesCubit extends Cubit<MessagesState> {
 
   Future<void> getAroundContext({
     required String chatId,
-    required MessageEntity message,
+    required int messageId,
     bool closeModal = false,
   }) async {
-    if (state.messagesPageEntity!.messages.any((e) => e.id == message.id)) {
+    final message = state.messagesPageEntity!.messages.firstWhereOrNull(
+      (e) => e.id == messageId,
+    );
+    if (message != null) {
+      final index = state.messagesPageEntity!.messages.indexOf(message);
       emit(
         state.copyWith(
           shouldScroll: true,
-          selectedPinnedMessage: message,
           closeModal: closeModal,
+          status: MessagesListStatus.aroundContext,
+          highlightedMessageIndex: index,
         ),
       );
       return;
@@ -283,9 +310,7 @@ class MessagesCubit extends Cubit<MessagesState> {
     final result = await _getAroundContextUseCase(
       GetAroundContextParams(
         chatId: chatId,
-        aroundMessageId: message.id.toString(),
-        before: 1,
-        after: 1,
+        aroundMessageId: messageId.toString(),
       ),
     );
     result.fold(
@@ -299,13 +324,18 @@ class MessagesCubit extends Cubit<MessagesState> {
         );
       },
       (r) {
+        var index = -1;
+        final message = r.messages.firstWhereOrNull((e) => e.id == messageId);
+        if (message != null) {
+          index = r.messages.indexOf(message);
+        }
         emit(
           state.copyWith(
             messagesPageEntity: r,
             isLoading: false,
             shouldScroll: true,
             status: MessagesListStatus.aroundContext,
-            selectedPinnedMessage: message,
+            highlightedMessageIndex: index,
             closeModal: closeModal,
           ),
         );
@@ -516,6 +546,10 @@ class MessagesCubit extends Cubit<MessagesState> {
   }
 
   Future<void> disableHighlightMessage() async {
-    emit(state.copyWith(highlightedMessageId: -1));
+    emit(state.copyWith(highlightedMessageId: -1, highlightedMessageIndex: -1));
+  }
+
+  Future<void> disableSearch() async {
+    emit(state.copyWith(searchResults: []));
   }
 }

@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../app/constants/app_enums.dart';
 import '../models/message_page_model.dart';
+import '../models/message_search_result_model.dart';
 
 abstract class MessagesRemoteDataSource {
   Future<MessagesPageModel> loadMessages({
@@ -15,6 +16,11 @@ abstract class MessagesRemoteDataSource {
     String? aroundMessageId,
     String? beforeMessageId,
     String? afterMessageId,
+  });
+
+  Future<List<MessageSearchResultModel>> searchMessages({
+    required String chatId,
+    required String query,
   });
 
   Future<MessageModel?> sendMessage({
@@ -86,6 +92,28 @@ class MessagesRemoteDataSourceImpl extends BaseRemoteDataSource
         queryParameters: queryParameters,
       );
       return MessagesPageModel.fromJson(response.data);
+    });
+  }
+
+  @override
+  Future<List<MessageSearchResultModel>> searchMessages({
+    required String chatId,
+    required String query,
+  }) async {
+    if (query.isEmpty) {
+      return [];
+    }
+    return makeRequest<List<MessageSearchResultModel>>(() async {
+      final Map<String, dynamic> queryParameters = {'query': query};
+      final response = await dio.get(
+        'messages/chat/$chatId/search',
+        queryParameters: queryParameters,
+      );
+
+      if (response.statusCode == 200 && response.data != null) {
+        return MessageSearchResultModel.fromList(response.data);
+      }
+      return [];
     });
   }
 

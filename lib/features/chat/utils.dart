@@ -4,7 +4,10 @@ import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+@immutable
 class ChatUtils {
+  const ChatUtils._();
+
   static String buildGroupName(
     String currentUserName,
     List<UserListItemEntity> participants,

@@ -1,5 +1,6 @@
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_page_entity.dart';
+import 'package:chatting_app/features/messages/domain/entity/message_search_result_entity.dart';
 import 'package:equatable/equatable.dart';
 
 import 'cubit.dart';
@@ -8,6 +9,7 @@ class MessagesState extends Equatable {
   const MessagesState({
     this.status = MessagesListStatus.list,
     this.pinnedMessages = const [],
+    this.searchResults = const [],
     this.messagesPageEntity,
     this.error,
     this.showMenu = false,
@@ -18,17 +20,18 @@ class MessagesState extends Equatable {
     this.replyModeActive = false,
     this.closeModal = false,
     this.selectedMessage,
-    this.selectedPinnedMessage,
+    this.highlightedMessageIndex,
     this.highlightedMessageId,
     this.shouldScroll = false,
   });
 
   final MessagesListStatus status;
   final List<MessageEntity> pinnedMessages;
+  final List<MessageSearchResultEntity> searchResults;
   final MessagesPageEntity? messagesPageEntity;
   final String? error;
   final MessageEntity? selectedMessage;
-  final MessageEntity? selectedPinnedMessage;
+  final int? highlightedMessageIndex;
   final int? highlightedMessageId;
   final bool showMenu;
   final bool isLoading;
@@ -42,10 +45,11 @@ class MessagesState extends Equatable {
   MessagesState copyWith({
     MessagesListStatus? status,
     List<MessageEntity>? pinnedMessages,
+    List<MessageSearchResultEntity>? searchResults,
     MessagesPageEntity? messagesPageEntity,
     String? error,
     MessageEntity? selectedMessage,
-    MessageEntity? selectedPinnedMessage,
+    int? highlightedMessageIndex,
     int? highlightedMessageId,
     bool? showMenu,
     bool? isLoading,
@@ -59,12 +63,13 @@ class MessagesState extends Equatable {
     return MessagesState(
       status: status ?? this.status,
       pinnedMessages: pinnedMessages ?? this.pinnedMessages,
+      searchResults: searchResults ?? this.searchResults,
       messagesPageEntity: messagesPageEntity ?? this.messagesPageEntity,
       error: error ?? this.error,
       showMenu: showMenu ?? this.showMenu,
       selectedMessage: selectedMessage ?? this.selectedMessage,
-      selectedPinnedMessage:
-          selectedPinnedMessage ?? this.selectedPinnedMessage,
+      highlightedMessageIndex:
+          highlightedMessageIndex ?? this.highlightedMessageIndex,
       isLoading: isLoading ?? this.isLoading,
       showNewerLoader: showNewerLoader ?? this.showNewerLoader,
       showOlderLoader: showOlderLoader ?? this.showOlderLoader,
@@ -80,6 +85,7 @@ class MessagesState extends Equatable {
   List<dynamic> get props => [
     status,
     pinnedMessages,
+    searchResults,
     messagesPageEntity,
     error,
     isLoading,
@@ -87,7 +93,7 @@ class MessagesState extends Equatable {
     showOlderLoader,
     showMenu,
     selectedMessage,
-    selectedPinnedMessage,
+    highlightedMessageIndex,
     editModeActive,
     replyModeActive,
     closeModal,

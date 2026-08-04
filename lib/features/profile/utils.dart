@@ -3,7 +3,10 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../app/constants/asset_paths.dart';
 
+@immutable
 class ProfileUtils {
+  const ProfileUtils._();
+
   static Widget getLanguageIcon(String code) {
     var assetName = '';
     switch (code) {

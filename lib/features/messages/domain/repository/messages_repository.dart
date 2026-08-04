@@ -4,6 +4,7 @@ import '../../../../app/constants/app_enums.dart';
 import '../../../../core/error/failure.dart';
 import '../entity/message_entity.dart';
 import '../entity/message_page_entity.dart';
+import '../entity/message_search_result_entity.dart';
 
 abstract class MessagesRepository {
   Future<Either<Failure, MessagesPageEntity>> loadMessages({
@@ -13,6 +14,11 @@ abstract class MessagesRepository {
     String? aroundMessageId,
     String? beforeMessageId,
     String? afterMessageId,
+  });
+
+  Future<Either<Failure, List<MessageSearchResultEntity>>> searchMessages({
+    required String chatId,
+    required String query,
   });
 
   Future<Either<Failure, MessageEntity>> sendMessage({

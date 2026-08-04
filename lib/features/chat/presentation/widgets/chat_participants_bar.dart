@@ -15,7 +15,9 @@ import '../../../../core/presentation/widgets/avatar_stack.dart';
 import '../../../profile/domain/repository/profile_repository.dart';
 
 class ChatParticipantsBar extends StatefulWidget {
-  const ChatParticipantsBar({super.key});
+  const ChatParticipantsBar({super.key, this.trailing});
+
+  final Widget? trailing;
 
   @override
   State<ChatParticipantsBar> createState() => _ChatParticipantsBarState();
@@ -56,46 +58,54 @@ class _ChatParticipantsBarState extends State<ChatParticipantsBar> {
                   padding: const .all(16.0),
                   color: theme.bottomNavigationBarTheme.backgroundColor,
                   child: Row(
-                    spacing: 8.0,
-                    mainAxisAlignment: .start,
-                    crossAxisAlignment: .center,
+                    mainAxisAlignment: .spaceBetween,
                     children: [
-                      AvatarStack(
-                        avatarSize: 30.0,
-                        imageUrls: avatars,
-                        names: names,
-                        placeholderBackgroundColor: theme.unselectedWidgetColor,
-                        borderColor: theme.isDark()
-                            ? Colors.white
-                            : Colors.grey.shade500,
-                      ),
-                      Column(
+                      Row(
+                        spacing: 8.0,
+                        mainAxisAlignment: .start,
+                        crossAxisAlignment: .center,
                         children: [
-                          Text(
-                            ChatUtils.buildChatTitle(
-                              chatTitle: state.chat?.title ?? '',
-                              members: state.chatMembers,
-                            ),
-                            style: theme.textTheme.bodyMedium,
+                          AvatarStack(
+                            avatarSize: 30.0,
+                            imageUrls: avatars,
+                            names: names,
+                            placeholderBackgroundColor:
+                                theme.unselectedWidgetColor,
+                            borderColor: theme.isDark()
+                                ? Colors.white
+                                : Colors.grey.shade500,
                           ),
-                          if (state.chat?.type == ChatType.group)
-                            Text(
-                              'createGroupScreen.participants'.plural(
-                                state.chatMembers.length,
+                          Column(
+                            children: [
+                              Text(
+                                ChatUtils.buildChatTitle(
+                                  chatTitle: state.chat?.title ?? '',
+                                  members: state.chatMembers,
+                                ),
+                                style: theme.textTheme.bodyMedium,
                               ),
-                              style: theme.textTheme.bodySmall,
-                            )
-                          else
-                            ChatUtils.buildMemberStatusWidget(
-                              yourId: _userProfile?.id ?? '',
-                              members: state.chatMembers,
-                              onlineStyle: theme.textTheme.bodySmall!.copyWith(
-                                color: theme.colorScheme.primary,
-                              ),
-                              offlineStyle: theme.textTheme.bodySmall!,
-                            ),
+                              if (state.chat?.type == ChatType.group)
+                                Text(
+                                  'createGroupScreen.participants'.plural(
+                                    state.chatMembers.length,
+                                  ),
+                                  style: theme.textTheme.bodySmall,
+                                )
+                              else
+                                ChatUtils.buildMemberStatusWidget(
+                                  yourId: _userProfile?.id ?? '',
+                                  members: state.chatMembers,
+                                  onlineStyle: theme.textTheme.bodySmall!
+                                      .copyWith(
+                                        color: theme.colorScheme.primary,
+                                      ),
+                                  offlineStyle: theme.textTheme.bodySmall!,
+                                ),
+                            ],
+                          ),
                         ],
                       ),
+                      ?widget.trailing,
                     ],
                   ),
                 ),

@@ -1,7 +1,9 @@
 import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/features/messages/data/models/message_model.dart';
 import 'package:chatting_app/features/messages/data/models/message_page_model.dart';
+import 'package:chatting_app/features/messages/data/models/message_search_result_model.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
+import 'package:chatting_app/features/messages/domain/entity/message_search_result_entity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
@@ -37,6 +39,27 @@ class MessagesRepositoryImpl implements MessagesRepository {
         afterMessageId: afterMessageId,
       );
       return Right(result.toEntity());
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<MessageSearchResultEntity>>> searchMessages({
+    required String chatId,
+    required String query,
+  }) async {
+    try {
+      final list = await _messagesRemoteDataSource.searchMessages(
+        chatId: chatId,
+        query: query,
+      );
+      return Right(
+        AppUtils.listModelToListEntity<
+          MessageSearchResultModel,
+          MessageSearchResultEntity
+        >(list, (item) => item.toEntity()),
+      );
     } catch (e) {
       return Left(mapExceptionToFailure(e));
     }
