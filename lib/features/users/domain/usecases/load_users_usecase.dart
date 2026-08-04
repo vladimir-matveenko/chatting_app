@@ -7,15 +7,28 @@ import '../entity/users_list_item_entity.dart';
 import '../repository/users_repository.dart';
 
 @lazySingleton
-class LoadUsersUseCase implements UseCase<List<UserListItemEntity>, NoParams> {
+class LoadUsersUseCase
+    implements UseCase<List<UserListItemEntity>, LoadUsersParams> {
   LoadUsersUseCase(this._repository);
 
   final UsersRepository _repository;
 
   @override
   Future<Either<Failure, List<UserListItemEntity>>> call(
-    NoParams params,
+    LoadUsersParams params,
   ) async {
-    return await _repository.loadUsers();
+    return await _repository.loadUsers(
+      query: params.query,
+      limit: params.limit,
+      offset: params.offset,
+    );
   }
+}
+
+class LoadUsersParams {
+  LoadUsersParams({this.query, this.limit, this.offset});
+
+  final String? query;
+  final int? limit;
+  final int? offset;
 }
