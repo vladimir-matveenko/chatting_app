@@ -1,4 +1,5 @@
 import 'package:chatting_app/core/presentation/widgets/app_loader.dart';
+import 'package:chatting_app/features/users/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -10,11 +11,43 @@ import '../users_cubit/cubit.dart';
 import '../users_cubit/state.dart';
 import '../widgets/users_list.dart';
 
-class UsersScreen extends StatelessWidget {
+class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
 
   @override
+  State<UsersScreen> createState() => _UsersScreenState();
+}
+
+class _UsersScreenState extends State<UsersScreen> {
+  late UsersCubit cubit;
+  final _scrollController = ScrollController();
+  final _searchController = TextEditingController();
+
+  void _onScroll() {
+    if (UsersUtils.isBottom(_scrollController)) {
+      cubit.loadMoreUsers(query: _searchController.text);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cubit = context.read<UsersCubit>();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocListener<ChatCubit, ChatState>(
       listenWhen: (previous, current) =>
           previous.shouldNavigate != current.shouldNavigate &&
@@ -31,7 +64,37 @@ class UsersScreen extends StatelessWidget {
           final isLoading = state.isLoading;
           return isLoading
               ? const Center(child: AppLoader())
-              : UsersList(users: state.users);
+              : Column(
+                  mainAxisSize: .min,
+                  crossAxisAlignment: .stretch,
+                  children: [
+                    Padding(
+                      padding: const .all(16.0),
+                      child: SizedBox(
+                        height: 40.0,
+                        child: SearchBar(
+                          leading: Icon(
+                            Icons.search,
+                            color: theme.colorScheme.onPrimary,
+                          ),
+                          onTapOutside: (PointerDownEvent event) {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          },
+                          onChanged: (query) {
+                            cubit.loadUsers(query: query);
+                          },
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: UsersList(
+                        users: state.users,
+                        scrollController: _scrollController,
+                      ),
+                    ),
+                    if (state.showLoader) const AppLoader(size: 20.0),
+                  ],
+                );
         },
       ),
     );

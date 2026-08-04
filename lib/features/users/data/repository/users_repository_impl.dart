@@ -16,9 +16,17 @@ class UsersRepositoryImpl implements UsersRepository {
   final UsersRemoteDataSource _usersRemoteDataSource;
 
   @override
-  Future<Either<Failure, List<UserListItemEntity>>> loadUsers() async {
+  Future<Either<Failure, List<UserListItemEntity>>> loadUsers({
+    String? query,
+    int? limit,
+    int? offset,
+  }) async {
     try {
-      final list = await _usersRemoteDataSource.loadUsers();
+      final list = await _usersRemoteDataSource.loadUsers(
+        query: query,
+        limit: limit,
+        offset: offset,
+      );
       return Right(
         AppUtils.listModelToListEntity<UserListItemModel, UserListItemEntity>(
           list,

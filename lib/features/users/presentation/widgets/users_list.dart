@@ -10,14 +10,16 @@ import '../../../chat/presentation/cubit/cubit.dart';
 import '../../domain/entity/users_list_item_entity.dart';
 
 class UsersList extends StatelessWidget {
-  const UsersList({super.key, required this.users});
+  const UsersList({super.key, required this.users, this.scrollController});
 
   final List<UserListItemEntity> users;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ChatCubit>();
     return BaseListView<UserListItemEntity>(
+      controller: scrollController,
       items: users,
       itemBuilder: (context, index) {
         final user = users[index];

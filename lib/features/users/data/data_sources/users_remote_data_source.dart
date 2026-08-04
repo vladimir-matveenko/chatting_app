@@ -4,7 +4,11 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class UsersRemoteDataSource {
-  Future<List<UserListItemModel>> loadUsers();
+  Future<List<UserListItemModel>> loadUsers({
+    String? query,
+    int? limit,
+    int? offset,
+  });
 }
 
 @LazySingleton(as: UsersRemoteDataSource)
@@ -17,8 +21,8 @@ class UsersRemoteDataSourceImpl extends BaseRemoteDataSource
   @override
   Future<List<UserListItemModel>> loadUsers({
     String? query,
-    String? limit,
-    String? offset,
+    int? limit,
+    int? offset,
   }) async {
     return makeRequest<List<UserListItemModel>>(() async {
       Map<String, dynamic> queryParameters = {};
