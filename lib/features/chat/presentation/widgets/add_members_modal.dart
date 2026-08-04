@@ -19,6 +19,8 @@ class AddMembersModal extends StatelessWidget {
       constraints: AppUtils.getModalDialogConstraints(context),
       padding: const .all(16.0),
       child: BlocConsumer<ChatCubit, ChatState>(
+        listenWhen: (prev, current) =>
+            prev.closeModal != current.closeModal && current.closeModal,
         listener: (context, state) {
           if (state.closeModal) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
