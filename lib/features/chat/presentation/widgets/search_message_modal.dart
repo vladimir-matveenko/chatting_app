@@ -53,7 +53,7 @@ class SearchMessageModal extends StatelessWidget {
                   },
                 ),
               ),
-              Expanded(
+              Flexible(
                 child: BaseListView<MessageSearchResultEntity>(
                   items: state.searchResults,
                   itemBuilder: (context, index) {
