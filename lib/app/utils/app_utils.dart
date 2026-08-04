@@ -3,13 +3,16 @@ import 'dart:convert';
 import 'package:chatting_app/app/constants/app_constants.dart';
 import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../core/error/failure.dart';
 import 'extensions.dart';
 
+@immutable
 class AppUtils {
+  const AppUtils._();
+
   static String? parseFailureMessage(Failure failure) {
     if (failure is CacheFailure) {
       return 'errors.cacheError'.tr();
