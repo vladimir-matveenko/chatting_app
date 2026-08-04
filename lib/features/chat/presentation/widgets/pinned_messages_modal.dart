@@ -34,7 +34,7 @@ class PinnedMessagesModal extends StatelessWidget {
                       onNavigateTap: (message) {
                         cubit.getAroundContext(
                           chatId: item.chatId,
-                          message: item,
+                          messageId: item.id,
                           closeModal: true,
                         );
                       },

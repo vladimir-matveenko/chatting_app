@@ -107,6 +107,8 @@ import 'package:chatting_app/features/messages/domain/usecases/load_messages_use
     as _i882;
 import 'package:chatting_app/features/messages/domain/usecases/pin_message_usecase.dart'
     as _i375;
+import 'package:chatting_app/features/messages/domain/usecases/search_messages_usecase.dart'
+    as _i927;
 import 'package:chatting_app/features/messages/domain/usecases/send_message_usecase.dart'
     as _i977;
 import 'package:chatting_app/features/messages/domain/usecases/unpin_message_usecase.dart'
@@ -261,6 +263,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i375.PinMessageUseCase>(
       () => _i375.PinMessageUseCase(gh<_i166.MessagesRepository>()),
     );
+    gh.lazySingleton<_i927.SearchMessagesUseCase>(
+      () => _i927.SearchMessagesUseCase(gh<_i166.MessagesRepository>()),
+    );
     gh.lazySingleton<_i977.SendMessageUseCase>(
       () => _i977.SendMessageUseCase(gh<_i166.MessagesRepository>()),
     );
@@ -403,6 +408,19 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i2.MessagesSocketService>(
       () => _i702.MessagesSocketServiceImpl(gh<_i739.SocketService>()),
     );
+    gh.lazySingleton<_i348.ChatCubit>(
+      () => _i348.ChatCubit(
+        gh<_i415.GetChatUseCase>(),
+        gh<_i998.UpdateChatUseCase>(),
+        gh<_i223.GetChatMembersUseCase>(),
+        gh<_i919.CreateChatUseCase>(),
+        gh<_i334.DeleteMemberUseCase>(),
+        gh<_i926.AddMemberUseCase>(),
+        gh<_i226.ChatSocketService>(),
+        gh<_i481.MuteChatUseCase>(),
+        gh<_i618.LeaveChatUseCase>(),
+      ),
+    );
     gh.lazySingleton<_i714.MessagesCubit>(
       () => _i714.MessagesCubit(
         gh<_i882.LoadMessagesUseCase>(),
@@ -416,19 +434,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i252.GetPinnedMessagesUseCase>(),
         gh<_i2.MessagesSocketService>(),
         gh<_i564.GetAroundContextUseCase>(),
-      ),
-    );
-    gh.lazySingleton<_i348.ChatCubit>(
-      () => _i348.ChatCubit(
-        gh<_i415.GetChatUseCase>(),
-        gh<_i998.UpdateChatUseCase>(),
-        gh<_i223.GetChatMembersUseCase>(),
-        gh<_i919.CreateChatUseCase>(),
-        gh<_i334.DeleteMemberUseCase>(),
-        gh<_i926.AddMemberUseCase>(),
-        gh<_i226.ChatSocketService>(),
-        gh<_i481.MuteChatUseCase>(),
-        gh<_i618.LeaveChatUseCase>(),
+        gh<_i927.SearchMessagesUseCase>(),
       ),
     );
     return this;

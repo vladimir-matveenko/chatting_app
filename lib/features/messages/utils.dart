@@ -1,9 +1,13 @@
 import 'package:chatting_app/features/chat/domain/entity/chat_entity.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:chatting_app/features/messages/presentation/widgets/messages_list/controllers/chat_scroll_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+@immutable
 class MessagesUtils {
+  const MessagesUtils._();
+
   static bool isEnoughVisible(ItemPosition position) {
     const visibleThreshold = 0.5;
 
@@ -65,5 +69,19 @@ class MessagesUtils {
     }
 
     return maxVisibleId > 0 ? maxVisibleId : null;
+  }
+
+  static List<MessageEntity> mergeMessages(
+    List<MessageEntity> current,
+    List<MessageEntity> incoming,
+  ) {
+    final map = <int, MessageEntity>{
+      for (final m in current) m.id: m,
+      for (final m in incoming) m.id: m,
+    };
+
+    final result = map.values.toList()..sort((a, b) => b.id.compareTo(a.id));
+
+    return result;
   }
 }

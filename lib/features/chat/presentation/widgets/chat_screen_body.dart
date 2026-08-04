@@ -3,6 +3,7 @@ import 'package:chatting_app/features/chat/domain/entity/chat_entity.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/chat_participants_bar.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/pinned_message_widget.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/pinned_messages_modal.dart';
+import 'package:chatting_app/features/chat/presentation/widgets/search_message_modal.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,22 @@ class ChatScreenBody extends StatelessWidget {
             ? const Center(child: AppLoader())
             : Column(
                 children: [
-                  ChatParticipantsBar(key: ValueKey(chat.id)),
+                  ChatParticipantsBar(
+                    key: ValueKey(chat.id),
+                    trailing: IconButton(
+                      onPressed: () {
+                        AppDialog.empty(
+                          context,
+                          content: SearchMessageModal(chatId: chat.id),
+                          onClose: () {
+                            cubit.disableCloseModal();
+                            cubit.disableSearch();
+                          },
+                        );
+                      },
+                      icon: const Icon(Icons.search),
+                    ),
+                  ),
                   if (state.pinnedMessages.isNotEmpty)
                     PinnedMessageWidget(
                       messages: state.pinnedMessages,
@@ -86,7 +102,7 @@ class ChatScreenBody extends StatelessWidget {
                       onNavigateTap: (message) {
                         cubit.getAroundContext(
                           chatId: message.chatId,
-                          message: message,
+                          messageId: message.id,
                         );
                       },
                       onShowModalTap: () {
@@ -146,17 +162,15 @@ class ChatScreenBody extends StatelessWidget {
       listenWhen: (prev, current) =>
           prev.shouldScroll != current.shouldScroll && current.shouldScroll,
       listener: (context, state) {
-        if (state.selectedPinnedMessage != null) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            final index = state.messagesPageEntity!.messages.indexOf(
-              state.selectedPinnedMessage!,
-            );
-            scrollController.centerOnIndex(index);
-            context.read<MessagesCubit>().highlightMessage(
-              state.selectedPinnedMessage!.id,
-            );
-          });
-        }
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (state.highlightedMessageIndex != null) {
+            final message = state
+                .messagesPageEntity
+                ?.messages[state.highlightedMessageIndex ?? -1];
+            scrollController.centerOnIndex(state.highlightedMessageIndex!);
+            context.read<MessagesCubit>().highlightMessage(message?.id ?? -1);
+          }
+        });
       },
     );
   }
