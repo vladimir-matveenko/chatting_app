@@ -1,14 +1,15 @@
+import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/core/presentation/widgets/app_loader.dart';
-import 'package:chatting_app/features/users/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
+import '../../../../core/presentation/widgets/app_search_bar.dart';
 import '../../../chat/presentation/cubit/cubit.dart';
 import '../../../chat/presentation/cubit/state.dart';
-import '../users_cubit/cubit.dart';
-import '../users_cubit/state.dart';
+import '../cubit/cubit.dart';
+import '../cubit/state.dart';
 import '../widgets/users_list.dart';
 
 class UsersScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _UsersScreenState extends State<UsersScreen> {
   final _searchController = TextEditingController();
 
   void _onScroll() {
-    if (UsersUtils.isBottom(_scrollController)) {
+    if (AppUtils.isBottomOfList(_scrollController)) {
       cubit.loadMoreUsers(query: _searchController.text);
     }
   }
@@ -46,8 +47,6 @@ class _UsersScreenState extends State<UsersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return BlocListener<ChatCubit, ChatState>(
       listenWhen: (previous, current) =>
           previous.shouldNavigate != current.shouldNavigate &&
@@ -70,20 +69,10 @@ class _UsersScreenState extends State<UsersScreen> {
                   children: [
                     Padding(
                       padding: const .all(16.0),
-                      child: SizedBox(
-                        height: 40.0,
-                        child: SearchBar(
-                          leading: Icon(
-                            Icons.search,
-                            color: theme.colorScheme.onPrimary,
-                          ),
-                          onTapOutside: (PointerDownEvent event) {
-                            FocusManager.instance.primaryFocus?.unfocus();
-                          },
-                          onChanged: (query) {
-                            cubit.loadUsers(query: query);
-                          },
-                        ),
+                      child: AppSearchBar(
+                        onChanged: (query) {
+                          cubit.loadUsers(query: query);
+                        },
                       ),
                     ),
                     Flexible(

@@ -18,11 +18,4 @@ class UsersUtils {
 
     return result;
   }
-
-  static bool isBottom(ScrollController scrollController) {
-    if (!scrollController.hasClients) return false;
-    final maxScroll = scrollController.position.maxScrollExtent;
-    final currentScroll = scrollController.offset;
-    return currentScroll >= (maxScroll * 0.9);
-  }
 }

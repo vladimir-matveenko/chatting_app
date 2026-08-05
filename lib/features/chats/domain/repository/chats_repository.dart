@@ -4,9 +4,17 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/error/failure.dart';
 
 abstract class ChatsRepository {
-  Future<Either<Failure, List<ChatListItemEntity>>> loadChats();
+  Future<Either<Failure, List<ChatListItemEntity>>> loadChats({
+    String? query,
+    int? limit,
+    int? offset,
+  });
 
-  Future<Either<Failure, List<ChatListItemEntity>>> loadArchivedChats();
+  Future<Either<Failure, List<ChatListItemEntity>>> loadArchivedChats({
+    String? query,
+    int? limit,
+    int? offset,
+  });
 
   Future<Either<Failure, bool>> archive(String chatId);
 

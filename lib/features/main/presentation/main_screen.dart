@@ -1,6 +1,6 @@
 import 'package:chatting_app/features/main/presentation/widgets/bottom_nav_bar.dart';
 import 'package:chatting_app/features/main/presentation/widgets/custom_fab.dart';
-import 'package:chatting_app/features/users/presentation/users_cubit/cubit.dart';
+import 'package:chatting_app/features/users/presentation/cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

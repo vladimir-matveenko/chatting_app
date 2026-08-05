@@ -8,15 +8,27 @@ import '../../../../core/usecases/usecase.dart';
 
 @lazySingleton
 class LoadArchivedChatsUseCase
-    implements UseCase<List<ChatListItemEntity>, NoParams> {
+    implements UseCase<List<ChatListItemEntity>, LoadArchivedChatsParams> {
   LoadArchivedChatsUseCase(this._repository);
 
   final ChatsRepository _repository;
 
   @override
   Future<Either<Failure, List<ChatListItemEntity>>> call(
-    NoParams params,
+    LoadArchivedChatsParams params,
   ) async {
-    return await _repository.loadArchivedChats();
+    return await _repository.loadArchivedChats(
+      query: params.query,
+      limit: params.limit,
+      offset: params.offset,
+    );
   }
+}
+
+class LoadArchivedChatsParams {
+  LoadArchivedChatsParams({this.query, this.limit, this.offset});
+
+  final String? query;
+  final int? limit;
+  final int? offset;
 }

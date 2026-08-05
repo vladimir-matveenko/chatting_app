@@ -165,8 +165,8 @@ import 'package:chatting_app/features/users/domain/repository/users_repository.d
     as _i1068;
 import 'package:chatting_app/features/users/domain/usecases/load_users_usecase.dart'
     as _i603;
-import 'package:chatting_app/features/users/presentation/users_cubit/cubit.dart'
-    as _i334;
+import 'package:chatting_app/features/users/presentation/cubit/cubit.dart'
+    as _i63;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -347,8 +347,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i603.LoadUsersUseCase>(
       () => _i603.LoadUsersUseCase(gh<_i1068.UsersRepository>()),
     );
-    gh.lazySingleton<_i334.UsersCubit>(
-      () => _i334.UsersCubit(gh<_i603.LoadUsersUseCase>()),
+    gh.lazySingleton<_i63.UsersCubit>(
+      () => _i63.UsersCubit(gh<_i603.LoadUsersUseCase>()),
     );
     gh.lazySingleton<_i643.ProfileCubit>(
       () => _i643.ProfileCubit(

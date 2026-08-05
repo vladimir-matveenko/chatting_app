@@ -4,7 +4,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../app/utils/app_utils.dart';
 import '../../../../core/presentation/widgets/app_message.dart';
+import '../../../../core/presentation/widgets/app_search_bar.dart';
 import '../../../../core/presentation/widgets/custom_tab_bar.dart';
 import '../widgets/chat_list.dart';
 
@@ -17,6 +19,8 @@ class ChatsScreen extends StatefulWidget {
 
 class _ChatsScreenState extends State<ChatsScreen>
     with TickerProviderStateMixin {
+  final _scrollController = ScrollController();
+  final _searchController = TextEditingController();
   late TabController _tabController;
   late ChatsCubit cubit;
   int? initialIndex;
@@ -48,10 +52,17 @@ class _ChatsScreenState extends State<ChatsScreen>
     return tab;
   }
 
+  void _onScroll() {
+    if (AppUtils.isBottomOfList(_scrollController)) {
+      cubit.loadMoreChats(query: _searchController.text);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     cubit = context.read<ChatsCubit>();
+    _scrollController.addListener(_onScroll);
     _tabController = TabController(
       initialIndex: initialIndex ?? 0,
       length: tabCount,
@@ -64,6 +75,15 @@ class _ChatsScreenState extends State<ChatsScreen>
         setState(() {});
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    _searchController.dispose();
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -82,7 +102,16 @@ class _ChatsScreenState extends State<ChatsScreen>
         }
       },
       child: Column(
+        crossAxisAlignment: .stretch,
         children: [
+          Padding(
+            padding: const .all(16.0),
+            child: AppSearchBar(
+              onChanged: (query) {
+                cubit.loadChatsOrArchive(query: query);
+              },
+            ),
+          ),
           Builder(
             key: ValueKey(context.locale),
             builder: (context) {

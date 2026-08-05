@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/utils/app_utils.dart';
+import '../../../../core/presentation/widgets/app_search_bar.dart';
 
 class SearchMessageModal extends StatelessWidget {
   const SearchMessageModal({super.key, required this.chatId});
@@ -17,7 +18,6 @@ class SearchMessageModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<MessagesCubit>();
-    final theme = Theme.of(context);
 
     return Container(
       constraints: AppUtils.getModalDialogConstraints(context),
@@ -38,20 +38,10 @@ class SearchMessageModal extends StatelessWidget {
           return Column(
             mainAxisSize: .min,
             children: [
-              SizedBox(
-                height: 40.0,
-                child: SearchBar(
-                  leading: Icon(
-                    Icons.search,
-                    color: theme.colorScheme.onPrimary,
-                  ),
-                  onTapOutside: (PointerDownEvent event) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  },
-                  onChanged: (query) {
-                    cubit.searchMessages(chatId: chatId, query: query);
-                  },
-                ),
+              AppSearchBar(
+                onChanged: (query) {
+                  cubit.searchMessages(chatId: chatId, query: query);
+                },
               ),
               if (state.searchResults.isNotEmpty)
                 Flexible(

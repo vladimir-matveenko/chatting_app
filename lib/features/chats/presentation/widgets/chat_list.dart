@@ -1,5 +1,6 @@
 import 'package:chatting_app/app/router/app_routes.dart';
 import 'package:chatting_app/app/utils/extensions.dart';
+import 'package:chatting_app/core/presentation/widgets/app_loader.dart';
 import 'package:chatting_app/core/presentation/widgets/avatar_stack.dart';
 import 'package:chatting_app/core/presentation/widgets/base_list_view.dart';
 import 'package:chatting_app/features/chat/presentation/cubit/cubit.dart';
@@ -21,11 +22,17 @@ class ChatList extends StatelessWidget {
     final cubit = context.read<ChatCubit>();
     return BlocBuilder<ChatsCubit, ChatsState>(
       builder: (context, state) {
-        return state.chats.isNotEmpty
+        final chats = state.status == ChatsScreenStatus.active
+            ? state.chats
+            : state.archivedChats;
+        final isLoading = state.isLoading;
+        return isLoading
+            ? const AppLoader()
+            : chats.isNotEmpty
             ? BaseListView(
-                items: state.chats,
+                items: chats,
                 itemBuilder: (context, index) {
-                  final chat = state.chats[index];
+                  final chat = chats[index];
                   return ListItem(
                     key: ValueKey(chat.id),
                     slideableAction: () {

@@ -16,9 +16,17 @@ class ChatsRepositoryImpl implements ChatsRepository {
   final ChatsRemoteDataSource _chatsRemoteDataSource;
 
   @override
-  Future<Either<Failure, List<ChatListItemEntity>>> loadChats() async {
+  Future<Either<Failure, List<ChatListItemEntity>>> loadChats({
+    String? query,
+    int? limit,
+    int? offset,
+  }) async {
     try {
-      final list = await _chatsRemoteDataSource.loadChats();
+      final list = await _chatsRemoteDataSource.loadChats(
+        query: query,
+        limit: limit,
+        offset: offset,
+      );
       return Right(
         AppUtils.listModelToListEntity<ChatListItemModel, ChatListItemEntity>(
           list,
@@ -31,9 +39,17 @@ class ChatsRepositoryImpl implements ChatsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ChatListItemEntity>>> loadArchivedChats() async {
+  Future<Either<Failure, List<ChatListItemEntity>>> loadArchivedChats({
+    String? query,
+    int? limit,
+    int? offset,
+  }) async {
     try {
-      final list = await _chatsRemoteDataSource.loadArchivedChats();
+      final list = await _chatsRemoteDataSource.loadArchivedChats(
+        query: query,
+        limit: limit,
+        offset: offset,
+      );
       return Right(
         AppUtils.listModelToListEntity<ChatListItemModel, ChatListItemEntity>(
           list,

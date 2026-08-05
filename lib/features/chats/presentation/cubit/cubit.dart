@@ -7,10 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../app/utils/app_utils.dart';
-import '../../../../core/usecases/usecase.dart';
 import '../../data/socket/chats_socket_service.dart';
 import '../../domain/usecases/archive_chat_usecase.dart';
 import '../../domain/usecases/return_from_archive_usecase.dart';
+import '../../utils.dart';
 
 enum ChatsScreenStatus { active, archive }
 
@@ -32,6 +32,8 @@ class ChatsCubit extends Cubit<ChatsState> {
   final ArchiveChatUseCase _archiveChatUseCase;
   final ReturnFromArchiveUseCase _returnFromArchiveUseCase;
 
+  final int defaultLimit = 20;
+
   final List<StreamSubscription> _subscriptions = [];
 
   @override
@@ -51,10 +53,20 @@ class ChatsCubit extends Cubit<ChatsState> {
     );
   }
 
-  Future<void> loadChats({bool loadSilent = true}) async {
+  Future<void> loadChatsOrArchive({String? query}) async {
+    if (state.status == ChatsScreenStatus.active) {
+      loadChats(query: query);
+    } else {
+      loadArchivedChats(query: query);
+    }
+  }
+
+  Future<void> loadChats({bool loadSilent = true, String? query}) async {
     emit(state.copyWith(isLoading: !loadSilent));
-    final profile = await _loadChatsUseCase(NoParams());
-    profile.fold(
+    final list = await _loadChatsUseCase(
+      LoadChatsParams(query: query, limit: defaultLimit, offset: 0),
+    );
+    list.fold(
       (l) {
         emit(
           state.copyWith(
@@ -75,10 +87,49 @@ class ChatsCubit extends Cubit<ChatsState> {
     );
   }
 
-  Future<void> loadArchivedChats({bool loadSilent = true}) async {
+  Future<void> loadMoreChats({String? query}) async {
+    if (state.chats.length < defaultLimit) {
+      return;
+    }
+    emit(state.copyWith(showLoader: true));
+    final list = await _loadChatsUseCase(
+      LoadChatsParams(
+        query: query,
+        offset: state.chats.length,
+        limit: defaultLimit,
+      ),
+    );
+    list.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            showLoader: false,
+          ),
+        );
+      },
+      (r) {
+        final existingIds = state.chats.map((e) => e.id).toSet();
+
+        final users = ChatsUtils.mergeChats(
+          state.chats,
+          r.where((m) => !existingIds.contains(m.id)).toList(),
+        );
+
+        emit(state.copyWith(chats: users, showLoader: false));
+      },
+    );
+  }
+
+  Future<void> loadArchivedChats({
+    bool loadSilent = true,
+    String? query,
+  }) async {
     emit(state.copyWith(isLoading: !loadSilent));
-    final profile = await _loadArchivedChatsUseCase(NoParams());
-    profile.fold(
+    final list = await _loadArchivedChatsUseCase(
+      LoadArchivedChatsParams(query: query, limit: defaultLimit, offset: 0),
+    );
+    list.fold(
       (l) {
         emit(
           state.copyWith(
@@ -90,11 +141,45 @@ class ChatsCubit extends Cubit<ChatsState> {
       (r) {
         emit(
           state.copyWith(
-            chats: r,
+            archivedChats: r,
             isLoading: false,
             status: ChatsScreenStatus.archive,
           ),
         );
+      },
+    );
+  }
+
+  Future<void> loadMoreArchivedChats({String? query}) async {
+    if (state.archivedChats.length < defaultLimit) {
+      return;
+    }
+    emit(state.copyWith(showLoader: true));
+    final list = await _loadArchivedChatsUseCase(
+      LoadArchivedChatsParams(
+        query: query,
+        offset: state.archivedChats.length,
+        limit: defaultLimit,
+      ),
+    );
+    list.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            showLoader: false,
+          ),
+        );
+      },
+      (r) {
+        final existingIds = state.archivedChats.map((e) => e.id).toSet();
+
+        final chats = ChatsUtils.mergeChats(
+          state.archivedChats,
+          r.where((m) => !existingIds.contains(m.id)).toList(),
+        );
+
+        emit(state.copyWith(archivedChats: chats, showLoader: false));
       },
     );
   }

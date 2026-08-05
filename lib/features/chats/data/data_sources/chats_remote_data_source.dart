@@ -4,9 +4,17 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class ChatsRemoteDataSource {
-  Future<List<ChatListItemModel>> loadChats();
+  Future<List<ChatListItemModel>> loadChats({
+    String? query,
+    int? limit,
+    int? offset,
+  });
 
-  Future<List<ChatListItemModel>> loadArchivedChats();
+  Future<List<ChatListItemModel>> loadArchivedChats({
+    String? query,
+    int? limit,
+    int? offset,
+  });
 
   Future<bool> archive(String chatId);
 
@@ -21,9 +29,23 @@ class ChatsRemoteDataSourceImpl extends BaseRemoteDataSource
   final Dio dio;
 
   @override
-  Future<List<ChatListItemModel>> loadChats() async {
+  Future<List<ChatListItemModel>> loadChats({
+    String? query,
+    int? limit,
+    int? offset,
+  }) async {
+    Map<String, dynamic> queryParameters = {};
+    if (query != null) {
+      queryParameters.addAll({'query': query});
+    }
+    if (limit != null) {
+      queryParameters.addAll({'limit': limit});
+    }
+    if (offset != null) {
+      queryParameters.addAll({'offset': offset});
+    }
     return makeRequest<List<ChatListItemModel>>(() async {
-      final response = await dio.get('chats');
+      final response = await dio.get('chats', queryParameters: queryParameters);
       if (response.statusCode == 200 && response.data != null) {
         return ChatListItemModel.fromList(response.data);
       }
@@ -32,9 +54,26 @@ class ChatsRemoteDataSourceImpl extends BaseRemoteDataSource
   }
 
   @override
-  Future<List<ChatListItemModel>> loadArchivedChats() async {
+  Future<List<ChatListItemModel>> loadArchivedChats({
+    String? query,
+    int? limit,
+    int? offset,
+  }) async {
+    Map<String, dynamic> queryParameters = {};
+    if (query != null) {
+      queryParameters.addAll({'query': query});
+    }
+    if (limit != null) {
+      queryParameters.addAll({'limit': limit});
+    }
+    if (offset != null) {
+      queryParameters.addAll({'offset': offset});
+    }
     return makeRequest<List<ChatListItemModel>>(() async {
-      final response = await dio.get('chats/archive');
+      final response = await dio.get(
+        'chats/archive',
+        queryParameters: queryParameters,
+      );
       if (response.statusCode == 200 && response.data != null) {
         return ChatListItemModel.fromList(response.data);
       }
