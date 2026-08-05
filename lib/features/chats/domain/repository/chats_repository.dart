@@ -5,4 +5,10 @@ import '../../../../core/error/failure.dart';
 
 abstract class ChatsRepository {
   Future<Either<Failure, List<ChatListItemEntity>>> loadChats();
+
+  Future<Either<Failure, List<ChatListItemEntity>>> loadArchivedChats();
+
+  Future<Either<Failure, bool>> archive(String chatId);
+
+  Future<Either<Failure, bool>> returnFromArchive(String chatId);
 }

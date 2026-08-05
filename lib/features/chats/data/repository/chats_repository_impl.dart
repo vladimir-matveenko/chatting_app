@@ -29,4 +29,41 @@ class ChatsRepositoryImpl implements ChatsRepository {
       return Left(mapExceptionToFailure(e));
     }
   }
+
+  @override
+  Future<Either<Failure, List<ChatListItemEntity>>> loadArchivedChats() async {
+    try {
+      final list = await _chatsRemoteDataSource.loadArchivedChats();
+      return Right(
+        AppUtils.listModelToListEntity<ChatListItemModel, ChatListItemEntity>(
+          list,
+          (item) => item.toEntity(),
+        ),
+      );
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> archive(String chatId) async {
+    try {
+      final result = await _chatsRemoteDataSource.archive(chatId);
+
+      return Right(result);
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> returnFromArchive(String chatId) async {
+    try {
+      final result = await _chatsRemoteDataSource.returnFromArchive(chatId);
+
+      return Right(result);
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
 }

@@ -73,8 +73,14 @@ import 'package:chatting_app/features/chats/data/socket/chats_socket_service_imp
     as _i4;
 import 'package:chatting_app/features/chats/domain/repository/chats_repository.dart'
     as _i989;
+import 'package:chatting_app/features/chats/domain/usecases/archive_chat_usecase.dart'
+    as _i921;
+import 'package:chatting_app/features/chats/domain/usecases/load_archived_chats_usecase.dart'
+    as _i704;
 import 'package:chatting_app/features/chats/domain/usecases/load_chats_usecase.dart'
     as _i321;
+import 'package:chatting_app/features/chats/domain/usecases/return_from_archive_usecase.dart'
+    as _i525;
 import 'package:chatting_app/features/chats/presentation/cubit/cubit.dart'
     as _i55;
 import 'package:chatting_app/features/login/domain/usecases/login_usecase.dart'
@@ -287,8 +293,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i915.ChatRemoteDataSource>(
       () => _i915.ChatRemoteDataSourceImpl(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i921.ArchiveChatUseCase>(
+      () => _i921.ArchiveChatUseCase(gh<_i989.ChatsRepository>()),
+    );
+    gh.lazySingleton<_i704.LoadArchivedChatsUseCase>(
+      () => _i704.LoadArchivedChatsUseCase(gh<_i989.ChatsRepository>()),
+    );
     gh.lazySingleton<_i321.LoadChatsUseCase>(
       () => _i321.LoadChatsUseCase(gh<_i989.ChatsRepository>()),
+    );
+    gh.lazySingleton<_i525.ReturnFromArchiveUseCase>(
+      () => _i525.ReturnFromArchiveUseCase(gh<_i989.ChatsRepository>()),
     );
     gh.lazySingleton<_i312.ChangePasswordUseCase>(
       () => _i312.ChangePasswordUseCase(gh<_i672.ProfileRepository>()),
@@ -396,17 +411,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i478.ClearCacheUseCase>(),
       ),
     );
-    gh.lazySingleton<_i55.ChatsCubit>(
-      () => _i55.ChatsCubit(
-        gh<_i321.LoadChatsUseCase>(),
-        gh<_i156.ChatsSocketService>(),
-      ),
-    );
     gh.lazySingleton<_i289.AppRouter>(
       () => _i289.AppRouter(gh<_i330.AuthCubit>()),
     );
     gh.lazySingleton<_i2.MessagesSocketService>(
       () => _i702.MessagesSocketServiceImpl(gh<_i739.SocketService>()),
+    );
+    gh.lazySingleton<_i55.ChatsCubit>(
+      () => _i55.ChatsCubit(
+        gh<_i321.LoadChatsUseCase>(),
+        gh<_i704.LoadArchivedChatsUseCase>(),
+        gh<_i156.ChatsSocketService>(),
+        gh<_i921.ArchiveChatUseCase>(),
+        gh<_i525.ReturnFromArchiveUseCase>(),
+      ),
     );
     gh.lazySingleton<_i348.ChatCubit>(
       () => _i348.ChatCubit(

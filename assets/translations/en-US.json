@@ -59,7 +59,11 @@
     "screenName": "Contacts"
   },
   "chatsScreen": {
-    "screenName": "Chats"
+    "screenName": "Chats",
+    "tabs": {
+      "active": "Active",
+      "archive": "Archive"
+    }
   },
   "chatScreen": {
     "screenName": "Chat",
