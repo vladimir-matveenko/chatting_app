@@ -53,24 +53,25 @@ class SearchMessageModal extends StatelessWidget {
                   },
                 ),
               ),
-              Flexible(
-                child: BaseListView<MessageSearchResultEntity>(
-                  items: state.searchResults,
-                  itemBuilder: (context, index) {
-                    final item = state.searchResults[index];
-                    return SearchResultItem(
-                      item: item,
-                      onTap: () {
-                        cubit.getAroundContext(
-                          chatId: chatId,
-                          messageId: item.messageId,
-                          closeModal: true,
-                        );
-                      },
-                    );
-                  },
+              if (state.searchResults.isNotEmpty)
+                Flexible(
+                  child: BaseListView<MessageSearchResultEntity>(
+                    items: state.searchResults,
+                    itemBuilder: (context, index) {
+                      final item = state.searchResults[index];
+                      return SearchResultItem(
+                        item: item,
+                        onTap: () {
+                          cubit.getAroundContext(
+                            chatId: chatId,
+                            messageId: item.messageId,
+                            closeModal: true,
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ),
             ],
           );
         },
