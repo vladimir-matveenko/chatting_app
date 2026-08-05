@@ -7,17 +7,17 @@ import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
 
 @lazySingleton
-class LoadChatsUseCase
-    implements UseCase<List<ChatListItemEntity>, LoadChatsParams> {
-  LoadChatsUseCase(this._repository);
+class LoadArchivedChatsUseCase
+    implements UseCase<List<ChatListItemEntity>, LoadArchivedChatsParams> {
+  LoadArchivedChatsUseCase(this._repository);
 
   final ChatsRepository _repository;
 
   @override
   Future<Either<Failure, List<ChatListItemEntity>>> call(
-    LoadChatsParams params,
+    LoadArchivedChatsParams params,
   ) async {
-    return await _repository.loadChats(
+    return await _repository.loadArchivedChats(
       query: params.query,
       limit: params.limit,
       offset: params.offset,
@@ -25,8 +25,8 @@ class LoadChatsUseCase
   }
 }
 
-class LoadChatsParams {
-  LoadChatsParams({this.query, this.limit, this.offset});
+class LoadArchivedChatsParams {
+  LoadArchivedChatsParams({this.query, this.limit, this.offset});
 
   final String? query;
   final int? limit;

@@ -4,7 +4,7 @@ import 'package:chatting_app/app/router/app_router.dart';
 import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/profile/presentation/change_password_cubit/cubit.dart';
-import 'package:chatting_app/features/users/presentation/users_cubit/cubit.dart';
+import 'package:chatting_app/features/users/presentation/cubit/cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

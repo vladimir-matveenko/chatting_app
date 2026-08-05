@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/presentation/widgets/app_loader.dart';
 import '../../../../core/presentation/widgets/slide_down_animated_widget.dart';
-import '../../../users/presentation/users_cubit/cubit.dart';
-import '../../../users/presentation/users_cubit/state.dart';
+import '../../../users/presentation/cubit/cubit.dart';
+import '../../../users/presentation/cubit/state.dart';
 import '../cubit/cubit.dart';
 import 'added_participants_list.dart';
 

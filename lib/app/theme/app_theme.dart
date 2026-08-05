@@ -187,7 +187,7 @@ class AppTheme {
           elevation: 2,
         ),
         searchBarTheme: SearchBarThemeData(
-          backgroundColor: .all(appColors.unselectedWidget),
+          backgroundColor: .all(appColors.surfaceTint),
           shadowColor: .all(appColors.surfaceTint),
           elevation: .all(0),
           surfaceTintColor: .all(appColors.surfaceTint),
@@ -199,7 +199,10 @@ class AppTheme {
                 side: BorderSide(color: appColors.fieldBorderFocussed),
               );
             }
-            return RoundedRectangleBorder(borderRadius: .circular(10.0));
+            return RoundedRectangleBorder(
+              borderRadius: .circular(10.0),
+              side: BorderSide(color: appColors.bottomBarBackground),
+            );
           }),
         ),
         tooltipTheme: TooltipThemeData(
@@ -419,7 +422,7 @@ class AppTheme {
           elevation: 2,
         ),
         searchBarTheme: SearchBarThemeData(
-          backgroundColor: .all(appColors.unselectedWidget),
+          backgroundColor: .all(appColors.surfaceTint),
           shadowColor: .all(appColors.surfaceTint),
           elevation: .all(0),
           surfaceTintColor: .all(appColors.surfaceTint),
@@ -431,7 +434,10 @@ class AppTheme {
                 side: BorderSide(color: appColors.primary),
               );
             }
-            return RoundedRectangleBorder(borderRadius: .circular(10.0));
+            return RoundedRectangleBorder(
+              borderRadius: .circular(10.0),
+              side: BorderSide(color: appColors.bottomBarBackground),
+            );
           }),
         ),
         tooltipTheme: TooltipThemeData(

@@ -1,25 +1,96 @@
-import 'package:chatting_app/core/presentation/widgets/app_loader.dart';
 import 'package:chatting_app/features/chats/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/chats/presentation/cubit/state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../app/utils/app_utils.dart';
 import '../../../../core/presentation/widgets/app_message.dart';
+import '../../../../core/presentation/widgets/app_search_bar.dart';
+import '../../../../core/presentation/widgets/custom_tab_bar.dart';
 import '../widgets/chat_list.dart';
 
-class ChatsScreen extends StatelessWidget {
+class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
 
   @override
+  State<ChatsScreen> createState() => _ChatsScreenState();
+}
+
+class _ChatsScreenState extends State<ChatsScreen>
+    with TickerProviderStateMixin {
+  final _scrollController = ScrollController();
+  final _searchController = TextEditingController();
+  late TabController _tabController;
+  late ChatsCubit cubit;
+  int? initialIndex;
+  int _currentIndex = 0;
+  final int tabCount = 2;
+
+  /// Initialized tabs
+  final Map<int, Widget> _builtTabs = {};
+
+  Widget _buildTab(int index) {
+    /// return if already exist
+    if (_builtTabs.containsKey(index)) {
+      return _builtTabs[index]!;
+    }
+
+    late final Widget tab;
+    switch (index) {
+      case 0:
+        tab = const ChatList();
+        break;
+      case 1:
+        tab = const ChatList();
+        break;
+      default:
+        tab = const SizedBox();
+    }
+
+    _builtTabs[index] = tab;
+    return tab;
+  }
+
+  void _onScroll() {
+    if (AppUtils.isBottomOfList(_scrollController)) {
+      cubit.loadMoreChats(query: _searchController.text);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cubit = context.read<ChatsCubit>();
+    _scrollController.addListener(_onScroll);
+    _tabController = TabController(
+      initialIndex: initialIndex ?? 0,
+      length: tabCount,
+      vsync: this,
+    );
+    _currentIndex = _tabController.index;
+    _tabController.addListener(() {
+      if (_tabController.index != _currentIndex) {
+        _currentIndex = _tabController.index;
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    _searchController.dispose();
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final cubit = context.read<ChatsCubit>();
-    return BlocConsumer<ChatsCubit, ChatsState>(
-      builder: (context, state) {
-        final isLoading = state.isLoading;
-        return isLoading
-            ? const Center(child: AppLoader())
-            : ChatList(chats: state.chats);
-      },
+    final theme = Theme.of(context);
+
+    return BlocListener<ChatsCubit, ChatsState>(
       listenWhen: (previous, current) => previous.error != current.error,
       listener: (context, state) {
         if (state.error?.isNotEmpty == true) {
@@ -30,6 +101,58 @@ class ChatsScreen extends StatelessWidget {
           );
         }
       },
+      child: Column(
+        crossAxisAlignment: .stretch,
+        children: [
+          Padding(
+            padding: const .all(16.0),
+            child: AppSearchBar(
+              onChanged: (query) {
+                cubit.loadChatsOrArchive(query: query);
+              },
+            ),
+          ),
+          Builder(
+            key: ValueKey(context.locale),
+            builder: (context) {
+              return Padding(
+                padding: const .symmetric(horizontal: 16.0),
+                child: CustomTabBar(
+                  tabs: [
+                    'chatsScreen.tabs.active'.tr(),
+                    'chatsScreen.tabs.archive'.tr(),
+                  ],
+                  selectedIndex: _tabController.index,
+                  useDifferentBorderForOuter: true,
+                  onTap: (i) {
+                    _tabController.animateTo(i);
+                    if (i == 0) {
+                      cubit.loadChats();
+                    } else {
+                      cubit.loadArchivedChats();
+                    }
+                  },
+                  barDecoration: const BoxDecoration(color: Colors.transparent),
+                  barPadding: const EdgeInsets.symmetric(vertical: 8.0),
+                  buttonBorderRadius: 12.0,
+                  buttonColor: theme.unselectedWidgetColor,
+                  labelColor: theme.disabledColor,
+                  selectedButtonColor: theme.colorScheme.primary,
+                  selectedLabelColor: Colors.white,
+                  separator: const SizedBox(),
+                  fontSize: 14.0,
+                ),
+              );
+            },
+          ),
+          Expanded(
+            child: IndexedStack(
+              index: _tabController.index,
+              children: List.generate(tabCount, _buildTab),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

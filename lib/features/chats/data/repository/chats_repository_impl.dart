@@ -16,15 +16,68 @@ class ChatsRepositoryImpl implements ChatsRepository {
   final ChatsRemoteDataSource _chatsRemoteDataSource;
 
   @override
-  Future<Either<Failure, List<ChatListItemEntity>>> loadChats() async {
+  Future<Either<Failure, List<ChatListItemEntity>>> loadChats({
+    String? query,
+    int? limit,
+    int? offset,
+  }) async {
     try {
-      final list = await _chatsRemoteDataSource.loadChats();
+      final list = await _chatsRemoteDataSource.loadChats(
+        query: query,
+        limit: limit,
+        offset: offset,
+      );
       return Right(
         AppUtils.listModelToListEntity<ChatListItemModel, ChatListItemEntity>(
           list,
           (item) => item.toEntity(),
         ),
       );
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ChatListItemEntity>>> loadArchivedChats({
+    String? query,
+    int? limit,
+    int? offset,
+  }) async {
+    try {
+      final list = await _chatsRemoteDataSource.loadArchivedChats(
+        query: query,
+        limit: limit,
+        offset: offset,
+      );
+      return Right(
+        AppUtils.listModelToListEntity<ChatListItemModel, ChatListItemEntity>(
+          list,
+          (item) => item.toEntity(),
+        ),
+      );
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> archive(String chatId) async {
+    try {
+      final result = await _chatsRemoteDataSource.archive(chatId);
+
+      return Right(result);
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> returnFromArchive(String chatId) async {
+    try {
+      final result = await _chatsRemoteDataSource.returnFromArchive(chatId);
+
+      return Right(result);
     } catch (e) {
       return Left(mapExceptionToFailure(e));
     }

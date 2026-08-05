@@ -59,7 +59,11 @@
     "screenName": "Контакты"
   },
   "chatsScreen": {
-    "screenName": "Чаты"
+    "screenName": "Чаты",
+    "tabs": {
+      "active": "Активные",
+      "archive": "Архив"
+    }
   },
   "chatScreen": {
     "screenName": "Чат",
