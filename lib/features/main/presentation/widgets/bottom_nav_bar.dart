@@ -1,5 +1,7 @@
+import 'package:chatting_app/features/notifications/presentation/cubit/cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({
@@ -13,6 +15,8 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<NotificationsCubit>().state;
+    final theme = Theme.of(context);
     return Builder(
       key: ValueKey(context.locale),
       builder: (context) {
@@ -29,7 +33,24 @@ class BottomNavBar extends StatelessWidget {
               label: 'bottomNavBar.chats'.tr(),
             ),
             BottomNavigationBarItem(
-              icon: const Icon(Icons.notifications),
+              icon: Stack(
+                children: [
+                  const Icon(Icons.notifications),
+                  if (state.unreadCount > 0)
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: Container(
+                        width: 6.0,
+                        height: 6.0,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: theme.colorScheme.error,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
               label: 'bottomNavBar.notifications'.tr(),
             ),
             BottomNavigationBarItem(

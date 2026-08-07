@@ -123,6 +123,26 @@ import 'package:chatting_app/features/messages/domain/usecases/update_message_us
     as _i752;
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart'
     as _i714;
+import 'package:chatting_app/features/notifications/data/data_sources/notifications_remote_data_source.dart'
+    as _i713;
+import 'package:chatting_app/features/notifications/data/repository/notifications_repository_impl.dart'
+    as _i414;
+import 'package:chatting_app/features/notifications/data/socket/notifications_socket_service.dart'
+    as _i653;
+import 'package:chatting_app/features/notifications/data/socket/notifications_socket_service_impl.dart'
+    as _i46;
+import 'package:chatting_app/features/notifications/domain/repository/notifications_repository.dart'
+    as _i26;
+import 'package:chatting_app/features/notifications/domain/usecases/get_unread_count_usecase.dart'
+    as _i308;
+import 'package:chatting_app/features/notifications/domain/usecases/load_notifications_usecase.dart'
+    as _i84;
+import 'package:chatting_app/features/notifications/domain/usecases/mark_all_as_read_usecase.dart'
+    as _i487;
+import 'package:chatting_app/features/notifications/domain/usecases/mark_one_as_read_usecase.dart'
+    as _i976;
+import 'package:chatting_app/features/notifications/presentation/cubit/cubit.dart'
+    as _i367;
 import 'package:chatting_app/features/profile/data/data_sources/profile_local_data_source.dart'
     as _i989;
 import 'package:chatting_app/features/profile/data/data_sources/profile_remote_data_source.dart'
@@ -231,6 +251,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i395.MessagesRemoteDataSource>(
       () => _i395.MessagesRemoteDataSourceImpl(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i713.NotificationsRemoteDataSource>(
+      () => _i713.NotificationsRemoteDataSourceImpl(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i166.MessagesRepository>(
       () => _i2.MessagesRepositoryImpl(gh<_i395.MessagesRemoteDataSource>()),
     );
@@ -317,6 +340,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i237.UpdateProfileUseCase>(
       () => _i237.UpdateProfileUseCase(gh<_i672.ProfileRepository>()),
     );
+    gh.lazySingleton<_i26.NotificationsRepository>(
+      () => _i414.NotificationRepositoryImpl(
+        gh<_i713.NotificationsRemoteDataSource>(),
+      ),
+    );
     gh.lazySingleton<_i207.AuthRepository>(
       () => _i626.AuthRepositoryImpl(
         authLocalDataSource: gh<_i999.AuthLocalDataSource>(),
@@ -349,6 +377,18 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i63.UsersCubit>(
       () => _i63.UsersCubit(gh<_i603.LoadUsersUseCase>()),
+    );
+    gh.lazySingleton<_i308.GetUnreadCountUseCase>(
+      () => _i308.GetUnreadCountUseCase(gh<_i26.NotificationsRepository>()),
+    );
+    gh.lazySingleton<_i84.LoadNotificationsUseCase>(
+      () => _i84.LoadNotificationsUseCase(gh<_i26.NotificationsRepository>()),
+    );
+    gh.lazySingleton<_i487.MarkAllAsReadUseCase>(
+      () => _i487.MarkAllAsReadUseCase(gh<_i26.NotificationsRepository>()),
+    );
+    gh.lazySingleton<_i976.MarkOneAsReadUseCase>(
+      () => _i976.MarkOneAsReadUseCase(gh<_i26.NotificationsRepository>()),
     );
     gh.lazySingleton<_i643.ProfileCubit>(
       () => _i643.ProfileCubit(
@@ -396,6 +436,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i739.SocketService>(
       () => _i581.SocketServiceImpl(gh<_i71.SocketTokenProvider>()),
     );
+    gh.lazySingleton<_i653.NotificationSocketService>(
+      () => _i46.NotificationSocketServiceImpl(gh<_i739.SocketService>()),
+    );
     gh.lazySingleton<_i226.ChatSocketService>(
       () => _i710.ChatSocketServiceImpl(gh<_i739.SocketService>()),
     );
@@ -437,6 +480,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i226.ChatSocketService>(),
         gh<_i481.MuteChatUseCase>(),
         gh<_i618.LeaveChatUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i367.NotificationsCubit>(
+      () => _i367.NotificationsCubit(
+        gh<_i84.LoadNotificationsUseCase>(),
+        gh<_i308.GetUnreadCountUseCase>(),
+        gh<_i487.MarkAllAsReadUseCase>(),
+        gh<_i976.MarkOneAsReadUseCase>(),
+        gh<_i653.NotificationSocketService>(),
       ),
     );
     gh.lazySingleton<_i714.MessagesCubit>(

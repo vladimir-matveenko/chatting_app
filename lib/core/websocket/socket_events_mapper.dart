@@ -1,4 +1,6 @@
+import 'package:chatting_app/core/websocket/events/notification_created_socket_event.dart';
 import 'package:chatting_app/features/messages/data/models/message_model.dart';
+import 'package:chatting_app/features/notifications/data/models/notification_model.dart';
 
 import 'events/events.dart';
 import 'socket_events.dart';
@@ -56,6 +58,11 @@ abstract final class SocketEventsMapper {
 
       case SocketEvents.exception:
         return ExceptionSocketEvent(message: json['message'] as String);
+
+      case SocketEvents.notificationCreated:
+        return NotificationCreatedSocketEvent(
+          notification: NotificationModel.fromJson(json),
+        );
 
       default:
         throw UnsupportedError('Unknown socket event: $event');

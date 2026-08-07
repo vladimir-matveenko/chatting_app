@@ -95,7 +95,20 @@
     "addMember": "Add member"
   },
   "notificationsScreen": {
-    "screenName": "Notifications"
+    "screenName": "Notifications",
+    "bodyText": {
+      "message": "New message",
+      "chatUpdated": "Chat updated",
+      "adminGranted": "You have been granted admin rights",
+      "adminRevoked": "Admin rights revoked",
+      "memberAdded": "New member added to the chat",
+      "memberRemoved": "Member removed from the chat",
+      "chatInvite": "You have been invited to a chat",
+      "ownerChanged": "Chat owner changed",
+      "reaction": "Reactions added to your message",
+      "reply": "You received a reply"
+    },
+    "noNotifications": "No notifications"
   },
   "createGroupScreen": {
     "screenName": "Create group",
