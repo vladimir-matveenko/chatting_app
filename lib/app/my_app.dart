@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:chatting_app/app/router/app_router.dart';
 import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
+import 'package:chatting_app/features/notifications/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/profile/presentation/change_password_cubit/cubit.dart';
 import 'package:chatting_app/features/users/presentation/cubit/cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -38,6 +39,7 @@ class _MyAppState extends State<MyApp> {
   final chatCubit = getIt<ChatCubit>();
   final usersCubit = getIt<UsersCubit>();
   final messagesCubit = getIt<MessagesCubit>();
+  final notificationsCubit = getIt<NotificationsCubit>();
   final sessionManager = getIt<AuthSessionManager>();
   final authRepo = getIt<AuthRepository>();
 
@@ -67,6 +69,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => chatCubit),
         BlocProvider(create: (_) => usersCubit),
         BlocProvider(create: (_) => messagesCubit),
+        BlocProvider(create: (_) => notificationsCubit),
         BlocProvider(create: (_) => themeCubit..loadTheme()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(

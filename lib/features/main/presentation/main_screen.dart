@@ -1,5 +1,6 @@
 import 'package:chatting_app/features/main/presentation/widgets/bottom_nav_bar.dart';
 import 'package:chatting_app/features/main/presentation/widgets/custom_fab.dart';
+import 'package:chatting_app/features/notifications/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/users/presentation/cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +31,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     context.read<UsersCubit>().loadUsers(loadSilent: false);
+    context.read<NotificationsCubit>().loadData(loadSilent: false);
     chatsCubit = context.read<ChatsCubit>();
     chatsCubit.loadChats(loadSilent: false);
     super.initState();

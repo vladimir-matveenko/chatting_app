@@ -36,4 +36,6 @@ abstract final class SocketEvents {
   static const chatChanged = 'chat:changed';
 
   static const exception = 'exception';
+
+  static const notificationCreated = 'notification:created';
 }

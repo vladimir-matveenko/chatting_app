@@ -95,7 +95,20 @@
     "addMember": "Добавить участника"
   },
   "notificationsScreen": {
-    "screenName": "Уведомления"
+    "screenName": "Уведомления",
+    "bodyText": {
+      "message": "Новое сообщение",
+      "chatUpdated": "Чат был обновлен",
+      "adminGranted": "Вам выдали права администратора",
+      "adminRevoked": "Права администратора сняты",
+      "memberAdded": "В чат добавлен новый участник",
+      "memberRemoved": "Участник покинул чат",
+      "chatInvite": "Вас пригласили в чат",
+      "ownerChanged": "Изменился владелец чата",
+      "reaction": "К вашему сообщению добавили реакцию",
+      "reply": "Вам ответили"
+    },
+    "noNotifications": "Нет уведомлений"
   },
   "createGroupScreen": {
     "screenName": "Создать группу",
