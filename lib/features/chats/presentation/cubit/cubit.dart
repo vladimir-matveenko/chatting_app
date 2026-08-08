@@ -179,7 +179,7 @@ class ChatsCubit extends Cubit<ChatsState> {
         );
       },
       (r) {
-        loadChats();
+        loadAllChats();
       },
     );
   }
@@ -198,7 +198,7 @@ class ChatsCubit extends Cubit<ChatsState> {
         );
       },
       (r) {
-        loadArchivedChats();
+        loadAllChats();
       },
     );
   }

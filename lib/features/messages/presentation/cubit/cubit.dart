@@ -292,7 +292,7 @@ class MessagesCubit extends Cubit<MessagesState> {
     required int messageId,
     bool closeModal = false,
   }) async {
-    final message = state.messagesPageEntity!.messages.firstWhereOrNull(
+    final message = state.messagesPageEntity?.messages.firstWhereOrNull(
       (e) => e.id == messageId,
     );
     if (message != null) {
