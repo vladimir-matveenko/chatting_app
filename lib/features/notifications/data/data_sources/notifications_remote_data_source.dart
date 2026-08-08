@@ -58,7 +58,7 @@ class NotificationsRemoteDataSourceImpl extends BaseRemoteDataSource
   @override
   Future<bool> markAllAsRead() async {
     return makeRequest<bool>(() async {
-      final response = await dio.get('notifications/read-all');
+      final response = await dio.post('notifications/read-all');
       return response.statusCode == 204;
     });
   }
@@ -66,7 +66,7 @@ class NotificationsRemoteDataSourceImpl extends BaseRemoteDataSource
   @override
   Future<NotificationModel?> markAsRead(String id) async {
     return makeRequest<NotificationModel?>(() async {
-      final response = await dio.get('notifications/$id/read');
+      final response = await dio.post('notifications/$id/read');
       if (response.statusCode == 200 && response.data != null) {
         return NotificationModel.fromJson(response.data);
       }

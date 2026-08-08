@@ -8,7 +8,7 @@ import '../../app/constants/app_enums.dart';
 class NotificationsUtils {
   const NotificationsUtils._();
 
-  static final DateFormat _timeFormatter = DateFormat('H:mm:ss');
+  static final DateFormat _timeFormatter = DateFormat('H:mm');
 
   static List<NotificationEntity> mergeNotifications(
     List<NotificationEntity> current,

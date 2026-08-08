@@ -35,7 +35,7 @@ class ChatsRemoteDataSourceImpl extends BaseRemoteDataSource
     int? offset,
   }) async {
     Map<String, dynamic> queryParameters = {};
-    if (query != null) {
+    if (query?.isNotEmpty == true) {
       queryParameters.addAll({'query': query});
     }
     if (limit != null) {
