@@ -203,6 +203,8 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
           ],
         );
       },
+      listenWhen: (previous, current) =>
+          previous.shouldScroll != current.shouldScroll && current.shouldScroll,
       listener: _handleScroll,
     );
   }
