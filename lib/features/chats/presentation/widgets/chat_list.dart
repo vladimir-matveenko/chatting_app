@@ -27,7 +27,7 @@ class ChatList extends StatelessWidget {
             : state.archivedChats;
         final isLoading = state.isLoading;
         return isLoading
-            ? const AppLoader()
+            ? const Center(child: AppLoader())
             : chats.isNotEmpty
             ? BaseListView(
                 items: chats,

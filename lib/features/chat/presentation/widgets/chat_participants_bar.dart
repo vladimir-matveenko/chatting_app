@@ -81,6 +81,7 @@ class _ChatParticipantsBarState extends State<ChatParticipantsBar> {
                                 ChatUtils.buildChatTitle(
                                   chatTitle: state.chat?.title ?? '',
                                   members: state.chatMembers,
+                                  yourId: _userProfile?.id ?? '',
                                 ),
                                 style: theme.textTheme.bodyMedium,
                               ),

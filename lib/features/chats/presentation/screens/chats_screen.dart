@@ -20,7 +20,6 @@ class ChatsScreen extends StatefulWidget {
 class _ChatsScreenState extends State<ChatsScreen>
     with TickerProviderStateMixin {
   final _scrollController = ScrollController();
-  final _searchController = TextEditingController();
   late TabController _tabController;
   late ChatsCubit cubit;
   int? initialIndex;
@@ -54,7 +53,7 @@ class _ChatsScreenState extends State<ChatsScreen>
 
   void _onScroll() {
     if (AppUtils.isBottomOfList(_scrollController)) {
-      cubit.loadMoreChats(query: _searchController.text);
+      cubit.loadMoreChats();
     }
   }
 
@@ -81,7 +80,6 @@ class _ChatsScreenState extends State<ChatsScreen>
   void dispose() {
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
-    _searchController.dispose();
     _tabController.dispose();
     super.dispose();
   }
@@ -108,7 +106,8 @@ class _ChatsScreenState extends State<ChatsScreen>
             padding: const .all(16.0),
             child: AppSearchBar(
               onChanged: (query) {
-                cubit.loadChatsOrArchive(query: query);
+                cubit.query = query;
+                cubit.loadAllChats();
               },
             ),
           ),
@@ -127,9 +126,9 @@ class _ChatsScreenState extends State<ChatsScreen>
                   onTap: (i) {
                     _tabController.animateTo(i);
                     if (i == 0) {
-                      cubit.loadChats();
+                      cubit.setScreenStatus(ChatsScreenStatus.active);
                     } else {
-                      cubit.loadArchivedChats();
+                      cubit.setScreenStatus(ChatsScreenStatus.archive);
                     }
                   },
                   barDecoration: const BoxDecoration(color: Colors.transparent),

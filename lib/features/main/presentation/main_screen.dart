@@ -26,14 +26,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  late ChatsCubit chatsCubit;
-
   @override
   void initState() {
     context.read<UsersCubit>().loadUsers(loadSilent: false);
     context.read<NotificationsCubit>().loadData(loadSilent: false);
-    chatsCubit = context.read<ChatsCubit>();
-    chatsCubit.loadChats(loadSilent: false);
+    context.read<ChatsCubit>().loadAllChats(loadSilent: false);
     super.initState();
   }
 

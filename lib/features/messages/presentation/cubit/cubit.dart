@@ -186,7 +186,8 @@ class MessagesCubit extends Cubit<MessagesState> {
   Future<void> loadOlderMessages(String chatId) async {
     if (state.showOlderLoader ||
         !state.messagesPageEntity!.hasPrevious ||
-        state.showNewerLoader) {
+        state.showNewerLoader ||
+        state.shouldScroll) {
       return;
     }
 
@@ -238,7 +239,8 @@ class MessagesCubit extends Cubit<MessagesState> {
   Future<void> loadNewerMessages(String chatId) async {
     if (state.showNewerLoader ||
         !state.messagesPageEntity!.hasNext ||
-        state.showOlderLoader) {
+        state.showOlderLoader ||
+        state.shouldScroll) {
       return;
     }
 
@@ -292,17 +294,18 @@ class MessagesCubit extends Cubit<MessagesState> {
     required int messageId,
     bool closeModal = false,
   }) async {
-    final message = state.messagesPageEntity!.messages.firstWhereOrNull(
+    final message = state.messagesPageEntity?.messages.firstWhereOrNull(
       (e) => e.id == messageId,
     );
     if (message != null) {
       final index = state.messagesPageEntity!.messages.indexOf(message);
       emit(
         state.copyWith(
+          isLoading: false,
           shouldScroll: true,
-          closeModal: closeModal,
           status: MessagesListStatus.aroundContext,
           highlightedMessageIndex: index,
+          closeModal: closeModal,
         ),
       );
       return;

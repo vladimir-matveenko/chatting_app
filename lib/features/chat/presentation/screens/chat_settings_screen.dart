@@ -44,6 +44,7 @@ class _ChatSettingsScreenState extends State<ChatSettingsScreen> {
         final title = ChatUtils.buildChatTitle(
           chatTitle: state.chat?.title ?? '',
           members: state.chatMembers,
+          yourId: _userProfile?.id ?? '',
         );
 
         final subtitle = state.chat?.type == ChatType.group

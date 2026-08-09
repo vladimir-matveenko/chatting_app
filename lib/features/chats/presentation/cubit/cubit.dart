@@ -34,6 +34,7 @@ class ChatsCubit extends Cubit<ChatsState> {
 
   final int defaultLimit = 20;
 
+  String query = '';
   final List<StreamSubscription> _subscriptions = [];
 
   @override
@@ -48,20 +49,17 @@ class ChatsCubit extends Cubit<ChatsState> {
   void _subscribeSocketEvents() {
     _subscriptions.add(
       _chatsSocketService.refreshChats.listen((_) async {
-        await loadChats();
+        await loadAllChats();
       }),
     );
   }
 
-  Future<void> loadChatsOrArchive({String? query}) async {
-    if (state.status == ChatsScreenStatus.active) {
-      loadChats(query: query);
-    } else {
-      loadArchivedChats(query: query);
-    }
+  Future<void> loadAllChats({bool loadSilent = true}) async {
+    await loadChats(loadSilent: loadSilent);
+    await loadArchivedChats(loadSilent: loadSilent);
   }
 
-  Future<void> loadChats({bool loadSilent = true, String? query}) async {
+  Future<void> loadChats({bool loadSilent = true}) async {
     emit(state.copyWith(isLoading: !loadSilent));
     final list = await _loadChatsUseCase(
       LoadChatsParams(query: query, limit: defaultLimit, offset: 0),
@@ -76,18 +74,12 @@ class ChatsCubit extends Cubit<ChatsState> {
         );
       },
       (r) {
-        emit(
-          state.copyWith(
-            chats: r,
-            isLoading: false,
-            status: ChatsScreenStatus.active,
-          ),
-        );
+        emit(state.copyWith(chats: r, isLoading: false));
       },
     );
   }
 
-  Future<void> loadMoreChats({String? query}) async {
+  Future<void> loadMoreChats() async {
     if (state.chats.length < defaultLimit) {
       return;
     }
@@ -121,10 +113,7 @@ class ChatsCubit extends Cubit<ChatsState> {
     );
   }
 
-  Future<void> loadArchivedChats({
-    bool loadSilent = true,
-    String? query,
-  }) async {
+  Future<void> loadArchivedChats({bool loadSilent = true}) async {
     emit(state.copyWith(isLoading: !loadSilent));
     final list = await _loadArchivedChatsUseCase(
       LoadArchivedChatsParams(query: query, limit: defaultLimit, offset: 0),
@@ -139,18 +128,12 @@ class ChatsCubit extends Cubit<ChatsState> {
         );
       },
       (r) {
-        emit(
-          state.copyWith(
-            archivedChats: r,
-            isLoading: false,
-            status: ChatsScreenStatus.archive,
-          ),
-        );
+        emit(state.copyWith(archivedChats: r, isLoading: false));
       },
     );
   }
 
-  Future<void> loadMoreArchivedChats({String? query}) async {
+  Future<void> loadMoreArchivedChats() async {
     if (state.archivedChats.length < defaultLimit) {
       return;
     }
@@ -196,7 +179,7 @@ class ChatsCubit extends Cubit<ChatsState> {
         );
       },
       (r) {
-        loadChats();
+        loadAllChats();
       },
     );
   }
@@ -215,9 +198,13 @@ class ChatsCubit extends Cubit<ChatsState> {
         );
       },
       (r) {
-        loadArchivedChats();
+        loadAllChats();
       },
     );
+  }
+
+  Future<void> setScreenStatus(ChatsScreenStatus status) async {
+    emit(state.copyWith(status: status));
   }
 
   Future<void> disableError() async {

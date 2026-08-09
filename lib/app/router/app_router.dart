@@ -113,8 +113,15 @@ class AppRouter {
                     path: ':id',
                     pageBuilder: (context, state) {
                       final id = state.pathParameters['id']!;
+                      final messageId = state.extra != null
+                          ? (state.extra as String)
+                          : null;
                       return NoTransitionPage(
-                        child: ChatScreen(key: ValueKey(id), id: id),
+                        child: ChatScreen(
+                          key: ValueKey('$id-$messageId'),
+                          id: id,
+                          messageId: messageId,
+                        ),
                       );
                     },
                     routes: [
