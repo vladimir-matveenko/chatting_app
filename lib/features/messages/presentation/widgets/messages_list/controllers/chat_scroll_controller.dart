@@ -61,21 +61,26 @@ class ChatScrollController extends ChangeNotifier {
 
   Future<void> animateToIndex(
     int index, {
+    int retries = 10,
     double alignment = ChatScrollAlignment.latest,
   }) async {
-    if (!isAttached) return;
+    if (isAttached) {
+      _setJumping(true);
 
-    _setJumping(true);
-
-    try {
-      await itemScrollController.scrollTo(
-        index: index,
-        alignment: alignment,
-        duration: scrollDuration,
-        curve: scrollCurve,
-      );
-    } finally {
-      _setJumping(false);
+      try {
+        await itemScrollController.scrollTo(
+          index: index,
+          alignment: alignment,
+          duration: scrollDuration,
+          curve: scrollCurve,
+        );
+      } finally {
+        _setJumping(false);
+      }
+    } else if (retries > 0) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        animateToIndex(index, retries: retries - 1, alignment: alignment);
+      });
     }
   }
 

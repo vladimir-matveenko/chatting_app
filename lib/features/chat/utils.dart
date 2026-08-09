@@ -27,6 +27,7 @@ class ChatUtils {
   static String buildChatTitle({
     required String chatTitle,
     required List<ChatMemberEntity> members,
+    required String yourId,
   }) {
     if (chatTitle.isNotEmpty) {
       return chatTitle;
@@ -34,8 +35,8 @@ class ChatUtils {
     if (members.isEmpty) {
       return '';
     }
-    final firstMember = members.first;
-    return firstMember.displayName ?? firstMember.userName;
+    final firstMember = members.firstWhereOrNull((e) => e.userId != yourId);
+    return firstMember?.displayName ?? firstMember?.userName ?? '';
   }
 
   static ChatMemberEntity? getPrivateChatMember({

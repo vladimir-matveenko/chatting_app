@@ -55,12 +55,13 @@ class NotificationsList extends StatelessWidget {
                         NotificationItem(
                           onTap: () {
                             final chatId = item.payload.chatId ?? '';
+                            final messageId = item.payload.messageId;
                             if (chatId.isNotEmpty) {
-                              context.read<ChatCubit>().getChatById(
-                                chatId,
-                                loadSilent: false,
+                              context.read<ChatCubit>().getChatById(chatId);
+                              context.go(
+                                '${AppRoutes.chats}/$chatId',
+                                extra: messageId,
                               );
-                              context.go('${AppRoutes.chats}/$chatId');
                             }
                           },
                           slideableAction: () {

@@ -15,9 +15,10 @@ import '../cubit/cubit.dart';
 import '../widgets/chat_screen_body.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key, required this.id});
+  const ChatScreen({super.key, required this.id, this.messageId});
 
   final String id;
+  final String? messageId;
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -37,8 +38,13 @@ class _ChatScreenState extends State<ChatScreen> {
     messagesCubit = context.read<MessagesCubit>();
     chatCubit.disableNavigate();
     chatCubit.getChatMembers(chatId: widget.id);
-    messagesCubit.loadMessages(chatId: widget.id);
     messagesCubit.getPinnedMessages(chatId: widget.id);
+    if (widget.messageId != null) {
+      final id = int.tryParse(widget.messageId!) ?? -1;
+      messagesCubit.getAroundContext(chatId: widget.id, messageId: id);
+    } else {
+      messagesCubit.loadMessages(chatId: widget.id);
+    }
     getIt<ChatSocketService>().joinChat(widget.id);
     super.initState();
   }
@@ -89,7 +95,7 @@ class _ChatScreenState extends State<ChatScreen> {
             if (state.editModeActive) {
               _messageController.text = state.selectedMessage?.body ?? '';
             }
-            if(state.replyModeActive){
+            if (state.replyModeActive) {
               messageFocusNode.requestFocus();
             }
           },
