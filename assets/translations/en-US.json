@@ -30,9 +30,6 @@
   "profileScreen": {
     "screenName": "Profile",
     "created": "Profile created successful",
-    "btnRemove": "Remove profile",
-    "btnRemoveProfile": "Remove profile",
-    "youWantRemove": "Do you really want delete profile? This action is permanent and all your data will be removed.",
     "btnLogout": "Logout",
     "changeLang": "Change language",
     "langEn": "English",

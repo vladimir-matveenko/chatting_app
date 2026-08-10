@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
-import '../../../../core/presentation/widgets/app_dialog.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
 import '../../../../core/presentation/widgets/avatar_placeholder.dart';
 import '../../../auth/presentation/cubit/cubit.dart';
@@ -58,7 +57,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       backgroundColor: theme.cardTheme.color,
                     ),
                     Text(
-                      state.profile?.displayName ?? '',
+                      state.profile?.displayName ??
+                          state.profile?.userName ??
+                          '',
                       style: theme.textTheme.headlineSmall,
                     ),
                     Text(
@@ -109,25 +110,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         loginCubit.onLogout();
                       },
                       child: Text('profileScreen.logout'.tr()),
-                    ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        foregroundColor: theme.colorScheme.error,
-                      ),
-                      onPressed: () async {
-                        final result = await AppDialog.show(
-                          context,
-                          title: 'profileScreen.btnRemove'.tr(),
-                          text: 'profileScreen.youWantRemove'.tr(),
-                          cancelText: 'cancelText'.tr(),
-                          okText: 'okText'.tr(),
-                        );
-                        if (result) {
-                          authCubit.logout();
-                          loginCubit.onLogout();
-                        }
-                      },
-                      child: Text('profileScreen.btnRemoveProfile'.tr()),
                     ),
                   ],
                 ),
