@@ -30,4 +30,8 @@ extension BuildContextX on BuildContext {
     final screenSize = MediaQuery.sizeOf(this);
     return screenSize.width > screenSize.height;
   }
+
+  DateFormat get dateFormatter => DateFormat('yyyy.MM.dd', locale.languageCode);
+
+  DateFormat get timeFormatter => DateFormat('H:mm', locale.languageCode);
 }

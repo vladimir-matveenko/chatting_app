@@ -8,8 +8,6 @@ import '../../app/constants/app_enums.dart';
 class NotificationsUtils {
   const NotificationsUtils._();
 
-  static final DateFormat _timeFormatter = DateFormat('H:mm');
-
   static List<NotificationEntity> mergeNotifications(
     List<NotificationEntity> current,
     List<NotificationEntity> incoming,
@@ -28,6 +26,7 @@ class NotificationsUtils {
     required NotificationEntity notification,
     required TextStyle textStyle,
     required TextStyle smallTextStyle,
+    required DateFormat timeFormatter,
   }) {
     var icon = Icons.info;
     var text = '';
@@ -82,7 +81,7 @@ class NotificationsUtils {
           children: [
             Text(text, style: textStyle),
             Text(
-              _timeFormatter.format(notification.createdAt),
+              timeFormatter.format(notification.createdAt),
               style: smallTextStyle,
             ),
           ],

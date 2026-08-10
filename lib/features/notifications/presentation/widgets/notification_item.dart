@@ -56,6 +56,7 @@ class NotificationItem extends StatelessWidget {
                 notification: notification,
                 textStyle: theme.textTheme.bodyMedium!,
                 smallTextStyle: theme.textTheme.bodySmall!,
+                timeFormatter: context.timeFormatter,
               ),
               if (!notification.isRead)
                 Icon(Icons.new_releases, size: 16.0, color: colors.success),

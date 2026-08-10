@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:chatting_app/app/constants/app_constants.dart';
 import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -30,18 +28,6 @@ class AppUtils {
       return failure.message;
     }
     return null;
-  }
-
-  static Map<String, dynamic> parseJson(String text) {
-    final match = RegExp(r'\{[\s\S]*\}').firstMatch(text);
-
-    if (match == null) {
-      throw Exception('JSON not found in Gemini response');
-    }
-
-    final jsonString = match.group(0)!;
-
-    return jsonDecode(jsonString) as Map<String, dynamic>;
   }
 
   static String getFirstLetter(String name) {

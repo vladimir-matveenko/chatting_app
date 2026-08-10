@@ -18,7 +18,7 @@ class NotificationsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<NotificationsCubit>();
-    final dateFormatter = DateFormat('yyyy.MM.dd', context.locale.languageCode);
+    final dateFormatter = context.dateFormatter;
     return BlocBuilder<NotificationsCubit, NotificationsState>(
       builder: (context, state) {
         final isLoading = state.isLoading;
