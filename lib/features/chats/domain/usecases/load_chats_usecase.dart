@@ -3,8 +3,8 @@ import 'package:chatting_app/features/chats/domain/repository/chats_repository.d
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/domain/usecases/usecase.dart';
 import '../../../../core/error/failure.dart';
-import '../../../../core/usecases/usecase.dart';
 
 @lazySingleton
 class LoadChatsUseCase

@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../app/constants/app_enums.dart';
+import '../../../../core/domain/usecases/usecase.dart';
 import '../../../../core/error/failure.dart';
-import '../../../../core/usecases/usecase.dart';
 import '../entity/chat_entity.dart';
 import '../repository/chat_repository.dart';
 

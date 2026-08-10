@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../app/utils/app_utils.dart';
-import '../../../../core/usecases/usecase.dart';
+import '../../../../core/domain/usecases/usecase.dart';
 import '../../domain/usecases/create_profile_usecase.dart';
 import '../../domain/usecases/fetch_profile_usecase.dart';
 

@@ -2,7 +2,7 @@ import 'package:chatting_app/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/usecases/usecase.dart';
+import '../../../../core/domain/usecases/usecase.dart';
 import '../repository/auth_repository.dart';
 
 @lazySingleton

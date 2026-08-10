@@ -5,7 +5,7 @@ import 'package:chatting_app/features/auth/presentation/cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/usecases/usecase.dart';
+import '../../../../core/domain/usecases/usecase.dart';
 import '../../../../core/websocket/socket_service.dart';
 import '../../domain/usecases/check_auth_usecase.dart' show CheckAuthUseCase;
 
