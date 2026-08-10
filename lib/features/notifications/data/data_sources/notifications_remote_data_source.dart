@@ -3,7 +3,7 @@ import 'package:chatting_app/features/notifications/data/models/unread_count_mod
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../app/constants/app_enums.dart';
+import '../enums/notification_type.dart';
 import '../models/notification_model.dart';
 
 abstract class NotificationsRemoteDataSource {
@@ -35,7 +35,7 @@ class NotificationsRemoteDataSourceImpl extends BaseRemoteDataSource
   }) async {
     Map<String, dynamic> queryParameters = {};
     if (type != null) {
-      queryParameters.addAll({'type': type.name});
+      queryParameters.addAll({'type': type.value});
     }
     if (limit != null) {
       queryParameters.addAll({'limit': limit});

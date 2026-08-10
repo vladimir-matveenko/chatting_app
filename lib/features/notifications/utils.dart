@@ -2,7 +2,7 @@ import 'package:chatting_app/features/notifications/domain/entity/notification_e
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../app/constants/app_enums.dart';
+import 'data/enums/notification_type.dart';
 
 @immutable
 class NotificationsUtils {
@@ -37,6 +37,28 @@ class NotificationsUtils {
     };
   }
 
+  static String getNotificationTypeText(NotificationType type) {
+    return switch (type) {
+      NotificationType.message => 'notificationsScreen.bodyText.message'.tr(),
+      NotificationType.chatUpdated =>
+        'notificationsScreen.bodyText.chatUpdated'.tr(),
+      NotificationType.adminGranted =>
+        'notificationsScreen.bodyText.adminGranted'.tr(),
+      NotificationType.adminRevoked =>
+        'notificationsScreen.bodyText.adminRevoked'.tr(),
+      NotificationType.memberAdded =>
+        'notificationsScreen.bodyText.memberAdded'.tr(),
+      NotificationType.memberRemoved =>
+        'notificationsScreen.bodyText.memberRemoved'.tr(),
+      NotificationType.chatInvite =>
+        'notificationsScreen.bodyText.chatInvite'.tr(),
+      NotificationType.ownerChanged =>
+        'notificationsScreen.bodyText.ownerChanged'.tr(),
+      NotificationType.reaction => 'notificationsScreen.bodyText.reaction'.tr(),
+      NotificationType.reply => 'notificationsScreen.bodyText.reply'.tr(),
+    };
+  }
+
   static Widget getNotificationBody({
     required NotificationEntity notification,
     required TextStyle textStyle,
@@ -44,39 +66,7 @@ class NotificationsUtils {
     required DateFormat timeFormatter,
   }) {
     var icon = getNotificationTypeIcon(notification.type);
-    var text = '';
-    switch (notification.type) {
-      case NotificationType.message:
-        text = 'notificationsScreen.bodyText.message'.tr();
-        break;
-      case NotificationType.chatUpdated:
-        text = 'notificationsScreen.bodyText.chatUpdated'.tr();
-        break;
-      case NotificationType.adminGranted:
-        text = 'notificationsScreen.bodyText.adminGranted'.tr();
-        break;
-      case NotificationType.adminRevoked:
-        text = 'notificationsScreen.bodyText.adminRevoked'.tr();
-        break;
-      case NotificationType.memberAdded:
-        text = 'notificationsScreen.bodyText.memberAdded'.tr();
-        break;
-      case NotificationType.memberRemoved:
-        text = 'notificationsScreen.bodyText.memberRemoved'.tr();
-        break;
-      case NotificationType.chatInvite:
-        text = 'notificationsScreen.bodyText.chatInvite'.tr();
-        break;
-      case NotificationType.ownerChanged:
-        text = 'notificationsScreen.bodyText.ownerChanged'.tr();
-        break;
-      case NotificationType.reaction:
-        text = 'notificationsScreen.bodyText.reaction'.tr();
-        break;
-      case NotificationType.reply:
-        text = 'notificationsScreen.bodyText.reply'.tr();
-        break;
-    }
+    var text = getNotificationTypeText(notification.type);
     return Row(
       spacing: 8.0,
       children: [

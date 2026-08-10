@@ -1,8 +1,8 @@
-import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:chatting_app/features/notifications/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/domain/entity/availability_filter_entity.dart';
+import '../../data/enums/notification_type.dart';
 
 class TypeFilterBlock extends StatelessWidget {
   const TypeFilterBlock({
@@ -42,9 +42,7 @@ class TypeFilterBlock extends StatelessWidget {
       padding: const .all(8.0),
       color: theme.bottomNavigationBarTheme.backgroundColor,
       child: Row(
-        children: [
-          Wrap(spacing: 8.0, runSpacing: 8.0, children: filters),
-        ],
+        children: [Wrap(spacing: 8.0, runSpacing: 8.0, children: filters)],
       ),
     );
   }

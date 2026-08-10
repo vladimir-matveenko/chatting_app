@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:chatting_app/core/domain/entity/availability_filter_entity.dart';
 import 'package:chatting_app/features/notifications/data/socket/notifications_socket_service.dart';
 import 'package:chatting_app/features/notifications/domain/usecases/get_unread_count_usecase.dart';
@@ -12,6 +11,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../app/utils/app_utils.dart';
 import '../../../../core/domain/usecases/usecase.dart';
+import '../../data/enums/notification_type.dart';
 import '../../domain/usecases/load_notifications_usecase.dart';
 import '../../utils.dart';
 
