@@ -2,8 +2,8 @@ import 'package:chatting_app/features/messages/domain/repository/messages_reposi
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/domain/usecases/usecase.dart';
 import '../../../../core/error/failure.dart';
-import '../../../../core/usecases/usecase.dart';
 
 @lazySingleton
 class DeleteMessageUseCase implements UseCase<bool, DeleteMessageParams> {

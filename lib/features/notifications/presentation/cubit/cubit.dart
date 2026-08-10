@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:chatting_app/app/constants/app_enums.dart';
-import 'package:chatting_app/core/usecases/usecase.dart';
+import 'package:chatting_app/core/domain/entity/availability_filter_entity.dart';
 import 'package:chatting_app/features/notifications/data/socket/notifications_socket_service.dart';
 import 'package:chatting_app/features/notifications/domain/usecases/get_unread_count_usecase.dart';
 import 'package:chatting_app/features/notifications/domain/usecases/mark_all_as_read_usecase.dart';
@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../app/utils/app_utils.dart';
+import '../../../../core/domain/usecases/usecase.dart';
 import '../../domain/usecases/load_notifications_usecase.dart';
 import '../../utils.dart';
 
@@ -58,13 +59,14 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     await getUnreadCount();
   }
 
-  Future<void> loadNotifications({
-    bool loadSilent = true,
-    NotificationType? type,
-  }) async {
+  Future<void> loadNotifications({bool loadSilent = true}) async {
     emit(state.copyWith(isLoading: !loadSilent));
     final list = await _loadNotificationsUseCase(
-      LoadNotificationsParams(type: type, limit: defaultLimit, offset: 0),
+      LoadNotificationsParams(
+        type: state.filters.isNotEmpty ? state.filters.first.apiValue : null,
+        limit: defaultLimit,
+        offset: 0,
+      ),
     );
     list.fold(
       (l) {
@@ -72,6 +74,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
+            notifications: [],
           ),
         );
       },
@@ -164,6 +167,23 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         emit(state.copyWith(unreadCount: r));
       },
     );
+  }
+
+  Future<void> addFilter(AvailabilityFilterEntity filter) async {
+    final filters = List<AvailabilityFilterEntity>.from(state.filters);
+    // only one selected value available
+    final contains = filters.any((e) => e == filter);
+    filters.clear();
+    if (!contains) {
+      filters.add(filter);
+    }
+    emit(state.copyWith(filters: filters));
+    loadNotifications();
+  }
+
+  Future<void> disableFilters() async {
+    emit(state.copyWith(filters: []));
+    loadNotifications();
   }
 
   Future<void> disableError() async {

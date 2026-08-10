@@ -109,8 +109,8 @@ class _MessagesListState extends State<MessagesList> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final messageColor = isDark ? Colors.grey.shade200 : theme.cardTheme.color;
-    final dateFormatter = DateFormat('yyyy.MM.dd', context.locale.languageCode);
-    final timeFormatter = DateFormat('H:mm', context.locale.languageCode);
+    final dateFormatter = context.dateFormatter;
+    final timeFormatter = context.timeFormatter;
     final state = context.watch<MessagesCubit>().state;
     final isPinnedMessageSelected = state.pinnedMessages.any(
       (e) => e.id == state.selectedMessage?.id,

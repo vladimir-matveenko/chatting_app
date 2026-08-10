@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../app/theme/app_theme.dart';
 import '../../../../app/theme/app_theme_colors.dart';
-import '../../../../core/usecases/usecase.dart';
+import '../../../../core/domain/usecases/usecase.dart';
 import '../../domain/entity/app_theme_mode.dart';
 import '../../domain/usecases/get_theme_usecase.dart';
 import '../../domain/usecases/set_theme_usecase.dart';

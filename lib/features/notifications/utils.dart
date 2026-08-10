@@ -8,8 +8,6 @@ import '../../app/constants/app_enums.dart';
 class NotificationsUtils {
   const NotificationsUtils._();
 
-  static final DateFormat _timeFormatter = DateFormat('H:mm');
-
   static List<NotificationEntity> mergeNotifications(
     List<NotificationEntity> current,
     List<NotificationEntity> incoming,
@@ -24,52 +22,58 @@ class NotificationsUtils {
     return result;
   }
 
+  static IconData getNotificationTypeIcon(NotificationType type) {
+    return switch (type) {
+      NotificationType.message => Icons.chat_bubble_outline,
+      NotificationType.chatUpdated => Icons.edit_outlined,
+      NotificationType.adminGranted => Icons.admin_panel_settings_outlined,
+      NotificationType.adminRevoked => Icons.remove_moderator_outlined,
+      NotificationType.memberAdded => Icons.person_add_alt_1_outlined,
+      NotificationType.memberRemoved => Icons.person_remove_outlined,
+      NotificationType.chatInvite => Icons.group_add_outlined,
+      NotificationType.ownerChanged => Icons.stars_outlined,
+      NotificationType.reaction => Icons.emoji_emotions_outlined,
+      NotificationType.reply => Icons.reply_outlined,
+    };
+  }
+
   static Widget getNotificationBody({
     required NotificationEntity notification,
     required TextStyle textStyle,
     required TextStyle smallTextStyle,
+    required DateFormat timeFormatter,
   }) {
-    var icon = Icons.info;
+    var icon = getNotificationTypeIcon(notification.type);
     var text = '';
     switch (notification.type) {
       case NotificationType.message:
-        icon = Icons.chat_bubble_outline;
         text = 'notificationsScreen.bodyText.message'.tr();
         break;
       case NotificationType.chatUpdated:
-        icon = Icons.edit_outlined;
         text = 'notificationsScreen.bodyText.chatUpdated'.tr();
         break;
       case NotificationType.adminGranted:
-        icon = Icons.admin_panel_settings_outlined;
         text = 'notificationsScreen.bodyText.adminGranted'.tr();
         break;
       case NotificationType.adminRevoked:
-        icon = Icons.remove_moderator_outlined;
         text = 'notificationsScreen.bodyText.adminRevoked'.tr();
         break;
       case NotificationType.memberAdded:
-        icon = Icons.person_add_alt_1_outlined;
         text = 'notificationsScreen.bodyText.memberAdded'.tr();
         break;
       case NotificationType.memberRemoved:
-        icon = Icons.person_remove_outlined;
         text = 'notificationsScreen.bodyText.memberRemoved'.tr();
         break;
       case NotificationType.chatInvite:
-        icon = Icons.group_add_outlined;
         text = 'notificationsScreen.bodyText.chatInvite'.tr();
         break;
       case NotificationType.ownerChanged:
-        icon = Icons.stars_outlined;
         text = 'notificationsScreen.bodyText.ownerChanged'.tr();
         break;
       case NotificationType.reaction:
-        icon = Icons.emoji_emotions_outlined;
         text = 'notificationsScreen.bodyText.reaction'.tr();
         break;
       case NotificationType.reply:
-        icon = Icons.reply_outlined;
         text = 'notificationsScreen.bodyText.reply'.tr();
         break;
     }
@@ -82,7 +86,7 @@ class NotificationsUtils {
           children: [
             Text(text, style: textStyle),
             Text(
-              _timeFormatter.format(notification.createdAt),
+              timeFormatter.format(notification.createdAt),
               style: smallTextStyle,
             ),
           ],
