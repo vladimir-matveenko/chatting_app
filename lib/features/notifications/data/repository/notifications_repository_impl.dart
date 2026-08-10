@@ -2,12 +2,12 @@ import 'package:chatting_app/features/notifications/data/models/notification_mod
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../app/constants/app_enums.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/error/mapper.dart';
 import '../../domain/entity/notification_entity.dart';
 import '../../domain/repository/notifications_repository.dart';
 import '../data_sources/notifications_remote_data_source.dart';
+import '../enums/notification_type.dart';
 
 @LazySingleton(as: NotificationsRepository)
 class NotificationRepositoryImpl implements NotificationsRepository {

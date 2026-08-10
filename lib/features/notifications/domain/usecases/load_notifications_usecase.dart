@@ -2,9 +2,9 @@ import 'package:chatting_app/features/notifications/domain/repository/notificati
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../app/constants/app_enums.dart';
 import '../../../../core/domain/usecases/usecase.dart';
 import '../../../../core/error/failure.dart';
+import '../../data/enums/notification_type.dart';
 import '../entity/notification_entity.dart';
 
 @lazySingleton

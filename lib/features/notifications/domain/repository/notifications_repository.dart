@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../app/constants/app_enums.dart';
 import '../../../../core/error/failure.dart';
+import '../../data/enums/notification_type.dart';
 import '../entity/notification_entity.dart';
 
 abstract class NotificationsRepository {

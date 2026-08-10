@@ -1,9 +1,9 @@
-import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:chatting_app/features/notifications/data/models/notification_payload_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../app/utils/app_utils.dart';
 import '../../domain/entity/notification_entity.dart';
+import '../enums/notification_type.dart';
 
 part 'notification_model.freezed.dart';
 part 'notification_model.g.dart';
