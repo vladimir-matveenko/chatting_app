@@ -137,7 +137,7 @@ class MessagesCubit extends Cubit<MessagesState> {
     emit(
       state.copyWith(
         isLoading: !isChatTheSame || !loadSilent,
-        error: '',
+        error: null,
         status: MessagesListStatus.list,
       ),
     );
@@ -510,6 +510,7 @@ class MessagesCubit extends Cubit<MessagesState> {
         editModeActive: false,
         showMenu: false,
         replyModeActive: false,
+        selectedMessage: null,
       ),
     );
   }
@@ -527,7 +528,7 @@ class MessagesCubit extends Cubit<MessagesState> {
   }
 
   Future<void> disableError() async {
-    emit(state.copyWith(error: ''));
+    emit(state.copyWith(error: null));
   }
 
   Future<void> disableCloseModal() async {
@@ -549,7 +550,9 @@ class MessagesCubit extends Cubit<MessagesState> {
   }
 
   Future<void> disableHighlightMessage() async {
-    emit(state.copyWith(highlightedMessageId: -1, highlightedMessageIndex: -1));
+    emit(
+      state.copyWith(highlightedMessageId: null, highlightedMessageIndex: null),
+    );
   }
 
   Future<void> disableSearch() async {

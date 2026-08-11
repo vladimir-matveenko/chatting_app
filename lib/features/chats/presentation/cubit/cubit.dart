@@ -208,6 +208,6 @@ class ChatsCubit extends Cubit<ChatsState> {
   }
 
   Future<void> disableError() async {
-    emit(state.copyWith(error: ''));
+    emit(state.copyWith(error: null));
   }
 }

@@ -1,28 +1,12 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class ChangePasswordState extends Equatable {
-  const ChangePasswordState({
-    this.error,
-    this.isLoading = false,
-    this.changedSuccessful = false,
-  });
+part 'state.freezed.dart';
 
-  final String? error;
-  final bool isLoading;
-  final bool changedSuccessful;
-
-  ChangePasswordState copyWith({
+@freezed
+abstract class ChangePasswordState with _$ChangePasswordState {
+  const factory ChangePasswordState({
     String? error,
-    bool? isLoading,
-    bool? changedSuccessful,
-  }) {
-    return ChangePasswordState(
-      error: error ?? this.error,
-      isLoading: isLoading ?? this.isLoading,
-      changedSuccessful: changedSuccessful ?? this.changedSuccessful,
-    );
-  }
-
-  @override
-  List<dynamic> get props => [error, isLoading, changedSuccessful];
+    @Default(false) bool isLoading,
+    @Default(false) bool changedSuccessful,
+  }) = _ChangePasswordState;
 }

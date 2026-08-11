@@ -38,7 +38,7 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   }
 
   Future<void> disableError() async {
-    emit(state.copyWith(error: ''));
+    emit(state.copyWith(error: null));
   }
 
   Future<void> disableSuccess() async {
