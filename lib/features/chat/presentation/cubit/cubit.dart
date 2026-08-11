@@ -171,7 +171,7 @@ class ChatCubit extends Cubit<ChatState> {
       state.copyWith(
         status: CreateGroupStatus.initial,
         selectedParticipants: [],
-        error: '',
+        error: null,
       ),
     );
   }
@@ -294,7 +294,7 @@ class ChatCubit extends Cubit<ChatState> {
         );
       },
       (r) {
-        emit(state.copyWith(error: ''));
+        emit(state.copyWith(error: null));
       },
     );
   }
@@ -318,7 +318,11 @@ class ChatCubit extends Cubit<ChatState> {
       },
       (r) {
         emit(
-          state.copyWith(error: '', selectedParticipants: [], closeModal: true),
+          state.copyWith(
+            error: null,
+            selectedParticipants: [],
+            closeModal: true,
+          ),
         );
       },
     );
@@ -359,7 +363,7 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   Future<void> disableError() async {
-    emit(state.copyWith(error: ''));
+    emit(state.copyWith(error: null));
   }
 
   Future<void> disableNavigate() async {

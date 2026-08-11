@@ -92,7 +92,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> disableError() async {
-    emit(state.copyWith(error: ''));
+    emit(state.copyWith(error: null));
   }
 
   Future<void> disableSuccess() async {
