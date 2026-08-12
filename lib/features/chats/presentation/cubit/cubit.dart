@@ -10,7 +10,6 @@ import '../../../../app/utils/app_utils.dart';
 import '../../data/socket/chats_socket_service.dart';
 import '../../domain/usecases/archive_chat_usecase.dart';
 import '../../domain/usecases/return_from_archive_usecase.dart';
-import '../../utils.dart';
 
 enum ChatsScreenStatus { active, archive }
 
@@ -103,9 +102,10 @@ class ChatsCubit extends Cubit<ChatsState> {
       (r) {
         final existingIds = state.chats.map((e) => e.id).toSet();
 
-        final users = ChatsUtils.mergeChats(
+        final users = AppUtils.mergeBy(
           state.chats,
           r.where((m) => !existingIds.contains(m.id)).toList(),
+          getId: (m) => m.id,
         );
 
         emit(state.copyWith(chats: users, showLoader: false));
@@ -157,9 +157,10 @@ class ChatsCubit extends Cubit<ChatsState> {
       (r) {
         final existingIds = state.archivedChats.map((e) => e.id).toSet();
 
-        final chats = ChatsUtils.mergeChats(
+        final chats = AppUtils.mergeBy(
           state.archivedChats,
           r.where((m) => !existingIds.contains(m.id)).toList(),
+          getId: (m) => m.id,
         );
 
         emit(state.copyWith(archivedChats: chats, showLoader: false));

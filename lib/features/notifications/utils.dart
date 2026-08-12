@@ -8,20 +8,6 @@ import 'data/enums/notification_type.dart';
 class NotificationsUtils {
   const NotificationsUtils._();
 
-  static List<NotificationEntity> mergeNotifications(
-    List<NotificationEntity> current,
-    List<NotificationEntity> incoming,
-  ) {
-    final map = <String, NotificationEntity>{
-      for (final m in current) m.id: m,
-      for (final m in incoming) m.id: m,
-    };
-
-    final result = map.values.toList()..sort((a, b) => a.id.compareTo(b.id));
-
-    return result;
-  }
-
   static IconData getNotificationTypeIcon(NotificationType type) {
     return switch (type) {
       NotificationType.message => Icons.chat_bubble_outline,

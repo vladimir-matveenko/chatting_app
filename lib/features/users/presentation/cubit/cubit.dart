@@ -1,4 +1,3 @@
-import 'package:chatting_app/features/users/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -57,9 +56,10 @@ class UsersCubit extends Cubit<UsersState> {
       (r) {
         final existingIds = state.users.map((e) => e.id).toSet();
 
-        final users = UsersUtils.mergeUsers(
+        final users = AppUtils.mergeBy(
           state.users,
           r.where((m) => !existingIds.contains(m.id)).toList(),
+          getId: (m) => m.id,
         );
 
         emit(state.copyWith(users: users, showLoader: false));

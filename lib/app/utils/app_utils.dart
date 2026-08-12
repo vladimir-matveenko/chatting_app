@@ -83,6 +83,35 @@ class AppUtils {
     return list.map((item) => toEntity(item)).toList();
   }
 
+  /// mergeBy
+  /// Example:
+  /// ```dart
+  ///   final merged = mergeBy<Entity, int>(
+  ///     currentList,
+  ///     incomingList,
+  ///     getId: (m) => m.id,
+  ///   );
+  ///```
+  static List<T> mergeBy<T, K>(
+    List<T> current,
+    List<T> incoming, {
+    required K Function(T item) getId,
+    bool descending = true,
+  }) {
+    final map = <K, T>{
+      for (final item in current) getId(item): item,
+      for (final item in incoming) getId(item): item,
+    };
+
+    return map.values.toList()..sort((a, b) {
+      final keyA = getId(a) as Comparable;
+      final keyB = getId(b) as Comparable;
+      return descending
+          ? Comparable.compare(keyB, keyA)
+          : Comparable.compare(keyA, keyB);
+    });
+  }
+
   static String getReactionSymbol(ReactionType type) => switch (type) {
     ReactionType.like => AppConstants.reactions[0],
     ReactionType.dislike => AppConstants.reactions[1],
