@@ -63,7 +63,7 @@ class _ChatSettingsScreenState extends State<ChatSettingsScreen> {
               actionBar: ChatActionBar(currentUserId: _userProfile?.id ?? ''),
             ),
 
-            if (state.chat?.type == ChatType.group)
+            if (state.chat?.type == ChatType.group) ...[
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -85,40 +85,39 @@ class _ChatSettingsScreenState extends State<ChatSettingsScreen> {
                     ),
                   ),
                 ),
-              )
-            else
-              const SliverToBoxAdapter(child: SizedBox(height: 16.0)),
-
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              sliver: SliverSeparatedList(
-                itemCount: state.chatMembers.length,
-                itemBuilder: (context, index) {
-                  final member = state.chatMembers[index];
-
-                  return MembersListItem(
-                    key: ValueKey(member.userId),
-                    user: member,
-                    isOwner: member.role == ChatMemberRole.owner,
-                    action: () {
-                      cubit.deleteChatMember(
-                        chatId: state.chat?.id ?? '',
-                        userId: member.userId,
-                      );
-                    },
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return Divider(
-                    height: 16,
-                    thickness: 1,
-                    color: Theme.of(context).unselectedWidgetColor,
-                  );
-                },
               ),
-            ),
 
-            const SliverPadding(padding: EdgeInsets.only(bottom: 24)),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                sliver: SliverSeparatedList(
+                  itemCount: state.chatMembers.length,
+                  itemBuilder: (context, index) {
+                    final member = state.chatMembers[index];
+
+                    return MembersListItem(
+                      key: ValueKey(member.userId),
+                      user: member,
+                      isOwner: member.role == ChatMemberRole.owner,
+                      action: () {
+                        cubit.deleteChatMember(
+                          chatId: state.chat?.id ?? '',
+                          userId: member.userId,
+                        );
+                      },
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return Divider(
+                      height: 16,
+                      thickness: 1,
+                      color: Theme.of(context).unselectedWidgetColor,
+                    );
+                  },
+                ),
+              ),
+
+              const SliverPadding(padding: EdgeInsets.only(bottom: 24)),
+            ],
           ],
         );
       },
