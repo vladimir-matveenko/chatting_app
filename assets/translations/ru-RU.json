@@ -86,7 +86,8 @@
     },
     "unreadMessages": "Непрочитанные сообщения",
     "showPinnedMessages": "Посмотреть закрепленные сообщения",
-    "replyTo": "В ответ"
+    "replyTo": "В ответ",
+    "typing": "Печатает ..."
   },
   "editChatScreen": {
     "addMember": "Добавить участника"

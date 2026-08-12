@@ -46,6 +46,10 @@ class _ChatParticipantsBarState extends State<ChatParticipantsBar> {
         final names = anotherParticipants
             .map((e) => e.displayName ?? e.userName)
             .toList();
+        final showTyping =
+            state.typingUserEntity != null &&
+            state.typingUserEntity?.chatId == state.chat?.id &&
+            state.typingUserEntity?.userId != _userProfile?.id;
         return state.isLoading
             ? const SizedBox()
             : GestureDetector(
@@ -76,6 +80,7 @@ class _ChatParticipantsBarState extends State<ChatParticipantsBar> {
                                 : Colors.grey.shade500,
                           ),
                           Column(
+                            crossAxisAlignment: .start,
                             children: [
                               Text(
                                 ChatUtils.buildChatTitle(
@@ -90,6 +95,11 @@ class _ChatParticipantsBarState extends State<ChatParticipantsBar> {
                                   'createGroupScreen.participants'.plural(
                                     state.chatMembers.length,
                                   ),
+                                  style: theme.textTheme.bodySmall,
+                                )
+                              else if (showTyping)
+                                Text(
+                                  'chatScreen.typing'.tr(),
                                   style: theme.textTheme.bodySmall,
                                 )
                               else

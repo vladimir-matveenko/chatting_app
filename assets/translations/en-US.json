@@ -86,7 +86,8 @@
     },
     "unreadMessages": "Unread messages",
     "showPinnedMessages": "Show pinned messages",
-    "replyTo": "Reply to"
+    "replyTo": "Reply to",
+    "typing": "Typing ..."
   },
   "editChatScreen": {
     "addMember": "Add member"

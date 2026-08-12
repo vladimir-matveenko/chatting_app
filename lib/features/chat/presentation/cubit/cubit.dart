@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chatting_app/features/chat/data/socket/chat_socket_service.dart';
+import 'package:chatting_app/features/chat/domain/entity/typing_user_entity.dart';
 import 'package:chatting_app/features/chat/domain/usecases/add_member_usecase.dart';
 import 'package:chatting_app/features/chat/domain/usecases/delete_member_usecase.dart';
 import 'package:chatting_app/features/chat/domain/usecases/leave_chat_usecase.dart';
@@ -90,11 +91,18 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   void _onTypingStarted(TypingStartedSocketEvent event) {
-    // TODO(): add action
+    emit(
+      state.copyWith(
+        typingUserEntity: TypingUserEntity(
+          chatId: event.chatId,
+          userId: event.userId,
+        ),
+      ),
+    );
   }
 
   void _onTypingStopped(TypingStoppedSocketEvent event) {
-    // TODO(): add action
+    emit(state.copyWith(typingUserEntity: null));
   }
 
   void _onChatChanged(ChatChangedSocketEvent event) {
