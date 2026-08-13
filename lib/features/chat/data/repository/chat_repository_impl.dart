@@ -145,4 +145,68 @@ class ChatRepositoryImpl implements ChatRepository {
       return Left(mapExceptionToFailure(e));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> changeOwner({
+    required String chatId,
+    required String userId,
+  }) async {
+    try {
+      final result = await _chatsRemoteDataSource.changeOwner(
+        chatId: chatId,
+        userId: userId,
+      );
+
+      return Right(result);
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> changeMemberRole({
+    required String chatId,
+    required String userId,
+    required ChatMemberRole role,
+  }) async {
+    try {
+      final result = await _chatsRemoteDataSource.changeMemberRole(
+        chatId: chatId,
+        userId: userId,
+        role: role,
+      );
+
+      return Right(result);
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ChatMemberEntity>> getChatMember({
+    required String chatId,
+    required String userId,
+  }) async {
+    try {
+      final result = await _chatsRemoteDataSource.getChatMember(
+        chatId: chatId,
+        userId: userId,
+      );
+
+      return Right(result!.toEntity());
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ChatMemberEntity>> getMeFromChat(String chatId) async {
+    try {
+      final result = await _chatsRemoteDataSource.getMeFromChat(chatId);
+
+      return Right(result!.toEntity());
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
 }

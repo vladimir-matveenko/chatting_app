@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/presentation/widgets/app_dialog.dart';
+import 'change_owner_modal.dart';
 
 class ChatActionBar extends StatelessWidget {
   const ChatActionBar({super.key, required this.currentUserId});
@@ -21,6 +22,10 @@ class ChatActionBar extends StatelessWidget {
     final currentUser = state.chatMembers.firstWhereOrNull(
       (e) => e.userId == currentUserId,
     );
+    final owner = state.chatMembers.firstWhereOrNull(
+      (e) => e.role == ChatMemberRole.owner,
+    );
+    final areYouOwner = currentUser?.userId == owner?.userId;
     final screenSize = MediaQuery.sizeOf(context);
     final isLandscape = context.isLandscape();
     return SizedBox(
@@ -56,25 +61,41 @@ class ChatActionBar extends StatelessWidget {
                   : 'chatScreen.unmuted'.tr(),
             ),
           ),
-          if (state.chat?.type == ChatType.group)
-            Expanded(
-              child: ChatActionButton(
-                onTap: () async {
-                  final result = await AppDialog.show(
-                    context,
-                    title: 'chatScreen.leavingChat.leaveChat'.tr(),
-                    text: 'chatScreen.leavingChat.areYouSure'.tr(),
-                    cancelText: 'cancelText'.tr(),
-                    okText: 'okText'.tr(),
-                  );
-                  if (result) {
-                    cubit.leaveChat(state.chat?.id ?? '');
-                  }
-                },
-                icon: Icons.logout_outlined,
-                text: 'chatScreen.leavingChat.leaveChat'.tr(),
+          if (state.chat?.type == ChatType.group) ...[
+            if (!areYouOwner)
+              Expanded(
+                child: ChatActionButton(
+                  onTap: () async {
+                    final result = await AppDialog.show(
+                      context,
+                      title: 'editChatScreen.leavingChat.leaveChat'.tr(),
+                      text: 'editChatScreen.leavingChat.areYouSure'.tr(),
+                      cancelText: 'cancelText'.tr(),
+                      okText: 'okText'.tr(),
+                    );
+                    if (result) {
+                      cubit.leaveChat(state.chat?.id ?? '');
+                    }
+                  },
+                  icon: Icons.logout_outlined,
+                  text: 'editChatScreen.leavingChat.leaveChat'.tr(),
+                ),
               ),
-            ),
+            if (areYouOwner)
+              Expanded(
+                child: ChatActionButton(
+                  onTap: () {
+                    AppDialog.empty(
+                      context,
+                      content: ChangeOwnerModal(ownerId: owner?.userId ?? ''),
+                      onClose: cubit.disableCloseModal,
+                    );
+                  },
+                  icon: Icons.stars_outlined,
+                  text: 'editChatScreen.changeOwner'.tr(),
+                ),
+              ),
+          ],
         ],
       ),
     );

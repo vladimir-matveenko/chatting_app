@@ -41,4 +41,22 @@ abstract class ChatRepository {
   });
 
   Future<Either<Failure, bool>> leaveChat(String chatId);
+
+  Future<Either<Failure, bool>> changeOwner({
+    required String chatId,
+    required String userId,
+  });
+
+  Future<Either<Failure, bool>> changeMemberRole({
+    required String chatId,
+    required String userId,
+    required ChatMemberRole role,
+  });
+
+  Future<Either<Failure, ChatMemberEntity>> getChatMember({
+    required String chatId,
+    required String userId,
+  });
+
+  Future<Either<Failure, ChatMemberEntity>> getMeFromChat(String chatId);
 }

@@ -10,6 +10,7 @@ import '../../../../core/presentation/widgets/app_message.dart';
 import '../../../messages/presentation/cubit/state.dart';
 import '../../../messages/presentation/widgets/messages_list/controllers/chat_scroll_controller.dart';
 import '../../../profile/domain/repository/profile_repository.dart';
+import '../../data/controllers/chat_typing_controller.dart';
 import '../../data/socket/chat_socket_service.dart';
 import '../cubit/cubit.dart';
 import '../widgets/chat_screen_body.dart';
@@ -26,11 +27,20 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final _userProfile = getIt<ProfileRepository>().profile;
+  final _chatSocketService = getIt<ChatSocketService>();
   late ChatCubit chatCubit;
   late MessagesCubit messagesCubit;
+  late final TypingController _typingController;
   final _scrollController = ChatScrollController();
   final _messageController = TextEditingController();
   final messageFocusNode = FocusNode();
+
+  void _onMessageChanged() {
+    if (messagesCubit.state.editModeActive) {
+      return;
+    }
+    _typingController.onTextChanged(_messageController.text);
+  }
 
   @override
   void initState() {
@@ -38,6 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
     messagesCubit = context.read<MessagesCubit>();
     chatCubit.disableNavigate();
     chatCubit.getChatMembers(chatId: widget.id);
+    chatCubit.getMeFromChat(widget.id);
     messagesCubit.getPinnedMessages(chatId: widget.id);
     if (widget.messageId != null) {
       final id = int.tryParse(widget.messageId!) ?? -1;
@@ -46,12 +57,19 @@ class _ChatScreenState extends State<ChatScreen> {
       messagesCubit.loadMessages(chatId: widget.id);
     }
     getIt<ChatSocketService>().joinChat(widget.id);
+    _typingController = TypingController(
+      chatId: widget.id,
+      socketService: _chatSocketService,
+    );
+    _messageController.addListener(_onMessageChanged);
     super.initState();
   }
 
   @override
   void dispose() {
+    _messageController.removeListener(_onMessageChanged);
     getIt<ChatSocketService>().leaveChat(widget.id);
+    _typingController.dispose();
     _scrollController.dispose();
     _messageController.dispose();
     super.dispose();
@@ -62,7 +80,8 @@ class _ChatScreenState extends State<ChatScreen> {
     return MultiBlocListener(
       listeners: [
         BlocListener<ChatCubit, ChatState>(
-          listenWhen: (previous, current) => previous.error != current.error,
+          listenWhen: (previous, current) =>
+              previous.error != current.error && current.error != null,
           listener: (context, state) {
             if (state.error?.isNotEmpty == true) {
               AppMessage.error(

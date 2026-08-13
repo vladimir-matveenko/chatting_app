@@ -14,7 +14,6 @@ import 'package:chatting_app/features/messages/domain/usecases/send_message_usec
 import 'package:chatting_app/features/messages/domain/usecases/unpin_message_usecase.dart';
 import 'package:chatting_app/features/messages/domain/usecases/update_message_usecase.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
-import 'package:chatting_app/features/messages/utils.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -219,9 +218,10 @@ class MessagesCubit extends Cubit<MessagesState> {
             .map((e) => e.id)
             .toSet();
 
-        final messages = MessagesUtils.mergeMessages(
+        final messages = AppUtils.mergeBy<MessageEntity, int>(
           state.messagesPageEntity!.messages,
           r.messages.where((m) => !existingIds.contains(m.id)).toList(),
+          getId: (m) => m.id,
         );
 
         emit(
@@ -272,9 +272,10 @@ class MessagesCubit extends Cubit<MessagesState> {
             .map((e) => e.id)
             .toSet();
 
-        final messages = MessagesUtils.mergeMessages(
+        final messages = AppUtils.mergeBy<MessageEntity, int>(
           state.messagesPageEntity!.messages,
           r.messages.where((m) => !existingIds.contains(m.id)).toList(),
+          getId: (m) => m.id,
         );
 
         emit(

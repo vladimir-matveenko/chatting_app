@@ -3,6 +3,7 @@
   "cancelText": "Cancel",
   "and": "and",
   "change": "Change",
+  "you": "You",
   "other": {
     "one": "{} other",
     "few": "{} other",
@@ -75,21 +76,27 @@
       "remove": "Remove"
     },
     "owner": "Owner",
+    "admin": "Admin",
     "pinnedMessage": "Pinned message",
     "online": "Online",
     "offline": "Offline",
     "muted": "Muted",
     "unmuted": "Unmuted",
+    "unreadMessages": "Unread messages",
+    "showPinnedMessages": "Show pinned messages",
+    "replyTo": "Reply to",
+    "typing": "Typing ..."
+  },
+  "editChatScreen": {
+    "addMember": "Add member",
     "leavingChat": {
       "leaveChat": "Leave chat",
       "areYouSure": "Are you sure you want to leave chat?"
     },
-    "unreadMessages": "Unread messages",
-    "showPinnedMessages": "Show pinned messages",
-    "replyTo": "Reply to"
-  },
-  "editChatScreen": {
-    "addMember": "Add member"
+    "changeOwner": "Change owner",
+    "newOwner": "New owner",
+    "makeAdmin": "Admin on",
+    "disableAdmin": "Admin off"
   },
   "notificationsScreen": {
     "screenName": "Notifications",

@@ -13,7 +13,6 @@ import '../../../../app/utils/app_utils.dart';
 import '../../../../core/domain/usecases/usecase.dart';
 import '../../data/enums/notification_type.dart';
 import '../../domain/usecases/load_notifications_usecase.dart';
-import '../../utils.dart';
 
 @lazySingleton
 class NotificationsCubit extends Cubit<NotificationsState> {
@@ -108,9 +107,10 @@ class NotificationsCubit extends Cubit<NotificationsState> {
       (r) {
         final existingIds = state.notifications.map((e) => e.id).toSet();
 
-        final users = NotificationsUtils.mergeNotifications(
+        final users = AppUtils.mergeBy(
           state.notifications,
           r.where((m) => !existingIds.contains(m.id)).toList(),
+          getId: (m) => m.id,
         );
 
         emit(state.copyWith(notifications: users, showLoader: false));

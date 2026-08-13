@@ -3,6 +3,7 @@
   "cancelText": "Отмена",
   "and": "и",
   "change": "Изменить",
+  "you": "Вы",
   "other": {
     "one": "{} другой",
     "few": "{} другие",
@@ -75,21 +76,27 @@
       "remove": "Удалить"
     },
     "owner": "Владелец",
+    "admin": "Администратор",
     "pinnedMessage": "Закрепленное сообщение",
     "online": "В сети",
     "offline": "Не в сети",
     "muted": "Звук выкл.",
     "unmuted": "Звук вкл.",
+    "unreadMessages": "Непрочитанные сообщения",
+    "showPinnedMessages": "Посмотреть закрепленные сообщения",
+    "replyTo": "В ответ",
+    "typing": "Печатает ..."
+  },
+  "editChatScreen": {
+    "addMember": "Добавить участника",
     "leavingChat": {
       "leaveChat": "Выйти из чата",
       "areYouSure": "Вы уверены, что Вы хотите покинуть чат?"
     },
-    "unreadMessages": "Непрочитанные сообщения",
-    "showPinnedMessages": "Посмотреть закрепленные сообщения",
-    "replyTo": "В ответ"
-  },
-  "editChatScreen": {
-    "addMember": "Добавить участника"
+    "changeOwner": "Сменить владельца",
+    "newOwner": "Новый владелец",
+    "makeAdmin": "Админ. вкл.",
+    "disableAdmin": "Админ. выкл"
   },
   "notificationsScreen": {
     "screenName": "Уведомления",

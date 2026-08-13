@@ -36,7 +36,22 @@ abstract class ChatRemoteDataSource {
 
   Future<bool> muteChat({required String chatId, required bool isMuted});
 
+  Future<bool> changeOwner({required String chatId, required String userId});
+
+  Future<bool> changeMemberRole({
+    required String chatId,
+    required String userId,
+    required ChatMemberRole role,
+  });
+
   Future<bool> leaveChat(String chatId);
+
+  Future<ChatMemberModel?> getChatMember({
+    required String chatId,
+    required String userId,
+  });
+
+  Future<ChatMemberModel?> getMeFromChat(String chatId);
 }
 
 @LazySingleton(as: ChatRemoteDataSource)
@@ -142,6 +157,35 @@ class ChatRemoteDataSourceImpl extends BaseRemoteDataSource
   }
 
   @override
+  Future<bool> changeOwner({
+    required String chatId,
+    required String userId,
+  }) async {
+    return makeRequest<bool>(() async {
+      final response = await dio.patch(
+        'chats/$chatId/owner',
+        data: {'userId': userId},
+      );
+      return response.statusCode == 204;
+    });
+  }
+
+  @override
+  Future<bool> changeMemberRole({
+    required String chatId,
+    required String userId,
+    required ChatMemberRole role,
+  }) async {
+    return makeRequest<bool>(() async {
+      final response = await dio.patch(
+        'chats/$chatId/members/$userId/role',
+        data: {'role': role.name},
+      );
+      return response.statusCode == 204;
+    });
+  }
+
+  @override
   Future<bool> muteChat({required String chatId, required bool isMuted}) async {
     return makeRequest<bool>(() async {
       final response = await dio.patch(
@@ -157,6 +201,31 @@ class ChatRemoteDataSourceImpl extends BaseRemoteDataSource
     return makeRequest<bool>(() async {
       final response = await dio.delete('chats/$chatId/members/me');
       return response.statusCode == 204;
+    });
+  }
+
+  @override
+  Future<ChatMemberModel?> getChatMember({
+    required String chatId,
+    required String userId,
+  }) async {
+    return makeRequest<ChatMemberModel?>(() async {
+      final response = await dio.get('chats/$chatId/members/$userId');
+      if (response.statusCode == 200 && response.data != null) {
+        return ChatMemberModel.fromJson(response.data);
+      }
+      return null;
+    });
+  }
+
+  @override
+  Future<ChatMemberModel?> getMeFromChat(String chatId) async {
+    return makeRequest<ChatMemberModel?>(() async {
+      final response = await dio.get('chats/$chatId/members/me');
+      if (response.statusCode == 200 && response.data != null) {
+        return ChatMemberModel.fromJson(response.data);
+      }
+      return null;
     });
   }
 }

@@ -1,8 +1,12 @@
 import 'dart:async';
 
 import 'package:chatting_app/features/chat/data/socket/chat_socket_service.dart';
+import 'package:chatting_app/features/chat/domain/entity/typing_user_entity.dart';
 import 'package:chatting_app/features/chat/domain/usecases/add_member_usecase.dart';
+import 'package:chatting_app/features/chat/domain/usecases/change_member_role_usecase.dart';
+import 'package:chatting_app/features/chat/domain/usecases/change_owner_usecase.dart';
 import 'package:chatting_app/features/chat/domain/usecases/delete_member_usecase.dart';
+import 'package:chatting_app/features/chat/domain/usecases/get_me_from_chat_usecase.dart';
 import 'package:chatting_app/features/chat/domain/usecases/leave_chat_usecase.dart';
 import 'package:chatting_app/features/chat/domain/usecases/mute_chat_usecase.dart';
 import 'package:chatting_app/features/chat/domain/usecases/update_chat_usecase.dart';
@@ -14,6 +18,7 @@ import 'package:injectable/injectable.dart';
 import '../../../../app/constants/app_enums.dart';
 import '../../../../app/utils/app_utils.dart';
 import '../../../../core/websocket/events/events.dart';
+import '../../domain/entity/chat_member_entity.dart';
 import '../../domain/usecases/create_chat_usecase.dart';
 import '../../domain/usecases/get_chat_members_usecase.dart';
 import '../../domain/usecases/get_chat_usecase.dart';
@@ -32,6 +37,9 @@ class ChatCubit extends Cubit<ChatState> {
     this._chatSocketService,
     this._muteChatUseCase,
     this._leaveChatUseCase,
+    this._changeOwnerUseCase,
+    this._changeMemberRoleUseCase,
+    this._getMeFromChatUseCase,
   ) : super(const ChatState()) {
     _subscribeSocketEvents();
   }
@@ -44,6 +52,9 @@ class ChatCubit extends Cubit<ChatState> {
   final AddMemberUseCase _addMemberUseCase;
   final MuteChatUseCase _muteChatUseCase;
   final LeaveChatUseCase _leaveChatUseCase;
+  final ChangeOwnerUseCase _changeOwnerUseCase;
+  final ChangeMemberRoleUseCase _changeMemberRoleUseCase;
+  final GetMeFromChatUseCase _getMeFromChatUseCase;
   final ChatSocketService _chatSocketService;
 
   final List<StreamSubscription> _subscriptions = [];
@@ -90,17 +101,25 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   void _onTypingStarted(TypingStartedSocketEvent event) {
-    // TODO(): add action
+    emit(
+      state.copyWith(
+        typingUserEntity: TypingUserEntity(
+          chatId: event.chatId,
+          userId: event.userId,
+        ),
+      ),
+    );
   }
 
   void _onTypingStopped(TypingStoppedSocketEvent event) {
-    // TODO(): add action
+    emit(state.copyWith(typingUserEntity: null));
   }
 
   void _onChatChanged(ChatChangedSocketEvent event) {
     if (event.chatId == state.chat?.id) {
       getChatById(event.chatId);
       getChatMembers(chatId: event.chatId);
+      getMeFromChat(event.chatId);
     }
   }
 
@@ -277,6 +296,23 @@ class ChatCubit extends Cubit<ChatState> {
     );
   }
 
+  Future<void> getMeFromChat(String chatId) async {
+    final result = await _getMeFromChatUseCase(GetMeFromChatParams(chatId));
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(isLoading: false, me: r));
+      },
+    );
+  }
+
   Future<void> deleteChatMember({
     required String chatId,
     required String userId,
@@ -317,15 +353,17 @@ class ChatCubit extends Cubit<ChatState> {
         );
       },
       (r) {
-        emit(
-          state.copyWith(
-            error: null,
-            selectedParticipants: [],
-            closeModal: true,
-          ),
-        );
+        emit(state.copyWith(error: null, closeModal: true));
       },
     );
+  }
+
+  Future<void> selectChatMember(ChatMemberEntity member) async {
+    emit(state.copyWith(selectedMember: member));
+  }
+
+  Future<void> disableChatMember() async {
+    emit(state.copyWith(selectedMember: null));
   }
 
   Future<void> muteChat({required String chatId, required isMuted}) async {
@@ -350,8 +388,36 @@ class ChatCubit extends Cubit<ChatState> {
     );
   }
 
-  Future<void> leaveChat(String chatId) async {
-    final result = await _leaveChatUseCase(LeaveChatParams(chatId));
+  Future<void> changeOwner({
+    required String chatId,
+    required String userId,
+  }) async {
+    final result = await _changeOwnerUseCase(
+      ChangeOwnerParams(chatId: chatId, userId: userId),
+    );
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(closeModal: true));
+      },
+    );
+  }
+
+  Future<void> changeMemberRole({
+    required String chatId,
+    required String userId,
+    required ChatMemberRole role,
+  }) async {
+    final result = await _changeMemberRoleUseCase(
+      ChangeMemberRoleParams(chatId: chatId, userId: userId, role: role),
+    );
     result.fold((l) {
       emit(
         state.copyWith(
@@ -360,6 +426,23 @@ class ChatCubit extends Cubit<ChatState> {
         ),
       );
     }, (r) {});
+  }
+
+  Future<void> leaveChat(String chatId) async {
+    final result = await _leaveChatUseCase(LeaveChatParams(chatId));
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(closeModal: true));
+      },
+    );
   }
 
   Future<void> disableError() async {
@@ -371,6 +454,12 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   Future<void> disableCloseModal() async {
-    emit(state.copyWith(closeModal: false));
+    emit(
+      state.copyWith(
+        closeModal: false,
+        selectedMember: null,
+        selectedParticipants: [],
+      ),
+    );
   }
 }

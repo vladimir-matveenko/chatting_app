@@ -70,18 +70,4 @@ class MessagesUtils {
 
     return maxVisibleId > 0 ? maxVisibleId : null;
   }
-
-  static List<MessageEntity> mergeMessages(
-    List<MessageEntity> current,
-    List<MessageEntity> incoming,
-  ) {
-    final map = <int, MessageEntity>{
-      for (final m in current) m.id: m,
-      for (final m in incoming) m.id: m,
-    };
-
-    final result = map.values.toList()..sort((a, b) => b.id.compareTo(a.id));
-
-    return result;
-  }
 }
