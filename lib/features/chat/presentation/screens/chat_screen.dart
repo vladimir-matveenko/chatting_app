@@ -48,6 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
     messagesCubit = context.read<MessagesCubit>();
     chatCubit.disableNavigate();
     chatCubit.getChatMembers(chatId: widget.id);
+    chatCubit.getMeFromChat(widget.id);
     messagesCubit.getPinnedMessages(chatId: widget.id);
     if (widget.messageId != null) {
       final id = int.tryParse(widget.messageId!) ?? -1;
@@ -79,7 +80,8 @@ class _ChatScreenState extends State<ChatScreen> {
     return MultiBlocListener(
       listeners: [
         BlocListener<ChatCubit, ChatState>(
-          listenWhen: (previous, current) => previous.error != current.error,
+          listenWhen: (previous, current) =>
+              previous.error != current.error && current.error != null,
           listener: (context, state) {
             if (state.error?.isNotEmpty == true) {
               AppMessage.error(

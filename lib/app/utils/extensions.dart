@@ -1,3 +1,4 @@
+import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -34,4 +35,12 @@ extension BuildContextX on BuildContext {
   DateFormat get dateFormatter => DateFormat('yyyy.MM.dd', locale.languageCode);
 
   DateFormat get timeFormatter => DateFormat('H:mm', locale.languageCode);
+}
+
+extension ChatMemberRoleX on ChatMemberRole {
+  bool get isOwner => this == ChatMemberRole.owner;
+
+  bool get isAdmin => this == ChatMemberRole.admin;
+
+  bool get isMember => this == ChatMemberRole.member;
 }

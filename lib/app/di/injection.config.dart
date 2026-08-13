@@ -47,6 +47,10 @@ import 'package:chatting_app/features/chat/domain/repository/chat_repository.dar
     as _i91;
 import 'package:chatting_app/features/chat/domain/usecases/add_member_usecase.dart'
     as _i926;
+import 'package:chatting_app/features/chat/domain/usecases/change_member_role_usecase.dart'
+    as _i454;
+import 'package:chatting_app/features/chat/domain/usecases/change_owner_usecase.dart'
+    as _i349;
 import 'package:chatting_app/features/chat/domain/usecases/create_chat_usecase.dart'
     as _i919;
 import 'package:chatting_app/features/chat/domain/usecases/delete_member_usecase.dart'
@@ -55,6 +59,8 @@ import 'package:chatting_app/features/chat/domain/usecases/get_chat_members_usec
     as _i223;
 import 'package:chatting_app/features/chat/domain/usecases/get_chat_usecase.dart'
     as _i415;
+import 'package:chatting_app/features/chat/domain/usecases/get_me_from_chat_usecase.dart'
+    as _i626;
 import 'package:chatting_app/features/chat/domain/usecases/leave_chat_usecase.dart'
     as _i618;
 import 'package:chatting_app/features/chat/domain/usecases/mute_chat_usecase.dart'
@@ -412,6 +418,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i926.AddMemberUseCase>(
       () => _i926.AddMemberUseCase(gh<_i91.ChatRepository>()),
     );
+    gh.lazySingleton<_i454.ChangeMemberRoleUseCase>(
+      () => _i454.ChangeMemberRoleUseCase(gh<_i91.ChatRepository>()),
+    );
+    gh.lazySingleton<_i349.ChangeOwnerUseCase>(
+      () => _i349.ChangeOwnerUseCase(gh<_i91.ChatRepository>()),
+    );
     gh.lazySingleton<_i919.CreateChatUseCase>(
       () => _i919.CreateChatUseCase(gh<_i91.ChatRepository>()),
     );
@@ -423,6 +435,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i415.GetChatUseCase>(
       () => _i415.GetChatUseCase(gh<_i91.ChatRepository>()),
+    );
+    gh.lazySingleton<_i626.GetMeFromChatUseCase>(
+      () => _i626.GetMeFromChatUseCase(gh<_i91.ChatRepository>()),
     );
     gh.lazySingleton<_i618.LeaveChatUseCase>(
       () => _i618.LeaveChatUseCase(gh<_i91.ChatRepository>()),
@@ -454,6 +469,22 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i478.ClearCacheUseCase>(),
       ),
     );
+    gh.lazySingleton<_i348.ChatCubit>(
+      () => _i348.ChatCubit(
+        gh<_i415.GetChatUseCase>(),
+        gh<_i998.UpdateChatUseCase>(),
+        gh<_i223.GetChatMembersUseCase>(),
+        gh<_i919.CreateChatUseCase>(),
+        gh<_i334.DeleteMemberUseCase>(),
+        gh<_i926.AddMemberUseCase>(),
+        gh<_i226.ChatSocketService>(),
+        gh<_i481.MuteChatUseCase>(),
+        gh<_i618.LeaveChatUseCase>(),
+        gh<_i349.ChangeOwnerUseCase>(),
+        gh<_i454.ChangeMemberRoleUseCase>(),
+        gh<_i626.GetMeFromChatUseCase>(),
+      ),
+    );
     gh.lazySingleton<_i289.AppRouter>(
       () => _i289.AppRouter(gh<_i330.AuthCubit>()),
     );
@@ -467,19 +498,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i156.ChatsSocketService>(),
         gh<_i921.ArchiveChatUseCase>(),
         gh<_i525.ReturnFromArchiveUseCase>(),
-      ),
-    );
-    gh.lazySingleton<_i348.ChatCubit>(
-      () => _i348.ChatCubit(
-        gh<_i415.GetChatUseCase>(),
-        gh<_i998.UpdateChatUseCase>(),
-        gh<_i223.GetChatMembersUseCase>(),
-        gh<_i919.CreateChatUseCase>(),
-        gh<_i334.DeleteMemberUseCase>(),
-        gh<_i926.AddMemberUseCase>(),
-        gh<_i226.ChatSocketService>(),
-        gh<_i481.MuteChatUseCase>(),
-        gh<_i618.LeaveChatUseCase>(),
       ),
     );
     gh.lazySingleton<_i367.NotificationsCubit>(

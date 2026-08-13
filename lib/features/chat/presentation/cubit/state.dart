@@ -12,8 +12,10 @@ part 'state.freezed.dart';
 abstract class ChatState with _$ChatState {
   const factory ChatState({
     ChatEntity? chat,
+    ChatMemberEntity? me,
     @Default([]) List<ChatMemberEntity> chatMembers,
     @Default([]) List<UserListItemEntity> selectedParticipants,
+    ChatMemberEntity? selectedMember,
     String? error,
     @Default(false) bool isLoading,
     @Default(false) bool shouldNavigate,

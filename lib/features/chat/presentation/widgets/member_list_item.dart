@@ -1,24 +1,25 @@
-import 'package:chatting_app/features/chat/presentation/widgets/user_online_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../../app/utils/extensions.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
-import '../../../profile/presentation/widgets/user_avatar.dart';
+import '../../../../core/presentation/widgets/avatar_with_name.dart';
 import '../../domain/entity/chat_member_entity.dart';
 
 class MembersListItem extends StatelessWidget {
   const MembersListItem({
     super.key,
-    required this.action,
     required this.user,
-    this.isOwner = false,
+    this.swipeLeftAction,
+    this.swipeRightAction,
+    this.areYou = false,
   });
 
   final ChatMemberEntity user;
-  final VoidCallback action;
-  final bool isOwner;
+  final VoidCallback? swipeLeftAction;
+  final VoidCallback? swipeRightAction;
+  final bool areYou;
 
   @override
   Widget build(BuildContext context) {
@@ -27,57 +28,85 @@ class MembersListItem extends StatelessWidget {
     final textTheme = theme.textTheme;
     final userName = user.displayName ?? user.userName;
     final isLandscape = context.isLandscape();
+    final isOwner = user.role.isOwner;
+    final isAdmin = user.role.isAdmin;
 
     return Slidable(
       key: ValueKey(user.userId),
-      enabled: !isOwner,
-      endActionPane: ActionPane(
-        motion: const BehindMotion(),
-        extentRatio: isLandscape ? 0.2 : 0.3,
-        children: [
-          SlidableAction(
-            onPressed: (context) async {
-              final result = await AppDialog.show(
-                context,
-                title: 'chatScreen.members.removeMember'.tr(),
-                text: 'chatScreen.members.areYouSure'.tr(),
-                cancelText: 'cancelText'.tr(),
-                okText: 'okText'.tr(),
-              );
-              if (result) {
-                action.call();
-              }
-            },
-            backgroundColor: colorScheme.error,
-            foregroundColor: colorScheme.onError,
-            icon: Icons.delete_forever,
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-        ],
-      ),
+      // swipe right
+      startActionPane: swipeRightAction != null
+          ? ActionPane(
+              motion: const BehindMotion(),
+              extentRatio: isLandscape ? 0.2 : 0.3,
+              children: [
+                SlidableAction(
+                  onPressed: (_) {
+                    swipeRightAction!.call();
+                  },
+                  backgroundColor: colorScheme.primary,
+                  foregroundColor: colorScheme.onPrimary,
+                  label: isAdmin
+                      ? 'editChatScreen.disableAdmin'.tr()
+                      : 'editChatScreen.makeAdmin'.tr(),
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ],
+            )
+          : null,
+      // swipe left
+      endActionPane: swipeLeftAction != null
+          ? ActionPane(
+              motion: const BehindMotion(),
+              extentRatio: isLandscape ? 0.2 : 0.3,
+              children: [
+                SlidableAction(
+                  onPressed: (context) async {
+                    final result = await AppDialog.show(
+                      context,
+                      title: 'chatScreen.members.removeMember'.tr(),
+                      text: 'chatScreen.members.areYouSure'.tr(),
+                      cancelText: 'cancelText'.tr(),
+                      okText: 'okText'.tr(),
+                    );
+                    if (result) {
+                      swipeLeftAction!.call();
+                    }
+                  },
+                  backgroundColor: colorScheme.error,
+                  foregroundColor: colorScheme.onError,
+                  icon: Icons.delete_forever,
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ],
+            )
+          : null,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Row(
           mainAxisAlignment: .spaceBetween,
           children: [
             Row(
-              mainAxisAlignment: .start,
+              spacing: 4.0,
               children: [
-                UserAvatar(
-                  size: 30.0,
+                AvatarWithName(
                   avatar: user.avatarUrl ?? '',
-                  firstName: userName,
-                  lastName: '',
+                  userName: userName,
+                  isOnline: user.isOnline,
                 ),
-                if (user.isOnline)
-                  const UserOnlineIndicator(baseUserAvatarSize: 30.0),
-                SizedBox(width: user.isOnline ? 4 : 12),
-                Text(userName, style: textTheme.bodyMedium),
+                if (areYou)
+                  Text('(${'you'.tr()})', style: textTheme.bodyMedium),
               ],
             ),
             if (isOwner)
               Text(
                 'chatScreen.owner'.tr(),
+                style: textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                ),
+              )
+            else if (isAdmin)
+              Text(
+                'chatScreen.admin'.tr(),
                 style: textTheme.bodyMedium?.copyWith(
                   color: theme.colorScheme.primary,
                 ),

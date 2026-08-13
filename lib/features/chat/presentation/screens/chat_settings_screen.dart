@@ -1,4 +1,5 @@
 import 'package:chatting_app/app/constants/app_enums.dart';
+import 'package:chatting_app/app/utils/extensions.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/add_members_modal.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/di/injection.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
-import '../../../../core/presentation/widgets/app_message.dart';
 import '../../../../core/presentation/widgets/sliver_separated_list.dart';
 import '../../../profile/domain/repository/profile_repository.dart';
 import '../../utils.dart';
@@ -31,7 +31,7 @@ class _ChatSettingsScreenState extends State<ChatSettingsScreen> {
   Widget build(BuildContext context) {
     final cubit = context.read<ChatCubit>();
 
-    return BlocConsumer<ChatCubit, ChatState>(
+    return BlocBuilder<ChatCubit, ChatState>(
       builder: (context, state) {
         final isOnline = state.chat?.type == ChatType.private
             ? ChatUtils.getPrivateChatMember(
@@ -93,17 +93,41 @@ class _ChatSettingsScreenState extends State<ChatSettingsScreen> {
                   itemCount: state.chatMembers.length,
                   itemBuilder: (context, index) {
                     final member = state.chatMembers[index];
+                    final areYou = _userProfile?.id == member.userId;
+                    final yourRole = state.me?.role ?? ChatMemberRole.member;
+
+                    final canManageMember =
+                        !member.role.isOwner &&
+                        (yourRole.isOwner ||
+                            (yourRole.isAdmin && member.role.isMember));
+
+                    final canRemoveMember = !areYou && canManageMember;
+                    final canChangeRole = canManageMember;
 
                     return MembersListItem(
                       key: ValueKey(member.userId),
                       user: member,
-                      isOwner: member.role == ChatMemberRole.owner,
-                      action: () {
-                        cubit.deleteChatMember(
-                          chatId: state.chat?.id ?? '',
-                          userId: member.userId,
-                        );
-                      },
+                      areYou: areYou,
+                      swipeLeftAction: canRemoveMember
+                          ? () {
+                              cubit.deleteChatMember(
+                                chatId: member.chatId,
+                                userId: member.userId,
+                              );
+                            }
+                          : null,
+                      swipeRightAction: canChangeRole
+                          ? () {
+                              final newRole = member.role.isAdmin
+                                  ? ChatMemberRole.member
+                                  : ChatMemberRole.admin;
+                              cubit.changeMemberRole(
+                                chatId: member.chatId,
+                                userId: member.userId,
+                                role: newRole,
+                              );
+                            }
+                          : null,
                     );
                   },
                   separatorBuilder: (context, index) {
@@ -120,15 +144,6 @@ class _ChatSettingsScreenState extends State<ChatSettingsScreen> {
             ],
           ],
         );
-      },
-      listener: (context, state) {
-        if (state.error?.isNotEmpty == true) {
-          AppMessage.error(
-            context,
-            message: state.error!,
-            onClose: cubit.disableError,
-          );
-        }
       },
     );
   }
