@@ -22,7 +22,12 @@ abstract class ChatRemoteDataSource {
     String? avatarUrl,
   });
 
-  Future<List<ChatMemberModel>> getChatMembers({required String chatId});
+  Future<List<ChatMemberModel>> getChatMembers({
+    required String chatId,
+    String? query,
+    int? limit,
+    int? offset,
+  });
 
   Future<bool> deleteChatMember({
     required String chatId,
@@ -121,9 +126,27 @@ class ChatRemoteDataSourceImpl extends BaseRemoteDataSource
   }
 
   @override
-  Future<List<ChatMemberModel>> getChatMembers({required String chatId}) async {
+  Future<List<ChatMemberModel>> getChatMembers({
+    required String chatId,
+    String? query,
+    int? limit,
+    int? offset,
+  }) async {
+    Map<String, dynamic> queryParameters = {};
+    if (query?.isNotEmpty == true) {
+      queryParameters.addAll({'query': query});
+    }
+    if (limit != null) {
+      queryParameters.addAll({'limit': limit});
+    }
+    if (offset != null) {
+      queryParameters.addAll({'offset': offset});
+    }
     return makeRequest<List<ChatMemberModel>>(() async {
-      final response = await dio.get('chats/$chatId/members');
+      final response = await dio.get(
+        'chats/$chatId/members',
+        queryParameters: queryParameters,
+      );
       if (response.statusCode == 200 && response.data != null) {
         return ChatMemberModel.fromList(response.data);
       }

@@ -20,6 +20,7 @@ abstract class ChatState with _$ChatState {
     @Default(false) bool isLoading,
     @Default(false) bool shouldNavigate,
     @Default(false) bool closeModal,
+    @Default(false) bool showLoader,
     @Default(CreateGroupStatus.initial) CreateGroupStatus status,
     TypingUserEntity? typingUserEntity,
   }) = _ChatState;

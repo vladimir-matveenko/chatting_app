@@ -17,12 +17,25 @@ class GetChatMembersUseCase
   Future<Either<Failure, List<ChatMemberEntity>>> call(
     GetChatMembersParams params,
   ) async {
-    return await _repository.getChatMembers(chatId: params.chatId);
+    return await _repository.getChatMembers(
+      chatId: params.chatId,
+      query: params.query,
+      limit: params.limit,
+      offset: params.offset,
+    );
   }
 }
 
 class GetChatMembersParams {
-  GetChatMembersParams({required this.chatId});
+  GetChatMembersParams({
+    required this.chatId,
+    this.query,
+    this.limit,
+    this.offset,
+  });
 
   final String chatId;
+  final String? query;
+  final int? limit;
+  final int? offset;
 }

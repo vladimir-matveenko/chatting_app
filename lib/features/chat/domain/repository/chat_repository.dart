@@ -23,6 +23,9 @@ abstract class ChatRepository {
 
   Future<Either<Failure, List<ChatMemberEntity>>> getChatMembers({
     required String chatId,
+    String? query,
+    int? limit,
+    int? offset,
   });
 
   Future<Either<Failure, bool>> deleteChatMember({

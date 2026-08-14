@@ -57,6 +57,8 @@ class ChatCubit extends Cubit<ChatState> {
   final GetMeFromChatUseCase _getMeFromChatUseCase;
   final ChatSocketService _chatSocketService;
 
+  final int defaultLimit = 20;
+
   final List<StreamSubscription> _subscriptions = [];
 
   @override
@@ -275,11 +277,12 @@ class ChatCubit extends Cubit<ChatState> {
 
   Future<void> getChatMembers({
     required String chatId,
+    String? query,
     bool loadSilent = true,
   }) async {
     emit(state.copyWith(isLoading: state.chat?.id != chatId || !loadSilent));
     final result = await _getChatMembersUseCase(
-      GetChatMembersParams(chatId: chatId),
+      GetChatMembersParams(chatId: chatId, query: query),
     );
     result.fold(
       (l) {
@@ -292,6 +295,42 @@ class ChatCubit extends Cubit<ChatState> {
       },
       (r) {
         emit(state.copyWith(isLoading: false, chatMembers: r));
+      },
+    );
+  }
+
+  Future<void> getMoreMembers({String? query}) async {
+    if (state.chatMembers.length < defaultLimit) {
+      return;
+    }
+    emit(state.copyWith(showLoader: true));
+    final list = await _getChatMembersUseCase(
+      GetChatMembersParams(
+        chatId: state.chat?.id ?? '',
+        query: query,
+        offset: state.chatMembers.length,
+        limit: defaultLimit,
+      ),
+    );
+    list.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            showLoader: false,
+          ),
+        );
+      },
+      (r) {
+        final existingIds = state.chatMembers.map((e) => e.chatId).toSet();
+
+        final members = AppUtils.mergeBy(
+          state.chatMembers,
+          r.where((m) => !existingIds.contains(m.chatId)).toList(),
+          getId: (m) => m.chatId,
+        );
+
+        emit(state.copyWith(chatMembers: members, showLoader: false));
       },
     );
   }

@@ -20,11 +20,13 @@ class ChatsScreen extends StatefulWidget {
 class _ChatsScreenState extends State<ChatsScreen>
     with TickerProviderStateMixin {
   final _scrollController = ScrollController();
+  final _archiveScrollController = ScrollController();
   late TabController _tabController;
   late ChatsCubit cubit;
   int? initialIndex;
   int _currentIndex = 0;
   final int tabCount = 2;
+  String query = '';
 
   /// Initialized tabs
   final Map<int, Widget> _builtTabs = {};
@@ -38,10 +40,10 @@ class _ChatsScreenState extends State<ChatsScreen>
     late final Widget tab;
     switch (index) {
       case 0:
-        tab = const ChatList();
+        tab = ChatList(scrollController: _scrollController);
         break;
       case 1:
-        tab = const ChatList();
+        tab = ChatList(scrollController: _archiveScrollController);
         break;
       default:
         tab = const SizedBox();
@@ -53,7 +55,7 @@ class _ChatsScreenState extends State<ChatsScreen>
 
   void _onScroll() {
     if (AppUtils.isBottomOfList(_scrollController)) {
-      cubit.loadMoreChats();
+      cubit.loadMoreChats(query: query);
     }
   }
 
@@ -62,6 +64,7 @@ class _ChatsScreenState extends State<ChatsScreen>
     super.initState();
     cubit = context.read<ChatsCubit>();
     _scrollController.addListener(_onScroll);
+    _archiveScrollController.addListener(_onScroll);
     _tabController = TabController(
       initialIndex: initialIndex ?? 0,
       length: tabCount,
@@ -79,7 +82,9 @@ class _ChatsScreenState extends State<ChatsScreen>
   @override
   void dispose() {
     _scrollController.removeListener(_onScroll);
+    _archiveScrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _archiveScrollController.dispose();
     _tabController.dispose();
     super.dispose();
   }
@@ -106,8 +111,8 @@ class _ChatsScreenState extends State<ChatsScreen>
             padding: const .all(16.0),
             child: AppSearchBar(
               onChanged: (query) {
-                cubit.query = query;
-                cubit.loadAllChats();
+                query = query;
+                cubit.loadAllChats(query: query);
               },
             ),
           ),
