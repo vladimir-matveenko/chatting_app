@@ -3,21 +3,53 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../app/utils/app_utils.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
+import '../../../../core/presentation/widgets/app_search_bar.dart';
 import '../../../../core/presentation/widgets/slide_down_animated_widget.dart';
 import '../../../users/presentation/cubit/cubit.dart';
 import '../../../users/presentation/cubit/state.dart';
 import '../cubit/cubit.dart';
 import 'added_participants_list.dart';
 
-class AddParticipantsBlock extends StatelessWidget {
+class AddParticipantsBlock extends StatefulWidget {
   const AddParticipantsBlock({super.key, this.title});
 
   final String? title;
 
   @override
+  State<AddParticipantsBlock> createState() => _AddParticipantsBlockState();
+}
+
+class _AddParticipantsBlockState extends State<AddParticipantsBlock> {
+  late ChatCubit chatCubit;
+  late UsersCubit usersCubit;
+  final _scrollController = ScrollController();
+  String query = '';
+
+  void _onScroll() {
+    if (AppUtils.isBottomOfList(_scrollController)) {
+      usersCubit.loadMoreUsers(query: query);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    chatCubit = context.read<ChatCubit>();
+    usersCubit = context.read<UsersCubit>();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final chatCubit = context.read<ChatCubit>();
     final chatState = context.watch<ChatCubit>().state;
     final blockTitle = chatState.status == CreateGroupStatus.setName
         ? 'createGroupScreen.setName'.tr()
@@ -31,7 +63,9 @@ class AddParticipantsBlock extends StatelessWidget {
           spacing: 8.0,
           children: [
             Row(
-              children: [Text(title ?? blockTitle, textAlign: TextAlign.start)],
+              children: [
+                Text(widget.title ?? blockTitle, textAlign: TextAlign.start),
+              ],
             ),
             SlideDownAnimatedWidget(
               duration: 500,
@@ -52,11 +86,37 @@ class AddParticipantsBlock extends StatelessWidget {
             final isLoading = state.isLoading;
             return isLoading
                 ? const Center(child: AppLoader())
-                : ParticipantsList(
-                    participants: state.users,
-                    onAddTap: (participant) {
-                      chatCubit.addParticipant(participant);
-                    },
+                : Column(
+                    crossAxisAlignment: .stretch,
+                    children: [
+                      Padding(
+                        padding: const .symmetric(vertical: 16.0),
+                        child: AppSearchBar(
+                          onChanged: (query) {
+                            query = query;
+                            usersCubit.loadUsers(query: query);
+                          },
+                        ),
+                      ),
+                      Stack(
+                        children: [
+                          ParticipantsList(
+                            scrollController: _scrollController,
+                            participants: state.users,
+                            onAddTap: (participant) {
+                              chatCubit.addParticipant(participant);
+                            },
+                          ),
+                          if (state.showLoader)
+                            const Positioned(
+                              left: 0,
+                              bottom: 0,
+                              right: 0,
+                              child: AppLoader(size: 20.0),
+                            ),
+                        ],
+                      ),
+                    ],
                   );
           },
         ),

@@ -15,7 +15,9 @@ import '../cubit/cubit.dart';
 import '../cubit/state.dart';
 
 class ChatList extends StatelessWidget {
-  const ChatList({super.key});
+  const ChatList({super.key, required this.scrollController});
+
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class ChatList extends StatelessWidget {
             ? const Center(child: AppLoader())
             : chats.isNotEmpty
             ? BaseListView(
+                controller: scrollController,
                 items: chats,
                 itemBuilder: (context, index) {
                   final chat = chats[index];

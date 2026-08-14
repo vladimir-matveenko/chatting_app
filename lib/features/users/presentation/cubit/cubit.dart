@@ -68,6 +68,6 @@ class UsersCubit extends Cubit<UsersState> {
   }
 
   Future<void> disableError() async {
-    emit(state.copyWith(error: ''));
+    emit(state.copyWith(error: null));
   }
 }

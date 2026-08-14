@@ -33,7 +33,6 @@ class ChatsCubit extends Cubit<ChatsState> {
 
   final int defaultLimit = 20;
 
-  String query = '';
   final List<StreamSubscription> _subscriptions = [];
 
   @override
@@ -53,12 +52,12 @@ class ChatsCubit extends Cubit<ChatsState> {
     );
   }
 
-  Future<void> loadAllChats({bool loadSilent = true}) async {
-    await loadChats(loadSilent: loadSilent);
-    await loadArchivedChats(loadSilent: loadSilent);
+  Future<void> loadAllChats({bool loadSilent = true, String? query}) async {
+    await loadChats(loadSilent: loadSilent, query: query);
+    await loadArchivedChats(loadSilent: loadSilent, query: query);
   }
 
-  Future<void> loadChats({bool loadSilent = true}) async {
+  Future<void> loadChats({bool loadSilent = true, String? query}) async {
     emit(state.copyWith(isLoading: !loadSilent));
     final list = await _loadChatsUseCase(
       LoadChatsParams(query: query, limit: defaultLimit, offset: 0),
@@ -78,7 +77,7 @@ class ChatsCubit extends Cubit<ChatsState> {
     );
   }
 
-  Future<void> loadMoreChats() async {
+  Future<void> loadMoreChats({String? query}) async {
     if (state.chats.length < defaultLimit) {
       return;
     }
@@ -113,7 +112,10 @@ class ChatsCubit extends Cubit<ChatsState> {
     );
   }
 
-  Future<void> loadArchivedChats({bool loadSilent = true}) async {
+  Future<void> loadArchivedChats({
+    bool loadSilent = true,
+    String? query,
+  }) async {
     emit(state.copyWith(isLoading: !loadSilent));
     final list = await _loadArchivedChatsUseCase(
       LoadArchivedChatsParams(query: query, limit: defaultLimit, offset: 0),
@@ -133,7 +135,7 @@ class ChatsCubit extends Cubit<ChatsState> {
     );
   }
 
-  Future<void> loadMoreArchivedChats() async {
+  Future<void> loadMoreArchivedChats({String? query}) async {
     if (state.archivedChats.length < defaultLimit) {
       return;
     }

@@ -9,14 +9,17 @@ class ParticipantsList extends StatelessWidget {
     super.key,
     required this.participants,
     required this.onAddTap,
+    this.scrollController,
   });
 
   final List<UserListItemEntity> participants;
   final Function(UserListItemEntity) onAddTap;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
     return BaseListView<UserListItemEntity>(
+      controller: scrollController,
       items: participants,
       itemBuilder: (context, index) {
         final user = participants[index];

@@ -69,9 +69,17 @@ class ChatRepositoryImpl implements ChatRepository {
   @override
   Future<Either<Failure, List<ChatMemberEntity>>> getChatMembers({
     required String chatId,
+    String? query,
+    int? limit,
+    int? offset,
   }) async {
     try {
-      final list = await _chatsRemoteDataSource.getChatMembers(chatId: chatId);
+      final list = await _chatsRemoteDataSource.getChatMembers(
+        chatId: chatId,
+        query: query,
+        limit: limit,
+        offset: offset,
+      );
 
       return Right(
         AppUtils.listModelToListEntity<ChatMemberModel, ChatMemberEntity>(
