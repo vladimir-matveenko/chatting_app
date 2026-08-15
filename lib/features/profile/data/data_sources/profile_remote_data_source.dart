@@ -2,6 +2,7 @@ import 'package:chatting_app/core/network/base_remote_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/domain/entity/app_image_entity.dart';
 import '../../../auth/data/models/user_model.dart';
 
 abstract class ProfileRemoteDataSource {
@@ -18,6 +19,10 @@ abstract class ProfileRemoteDataSource {
     required String currentPassword,
     required String newPassword,
   });
+
+  Future<UserModel?> updateUserAvatar(AppImageEntity imageFile);
+
+  Future<bool> deleteUserAvatar();
 }
 
 @LazySingleton(as: ProfileRemoteDataSource)
@@ -74,6 +79,31 @@ class ProfileRemoteDataSourceImpl extends BaseRemoteDataSource
         'users/me/password',
         data: {'currentPassword': currentPassword, 'newPassword': newPassword},
       );
+      return response.statusCode == 204;
+    });
+  }
+
+  @override
+  Future<UserModel?> updateUserAvatar(AppImageEntity imageFile) async {
+    return makeRequest<UserModel?>(() async {
+      final formData = FormData.fromMap({
+        'file': MultipartFile.fromBytes(
+          imageFile.bytes,
+          filename: imageFile.name,
+        ),
+      });
+      final response = await dio.post('users/me/avatar', data: formData);
+      if (response.data != null) {
+        return UserModel.fromJson(response.data);
+      }
+      return null;
+    });
+  }
+
+  @override
+  Future<bool> deleteUserAvatar() async {
+    return makeRequest<bool>(() async {
+      final response = await dio.delete('users/me/avatar');
       return response.statusCode == 204;
     });
   }

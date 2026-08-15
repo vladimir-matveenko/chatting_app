@@ -24,14 +24,22 @@ class UserAvatar extends StatelessWidget {
       size: size,
       firstName: firstName ?? '',
       lastName: lastName ?? '',
-      backgroundColor: theme.unselectedWidgetColor,
+      backgroundColor: theme.cardTheme.color,
     );
     return avatar.isNotEmpty
         ? CircleAvatar(
-            radius: size,
-            backgroundImage: CachedNetworkImageProvider(avatar),
+            radius: size / 2,
             backgroundColor: theme.cardColor,
-            onBackgroundImageError: (o, s) => placeholder,
+            child: ClipOval(
+              child: CachedNetworkImage(
+                imageUrl: avatar,
+                width: size,
+                height: size,
+                fit: BoxFit.cover,
+                placeholder: (ctx, st) => placeholder,
+                errorWidget: (ctx, st, o) => placeholder,
+              ),
+            ),
           )
         : placeholder;
   }

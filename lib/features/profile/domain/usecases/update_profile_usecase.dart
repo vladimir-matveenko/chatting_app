@@ -17,21 +17,14 @@ class UpdateProfileUseCase implements UseCase<bool, UpdateProfileParams> {
       username: params.username,
       displayName: params.displayName,
       email: params.email,
-      avatarUrl: params.avatarUrl,
     );
   }
 }
 
 class UpdateProfileParams {
-  UpdateProfileParams({
-    this.username,
-    this.displayName,
-    this.email,
-    this.avatarUrl,
-  });
+  UpdateProfileParams({this.username, this.displayName, this.email});
 
   final String? username;
   final String? displayName;
   final String? email;
-  final String? avatarUrl;
 }

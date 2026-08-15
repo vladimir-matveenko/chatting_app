@@ -149,8 +149,6 @@ import 'package:chatting_app/features/notifications/domain/usecases/mark_one_as_
     as _i976;
 import 'package:chatting_app/features/notifications/presentation/cubit/cubit.dart'
     as _i367;
-import 'package:chatting_app/features/profile/data/data_sources/profile_local_data_source.dart'
-    as _i989;
 import 'package:chatting_app/features/profile/data/data_sources/profile_remote_data_source.dart'
     as _i125;
 import 'package:chatting_app/features/profile/data/repository/profile_repository_impl.dart'
@@ -163,8 +161,12 @@ import 'package:chatting_app/features/profile/domain/usecases/clear_cache_usecas
     as _i209;
 import 'package:chatting_app/features/profile/domain/usecases/create_profile_usecase.dart'
     as _i605;
+import 'package:chatting_app/features/profile/domain/usecases/delete_avatar_usecase.dart'
+    as _i171;
 import 'package:chatting_app/features/profile/domain/usecases/fetch_profile_usecase.dart'
     as _i483;
+import 'package:chatting_app/features/profile/domain/usecases/update_avatar_usecase.dart'
+    as _i413;
 import 'package:chatting_app/features/profile/domain/usecases/update_profile_usecase.dart'
     as _i237;
 import 'package:chatting_app/features/profile/presentation/change_password_cubit/cubit.dart'
@@ -221,9 +223,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => networkModule.refreshDio(),
       instanceName: 'refresh_dio',
     );
-    gh.lazySingleton<_i989.ProfileLocalDataSource>(
-      () => _i989.ProfileLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
-    );
     gh.lazySingleton<_i595.ThemeLocalDataSource>(
       () => _i595.ThemeLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
@@ -262,11 +261,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i166.MessagesRepository>(
       () => _i2.MessagesRepositoryImpl(gh<_i395.MessagesRemoteDataSource>()),
-    );
-    gh.lazySingleton<_i672.ProfileRepository>(
-      () => _i557.ProfileRepositoryImpl(
-        profileRemoteDataSource: gh<_i125.ProfileRemoteDataSource>(),
-      ),
     );
     gh.lazySingleton<_i58.ThemeCubit>(
       () => _i58.ThemeCubit(
@@ -334,22 +328,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i525.ReturnFromArchiveUseCase>(
       () => _i525.ReturnFromArchiveUseCase(gh<_i989.ChatsRepository>()),
     );
-    gh.lazySingleton<_i312.ChangePasswordUseCase>(
-      () => _i312.ChangePasswordUseCase(gh<_i672.ProfileRepository>()),
-    );
-    gh.lazySingleton<_i209.ClearCacheUseCase>(
-      () => _i209.ClearCacheUseCase(gh<_i672.ProfileRepository>()),
-    );
-    gh.lazySingleton<_i483.FetchProfileUseCase>(
-      () => _i483.FetchProfileUseCase(gh<_i672.ProfileRepository>()),
-    );
-    gh.lazySingleton<_i237.UpdateProfileUseCase>(
-      () => _i237.UpdateProfileUseCase(gh<_i672.ProfileRepository>()),
-    );
     gh.lazySingleton<_i26.NotificationsRepository>(
       () => _i414.NotificationRepositoryImpl(
         gh<_i713.NotificationsRemoteDataSource>(),
       ),
+    );
+    gh.lazySingleton<_i672.ProfileRepository>(
+      () => _i557.ProfileRepositoryImpl(gh<_i125.ProfileRemoteDataSource>()),
     );
     gh.lazySingleton<_i207.AuthRepository>(
       () => _i626.AuthRepositoryImpl(
@@ -396,16 +381,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i976.MarkOneAsReadUseCase>(
       () => _i976.MarkOneAsReadUseCase(gh<_i26.NotificationsRepository>()),
     );
-    gh.lazySingleton<_i643.ProfileCubit>(
-      () => _i643.ProfileCubit(
-        gh<_i483.FetchProfileUseCase>(),
-        gh<_i605.CreateProfileUseCase>(),
-        gh<_i237.UpdateProfileUseCase>(),
-      ),
-    );
-    gh.lazySingleton<_i126.ChangePasswordCubit>(
-      () => _i126.ChangePasswordCubit(gh<_i312.ChangePasswordUseCase>()),
-    );
     gh.factory<_i71.SocketTokenProvider>(
       () => _i71.SocketTokenProvider(gh<_i866.GetTokenUseCase>()),
     );
@@ -414,6 +389,24 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i91.ChatRepository>(
       () => _i325.ChatRepositoryImpl(gh<_i915.ChatRemoteDataSource>()),
+    );
+    gh.lazySingleton<_i312.ChangePasswordUseCase>(
+      () => _i312.ChangePasswordUseCase(gh<_i672.ProfileRepository>()),
+    );
+    gh.lazySingleton<_i209.ClearCacheUseCase>(
+      () => _i209.ClearCacheUseCase(gh<_i672.ProfileRepository>()),
+    );
+    gh.lazySingleton<_i171.DeleteAvatarUseCase>(
+      () => _i171.DeleteAvatarUseCase(gh<_i672.ProfileRepository>()),
+    );
+    gh.lazySingleton<_i483.FetchProfileUseCase>(
+      () => _i483.FetchProfileUseCase(gh<_i672.ProfileRepository>()),
+    );
+    gh.lazySingleton<_i413.UpdateAvatarUseCase>(
+      () => _i413.UpdateAvatarUseCase(gh<_i672.ProfileRepository>()),
+    );
+    gh.lazySingleton<_i237.UpdateProfileUseCase>(
+      () => _i237.UpdateProfileUseCase(gh<_i672.ProfileRepository>()),
     );
     gh.lazySingleton<_i926.AddMemberUseCase>(
       () => _i926.AddMemberUseCase(gh<_i91.ChatRepository>()),
@@ -450,6 +443,18 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i739.SocketService>(
       () => _i581.SocketServiceImpl(gh<_i71.SocketTokenProvider>()),
+    );
+    gh.lazySingleton<_i643.ProfileCubit>(
+      () => _i643.ProfileCubit(
+        gh<_i483.FetchProfileUseCase>(),
+        gh<_i605.CreateProfileUseCase>(),
+        gh<_i237.UpdateProfileUseCase>(),
+        gh<_i413.UpdateAvatarUseCase>(),
+        gh<_i171.DeleteAvatarUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i126.ChangePasswordCubit>(
+      () => _i126.ChangePasswordCubit(gh<_i312.ChangePasswordUseCase>()),
     );
     gh.lazySingleton<_i653.NotificationSocketService>(
       () => _i46.NotificationSocketServiceImpl(gh<_i739.SocketService>()),

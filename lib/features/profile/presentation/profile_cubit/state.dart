@@ -10,6 +10,7 @@ abstract class ProfileState with _$ProfileState {
     UserEntity? profile,
     String? error,
     @Default(false) bool isLoading,
+    @Default(false) bool isAvatarLoading,
     @Default(false) bool createdSuccessful,
     @Default(false) bool updatedSuccessful,
   }) = _ProfileState;

@@ -1,4 +1,6 @@
+import 'package:chatting_app/core/presentation/widgets/app_dialog.dart';
 import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
+import 'package:chatting_app/features/profile/presentation/widgets/profile_screen_wrapper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,11 +8,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
-import '../../../../core/presentation/widgets/avatar_placeholder.dart';
 import '../../../auth/presentation/cubit/cubit.dart';
 import '../profile_cubit/cubit.dart';
-import '../profile_cubit/state.dart';
 import '../widgets/language_selector.dart';
+import '../widgets/profile_avatar.dart';
 import '../widgets/theme_selector.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -37,11 +38,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BlocBuilder<ProfileCubit, ProfileState>(
-      builder: (context, state) {
-        final username = state.profile?.displayName ?? state.profile?.userName;
-        final firstName = username?.split(' ').first ?? '';
-        final lastName = username?.split(' ').last ?? '';
+    return ProfileScreenWrapper(
+      buildBody: (context, state) {
+        final username =
+            state.profile?.displayName ?? state.profile?.userName ?? '';
         return ColoredBox(
           color: theme.scaffoldBackgroundColor,
           child: state.isLoading
@@ -50,11 +50,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: .center,
                   spacing: 16.0,
                   children: [
-                    AvatarPlaceholder(
-                      size: 120.0,
-                      firstName: firstName,
-                      lastName: lastName,
-                      backgroundColor: theme.cardTheme.color,
+                    ProfileAvatar(
+                      showLoader: state.isAvatarLoading,
+                      avatarUrl: state.profile?.avatarUrl ?? '',
+                      userName: username,
+                      onTap: () {
+                        cubit.updateUserAvatar();
+                      },
+                      onDeleteTap: () async {
+                        final result = await AppDialog.show(
+                          context,
+                          title: 'profileScreen.avatar.removeAvatar'.tr(),
+                          text: 'profileScreen.avatar.areYouSure'.tr(),
+                          cancelText: 'cancelText'.tr(),
+                          okText: 'okText'.tr(),
+                        );
+                        if (result) {
+                          cubit.deleteUserAvatar();
+                        }
+                      },
                     ),
                     Text(
                       state.profile?.displayName ??
@@ -114,6 +128,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
         );
+      },
+      successMessage: '',
+      onJobDone: () {},
+      onSuccess: () {
+        context.read<ProfileCubit>().loadProfile();
       },
     );
   }

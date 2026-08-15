@@ -35,14 +35,19 @@ class ProfileScreenWrapper extends StatelessWidget {
         }
         if (state.createdSuccessful || state.updatedSuccessful) {
           onJobDone.call();
-          AppMessage.success(
-            context,
-            message: successMessage,
-            onClose: () {
-              context.read<ProfileCubit>().disableSuccess();
-              onSuccess.call();
-            },
-          );
+          if (successMessage.isNotEmpty) {
+            AppMessage.success(
+              context,
+              message: successMessage,
+              onClose: () {
+                context.read<ProfileCubit>().disableSuccess();
+                onSuccess.call();
+              },
+            );
+          } else {
+            context.read<ProfileCubit>().disableSuccess();
+            onSuccess.call();
+          }
         }
       },
     );
