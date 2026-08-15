@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/domain/entity/app_image_entity.dart';
 import '../../../../core/error/failure.dart';
 import '../../../auth/domain/entity/user_entity.dart';
 
@@ -12,7 +13,6 @@ abstract class ProfileRepository {
     String? username,
     String? displayName,
     String? email,
-    String? avatarUrl,
   });
 
   Future<Either<Failure, bool>> changePassword({
@@ -21,4 +21,10 @@ abstract class ProfileRepository {
   });
 
   Future<Either<Failure, void>> clearCache();
+
+  Future<Either<Failure, UserEntity>> updateUserAvatar(
+    AppImageEntity imageFile,
+  );
+
+  Future<Either<Failure, bool>> deleteUserAvatar();
 }

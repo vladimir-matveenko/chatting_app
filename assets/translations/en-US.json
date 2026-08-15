@@ -37,7 +37,11 @@
     "langRu": "Russian",
     "themeDark": "Dark theme",
     "themeLight": "Light theme",
-    "logout": "Logout"
+    "logout": "Logout",
+    "avatar": {
+      "removeAvatar": "Remove avatar",
+      "areYouSure": "Are you sure, you want to remove avatar?"
+    }
   },
   "editProfileScreen": {
     "screenName": "Edit profile",

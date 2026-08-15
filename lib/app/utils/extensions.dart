@@ -8,6 +8,8 @@ extension StringX on String {
 
 extension IntegerX on int {
   int min(int other) => this < other ? this : other;
+
+  int max(int other) => this > other ? this : other;
 }
 
 extension DateX on DateTime {

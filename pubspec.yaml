@@ -32,6 +32,7 @@ dependencies:
   flutter_slidable: ^4.0.3
   socket_io_client: ^3.1.6
   scrollable_positioned_list: ^0.3.8
+  web: ^1.1.1
 
 dev_dependencies:
   flutter_test:

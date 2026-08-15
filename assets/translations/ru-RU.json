@@ -37,7 +37,11 @@
     "langRu": "Русский",
     "themeDark": "Темная тема",
     "themeLight": "Светлая тема",
-    "logout": "Выйти"
+    "logout": "Выйти",
+    "avatar": {
+      "removeAvatar": "Удалить аватар",
+      "areYouSure": "Вы уверены, что хотите удалить аватар?"
+    }
   },
   "editProfileScreen": {
     "screenName": "Редактировать профиль",

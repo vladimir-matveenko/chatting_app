@@ -3,6 +3,7 @@ import 'package:chatting_app/features/profile/data/data_sources/profile_remote_d
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/domain/entity/app_image_entity.dart';
 import '../../../../core/error/failure.dart';
 import '../../../../core/error/mapper.dart';
 import '../../../auth/data/models/user_model.dart';
@@ -10,9 +11,9 @@ import '../../domain/repository/profile_repository.dart';
 
 @LazySingleton(as: ProfileRepository)
 class ProfileRepositoryImpl implements ProfileRepository {
-  ProfileRepositoryImpl({required this.profileRemoteDataSource});
+  ProfileRepositoryImpl(this._profileRemoteDataSource);
 
-  final ProfileRemoteDataSource profileRemoteDataSource;
+  final ProfileRemoteDataSource _profileRemoteDataSource;
   UserEntity? _profile;
 
   @override
@@ -21,7 +22,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Future<Either<Failure, UserEntity>> fetchProfile() async {
     try {
-      final model = await profileRemoteDataSource.fetchProfile();
+      final model = await _profileRemoteDataSource.fetchProfile();
       if (model == null) {
         return Left(CacheFailure());
       }
@@ -38,7 +39,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
     required String newPassword,
   }) async {
     try {
-      final result = await profileRemoteDataSource.changePassword(
+      final result = await _profileRemoteDataSource.changePassword(
         currentPassword: currentPassword,
         newPassword: newPassword,
       );
@@ -56,14 +57,12 @@ class ProfileRepositoryImpl implements ProfileRepository {
     String? username,
     String? displayName,
     String? email,
-    String? avatarUrl,
   }) async {
     try {
-      final result = await profileRemoteDataSource.updateProfile(
+      final result = await _profileRemoteDataSource.updateProfile(
         username: username,
         displayName: displayName,
         email: email,
-        avatarUrl: avatarUrl,
       );
       if (!result) {
         return Left(CacheFailure());
@@ -80,6 +79,30 @@ class ProfileRepositoryImpl implements ProfileRepository {
       _profile = null;
       return const Right(null);
     } on Exception catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> updateUserAvatar(
+    AppImageEntity imageFile,
+  ) async {
+    try {
+      final result = await _profileRemoteDataSource.updateUserAvatar(imageFile);
+
+      return Right(result!.toEntity());
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteUserAvatar() async {
+    try {
+      final result = await _profileRemoteDataSource.deleteUserAvatar();
+
+      return Right(result);
+    } catch (e) {
       return Left(mapExceptionToFailure(e));
     }
   }
