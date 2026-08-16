@@ -26,8 +26,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   final UpdateAvatarUseCase _updateAvatarUseCase;
   final DeleteAvatarUseCase _deleteAvatarUseCase;
 
-  Future<void> loadProfile() async {
-    emit(state.copyWith(isLoading: true));
+  Future<void> loadProfile({bool loadSilent = true}) async {
+    emit(state.copyWith(isLoading: !loadSilent));
     final profile = await _fetchProfileUseCase(NoParams());
     profile.fold(
       (l) {
@@ -124,14 +124,19 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> deleteUserAvatar() async {
     final result = await _deleteAvatarUseCase(NoParams());
-    result.fold((l) {
-      emit(
-        state.copyWith(
-          error: AppUtils.parseFailureMessage(l),
-          isLoading: false,
-        ),
-      );
-    }, (r) {});
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(updatedSuccessful: true));
+      },
+    );
   }
 
   Future<void> disableError() async {
