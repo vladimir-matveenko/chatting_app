@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
@@ -31,7 +32,9 @@ class ImageService {
         _NormalizeImageParams(bytes: bytes, originalName: picked.name),
       );
 
-      final fileName = _normalizeFileName(picked.name);
+      final ext = AppUtils.getSupportedImageExtension(picked.name);
+
+      final fileName = AppUtils.normalizeFileName(picked.name, ext);
 
       return AppImageEntity(bytes: normalizedBytes, name: fileName);
     } catch (e) {
@@ -50,21 +53,21 @@ class ImageService {
 
       final normalized = img.bakeOrientation(image);
 
-      return _encode(normalized);
+      final ext = AppUtils.getSupportedImageExtension(params.originalName);
+
+      return _encode(normalized, ext);
     } catch (e) {
       log('normalizeImage error: $e');
       return params.bytes;
     }
   }
 
-  static Uint8List _encode(img.Image image) {
-    return Uint8List.fromList(img.encodeJpg(image));
-  }
-
-  static String _normalizeFileName(String originalName) {
-    final base = originalName.split('.').first;
-
-    return '$base.jpg';
+  static Uint8List _encode(img.Image image, String ext) {
+    return switch (ext) {
+      'png' => Uint8List.fromList(img.encodePng(image)),
+      'webp ' => Uint8List.fromList(img.encodeWebP(image)),
+      _ => Uint8List.fromList(img.encodeJpg(image)),
+    };
   }
 }
 

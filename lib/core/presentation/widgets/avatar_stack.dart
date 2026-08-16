@@ -1,5 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chatting_app/core/presentation/widgets/avatar_placeholder.dart';
+import 'package:chatting_app/features/profile/presentation/widgets/user_avatar.dart';
 import 'package:flutter/material.dart';
 
 class AvatarStack extends StatelessWidget {
@@ -29,7 +28,7 @@ class AvatarStack extends StatelessWidget {
     return SizedBox(
       height: avatarSize,
       width: imageUrls.isEmpty
-          ? 0
+          ? avatarSize
           : avatarSize + (imageUrls.length - 1) * offsetAmount,
       child: Stack(
         alignment: .center,
@@ -46,15 +45,10 @@ class AvatarStack extends StatelessWidget {
                   width: borderWidth,
                 ),
               ),
-              child: CachedNetworkImage(
-                imageUrl: imageUrls[index],
-                fit: BoxFit.cover,
-                errorWidget: (context, s, o) => AvatarPlaceholder(
-                  backgroundColor: placeholderBackgroundColor,
-                  size: avatarSize,
-                  firstName: names[index],
-                  lastName: '',
-                ),
+              child: UserAvatar(
+                size: avatarSize - 2 * borderWidth,
+                avatar: imageUrls[index],
+                firstName: names[index],
               ),
             ),
           );

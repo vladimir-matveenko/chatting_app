@@ -29,7 +29,6 @@ class UserAvatar extends StatelessWidget {
     return avatar.isNotEmpty
         ? CircleAvatar(
             radius: size / 2,
-            backgroundColor: theme.cardColor,
             child: ClipOval(
               child: CachedNetworkImage(
                 imageUrl: avatar,

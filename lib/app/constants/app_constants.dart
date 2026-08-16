@@ -1,4 +1,9 @@
+import 'package:flutter/material.dart';
+
+@immutable
 class AppConstants {
+  const AppConstants._();
+
   static const assetDbName = 'en_ru_dictionary.db';
   static const profileKey = 'profile';
   static const themeKey = 'theme_mode';
@@ -10,4 +15,7 @@ class AppConstants {
 
   /// reactions
   static const reactions = ['👍', '👎︎'];
+
+  /// available image types
+  static const availableImageTypes = ['jpeg', 'png', 'webp'];
 }

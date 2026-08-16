@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:js_interop';
 import 'dart:typed_data';
 
+import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:web/web.dart';
@@ -42,7 +43,9 @@ class ImageService {
 
       context.drawImage(image, 0, 0, size.width, size.height);
 
-      final blob = await _canvasToBlob(canvas);
+      final ext = AppUtils.getSupportedImageExtension(picked.name);
+
+      final blob = await _canvasToBlob(canvas, ext);
 
       if (blob == null) {
         return null;
@@ -50,7 +53,10 @@ class ImageService {
 
       final bytes = await _blobToBytes(blob);
 
-      return AppImageEntity(bytes: bytes, name: _fileName(picked.name));
+      return AppImageEntity(
+        bytes: bytes,
+        name: AppUtils.normalizeFileName(picked.name, ext),
+      );
     } catch (e) {
       return null;
     } finally {
@@ -75,14 +81,20 @@ class ImageService {
     return _ImageSize((width * _maxImageSize / height).round(), _maxImageSize);
   }
 
-  static Future<Blob?> _canvasToBlob(HTMLCanvasElement canvas) {
+  static Future<Blob?> _canvasToBlob(HTMLCanvasElement canvas, String ext) {
     final completer = Completer<Blob?>();
 
     final callback = ((Blob? blob) {
       completer.complete(blob);
     }).toJS;
 
-    canvas.toBlob(callback, 'image/jpeg', _quality.toJS);
+    final mimeType = switch (ext) {
+      '.png' => 'image/png',
+      '.webp' => 'image/webp',
+      _ => 'image/jpeg',
+    };
+
+    canvas.toBlob(callback, mimeType, _quality.toJS);
 
     return completer.future;
   }
@@ -93,12 +105,6 @@ class ImageService {
     final jsArray = JSUint8Array(arrayBuffer);
 
     return jsArray.toDart;
-  }
-
-  static String _fileName(String originalName) {
-    final base = originalName.split('.').first;
-
-    return '$base.jpg';
   }
 }
 
