@@ -30,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     cubit = context.read<ProfileCubit>();
-    cubit.loadProfile();
+    cubit.loadProfile(loadSilent: false);
     authCubit = context.read<AuthCubit>();
     loginCubit = context.read<LoginCubit>();
   }

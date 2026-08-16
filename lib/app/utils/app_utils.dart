@@ -161,4 +161,19 @@ class AppUtils {
     final currentScroll = scrollController.offset;
     return currentScroll >= (maxScroll * 0.9);
   }
+
+  static String getSupportedImageExtension(String? fileName) {
+    final extension = fileName?.split('.').last.toLowerCase();
+
+    return switch (extension) {
+      'png' || 'webp' => extension!,
+      _ => 'jpg',
+    };
+  }
+
+  static String normalizeFileName(String originalName, String ext) {
+    final base = originalName.split('.').first;
+
+    return '$base.$ext';
+  }
 }
