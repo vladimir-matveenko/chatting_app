@@ -89,8 +89,8 @@ class ImageService {
     }).toJS;
 
     final mimeType = switch (ext) {
-      '.png' => 'image/png',
-      '.webp' => 'image/webp',
+      'png' => 'image/png',
+      'webp' => 'image/webp',
       _ => 'image/jpeg',
     };
 
