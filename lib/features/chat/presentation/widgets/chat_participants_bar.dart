@@ -75,7 +75,7 @@ class _ChatParticipantsBarState extends State<ChatParticipantsBar> {
                             names: names,
                             placeholderBackgroundColor:
                                 theme.unselectedWidgetColor,
-                            borderColor: theme.isDark()
+                            borderColor: theme.isDark
                                 ? Colors.white
                                 : Colors.grey.shade500,
                           ),

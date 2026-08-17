@@ -117,7 +117,7 @@ class ListItem extends StatelessWidget {
                 imageUrls: avatars,
                 names: names,
                 placeholderBackgroundColor: theme.unselectedWidgetColor,
-                borderColor: theme.isDark()
+                borderColor: theme.isDark
                     ? Colors.white
                     : Colors.grey.shade500,
               ),

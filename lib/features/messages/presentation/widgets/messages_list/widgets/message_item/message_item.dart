@@ -31,7 +31,7 @@ class MessageItem extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: isSelected
-                  ? theme.isDark()
+                  ? theme.isDark
                         ? const Color(0xFF384A6B)
                         : const Color(0xFFC8E6C9)
                   : null,
