@@ -27,7 +27,7 @@ class _ValidateCodeBodyState extends State<ValidateCodeBody> {
     super.initState();
     cubit = context.read<ResetPasswordCubit>();
     if (cubit.countdownController.isFinished) {
-      cubit.countdownController.start(20);
+      cubit.countdownController.start(180);
     }
   }
 
