@@ -1,13 +1,13 @@
 import 'package:chatting_app/features/auth/domain/usecases/clear_cache_usecase.dart';
 import 'package:chatting_app/features/auth/domain/usecases/get_token_usecase.dart';
 import 'package:chatting_app/features/auth/domain/usecases/logout_usecase.dart';
-import 'package:chatting_app/features/auth/presentation/cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/domain/usecases/usecase.dart';
 import '../../../../core/websocket/socket_service.dart';
-import '../../domain/usecases/check_auth_usecase.dart' show CheckAuthUseCase;
+import '../../domain/usecases/check_auth_usecase.dart';
+import 'state.dart';
 
 @lazySingleton
 class AuthCubit extends Cubit<AuthState> {

@@ -14,10 +14,13 @@ class ChangePasswordForm extends StatelessWidget {
     required this.newPasswordController,
     required this.onSaveTapped,
     required this.mainButtonText,
+    this.currentPasswordHint,
+    this.newPasswordHint,
     required this.obscureCurrent,
     required this.obscureNew,
     required this.onObscureCurrentChanged,
     required this.onObscureNewChanged,
+    this.newPasswordValidator,
   });
 
   final bool isFormActive;
@@ -27,10 +30,13 @@ class ChangePasswordForm extends StatelessWidget {
   final TextEditingController newPasswordController;
   final VoidCallback onSaveTapped;
   final String mainButtonText;
+  final String? currentPasswordHint;
+  final String? newPasswordHint;
   final ValueNotifier<bool> obscureCurrent;
   final ValueNotifier<bool> obscureNew;
   final Function(bool) onObscureCurrentChanged;
   final Function(bool) onObscureNewChanged;
+  final String? Function(String?)? newPasswordValidator;
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +53,18 @@ class ChangePasswordForm extends StatelessWidget {
             passwordController: currentPasswordController,
             obscure: obscureCurrent,
             onObscureChanged: onObscureCurrentChanged,
-            hintText: 'changePasswordScreen.currentPasField'.tr(),
+            hintText:
+                currentPasswordHint ??
+                'changePasswordScreen.currentPasField'.tr(),
           ),
           PasswordTextField(
             enabled: isFormActive,
             passwordController: newPasswordController,
             obscure: obscureNew,
             onObscureChanged: onObscureNewChanged,
-            hintText: 'changePasswordScreen.newPasField'.tr(),
+            hintText:
+                newPasswordHint ?? 'changePasswordScreen.newPasField'.tr(),
+            validator: newPasswordValidator,
           ),
           ElevatedButton(
             onPressed: !isFormActive ? null : onSaveTapped,

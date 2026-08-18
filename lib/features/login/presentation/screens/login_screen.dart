@@ -115,6 +115,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       child: Text('createProfileScreen.screenName'.tr()),
                     ),
+                    TextButton(
+                      onPressed: () {
+                        context.push(AppRoutes.resetPassword);
+                      },
+                      child: Text('resetPasswordScreen.screenName'.tr()),
+                    ),
                   ],
                 ),
               ),

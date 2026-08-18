@@ -5,6 +5,7 @@ import 'package:chatting_app/features/chat/presentation/screens/create_group_scr
 import 'package:chatting_app/features/chats/presentation/screens/chats_screen.dart';
 import 'package:chatting_app/features/login/presentation/screens/login_screen.dart';
 import 'package:chatting_app/features/notifications/presentation/screens/notifications_screen.dart';
+import 'package:chatting_app/features/reset_password/presentation/screens/reset_password_screen.dart';
 import 'package:chatting_app/features/users/presentation/screens/users_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -41,20 +42,21 @@ class AppRouter {
       final isSplash = state.matchedLocation == AppRoutes.splash;
       final isLogin = state.matchedLocation == AppRoutes.login;
       final isCreateProfile = state.matchedLocation == AppRoutes.createProfile;
+      final isResetPassword = state.matchedLocation == AppRoutes.resetPassword;
 
       if (status == AuthStatus.unknown) {
         return null;
       }
 
       if (status == AuthStatus.unauthenticated) {
-        if (isCreateProfile || isLogin) {
+        if (isCreateProfile || isLogin || isResetPassword) {
           return null;
         }
         return AppRoutes.login;
       }
 
       if (status == AuthStatus.authenticated) {
-        if (isSplash || isCreateProfile || isLogin) {
+        if (isSplash || isCreateProfile || isLogin || isResetPassword) {
           return AppRoutes.chats;
         }
         return null;
@@ -72,6 +74,11 @@ class AppRouter {
         path: AppRoutes.login,
         pageBuilder: (context, state) =>
             const NoTransitionPage(child: LoginScreen()),
+      ),
+      GoRoute(
+        path: AppRoutes.resetPassword,
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: ResetPasswordScreen()),
       ),
       GoRoute(
         path: AppRoutes.createProfile,
