@@ -5,6 +5,7 @@ import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/notifications/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/profile/presentation/change_password_cubit/cubit.dart';
+import 'package:chatting_app/features/reset_password/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/users/presentation/cubit/cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class _MyAppState extends State<MyApp> {
   final appRouter = getIt<AppRouter>();
   final themeCubit = getIt<ThemeCubit>();
   final authCubit = getIt<AuthCubit>();
+  final resetPasswordCubit = getIt<ResetPasswordCubit>();
   final loginCubit = getIt<LoginCubit>();
   final profileCubit = getIt<ProfileCubit>();
   final changePasswordCubit = getIt<ChangePasswordCubit>();
@@ -62,6 +64,7 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => authCubit),
+        BlocProvider(create: (_) => resetPasswordCubit),
         BlocProvider(create: (_) => loginCubit),
         BlocProvider(create: (_) => profileCubit),
         BlocProvider(create: (_) => changePasswordCubit),

@@ -10,7 +10,7 @@ class AppSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final iconColor = theme.isDark()
+    final iconColor = theme.isDark
         ? theme.colorScheme.onPrimary
         : theme.colorScheme.primary;
     return SizedBox(

@@ -11,6 +11,7 @@ class PasswordTextField extends StatelessWidget {
     required this.obscure,
     required this.onObscureChanged,
     this.hintText,
+    this.validator,
   });
 
   final bool enabled;
@@ -18,6 +19,7 @@ class PasswordTextField extends StatelessWidget {
   final ValueNotifier<bool> obscure;
   final Function(bool) onObscureChanged;
   final String? hintText;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class PasswordTextField extends StatelessWidget {
               child: Icon(value ? Icons.lock : Icons.lock_open),
             ),
           ),
-          validator: (value) {
+          validator: validator ?? (value) {
             if (value == null || value.isEmpty) {
               return 'fieldValidation.enterPassword'.tr();
             }

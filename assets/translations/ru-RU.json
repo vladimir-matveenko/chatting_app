@@ -28,6 +28,19 @@
     "btnCreate": "Создать аккаунт",
     "createSuccessMessage": "Поздравляем! Профиль успешно создан. Пожалуйста, войдите, чтобы начать пользоваться приложением."
   },
+  "resetPasswordScreen": {
+    "screenName": "Переустановить пароль",
+    "fieldEmail": "Почта",
+    "btnRequest": "Запросить код",
+    "codeSent": "Если почта существует, код был выслан на",
+    "btnValidateCode": "Проверить код",
+    "btnResetPassword": "Установить пароль",
+    "fieldCode": "Код",
+    "timeIsUp": "Время вышло. Пожалуйста, запросите код снова",
+    "fieldPassword": "Пароль",
+    "fieldRepeatPassword": "Повторите пароль",
+    "successMessage": "Ваш пароль был успешно обновлен. Пожалуйста, войдите с новым паролем."
+  },
   "profileScreen": {
     "screenName": "Профиль",
     "created": "Профиль создан успешно",
@@ -133,7 +146,8 @@
     "fieldIsRequired": "Это поле обязательно!",
     "enterEmail": "Введите email",
     "enterPassword": "Введите пароль",
-    "minPasLength": "Минимальная длина 8 символов"
+    "minPasLength": "Минимальная длина 8 символов",
+    "mustEquals": "Должны совпадать!"
   },
   "errors": {
     "somethingWentWrong": "Ой! Что-то пошло не так",

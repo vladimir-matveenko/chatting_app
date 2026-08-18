@@ -28,6 +28,19 @@
     "btnCreate": "Create profile",
     "createSuccessMessage": "Your profile has been successfully created. Please log in to start using the app."
   },
+  "resetPasswordScreen": {
+    "screenName": "Reset password",
+    "fieldEmail": "Email",
+    "btnRequest": "Request code",
+    "codeSent": "If the email exists, a reset code has been sent to",
+    "btnValidateCode": "Validate code",
+    "btnResetPassword": "Reset password",
+    "fieldCode": "Code",
+    "timeIsUp": "Time is up. Please, request code again",
+    "fieldPassword": "Password",
+    "fieldRepeatPassword": "Repeat password",
+    "successMessage": "Your password has been changed successful. Please log in with a new password."
+  },
   "profileScreen": {
     "screenName": "Profile",
     "created": "Profile created successful",
@@ -133,7 +146,8 @@
     "fieldIsRequired": "This field is required!",
     "enterEmail": "Enter email",
     "enterPassword": "Enter password",
-    "minPasLength": "Min length is 8 chars"
+    "minPasLength": "Min length is 8 chars",
+    "mustEquals": "Must be equal!"
   },
   "errors": {
     "somethingWentWrong": "Oops! Something went wrong",

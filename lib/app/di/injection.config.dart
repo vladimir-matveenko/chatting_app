@@ -173,6 +173,20 @@ import 'package:chatting_app/features/profile/presentation/change_password_cubit
     as _i126;
 import 'package:chatting_app/features/profile/presentation/profile_cubit/cubit.dart'
     as _i643;
+import 'package:chatting_app/features/reset_password/data/data_sources/reset_password_remote_data_source.dart'
+    as _i325;
+import 'package:chatting_app/features/reset_password/data/repository/reset_password_repository_impl.dart'
+    as _i619;
+import 'package:chatting_app/features/reset_password/domain/repository/reset_password_repository.dart'
+    as _i1051;
+import 'package:chatting_app/features/reset_password/domain/usecases/request_code_usecase.dart'
+    as _i970;
+import 'package:chatting_app/features/reset_password/domain/usecases/reset_password_usecase.dart'
+    as _i989;
+import 'package:chatting_app/features/reset_password/domain/usecases/validate_code_usecase.dart'
+    as _i427;
+import 'package:chatting_app/features/reset_password/presentation/cubit/cubit.dart'
+    as _i669;
 import 'package:chatting_app/features/theme/data/data_sources/theme_local_data_source.dart'
     as _i595;
 import 'package:chatting_app/features/theme/data/repository/theme_repository_impl.dart'
@@ -268,6 +282,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i767.SetThemeUseCase>(),
       ),
     );
+    gh.lazySingleton<_i325.ResetPasswordRemoteDataSource>(
+      () => _i325.ResetPasswordRemoteDataSourceImpl(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i969.AddReactionUseCase>(
       () => _i969.AddReactionUseCase(gh<_i166.MessagesRepository>()),
     );
@@ -335,6 +352,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i672.ProfileRepository>(
       () => _i557.ProfileRepositoryImpl(gh<_i125.ProfileRemoteDataSource>()),
+    );
+    gh.lazySingleton<_i1051.ResetPasswordRepository>(
+      () => _i619.ResetPasswordRepositoryImpl(
+        dataSource: gh<_i325.ResetPasswordRemoteDataSource>(),
+      ),
     );
     gh.lazySingleton<_i207.AuthRepository>(
       () => _i626.AuthRepositoryImpl(
@@ -407,6 +429,22 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i237.UpdateProfileUseCase>(
       () => _i237.UpdateProfileUseCase(gh<_i672.ProfileRepository>()),
+    );
+    gh.lazySingleton<_i970.RequestCodeUseCase>(
+      () => _i970.RequestCodeUseCase(gh<_i1051.ResetPasswordRepository>()),
+    );
+    gh.lazySingleton<_i989.ResetPasswordUseCase>(
+      () => _i989.ResetPasswordUseCase(gh<_i1051.ResetPasswordRepository>()),
+    );
+    gh.lazySingleton<_i427.ValidateCodeUseCase>(
+      () => _i427.ValidateCodeUseCase(gh<_i1051.ResetPasswordRepository>()),
+    );
+    gh.lazySingleton<_i669.ResetPasswordCubit>(
+      () => _i669.ResetPasswordCubit(
+        gh<_i970.RequestCodeUseCase>(),
+        gh<_i427.ValidateCodeUseCase>(),
+        gh<_i989.ResetPasswordUseCase>(),
+      ),
     );
     gh.lazySingleton<_i926.AddMemberUseCase>(
       () => _i926.AddMemberUseCase(gh<_i91.ChatRepository>()),

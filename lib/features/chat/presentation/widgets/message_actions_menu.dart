@@ -24,7 +24,7 @@ class MessageActionsMenu extends StatelessWidget {
     final isonSize = 16.0;
     final iconColor = Colors.white;
     final theme = Theme.of(context);
-    final isDark = theme.isDark();
+    final isDark = theme.isDark;
     return Container(
       padding: const .all(12.0),
       decoration: BoxDecoration(
