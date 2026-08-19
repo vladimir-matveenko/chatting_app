@@ -271,6 +271,17 @@ class _MessagesListState extends State<MessagesList> {
                           onLongPress: () {
                             cubit.selectMessage(message);
                           },
+                          onReplyTap: () {
+                            if (message.reply != null) {
+                              final messageId = int.tryParse(message.reply!.id);
+                              if (messageId != null) {
+                                cubit.getAroundContext(
+                                  chatId: message.chatId,
+                                  messageId: messageId,
+                                );
+                              }
+                            }
+                          },
                         ),
                         reaction: message.currentUserReaction != null
                             ? GestureDetector(

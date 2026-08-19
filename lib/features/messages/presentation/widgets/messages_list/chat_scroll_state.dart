@@ -16,7 +16,7 @@ class ChatScrollState {
   final int? firstVisibleIndex;
   final int? lastVisibleIndex;
 
-  /// Находится ли пользователь возле последних сообщений.
+  /// Whether the user is near the latest messages.
   final bool isLatestVisible;
 
   ChatScrollState copyWith({

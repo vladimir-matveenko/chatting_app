@@ -11,6 +11,7 @@ class AppTheme {
         unselectedWidgetColor: appColors.unselectedWidget,
         canvasColor: appColors.canvas,
         splashColor: appColors.splash,
+        highlightColor: appColors.highlight,
         extensions: [AppSemanticColors(success: appColors.success)],
         colorScheme: const ColorScheme.dark().copyWith(
           brightness: Brightness.dark,
@@ -247,6 +248,7 @@ class AppTheme {
         unselectedWidgetColor: appColors.unselectedWidget,
         canvasColor: appColors.canvas,
         splashColor: appColors.splash,
+        highlightColor: appColors.highlight,
         extensions: [AppSemanticColors(success: appColors.success)],
         colorScheme: const ColorScheme.light().copyWith(
           brightness: Brightness.light,

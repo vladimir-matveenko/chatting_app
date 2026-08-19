@@ -26,6 +26,7 @@ class MessageBubble extends StatelessWidget {
     this.padding = const EdgeInsets.all(8),
     this.borderRadius = const BorderRadius.all(Radius.circular(12)),
     this.border,
+    this.onReplyTap,
   });
 
   final GlobalKey bubbleKey;
@@ -44,11 +45,11 @@ class MessageBubble extends StatelessWidget {
   final Border? border;
   final VoidCallback onTap;
   final VoidCallback? onLongPress;
+  final VoidCallback? onReplyTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
     return GestureDetector(
@@ -60,7 +61,7 @@ class MessageBubble extends StatelessWidget {
         curve: Curves.easeOut,
         padding: padding,
         decoration: BoxDecoration(
-          color: isHighlighted ? colorScheme.primaryContainer : bubbleColor,
+          color: isHighlighted ? theme.highlightColor : bubbleColor,
           borderRadius: borderRadius,
           border: border,
         ),
@@ -68,30 +69,36 @@ class MessageBubble extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (reply != null)
-              Container(
-                padding: const .all(8.0),
-                margin: const .only(bottom: 8.0),
-                decoration: BoxDecoration(
-                  borderRadius: .circular(8.0),
-                  color: theme.bottomNavigationBarTheme.backgroundColor,
-                ),
-                child: Column(
-                  spacing: 4.0,
-                  crossAxisAlignment: .start,
-                  children: [
-                    Text(
-                      reply?.sender.displayName ?? reply?.sender.userName ?? '',
-                      style: textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.primary,
+              GestureDetector(
+                onTap: onReplyTap,
+                behavior: .translucent,
+                child: Container(
+                  padding: const .all(8.0),
+                  margin: const .only(bottom: 8.0),
+                  decoration: BoxDecoration(
+                    borderRadius: .circular(8.0),
+                    color: theme.bottomNavigationBarTheme.backgroundColor,
+                  ),
+                  child: Column(
+                    spacing: 4.0,
+                    crossAxisAlignment: .start,
+                    children: [
+                      Text(
+                        reply?.sender.displayName ??
+                            reply?.sender.userName ??
+                            '',
+                        style: textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.primary,
+                        ),
                       ),
-                    ),
-                    Text(
-                      reply?.body ?? '',
-                      style: textTheme.bodySmall,
-                      maxLines: 1,
-                      overflow: .ellipsis,
-                    ),
-                  ],
+                      Text(
+                        reply?.body ?? '',
+                        style: textTheme.bodySmall,
+                        maxLines: 1,
+                        overflow: .ellipsis,
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
