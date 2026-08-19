@@ -21,6 +21,7 @@ class AppThemeColors {
     required this.primaryText,
     required this.secondaryText,
     required this.cardBackground,
+    required this.highlight,
   });
 
   final Color primary;
@@ -40,6 +41,7 @@ class AppThemeColors {
   final Color primaryText;
   final Color secondaryText;
   final Color cardBackground;
+  final Color highlight;
 
   static AppThemeColors fromMode(AppThemeMode mode) {
     switch (mode) {
@@ -68,6 +70,7 @@ class AppThemeColors {
     primaryText: Color(0xFF0F2416),
     secondaryText: Color(0xFF64748B),
     cardBackground: Color(0xFFE2E8F0),
+    highlight: Color(0xFFFF6D00),
   );
 
   static final dark = const AppThemeColors(
@@ -88,5 +91,6 @@ class AppThemeColors {
     primaryText: Colors.white,
     secondaryText: Color(0xFF94A3B8),
     cardBackground: Color(0xFF25354E),
+    highlight: Color(0xFFFACC15),
   );
 }
