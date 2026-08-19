@@ -1,4 +1,5 @@
 import 'package:chatting_app/app/constants/app_enums.dart';
+import 'package:chatting_app/features/reset_password/presentation/cubit/state.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -45,4 +46,14 @@ extension ChatMemberRoleX on ChatMemberRole {
   bool get isAdmin => this == ChatMemberRole.admin;
 
   bool get isMember => this == ChatMemberRole.member;
+}
+
+extension ResetPasswordStatusX on ResetPasswordStatus {
+  bool get isRequestCode => this == ResetPasswordStatus.requestCode;
+
+  bool get isValidateCode => this == ResetPasswordStatus.validateCode;
+
+  bool get isSetPassword => this == ResetPasswordStatus.setPassword;
+
+  bool get isSuccess => this == ResetPasswordStatus.success;
 }

@@ -38,9 +38,11 @@
     "fieldCode": "Код",
     "timeIsUp": "Время вышло. Пожалуйста, запросите код снова",
     "resendCode": "Выслать код через",
+    "codeRequestIn": "Запрос кода через",
     "fieldPassword": "Пароль",
     "fieldRepeatPassword": "Повторите пароль",
-    "successMessage": "Ваш пароль был успешно обновлен. Пожалуйста, войдите с новым паролем."
+    "successMessage": "Ваш пароль был успешно обновлен. Пожалуйста, войдите с новым паролем.",
+    "backToLogin": "Вернуться к Login"
   },
   "profileScreen": {
     "screenName": "Профиль",

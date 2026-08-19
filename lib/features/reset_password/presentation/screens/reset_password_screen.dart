@@ -1,77 +1,79 @@
+import 'package:chatting_app/app/utils/extensions.dart';
+import 'package:chatting_app/core/presentation/widgets/disable_back_navigation.dart';
 import 'package:chatting_app/features/reset_password/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/reset_password/presentation/cubit/state.dart';
+import 'package:chatting_app/features/reset_password/presentation/widgets/success_body.dart';
 import 'package:chatting_app/features/reset_password/presentation/widgets/validate_code_body.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../../app/utils/app_utils.dart';
 import '../../../../core/presentation/widgets/app_back_button.dart';
-import '../../../../core/presentation/widgets/app_dialog.dart';
+import '../../../../core/presentation/widgets/app_message.dart';
 import '../widgets/change_password_body.dart';
 import '../widgets/request_code_body.dart';
-import '../widgets/reset_password_screen_wrapper.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
+class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final cubit = context.read<ResetPasswordCubit>();
-    final state = context.watch<ResetPasswordCubit>().state;
+  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
+}
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('resetPasswordScreen.screenName'.tr()),
-        centerTitle: true,
-        leading: AppBackButton(
-          onTap: state.status != ResetPasswordStatus.requestCode
-              ? cubit.disableSuccess
-              : null,
-        ),
-      ),
-      resizeToAvoidBottomInset: true,
-      body: ResetPasswordScreenWrapper(
-        successMessage: '',
-        buildBody: (context, state) {
-          if (state.status == ResetPasswordStatus.requestCode) {
-            return const RequestCodeBody();
-          }
-          if (state.status == ResetPasswordStatus.validateCode) {
-            return const ValidateCodeBody();
-          }
-          return const ChangePasswordBody();
-        },
-        onJobDone: () {},
-        onSuccess: () {
-          AppDialog.empty(
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
+  late ResetPasswordCubit cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    cubit = context.read<ResetPasswordCubit>();
+    cubit.emailController.clear();
+  }
+
+  @override
+  void deactivate() {
+    cubit.disableSuccess();
+    super.deactivate();
+  }
+
+  Widget getBody(ResetPasswordStatus status) {
+    return switch (status) {
+      ResetPasswordStatus.requestCode => const RequestCodeBody(),
+      ResetPasswordStatus.validateCode => const ValidateCodeBody(),
+      ResetPasswordStatus.setPassword => const ChangePasswordBody(),
+      ResetPasswordStatus.success => const SuccessBody(),
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
+      listener: (context, state) {
+        if (state.error?.isNotEmpty == true && !state.status.isValidateCode) {
+          AppMessage.error(
             context,
+            message: state.error!,
             onClose: () {
-              context.pop();
+              context.read<ResetPasswordCubit>().disableError();
             },
-            content: Container(
-              padding: const .all(32.0),
-              constraints: AppUtils.getModalDialogConstraints(context),
-              child: Column(
-                crossAxisAlignment: .center,
-                mainAxisSize: .min,
-                spacing: 16.0,
-                children: [
-                  const Icon(Icons.check, color: Colors.green, size: 60.0),
-                  Text('resetPasswordScreen.successMessage'.tr()),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.pop();
-                    },
-                    child: Text('okText'.tr()),
-                  ),
-                ],
-              ),
-            ),
           );
-        },
-      ),
+        }
+      },
+      builder: (context, state) {
+        return DisableBackNavigation(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text('resetPasswordScreen.screenName'.tr()),
+              centerTitle: true,
+              leading: state.status.isRequestCode
+                  ? const AppBackButton()
+                  : const SizedBox(),
+            ),
+            resizeToAvoidBottomInset: true,
+            body: getBody(state.status),
+          ),
+        );
+      },
     );
   }
 }
