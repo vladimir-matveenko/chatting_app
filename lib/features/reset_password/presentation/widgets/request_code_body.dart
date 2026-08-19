@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/presentation/widgets/app_loader.dart';
+import '../../../../core/presentation/widgets/countdown_timer.dart';
 
 class RequestCodeBody extends StatefulWidget {
   const RequestCodeBody({super.key});
@@ -18,7 +19,8 @@ class _RequestCodeBodyState extends State<RequestCodeBody> {
   final _formKey = GlobalKey<FormState>();
 
   void _onRequestTapped() {
-    if (!(_formKey.currentState?.validate() ?? false)) {
+    if (!(_formKey.currentState?.validate() ?? false) ||
+        !cubit.requestCodeTimerController.isFinished) {
       return;
     }
     cubit.requestCode();
@@ -45,7 +47,23 @@ class _RequestCodeBodyState extends State<RequestCodeBody> {
             crossAxisAlignment: .stretch,
             spacing: 16.0,
             children: [
-              AppTextFormField(controller: cubit.emailController),
+              if (!cubit.requestCodeTimerController.isFinished)
+                CountdownTimer(
+                  controller: cubit.requestCodeTimerController,
+                  prefixWidget: Text(
+                    '${'resetPasswordScreen.resendCode'.tr()}:',
+                  ),
+                  onFinishedPlaceholder: const SizedBox(),
+                ),
+              AppTextFormField(
+                controller: cubit.emailController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'fieldValidation.enterEmail'.tr();
+                  }
+                  return null;
+                },
+              ),
               ElevatedButton(
                 onPressed: _onRequestTapped,
                 child: isLoading

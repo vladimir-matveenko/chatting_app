@@ -68,11 +68,13 @@ class CountdownTimer extends StatefulWidget {
     super.key,
     required this.controller,
     this.initialSeconds = 0,
+    this.prefixWidget,
     this.onFinishedPlaceholder,
   });
 
   final CountdownController controller;
   final int initialSeconds;
+  final Widget? prefixWidget;
   final Widget? onFinishedPlaceholder;
 
   @override
@@ -138,22 +140,27 @@ class _CountdownTimerState extends State<CountdownTimer> {
       style: isFinished ? textStyle?.copyWith(color: finishedColor) : textStyle,
     );
 
-    if (widget.onFinishedPlaceholder != null) {
-      return isFinished ? widget.onFinishedPlaceholder! : timerWidget;
+    if (isFinished) {
+      return widget.onFinishedPlaceholder ??
+          Row(
+            mainAxisSize: .min,
+            mainAxisAlignment: .center,
+            spacing: 8.0,
+            children: [
+              timerWidget,
+              Text(
+                'resetPasswordScreen.timeIsUp'.tr(),
+                style: textStyle?.copyWith(color: finishedColor),
+              ),
+            ],
+          );
     }
 
     return Row(
       mainAxisSize: .min,
       mainAxisAlignment: .center,
       spacing: 8.0,
-      children: [
-        timerWidget,
-        if (isFinished)
-          Text(
-            'resetPasswordScreen.timeIsUp'.tr(),
-            style: textStyle?.copyWith(color: finishedColor),
-          ),
-      ],
+      children: [?widget.prefixWidget, timerWidget],
     );
   }
 }

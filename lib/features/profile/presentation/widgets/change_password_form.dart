@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/presentation/widgets/app_loader.dart';
 import '../../../../core/presentation/widgets/text_fields/password_field.dart';
+import '../../../reset_password/presentation/widgets/back_to_login_button.dart';
 
 class ChangePasswordForm extends StatelessWidget {
   const ChangePasswordForm({
@@ -70,6 +71,7 @@ class ChangePasswordForm extends StatelessWidget {
             onPressed: !isFormActive ? null : onSaveTapped,
             child: isLoading ? AppLoader.small() : Text(mainButtonText),
           ),
+          const BackToLoginButton(),
         ],
       ),
     );
