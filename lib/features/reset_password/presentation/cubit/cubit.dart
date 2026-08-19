@@ -20,12 +20,14 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   final ValidateCodeUseCase _validateCodeUseCase;
   final ResetPasswordUseCase _resetPasswordUseCase;
   final emailController = TextEditingController();
-  final countdownController = CountdownController();
+  final validateCodeTimerController = CountdownController();
+  final requestCodeTimerController = CountdownController();
 
   @override
   Future<void> close() async {
     emailController.dispose();
-    countdownController.dispose();
+    validateCodeTimerController.dispose();
+    requestCodeTimerController.dispose();
     return super.close();
   }
 
@@ -38,6 +40,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
 
     result.fold(
       (l) {
+        validateCodeTimerController.stop();
         emit(
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
@@ -46,6 +49,8 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
         );
       },
       (r) {
+        requestCodeTimerController.start(60);
+        validateCodeTimerController.start(180);
         emit(
           state.copyWith(
             isLoading: false,

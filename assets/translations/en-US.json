@@ -37,6 +37,7 @@
     "btnResetPassword": "Reset password",
     "fieldCode": "Code",
     "timeIsUp": "Time is up. Please, request code again",
+    "resendCode": "Resend code in",
     "fieldPassword": "Password",
     "fieldRepeatPassword": "Repeat password",
     "successMessage": "Your password has been changed successful. Please log in with a new password."
