@@ -125,6 +125,9 @@ class _MessagesListState extends State<MessagesList> {
           onTap: state.status == MessagesListStatus.aroundContext
               ? () {
                   cubit.loadMessages(chatId: widget.chat.id);
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    widget.scrollController.jumpToLatest();
+                  });
                 }
               : null,
           child: NotificationListener(
