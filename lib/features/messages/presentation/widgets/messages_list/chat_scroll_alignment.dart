@@ -1,13 +1,13 @@
 abstract final class ChatScrollAlignment {
   const ChatScrollAlignment._();
 
-  /// Последние сообщения (index = 0).
+  /// Last messages (index = 0).
   static const double latest = .1;
 
-  /// Сообщение немного выше центра экрана.
-  /// Используется для pinned, reply, search.
+  /// The message is above the center of the screen.
+  /// Uses for pinned, reply, search.
   static const double focused = .35;
 
-  /// Сообщение по центру.
+  /// The message is centered.
   static const double centered = .5;
 }
