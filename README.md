@@ -17,12 +17,6 @@ The web version of the application is available here:
 
 This repository — the Flutter client application.
 
-### 🌐 Web Version
-
-The Flutter application is also available as a web application:
-
-👉 [Chatting App — Web](https://vladimir-matveenko.github.io/chatting_app/)
-
 ### ⚙️ Backend
 
 The backend is implemented separately using TypeScript, Node.js, Express and PostgreSQL.
