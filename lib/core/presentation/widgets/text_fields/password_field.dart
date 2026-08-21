@@ -40,15 +40,17 @@ class PasswordTextField extends StatelessWidget {
               child: Icon(value ? Icons.lock : Icons.lock_open),
             ),
           ),
-          validator: validator ?? (value) {
-            if (value == null || value.isEmpty) {
-              return 'fieldValidation.enterPassword'.tr();
-            }
-            if (value.length < 8) {
-              return 'fieldValidation.minPasLength'.tr();
-            }
-            return null;
-          },
+          validator:
+              validator ??
+              (value) {
+                if (value == null || value.isEmpty) {
+                  return 'fieldValidation.enterPassword'.tr();
+                }
+                if (value.length < 8) {
+                  return 'fieldValidation.minPasLength'.tr();
+                }
+                return null;
+              },
         );
       },
     );
