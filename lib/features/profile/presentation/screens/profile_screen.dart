@@ -123,7 +123,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         authCubit.logout();
                         loginCubit.onLogout();
                       },
-                      child: Text('profileScreen.logout'.tr()),
+                      child: Row(
+                        spacing: 8.0,
+                        mainAxisSize: .min,
+                        children: [
+                          Text('profileScreen.logout'.tr()),
+                          Icon(
+                            Icons.logout,
+                            color: theme.colorScheme.primary,
+                            size: 16.0,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
