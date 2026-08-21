@@ -1,0 +1,174 @@
+{
+  "okText": "ОК",
+  "cancelText": "Отмена",
+  "and": "и",
+  "change": "Изменить",
+  "you": "Вы",
+  "other": {
+    "one": "{} другой",
+    "few": "{} другие",
+    "many": "{} других",
+    "other": "{} других"
+  },
+  "bottomNavBar": {
+    "contacts": "Контакты",
+    "chats": "Чаты",
+    "notifications": "Уведомления",
+    "profile": "Профиль"
+  },
+  "loginScreen": {
+    "screenName": "Вход",
+    "fieldNameEmail": "Email",
+    "fieldNamePassword": "Пароль",
+    "btnLogin": "Войти"
+  },
+  "createProfileScreen": {
+    "screenName": "Создать аккаунт",
+    "fieldUserName": "Имя пользователя",
+    "btnCreate": "Создать аккаунт",
+    "createSuccessMessage": "Поздравляем! Профиль успешно создан. Пожалуйста, войдите, чтобы начать пользоваться приложением."
+  },
+  "resetPasswordScreen": {
+    "screenName": "Переустановить пароль",
+    "fieldEmail": "Почта",
+    "btnRequest": "Запросить код",
+    "codeSent": "Если почта существует, код был выслан на",
+    "btnValidateCode": "Проверить код",
+    "btnResetPassword": "Установить пароль",
+    "fieldCode": "Код",
+    "timeIsUp": "Время вышло. Пожалуйста, запросите код снова",
+    "resendCode": "Выслать код через",
+    "codeRequestIn": "Запрос кода через",
+    "fieldPassword": "Пароль",
+    "fieldRepeatPassword": "Повторите пароль",
+    "successMessage": "Ваш пароль был успешно обновлен. Пожалуйста, войдите с новым паролем.",
+    "backToLogin": "Вернуться к Login"
+  },
+  "profileScreen": {
+    "screenName": "Профиль",
+    "created": "Профиль создан успешно",
+    "btnLogout": "Выйти",
+    "changeLang": "Сменить язык",
+    "langEn": "Английский",
+    "langRu": "Русский",
+    "themeDark": "Темная тема",
+    "themeLight": "Светлая тема",
+    "logout": "Выйти",
+    "avatar": {
+      "removeAvatar": "Удалить аватар",
+      "areYouSure": "Вы уверены, что хотите удалить аватар?"
+    }
+  },
+  "editProfileScreen": {
+    "screenName": "Редактировать профиль",
+    "fieldDisplayName": "Отображаемое имя",
+    "btnChangePass": "Сменить пароль",
+    "btnSave": "Сохранить изменения",
+    "updated": "Профиль изменен успешно"
+  },
+  "changePasswordScreen": {
+    "screenName": "Смена пароля",
+    "currentPasField": "Текущий пароль",
+    "newPasField": "Новый пароль",
+    "btnSave": "Сохранить новый пароль",
+    "changed": "Пароль сохранен успешно"
+  },
+  "contactsScreen": {
+    "screenName": "Контакты"
+  },
+  "chatsScreen": {
+    "screenName": "Чаты",
+    "tabs": {
+      "active": "Активные",
+      "archive": "Архив"
+    }
+  },
+  "chatScreen": {
+    "screenName": "Чат",
+    "deleteMessage": "Удалить сообщение",
+    "areYouSure": "Вы уверены, что Вы хотите удалить сообщение?",
+    "editingMode": "Редактирование",
+    "edited": "Изменено",
+    "members": {
+      "addMember": "Добавить участника",
+      "removeMember": "Удалить участника",
+      "areYouSure": "Вы уверены, что Вы хотите удалить участника?",
+      "remove": "Удалить"
+    },
+    "owner": "Владелец",
+    "admin": "Администратор",
+    "pinnedMessage": "Закрепленное сообщение",
+    "online": "В сети",
+    "offline": "Не в сети",
+    "muted": "Звук выкл.",
+    "unmuted": "Звук вкл.",
+    "unreadMessages": "Непрочитанные сообщения",
+    "showPinnedMessages": "Посмотреть закрепленные сообщения",
+    "replyTo": "В ответ",
+    "typing": "Печатает ..."
+  },
+  "editChatScreen": {
+    "addMember": "Добавить участника",
+    "leavingChat": {
+      "leaveChat": "Выйти из чата",
+      "areYouSure": "Вы уверены, что Вы хотите покинуть чат?"
+    },
+    "changeOwner": "Сменить владельца",
+    "newOwner": "Новый владелец",
+    "makeAdmin": "Админ. вкл.",
+    "disableAdmin": "Админ. выкл"
+  },
+  "notificationsScreen": {
+    "screenName": "Уведомления",
+    "bodyText": {
+      "message": "Новое сообщение",
+      "chatUpdated": "Чат был обновлен",
+      "adminGranted": "Вам выдали права администратора",
+      "adminRevoked": "Права администратора сняты",
+      "memberAdded": "В чат добавлен новый участник",
+      "memberRemoved": "Участник покинул чат",
+      "chatInvite": "Вас пригласили в чат",
+      "ownerChanged": "Изменился владелец чата",
+      "reaction": "К вашему сообщению добавили реакцию",
+      "reply": "Вам ответили"
+    },
+    "noNotifications": "Нет уведомлений"
+  },
+  "createGroupScreen": {
+    "screenName": "Создать группу",
+    "addParticipants": "Добавить участников",
+    "setName": "Задать имя группы",
+    "participants": {
+      "one": "{} участник",
+      "few": "{} участника",
+      "many": "{} участников",
+      "other": "{} участников"
+    }
+  },
+  "fieldValidation": {
+    "fieldIsRequired": "Это поле обязательно!",
+    "enterEmail": "Введите email",
+    "enterPassword": "Введите пароль",
+    "minPasLength": "Минимальная длина 8 символов",
+    "mustEquals": "Должны совпадать!"
+  },
+  "errors": {
+    "somethingWentWrong": "Ой! Что-то пошло не так",
+    "authError": "Ошибка аутентификации",
+    "wrongEmailOrPassword": "Неверный email или пароль",
+    "serverError": "Ошибка сервера",
+    "cacheError": "Ошибка чтения данных с устройства",
+    "noData": "Нет данных для отображения",
+    "accessTokenInvalid": "Access token невалидный",
+    "logoutError": "Ошибка logout",
+    "network": {
+      "noInternet": "Проблемы с подключением к сети",
+      "timeout": "Время ожидания ответа истекло",
+      "sslError": "Ошибка SSL сертификата",
+      "connectionError": "Ошибка соединения"
+    },
+    "chatsErrors": {
+      "addParticipants": "Добавьте хотя-бы одного участника!"
+    }
+  }
+}

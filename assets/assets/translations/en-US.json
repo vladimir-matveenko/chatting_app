@@ -1,0 +1,174 @@
+{
+  "okText": "ОК",
+  "cancelText": "Cancel",
+  "and": "and",
+  "change": "Change",
+  "you": "You",
+  "other": {
+    "one": "{} other",
+    "few": "{} other",
+    "many": "{} other",
+    "other": "{} other"
+  },
+  "bottomNavBar": {
+    "contacts": "Contacts",
+    "chats": "Chats",
+    "notifications": "Notifications",
+    "profile": "Profile"
+  },
+  "loginScreen": {
+    "screenName": "Login",
+    "fieldNameEmail": "Email",
+    "fieldNamePassword": "Password",
+    "btnLogin": "Login"
+  },
+  "createProfileScreen": {
+    "screenName": "Create profile",
+    "fieldUserName": "User name",
+    "btnCreate": "Create profile",
+    "createSuccessMessage": "Your profile has been successfully created. Please log in to start using the app."
+  },
+  "resetPasswordScreen": {
+    "screenName": "Reset password",
+    "fieldEmail": "Email",
+    "btnRequest": "Request code",
+    "codeSent": "If the email exists, a reset code has been sent to",
+    "btnValidateCode": "Validate code",
+    "btnResetPassword": "Reset password",
+    "fieldCode": "Code",
+    "timeIsUp": "Time is up. Please, request code again",
+    "resendCode": "Resend code in",
+    "codeRequestIn": "Code request in",
+    "fieldPassword": "Password",
+    "fieldRepeatPassword": "Repeat password",
+    "successMessage": "Your password has been changed successful. Please log in with a new password.",
+    "backToLogin": "Back to Login"
+  },
+  "profileScreen": {
+    "screenName": "Profile",
+    "created": "Profile created successful",
+    "btnLogout": "Logout",
+    "changeLang": "Change language",
+    "langEn": "English",
+    "langRu": "Russian",
+    "themeDark": "Dark theme",
+    "themeLight": "Light theme",
+    "logout": "Logout",
+    "avatar": {
+      "removeAvatar": "Remove avatar",
+      "areYouSure": "Are you sure, you want to remove avatar?"
+    }
+  },
+  "editProfileScreen": {
+    "screenName": "Edit profile",
+    "fieldDisplayName": "Display name",
+    "btnChangePass": "Change password",
+    "btnSave": "Save changes",
+    "updated": "Profile changed successful"
+  },
+  "changePasswordScreen": {
+    "screenName": "Change password",
+    "currentPasField": "Current password",
+    "newPasField": "New password",
+    "btnSave": "Save new password",
+    "changed": "Password changed successful"
+  },
+  "contactsScreen": {
+    "screenName": "Contacts"
+  },
+  "chatsScreen": {
+    "screenName": "Chats",
+    "tabs": {
+      "active": "Active",
+      "archive": "Archive"
+    }
+  },
+  "chatScreen": {
+    "screenName": "Chat",
+    "deleteMessage": "Delete message",
+    "areYouSure": "Are you sure you want to delete a message?",
+    "editingMode": "Editing",
+    "edited": "Edited",
+    "members": {
+      "addMember": "Add participant",
+      "removeMember": "Remove participant",
+      "areYouSure": "Are you sure you want to delete a participant?",
+      "remove": "Remove"
+    },
+    "owner": "Owner",
+    "admin": "Admin",
+    "pinnedMessage": "Pinned message",
+    "online": "Online",
+    "offline": "Offline",
+    "muted": "Muted",
+    "unmuted": "Unmuted",
+    "unreadMessages": "Unread messages",
+    "showPinnedMessages": "Show pinned messages",
+    "replyTo": "Reply to",
+    "typing": "Typing ..."
+  },
+  "editChatScreen": {
+    "addMember": "Add member",
+    "leavingChat": {
+      "leaveChat": "Leave chat",
+      "areYouSure": "Are you sure you want to leave chat?"
+    },
+    "changeOwner": "Change owner",
+    "newOwner": "New owner",
+    "makeAdmin": "Admin on",
+    "disableAdmin": "Admin off"
+  },
+  "notificationsScreen": {
+    "screenName": "Notifications",
+    "bodyText": {
+      "message": "New message",
+      "chatUpdated": "Chat updated",
+      "adminGranted": "You have been granted admin rights",
+      "adminRevoked": "Admin rights revoked",
+      "memberAdded": "New member added to the chat",
+      "memberRemoved": "Member removed from the chat",
+      "chatInvite": "You have been invited to a chat",
+      "ownerChanged": "Chat owner changed",
+      "reaction": "Reactions added to your message",
+      "reply": "You received a reply"
+    },
+    "noNotifications": "No notifications"
+  },
+  "createGroupScreen": {
+    "screenName": "Create group",
+    "addParticipants": "Add participants",
+    "setName": "Set group name",
+    "participants": {
+      "one": "{} participant",
+      "few": "{} participants",
+      "many": "{} participants",
+      "other": "{} participants"
+    }
+  },
+  "fieldValidation": {
+    "fieldIsRequired": "This field is required!",
+    "enterEmail": "Enter email",
+    "enterPassword": "Enter password",
+    "minPasLength": "Min length is 8 chars",
+    "mustEquals": "Must be equal!"
+  },
+  "errors": {
+    "somethingWentWrong": "Oops! Something went wrong",
+    "authError": "Auth error",
+    "wrongEmailOrPassword": "Wrong email or password",
+    "serverError": "Server error",
+    "cacheError": "Cache reading error",
+    "noData": "No data available",
+    "accessTokenInvalid": "Access token is invalid",
+    "logoutError": "Logout error",
+    "network": {
+      "noInternet": "Network error",
+      "timeout": "Connection timeout",
+      "sslError": "SSL error",
+      "connectionError": "Connection error"
+    },
+    "chatsErrors": {
+      "addParticipants": "Add at least 1 participant!"
+    }
+  }
+}
