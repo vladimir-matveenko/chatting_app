@@ -19,10 +19,10 @@ void main() {
 
   Widget createWidget() {
     return EasyLocalization(
-      supportedLocales: const [Locale('en')],
-      startLocale: const Locale('en'),
-      path: 'assets/translations/en.json',
-      fallbackLocale: const Locale('en'),
+      supportedLocales: const [Locale('en', 'US')],
+      startLocale: const Locale('en', 'US'),
+      path: 'assets/translations/en-US.json',
+      fallbackLocale: const Locale('en', 'US'),
       child: MaterialApp(
         home: BlocProvider<LoginCubit>.value(
           value: mockCubit,
