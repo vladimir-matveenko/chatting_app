@@ -117,9 +117,7 @@ class ListItem extends StatelessWidget {
                 imageUrls: avatars,
                 names: names,
                 placeholderBackgroundColor: theme.unselectedWidgetColor,
-                borderColor: theme.isDark
-                    ? Colors.white
-                    : Colors.grey.shade500,
+                borderColor: theme.isDark ? Colors.white : Colors.grey.shade500,
               ),
               if (chat.participantsCount > 2)
                 Text(

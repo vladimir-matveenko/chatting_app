@@ -24,7 +24,7 @@ class SetGroupNameWidget extends StatelessWidget {
             fixedSize: const Size(60.0, 60.0),
             padding: const .all(10.0),
           ),
-          child: const Icon(Icons.add_a_photo, size: 24.0,),
+          child: const Icon(Icons.add_a_photo, size: 24.0),
         ),
         Expanded(child: AppTextFormField(controller: controller)),
       ],

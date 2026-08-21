@@ -19,11 +19,7 @@ class CustomFab extends StatelessWidget {
           child: FadeTransition(opacity: animation, child: child),
         );
       },
-      child: MainScreenUtils.getFAB(
-        context,
-        state: state,
-        action: action,
-      ),
+      child: MainScreenUtils.getFAB(context, state: state, action: action),
     );
   }
 }
