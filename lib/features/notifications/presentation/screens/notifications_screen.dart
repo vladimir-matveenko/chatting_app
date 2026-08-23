@@ -18,6 +18,7 @@ class NotificationsScreen extends StatelessWidget {
       builder: (context, state) {
         final isLoading = state.isLoading;
         return Column(
+          crossAxisAlignment: .stretch,
           children: [
             TypeFilterBlock(
               availabilityFilters: state.filters,

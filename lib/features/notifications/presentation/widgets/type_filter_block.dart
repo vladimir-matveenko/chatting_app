@@ -39,10 +39,10 @@ class TypeFilterBlock extends StatelessWidget {
     );
 
     return Container(
-      padding: const .all(8.0),
       color: theme.bottomNavigationBarTheme.backgroundColor,
-      child: Row(
-        children: [Wrap(spacing: 8.0, runSpacing: 8.0, children: filters)],
+      child: Padding(
+        padding: const .symmetric(horizontal: 8.0),
+        child: Wrap(spacing: 8.0, runSpacing: 8.0, children: filters),
       ),
     );
   }
