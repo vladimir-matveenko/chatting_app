@@ -5,6 +5,8 @@ class AppConstants {
   const AppConstants._();
 
   static const themeKey = 'theme_mode';
+
+  /// test data
   static const testEmail = 'john@example.com';
   static const testPassword = '1234567890';
 
