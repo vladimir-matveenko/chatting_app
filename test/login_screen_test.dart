@@ -185,7 +185,7 @@ void main() {
           )
           .controller
           ?.text,
-      'email@email.com',
+      'john@example.com',
     );
 
     expect(
@@ -210,7 +210,7 @@ void main() {
     await tester.pump();
 
     verify(
-      () => mockCubit.login(email: 'email@email.com', password: '1234567890'),
+      () => mockCubit.login(email: 'john@example.com', password: '1234567890'),
     ).called(1);
   });
 
