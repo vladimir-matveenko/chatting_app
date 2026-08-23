@@ -5,6 +5,7 @@ import 'package:chatting_app/core/websocket/socket_token_provider.dart';
 import 'package:injectable/injectable.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
+import '../../app_env.dart';
 import 'events/socket_event.dart';
 import 'socket_events.dart';
 import 'socket_events_mapper.dart';
@@ -44,7 +45,7 @@ class SocketServiceImpl implements SocketService {
     _currentToken = token;
 
     _socket = io.io(
-      'http://localhost:3000',
+      AppEnv.baseUrl,
       io.OptionBuilder()
           .setTransports(['websocket'])
           .enableForceNew()
