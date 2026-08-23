@@ -73,6 +73,7 @@ class _ChangePasswordBodyState extends State<ChangePasswordBody> {
             }
             return null;
           },
+          showGoToLoginButton: true,
         ),
       ),
     );

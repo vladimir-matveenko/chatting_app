@@ -22,6 +22,7 @@ class ChangePasswordForm extends StatelessWidget {
     required this.onObscureCurrentChanged,
     required this.onObscureNewChanged,
     this.newPasswordValidator,
+    this.showGoToLoginButton = false,
   });
 
   final bool isFormActive;
@@ -38,6 +39,7 @@ class ChangePasswordForm extends StatelessWidget {
   final Function(bool) onObscureCurrentChanged;
   final Function(bool) onObscureNewChanged;
   final String? Function(String?)? newPasswordValidator;
+  final bool showGoToLoginButton;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,7 @@ class ChangePasswordForm extends StatelessWidget {
             onPressed: !isFormActive ? null : onSaveTapped,
             child: isLoading ? AppLoader.small() : Text(mainButtonText),
           ),
-          const BackToLoginButton(),
+          if (showGoToLoginButton) const BackToLoginButton(),
         ],
       ),
     );
