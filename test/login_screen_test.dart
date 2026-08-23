@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:chatting_app/app/constants/app_constants.dart';
 import 'package:chatting_app/core/presentation/widgets/text_fields/email_text_field.dart';
 import 'package:chatting_app/core/presentation/widgets/text_fields/password_field.dart';
 import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
@@ -96,12 +97,12 @@ void main() {
 
     expect(
       tester.widget<TextFormField>(emailTextField).controller?.text,
-      'email@email.com',
+      AppConstants.testEmail,
     );
 
     expect(
       tester.widget<TextFormField>(passwordTextField).controller?.text,
-      '1234567890',
+      AppConstants.testPassword,
     );
   });
 
@@ -185,7 +186,7 @@ void main() {
           )
           .controller
           ?.text,
-      'john@example.com',
+      AppConstants.testEmail,
     );
 
     expect(
@@ -198,7 +199,7 @@ void main() {
           )
           .controller
           ?.text,
-      '1234567890',
+      AppConstants.testPassword,
     );
 
     final loginButton = find.widgetWithText(
@@ -210,7 +211,10 @@ void main() {
     await tester.pump();
 
     verify(
-      () => mockCubit.login(email: 'john@example.com', password: '1234567890'),
+      () => mockCubit.login(
+        email: AppConstants.testEmail,
+        password: AppConstants.testPassword,
+      ),
     ).called(1);
   });
 

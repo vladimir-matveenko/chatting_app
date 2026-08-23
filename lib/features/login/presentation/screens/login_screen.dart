@@ -1,3 +1,4 @@
+import 'package:chatting_app/app/constants/app_constants.dart';
 import 'package:chatting_app/core/presentation/widgets/text_fields/email_text_field.dart';
 import 'package:chatting_app/core/presentation/widgets/text_fields/password_field.dart';
 import 'package:chatting_app/features/auth/presentation/cubit/cubit.dart';
@@ -39,8 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
     cubit = context.read<LoginCubit>();
     cubit.setInitialParameters();
     // _emailController.text = 'email@email.com';
-    _emailController.text = 'john@example.com';
-    _passwordController.text = '1234567890';
+    _emailController.text = AppConstants.testEmail;
+    _passwordController.text = AppConstants.testPassword;
     super.initState();
   }
 
