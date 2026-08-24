@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 class AssetPaths {
   const AssetPaths._();
 
-  static const assetDbPath = 'assets/database/';
-  static const assetTextsPath = 'assets/texts/texts.json';
   static const assetTranslationsPath = 'assets/translations';
   static const splashLogo = 'assets/images/splash_logo.png';
   static const splashBackground = 'assets/images/splash_background.png';
