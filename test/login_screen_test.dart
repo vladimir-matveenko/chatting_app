@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:chatting_app/app/constants/app_constants.dart';
+import 'package:chatting_app/app/constants/asset_paths.dart';
 import 'package:chatting_app/core/presentation/widgets/text_fields/email_text_field.dart';
 import 'package:chatting_app/core/presentation/widgets/text_fields/password_field.dart';
 import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
@@ -10,11 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MockLoginCubit extends Mock implements LoginCubit {}
 
-void main() {
+void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences.setMockInitialValues({});
+  await EasyLocalization.ensureInitialized();
 
   late MockLoginCubit mockCubit;
 
@@ -22,7 +26,7 @@ void main() {
     return EasyLocalization(
       supportedLocales: const [Locale('en', 'US')],
       startLocale: const Locale('en', 'US'),
-      path: 'assets/translations/en-US.json',
+      path: AssetPaths.assetTranslationsPath,
       fallbackLocale: const Locale('en', 'US'),
       child: MaterialApp(
         home: BlocProvider<LoginCubit>.value(
@@ -123,7 +127,10 @@ void main() {
       );
 
       expect(
-        find.widgetWithText(TextButton, 'resetPasswordScreen.screenName'.tr()),
+        find.widgetWithText(
+          TextButton,
+          '${'loginScreen.forgotPassword'.tr()}?',
+        ),
         findsOneWidget,
       );
     },

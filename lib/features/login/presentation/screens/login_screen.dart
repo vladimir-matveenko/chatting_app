@@ -131,10 +131,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       spacing: 8.0,
                       mainAxisAlignment: .center,
                       children: [
-                        Text(
-                          'loginScreen.dontHaveAccount'.tr(),
-                          style: theme.textTheme.bodyMedium,
-                          textAlign: .center,
+                        Flexible(
+                          child: Text(
+                            'loginScreen.dontHaveAccount'.tr(),
+                            style: theme.textTheme.bodyMedium,
+                            textAlign: .center,
+                          ),
                         ),
                         TextButton(
                           onPressed: () {

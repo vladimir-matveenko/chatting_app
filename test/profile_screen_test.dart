@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:chatting_app/app/constants/asset_paths.dart';
 import 'package:chatting_app/features/auth/domain/entity/user_entity.dart';
 import 'package:chatting_app/features/auth/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/auth/presentation/cubit/state.dart';
@@ -19,6 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MockProfileCubit extends Mock implements ProfileCubit {}
 
@@ -32,7 +34,11 @@ class FakeProfileState extends Fake implements ProfileState {}
 
 class FakeThemeState extends Fake implements ThemeState {}
 
-void main() {
+void main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences.setMockInitialValues({});
+  await EasyLocalization.ensureInitialized();
+
   late MockProfileCubit profileCubit;
   late MockAuthCubit authCubit;
   late MockLoginCubit loginCubit;
@@ -147,7 +153,7 @@ void main() {
         child: EasyLocalization(
           supportedLocales: const [Locale('en', 'US')],
           startLocale: const Locale('en', 'US'),
-          path: 'assets/translations/en-US.json',
+          path: AssetPaths.assetTranslationsPath,
           fallbackLocale: const Locale('en', 'US'),
           child: MaterialApp.router(routerConfig: createRouter()),
         ),
