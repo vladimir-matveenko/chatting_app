@@ -39,7 +39,6 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     cubit = context.read<LoginCubit>();
     cubit.setInitialParameters();
-    // _emailController.text = 'email@email.com';
     _emailController.text = AppConstants.testEmail;
     _passwordController.text = AppConstants.testPassword;
     super.initState();
@@ -87,6 +86,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: theme.colorScheme.primary,
                     ),
                     const SizedBox(height: 40.0),
+                    Text(
+                      'loginScreen.welcomeBack'.tr(),
+                      style: theme.textTheme.headlineMedium,
+                      textAlign: .center,
+                    ),
+                    const SizedBox(height: 16.0),
                     EmailTextField(
                       enabled: !isLoading,
                       emailController: _emailController,
@@ -98,6 +103,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       onObscureChanged: (value) {
                         obscure.value = value;
                       },
+                    ),
+                    Row(
+                      mainAxisAlignment: .end,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            context.push(AppRoutes.resetPassword);
+                          },
+                          child: Text('${'loginScreen.forgotPassword'.tr()}?'),
+                        ),
+                      ],
                     ),
                     ElevatedButton(
                       onPressed: isLoading ? null : handleLogin,
@@ -111,17 +127,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             )
                           : Text('loginScreen.btnLogin'.tr()),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        context.push(AppRoutes.createProfile);
-                      },
-                      child: Text('createProfileScreen.screenName'.tr()),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context.push(AppRoutes.resetPassword);
-                      },
-                      child: Text('resetPasswordScreen.screenName'.tr()),
+                    Row(
+                      spacing: 8.0,
+                      mainAxisAlignment: .center,
+                      children: [
+                        Text(
+                          'loginScreen.dontHaveAccount'.tr(),
+                          style: theme.textTheme.bodyMedium,
+                          textAlign: .center,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            context.push(AppRoutes.createProfile);
+                          },
+                          child: Text('createProfileScreen.screenName'.tr()),
+                        ),
+                      ],
                     ),
                   ],
                 ),

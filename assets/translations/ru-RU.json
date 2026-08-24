@@ -18,8 +18,11 @@
   },
   "loginScreen": {
     "screenName": "Вход",
+    "welcomeBack": "С возвращением!",
+    "dontHaveAccount": "Еще нет акаунта?",
     "fieldNameEmail": "Email",
     "fieldNamePassword": "Пароль",
+    "forgotPassword": "Забыли пароль",
     "btnLogin": "Войти"
   },
   "createProfileScreen": {
