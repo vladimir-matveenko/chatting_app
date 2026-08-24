@@ -18,12 +18,15 @@
   },
   "loginScreen": {
     "screenName": "Login",
+    "welcomeBack": "Welcome back!",
+    "dontHaveAccount": "Don't have an account?",
     "fieldNameEmail": "Email",
     "fieldNamePassword": "Password",
+    "forgotPassword": "Forgot password",
     "btnLogin": "Login"
   },
   "createProfileScreen": {
-    "screenName": "Create profile",
+    "screenName": "Create account",
     "fieldUserName": "User name",
     "btnCreate": "Create profile",
     "createSuccessMessage": "Your profile has been successfully created. Please log in to start using the app."
