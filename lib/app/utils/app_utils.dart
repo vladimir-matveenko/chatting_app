@@ -19,10 +19,10 @@ class AppUtils {
       return 'errors.serverError'.tr();
     }
     if (failure is TimeoutFailure) {
-      return 'errors.timeout'.tr();
+      return 'errors.network.timeout'.tr();
     }
     if (failure is TimeoutFailure) {
-      return 'errors.timeout'.tr();
+      return 'errors.network.timeout'.tr();
     }
     if (failure is UnknownFailure) {
       return failure.message;
