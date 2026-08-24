@@ -87,7 +87,8 @@ class _MessagesListState extends State<MessagesList> {
     _timer = Timer(
       const Duration(seconds: 10),
       () => WidgetsBinding.instance.addPostFrameCallback((_) {
-        if ((widget.chat.lastReadMessageId ?? 0) < widget.messages.first.id) {
+        if (widget.messages.isNotEmpty &&
+            (widget.chat.lastReadMessageId ?? 0) < widget.messages.first.id) {
           final id = widget.messages.first.id;
           _onMessageSeen(id);
         }
