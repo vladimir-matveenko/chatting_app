@@ -164,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
           if (state.status == LoginStatus.success) {
+            context.read<AuthCubit>().hasLoggedIn = true;
             context.read<AuthCubit>().checkAuth();
           }
         },

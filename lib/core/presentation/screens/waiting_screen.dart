@@ -38,11 +38,21 @@ class _WaitingScreenState extends State<WaitingScreen> {
         child: CountdownTimer(
           controller: _timerController,
           timer: (sec) {
-            return CustomProgressIndicator(
-              initialValue: _time,
-              currentValue: sec,
-              activeColor: theme.unselectedWidgetColor,
-              inactiveColor: theme.colorScheme.primary,
+            return Column(
+              spacing: 8.0,
+              crossAxisAlignment: .center,
+              children: [
+                CustomProgressIndicator(
+                  initialValue: _time,
+                  currentValue: sec,
+                  activeColor: theme.unselectedWidgetColor,
+                  inactiveColor: theme.colorScheme.primary,
+                ),
+                Text(
+                  'waitingScreen.waitingForServer'.tr(),
+                  style: theme.textTheme.bodyLarge,
+                ),
+              ],
             );
           },
           onFinishedPlaceholder: Column(
