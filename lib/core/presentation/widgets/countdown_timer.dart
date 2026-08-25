@@ -70,12 +70,14 @@ class CountdownTimer extends StatefulWidget {
     this.initialSeconds = 0,
     this.prefixWidget,
     this.onFinishedPlaceholder,
+    this.timer,
   });
 
   final CountdownController controller;
   final int initialSeconds;
   final Widget? prefixWidget;
   final Widget? onFinishedPlaceholder;
+  final Widget Function(int)? timer;
 
   @override
   State<CountdownTimer> createState() => _CountdownTimerState();
@@ -135,10 +137,14 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
     final isFinished = widget.controller.isFinished;
 
-    final timerWidget = Text(
-      _formatTime(widget.controller.remainingSeconds),
-      style: isFinished ? textStyle?.copyWith(color: finishedColor) : textStyle,
-    );
+    final timerWidget = widget.timer != null
+        ? widget.timer!(widget.controller.remainingSeconds)
+        : Text(
+            _formatTime(widget.controller.remainingSeconds),
+            style: isFinished
+                ? textStyle?.copyWith(color: finishedColor)
+                : textStyle,
+          );
 
     if (isFinished) {
       return widget.onFinishedPlaceholder ??

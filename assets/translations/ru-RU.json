@@ -160,6 +160,7 @@
     "authError": "Ошибка аутентификации",
     "wrongEmailOrPassword": "Неверный email или пароль",
     "serverError": "Ошибка сервера",
+    "noConnectionWithServer": "Нет соединения с сервером",
     "cacheError": "Ошибка чтения данных с устройства",
     "noData": "Нет данных для отображения",
     "accessTokenInvalid": "Access token невалидный",

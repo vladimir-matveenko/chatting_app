@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:chatting_app/core/presentation/screens/waiting_screen.dart';
 import 'package:chatting_app/features/chat/presentation/screens/chat_settings_screen.dart';
 import 'package:chatting_app/features/chat/presentation/screens/create_group_screen.dart';
 import 'package:chatting_app/features/chats/presentation/screens/chats_screen.dart';
@@ -43,9 +44,14 @@ class AppRouter {
       final isLogin = state.matchedLocation == AppRoutes.login;
       final isCreateProfile = state.matchedLocation == AppRoutes.createProfile;
       final isResetPassword = state.matchedLocation == AppRoutes.resetPassword;
+      final isWaiting = state.matchedLocation == AppRoutes.waiting;
 
       if (status == AuthStatus.unknown) {
         return null;
+      }
+
+      if (status == AuthStatus.serverLoading) {
+        return AppRoutes.waiting;
       }
 
       if (status == AuthStatus.unauthenticated) {
@@ -56,7 +62,11 @@ class AppRouter {
       }
 
       if (status == AuthStatus.authenticated) {
-        if (isSplash || isCreateProfile || isLogin || isResetPassword) {
+        if (isSplash ||
+            isCreateProfile ||
+            isLogin ||
+            isResetPassword ||
+            isWaiting) {
           return AppRoutes.chats;
         }
         return null;
@@ -94,6 +104,11 @@ class AppRouter {
         path: AppRoutes.createGroup,
         pageBuilder: (context, state) =>
             const NoTransitionPage(child: CreateGroupScreen()),
+      ),
+      GoRoute(
+        path: AppRoutes.waiting,
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: WaitingScreen()),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

@@ -27,6 +27,8 @@ import 'package:chatting_app/features/auth/domain/repository/auth_repository.dar
     as _i207;
 import 'package:chatting_app/features/auth/domain/usecases/check_auth_usecase.dart'
     as _i323;
+import 'package:chatting_app/features/auth/domain/usecases/check_server_usecase.dart'
+    as _i39;
 import 'package:chatting_app/features/auth/domain/usecases/clear_cache_usecase.dart'
     as _i478;
 import 'package:chatting_app/features/auth/domain/usecases/get_token_usecase.dart'
@@ -370,6 +372,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i323.CheckAuthUseCase>(
       () => _i323.CheckAuthUseCase(gh<_i207.AuthRepository>()),
     );
+    gh.lazySingleton<_i39.CheckServerUseCase>(
+      () => _i39.CheckServerUseCase(gh<_i207.AuthRepository>()),
+    );
     gh.lazySingleton<_i478.ClearCacheUseCase>(
       () => _i478.ClearCacheUseCase(gh<_i207.AuthRepository>()),
     );
@@ -503,15 +508,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i156.ChatsSocketService>(
       () => _i4.ChatSocketServiceImpl(gh<_i739.SocketService>()),
     );
-    gh.lazySingleton<_i330.AuthCubit>(
-      () => _i330.AuthCubit(
-        gh<_i323.CheckAuthUseCase>(),
-        gh<_i844.LogoutUseCase>(),
-        gh<_i866.GetTokenUseCase>(),
-        gh<_i739.SocketService>(),
-        gh<_i478.ClearCacheUseCase>(),
-      ),
-    );
     gh.lazySingleton<_i348.ChatCubit>(
       () => _i348.ChatCubit(
         gh<_i415.GetChatUseCase>(),
@@ -526,6 +522,16 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i349.ChangeOwnerUseCase>(),
         gh<_i454.ChangeMemberRoleUseCase>(),
         gh<_i626.GetMeFromChatUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i330.AuthCubit>(
+      () => _i330.AuthCubit(
+        gh<_i323.CheckAuthUseCase>(),
+        gh<_i844.LogoutUseCase>(),
+        gh<_i866.GetTokenUseCase>(),
+        gh<_i39.CheckServerUseCase>(),
+        gh<_i739.SocketService>(),
+        gh<_i478.ClearCacheUseCase>(),
       ),
     );
     gh.lazySingleton<_i289.AppRouter>(
