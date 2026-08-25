@@ -11,4 +11,5 @@ class AssetPaths {
   static const flagRu = 'assets/svg_icons/flag_ru.svg';
   static const flagUs = 'assets/svg_icons/flag_us.svg';
   static const somethingWentWrong = 'assets/images/something_went_wrong.png';
+  static const noConnectionServer = 'assets/images/no_connection_server.png';
 }

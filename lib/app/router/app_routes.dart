@@ -1,5 +1,11 @@
+import 'package:flutter/material.dart';
+
+@immutable
 class AppRoutes {
+  const AppRoutes._();
+
   static const splash = '/splash';
+  static const waiting = '/waiting';
   static const login = '/login';
   static const createProfile = '/create-profile';
   static const resetPassword = '/reset-password';

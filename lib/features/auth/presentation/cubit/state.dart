@@ -1,6 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-enum AuthStatus { unknown, authenticated, unauthenticated }
+enum AuthStatus {
+  unknown,
+  authenticated,
+  serverLoading,
+  unauthenticated,
+  serverFailed,
+}
 
 class AuthState extends Equatable {
   const AuthState({this.status = AuthStatus.unknown});

@@ -6,6 +6,8 @@ import '../../../../core/network/base_remote_data_source.dart';
 import '../models/auth_token_model.dart';
 
 abstract class AuthRemoteDataSource {
+  Future<bool> checkHealth();
+
   Future<AuthTokenModel?> register({
     required String userName,
     required String email,
@@ -26,6 +28,14 @@ class AuthRemoteDataSourceImpl extends BaseRemoteDataSource
   AuthRemoteDataSourceImpl(this.dio);
 
   final Dio dio;
+
+  @override
+  Future<bool> checkHealth() {
+    return makeRequest<bool>(() async {
+      final response = await dio.get('health');
+      return response.statusCode == 200;
+    });
+  }
 
   @override
   Future<AuthTokenModel?> register({

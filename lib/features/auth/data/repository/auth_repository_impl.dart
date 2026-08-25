@@ -101,4 +101,14 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(mapExceptionToFailure(e));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> isServerReady() async {
+    try {
+      final result = await authRemoteDataSource.checkHealth();
+      return Right(result);
+    } catch (e) {
+      return const Right(false);
+    }
+  }
 }
