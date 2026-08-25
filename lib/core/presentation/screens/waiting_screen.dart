@@ -41,6 +41,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
             return Column(
               spacing: 8.0,
               crossAxisAlignment: .center,
+              mainAxisSize: .min,
               children: [
                 CustomProgressIndicator(
                   initialValue: _time,
@@ -58,6 +59,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
           onFinishedPlaceholder: Column(
             spacing: 8.0,
             crossAxisAlignment: .center,
+            mainAxisSize: .min,
             children: [
               Image.asset(
                 height: context.isLandscape()
