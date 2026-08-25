@@ -19,7 +19,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
 
   @override
   void initState() {
-    _timerController.start(12);
+    _timerController.start(60);
     super.initState();
   }
 
@@ -40,7 +40,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
           controller: _timerController,
           timer: (sec) {
             return CustomProgressIndicator(
-              initialValue: 12,
+              initialValue: 60,
               currentValue: sec,
               activeColor: theme.unselectedWidgetColor,
               inactiveColor: theme.colorScheme.primary,
