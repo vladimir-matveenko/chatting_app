@@ -16,6 +16,9 @@
     "notifications": "Уведомления",
     "profile": "Профиль"
   },
+  "waitingScreen": {
+    "waitingForServer": "Ожидание ответа сервера"
+  },
   "loginScreen": {
     "screenName": "Вход",
     "welcomeBack": "С возвращением!",

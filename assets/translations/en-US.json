@@ -16,6 +16,9 @@
     "notifications": "Notifications",
     "profile": "Profile"
   },
+  "waitingScreen": {
+    "waitingForServer": "Waiting for the server response"
+  },
   "loginScreen": {
     "screenName": "Login",
     "welcomeBack": "Welcome back!",
