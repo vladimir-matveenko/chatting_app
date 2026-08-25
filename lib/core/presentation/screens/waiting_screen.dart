@@ -1,4 +1,3 @@
-import 'package:chatting_app/core/presentation/widgets/app_back_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +14,12 @@ class WaitingScreen extends StatefulWidget {
 }
 
 class _WaitingScreenState extends State<WaitingScreen> {
+  final _time = 60;
   final _timerController = CountdownController();
 
   @override
   void initState() {
-    _timerController.start(12);
+    _timerController.start(_time);
     super.initState();
   }
 
@@ -34,13 +34,12 @@ class _WaitingScreenState extends State<WaitingScreen> {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.sizeOf(context);
     return Scaffold(
-      appBar: AppBar(leading: const AppBackButton()),
       body: Center(
         child: CountdownTimer(
           controller: _timerController,
           timer: (sec) {
             return CustomProgressIndicator(
-              initialValue: 12,
+              initialValue: _time,
               currentValue: sec,
               activeColor: theme.unselectedWidgetColor,
               inactiveColor: theme.colorScheme.primary,
