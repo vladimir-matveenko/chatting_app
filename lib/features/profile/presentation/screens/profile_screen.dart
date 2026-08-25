@@ -123,9 +123,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       OutlinedButton(
                         onPressed: () {
-                          // authCubit.logout();
-                          // loginCubit.onLogout();
-                          context.push(AppRoutes.waiting);
+                          authCubit.logout();
+                          loginCubit.onLogout();
                         },
                         child: Row(
                           spacing: 8.0,
