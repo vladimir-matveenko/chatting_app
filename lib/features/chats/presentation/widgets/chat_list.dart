@@ -105,53 +105,50 @@ class ListItem extends StatelessWidget {
             ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            spacing: 8.0,
-            mainAxisAlignment: .start,
-            crossAxisAlignment: .center,
-            children: [
-              AvatarStack(
-                avatarSize: 30.0,
-                imageUrls: avatars,
-                names: names,
-                placeholderBackgroundColor: theme.unselectedWidgetColor,
-                borderColor: theme.isDark ? Colors.white : Colors.grey.shade500,
+        child: Row(
+          spacing: 8.0,
+          mainAxisAlignment: .start,
+          crossAxisAlignment: .center,
+          children: [
+            AvatarStack(
+              avatarSize: 30.0,
+              imageUrls: avatars,
+              names: names,
+              placeholderBackgroundColor: theme.unselectedWidgetColor,
+              borderColor: theme.isDark ? Colors.white : Colors.grey.shade500,
+            ),
+            if (chat.participantsCount > 2)
+              Text(
+                '+${chat.participantsCount - 2}',
+                style: theme.textTheme.bodyMedium,
               ),
-              if (chat.participantsCount > 2)
-                Text(
-                  '+${chat.participantsCount - 2}',
-                  style: theme.textTheme.bodyMedium,
+            if (chat.title?.isNotEmpty == true)
+              Text(chat.title!, style: theme.textTheme.bodyMedium)
+            else if (chat.participantsCount == 2)
+              Text(
+                chat.participants.first.displayName ??
+                    chat.participants.first.userName,
+                style: theme.textTheme.bodyMedium,
+              ),
+            if (chat.unreadCount > 0) ...[
+              Chip(
+                label: Text(
+                  chat.unreadCount.toString(),
+                  style: theme.textTheme.titleLarge?.copyWith(fontSize: 12.0),
                 ),
-              if (chat.title?.isNotEmpty == true)
-                Text(chat.title!, style: theme.textTheme.bodyMedium)
-              else if (chat.participantsCount == 2)
-                Text(
-                  chat.participants.first.displayName ??
-                      chat.participants.first.userName,
-                  style: theme.textTheme.bodyMedium,
-                ),
-              if (chat.unreadCount > 0) ...[
-                Chip(
-                  label: Text(
-                    chat.unreadCount.toString(),
-                    style: theme.textTheme.titleLarge?.copyWith(fontSize: 12.0),
+              ),
+              if (chat.lastMessagePreview?.isNotEmpty == true)
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 120.0),
+                  child: Text(
+                    chat.lastMessagePreview!,
+                    style: theme.textTheme.bodySmall,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                if (chat.lastMessagePreview?.isNotEmpty == true)
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 120.0),
-                    child: Text(
-                      chat.lastMessagePreview!,
-                      style: theme.textTheme.bodySmall,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-              ],
             ],
-          ),
+          ],
         ),
       ),
     );

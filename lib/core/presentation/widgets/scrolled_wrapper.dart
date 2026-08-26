@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 
 class ScrolledWrapper extends StatelessWidget {
-  const ScrolledWrapper({super.key, required this.children});
+  const ScrolledWrapper({super.key, required this.child, this.padding});
 
-  final List<Widget> children;
+  final Widget child;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         return SingleChildScrollView(
-          padding: const .symmetric(horizontal: 16),
+          padding:
+              padding ??
+              EdgeInsets.only(
+                top: 24.0,
+                left: 24.0,
+                right: 24.0,
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
           physics: const ClampingScrollPhysics(),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: constraints.maxHeight),
-            child: Column(
-              mainAxisAlignment: .center,
-              spacing: 16.0,
-              children: children,
-            ),
+            child: child,
           ),
         );
       },

@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../app/router/app_routes.dart';
-import '../../../core/presentation/widgets/app_back_button.dart';
-import '../../chats/presentation/cubit/cubit.dart';
-import '../utils.dart';
+import '../../../../app/router/app_routes.dart';
+import '../../../../core/presentation/widgets/app_back_button.dart';
+import '../../../chats/presentation/cubit/cubit.dart';
+import '../../utils.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({

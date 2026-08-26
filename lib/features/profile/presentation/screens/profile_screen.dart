@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
+import '../../../../core/presentation/widgets/scrolled_wrapper.dart';
 import '../../../auth/presentation/cubit/cubit.dart';
 import '../profile_cubit/cubit.dart';
 import '../widgets/language_selector.dart';
@@ -42,107 +43,102 @@ class _ProfileScreenState extends State<ProfileScreen> {
       buildBody: (context, state) {
         final username =
             state.profile?.displayName ?? state.profile?.userName ?? '';
-        return ColoredBox(
-          color: theme.scaffoldBackgroundColor,
-          child: state.isLoading
-              ? const AppLoader()
-              : SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  padding: const .symmetric(vertical: 16.0),
-                  child: Column(
-                    mainAxisAlignment: .center,
-                    spacing: 16.0,
-                    children: [
-                      ProfileAvatar(
-                        showLoader: state.isAvatarLoading,
-                        avatarUrl: state.profile?.avatarUrl ?? '',
-                        userName: username,
-                        onTap: () {
-                          cubit.updateUserAvatar();
-                        },
-                        onDeleteTap: () async {
-                          final result = await AppDialog.show(
-                            context,
-                            title: 'profileScreen.avatar.removeAvatar'.tr(),
-                            text: 'profileScreen.avatar.areYouSure'.tr(),
-                            cancelText: 'cancelText'.tr(),
-                            okText: 'okText'.tr(),
-                          );
-                          if (result) {
-                            cubit.deleteUserAvatar();
-                          }
-                        },
+        return state.isLoading
+            ? const AppLoader()
+            : ScrolledWrapper(
+                child: Column(
+                  mainAxisAlignment: .center,
+                  spacing: 16.0,
+                  children: [
+                    ProfileAvatar(
+                      showLoader: state.isAvatarLoading,
+                      avatarUrl: state.profile?.avatarUrl ?? '',
+                      userName: username,
+                      onTap: () {
+                        cubit.updateUserAvatar();
+                      },
+                      onDeleteTap: () async {
+                        final result = await AppDialog.show(
+                          context,
+                          title: 'profileScreen.avatar.removeAvatar'.tr(),
+                          text: 'profileScreen.avatar.areYouSure'.tr(),
+                          cancelText: 'cancelText'.tr(),
+                          okText: 'okText'.tr(),
+                        );
+                        if (result) {
+                          cubit.deleteUserAvatar();
+                        }
+                      },
+                    ),
+                    Text(
+                      state.profile?.displayName ??
+                          state.profile?.userName ??
+                          '',
+                      style: theme.textTheme.headlineSmall,
+                    ),
+                    Text(
+                      state.profile?.email ?? '',
+                      style: theme.textTheme.headlineSmall,
+                    ),
+                    const ThemeSelector(),
+                    const LanguageSelector(),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: theme.colorScheme.primary,
                       ),
-                      Text(
-                        state.profile?.displayName ??
-                            state.profile?.userName ??
-                            '',
-                        style: theme.textTheme.headlineSmall,
-                      ),
-                      Text(
-                        state.profile?.email ?? '',
-                        style: theme.textTheme.headlineSmall,
-                      ),
-                      const ThemeSelector(),
-                      const LanguageSelector(),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: theme.colorScheme.primary,
-                        ),
-                        onPressed: () {
-                          context.go(
-                            '${AppRoutes.profile}/${AppRoutes.editProfile}',
-                          );
-                        },
-                        child: Row(
-                          spacing: 4.0,
-                          mainAxisSize: .min,
-                          children: [
-                            Text('editProfileScreen.screenName'.tr()),
-                            Icon(
-                              Icons.edit,
-                              color: theme.colorScheme.primary,
-                              size: 16.0,
-                            ),
-                          ],
-                        ),
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: theme.colorScheme.primary,
-                          textStyle: theme.textTheme.bodyMedium?.copyWith(
+                      onPressed: () {
+                        context.go(
+                          '${AppRoutes.profile}/${AppRoutes.editProfile}',
+                        );
+                      },
+                      child: Row(
+                        spacing: 4.0,
+                        mainAxisSize: .min,
+                        children: [
+                          Text('editProfileScreen.screenName'.tr()),
+                          Icon(
+                            Icons.edit,
                             color: theme.colorScheme.primary,
-                            decoration: .underline,
-                            decorationColor: theme.colorScheme.primary,
+                            size: 16.0,
                           ),
-                        ),
-                        onPressed: () {
-                          context.push(AppRoutes.licenses);
-                        },
-                        child: const Text('Open Source Licenses'),
+                        ],
                       ),
-                      OutlinedButton(
-                        onPressed: () {
-                          authCubit.logout();
-                          loginCubit.onLogout();
-                        },
-                        child: Row(
-                          spacing: 8.0,
-                          mainAxisSize: .min,
-                          children: [
-                            Text('profileScreen.logout'.tr()),
-                            Icon(
-                              Icons.logout,
-                              color: theme.colorScheme.primary,
-                              size: 16.0,
-                            ),
-                          ],
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: theme.colorScheme.primary,
+                        textStyle: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.primary,
+                          decoration: .underline,
+                          decorationColor: theme.colorScheme.primary,
                         ),
                       ),
-                    ],
-                  ),
+                      onPressed: () {
+                        context.push(AppRoutes.licenses);
+                      },
+                      child: const Text('Open Source Licenses'),
+                    ),
+                    OutlinedButton(
+                      onPressed: () {
+                        authCubit.logout();
+                        loginCubit.onLogout();
+                      },
+                      child: Row(
+                        spacing: 8.0,
+                        mainAxisSize: .min,
+                        children: [
+                          Text('profileScreen.logout'.tr()),
+                          Icon(
+                            Icons.logout,
+                            color: theme.colorScheme.primary,
+                            size: 16.0,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-        );
+              );
       },
       successMessage: '',
       onJobDone: () {},

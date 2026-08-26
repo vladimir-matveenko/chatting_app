@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/presentation/widgets/scrolled_wrapper.dart';
 import '../../../auth/domain/entity/user_entity.dart';
 import '../profile_cubit/cubit.dart';
 import '../widgets/profile_screen_wrapper.dart';
@@ -79,15 +80,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         buildBody: (context, state) {
           final isLoading = state.isLoading;
           final isBlocked = jobDone;
-          return EditProfileForm(
-            isFormActive: !isLoading && !isBlocked,
-            isLoading: isLoading,
-            formKey: _formKey,
-            userNameController: _userNameController,
-            displayNameController: _displayNameController,
-            emailController: _emailController,
-            onSaveTapped: _onSave,
-            mainButtonText: 'editProfileScreen.btnSave'.tr(),
+          return ScrolledWrapper(
+            child: EditProfileForm(
+              isFormActive: !isLoading && !isBlocked,
+              isLoading: isLoading,
+              formKey: _formKey,
+              userNameController: _userNameController,
+              displayNameController: _displayNameController,
+              emailController: _emailController,
+              onSaveTapped: _onSave,
+              mainButtonText: 'editProfileScreen.btnSave'.tr(),
+            ),
           );
         },
         onJobDone: () {

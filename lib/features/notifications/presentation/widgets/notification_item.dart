@@ -45,23 +45,27 @@ class NotificationItem extends StatelessWidget {
             ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            spacing: 8.0,
-            mainAxisAlignment: .spaceBetween,
-            crossAxisAlignment: .center,
-            children: [
-              NotificationsUtils.getNotificationBody(
-                notification: notification,
-                textStyle: theme.textTheme.bodyMedium!,
-                smallTextStyle: theme.textTheme.bodySmall!,
-                timeFormatter: context.timeFormatter,
+        child: Row(
+          spacing: 8.0,
+          mainAxisAlignment: .spaceBetween,
+          crossAxisAlignment: .center,
+          children: [
+            NotificationsUtils.getNotificationBody(
+              notification: notification,
+              textStyle: theme.textTheme.bodyMedium!,
+              smallTextStyle: theme.textTheme.bodySmall!,
+              timeFormatter: context.timeFormatter,
+            ),
+            if (!notification.isRead)
+              Padding(
+                padding: const .only(right: 8.0),
+                child: Icon(
+                  Icons.new_releases,
+                  size: 16.0,
+                  color: colors.success,
+                ),
               ),
-              if (!notification.isRead)
-                Icon(Icons.new_releases, size: 16.0, color: colors.success),
-            ],
-          ),
+          ],
         ),
       ),
     );

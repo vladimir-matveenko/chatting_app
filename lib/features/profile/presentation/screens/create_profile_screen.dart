@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/utils/app_utils.dart';
 import '../../../../core/presentation/widgets/app_back_button.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';
+import '../../../../core/presentation/widgets/scrolled_wrapper.dart';
 import '../profile_cubit/cubit.dart';
 import '../widgets/create_profile_form.dart';
 import '../widgets/profile_screen_wrapper.dart';
@@ -57,19 +58,21 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
         buildBody: (context, state) {
           final isLoading = state.isLoading;
           final isBlocked = jobDone;
-          return CreateProfileForm(
-            isFormActive: !isLoading && !isBlocked,
-            isLoading: isLoading,
-            formKey: _formKey,
-            userNameController: _userNameController,
-            emailController: _emailController,
-            passwordController: _passwordController,
-            onSaveTapped: _handleCreateProfile,
-            mainButtonText: 'createProfileScreen.btnCreate'.tr(),
-            obscure: obscure,
-            onObscureChanged: (value) {
-              obscure.value = value;
-            },
+          return ScrolledWrapper(
+            child: CreateProfileForm(
+              isFormActive: !isLoading && !isBlocked,
+              isLoading: isLoading,
+              formKey: _formKey,
+              userNameController: _userNameController,
+              emailController: _emailController,
+              passwordController: _passwordController,
+              onSaveTapped: _handleCreateProfile,
+              mainButtonText: 'createProfileScreen.btnCreate'.tr(),
+              obscure: obscure,
+              onObscureChanged: (value) {
+                obscure.value = value;
+              },
+            ),
           );
         },
         onJobDone: () {

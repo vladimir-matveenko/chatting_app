@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/presentation/widgets/app_message.dart';
+import '../../../../core/presentation/widgets/scrolled_wrapper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -63,91 +64,83 @@ class _LoginScreenState extends State<LoginScreen> {
       body: BlocConsumer<LoginCubit, LoginState>(
         builder: (context, state) {
           final isLoading = state.status == LoginStatus.inProgress;
-          return Center(
-            child: SingleChildScrollView(
-              padding: EdgeInsetsGeometry.only(
-                top: 24.0,
-                left: 24.0,
-                right: 24.0,
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  spacing: 16.0,
-                  children: [
-                    Icon(
-                      state.status == LoginStatus.success
-                          ? Icons.lock_open_outlined
-                          : Icons.lock_outline,
-                      size: 80.0,
-                      color: theme.colorScheme.primary,
-                    ),
-                    const SizedBox(height: 40.0),
-                    Text(
-                      'loginScreen.welcomeBack'.tr(),
-                      style: theme.textTheme.headlineMedium,
-                      textAlign: .center,
-                    ),
-                    const SizedBox(height: 16.0),
-                    EmailTextField(
-                      enabled: !isLoading,
-                      emailController: _emailController,
-                    ),
-                    PasswordTextField(
-                      enabled: !isLoading,
-                      passwordController: _passwordController,
-                      obscure: obscure,
-                      onObscureChanged: (value) {
-                        obscure.value = value;
-                      },
-                    ),
-                    Row(
-                      mainAxisAlignment: .end,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            context.push(AppRoutes.resetPassword);
-                          },
-                          child: Text('${'loginScreen.forgotPassword'.tr()}?'),
+          return ScrolledWrapper(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: .center,
+                crossAxisAlignment: .stretch,
+                spacing: 16.0,
+                children: [
+                  Icon(
+                    state.status == LoginStatus.success
+                        ? Icons.lock_open_outlined
+                        : Icons.lock_outline,
+                    size: 80.0,
+                    color: theme.colorScheme.primary,
+                  ),
+                  const SizedBox(height: 40.0),
+                  Text(
+                    'loginScreen.welcomeBack'.tr(),
+                    style: theme.textTheme.headlineMedium,
+                    textAlign: .center,
+                  ),
+                  const SizedBox(height: 16.0),
+                  EmailTextField(
+                    enabled: !isLoading,
+                    emailController: _emailController,
+                  ),
+                  PasswordTextField(
+                    enabled: !isLoading,
+                    passwordController: _passwordController,
+                    obscure: obscure,
+                    onObscureChanged: (value) {
+                      obscure.value = value;
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: .end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          context.push(AppRoutes.resetPassword);
+                        },
+                        child: Text('${'loginScreen.forgotPassword'.tr()}?'),
+                      ),
+                    ],
+                  ),
+                  ElevatedButton(
+                    onPressed: isLoading ? null : handleLogin,
+                    child: isLoading
+                        ? const SizedBox(
+                            width: 20.0,
+                            height: 20.0,
+                            child: CircularProgressIndicator.adaptive(
+                              strokeWidth: 2.0,
+                            ),
+                          )
+                        : Text('loginScreen.btnLogin'.tr()),
+                  ),
+                  Row(
+                    spacing: 8.0,
+                    mainAxisAlignment: .center,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'loginScreen.dontHaveAccount'.tr(),
+                          style: theme.textTheme.bodyMedium,
+                          textAlign: .center,
                         ),
-                      ],
-                    ),
-                    ElevatedButton(
-                      onPressed: isLoading ? null : handleLogin,
-                      child: isLoading
-                          ? const SizedBox(
-                              width: 20.0,
-                              height: 20.0,
-                              child: CircularProgressIndicator.adaptive(
-                                strokeWidth: 2.0,
-                              ),
-                            )
-                          : Text('loginScreen.btnLogin'.tr()),
-                    ),
-                    Row(
-                      spacing: 8.0,
-                      mainAxisAlignment: .center,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            'loginScreen.dontHaveAccount'.tr(),
-                            style: theme.textTheme.bodyMedium,
-                            textAlign: .center,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            context.push(AppRoutes.createProfile);
-                          },
-                          child: Text('createProfileScreen.screenName'.tr()),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          context.push(AppRoutes.createProfile);
+                        },
+                        child: Text('createProfileScreen.screenName'.tr()),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           );
