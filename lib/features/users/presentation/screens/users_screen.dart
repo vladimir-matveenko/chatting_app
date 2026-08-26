@@ -66,8 +66,8 @@ class _UsersScreenState extends State<UsersScreen> {
           return isLoading
               ? const Center(child: AppLoader())
               : Padding(
-                padding: const .symmetric(horizontal: 16.0),
-                child: Column(
+                  padding: const .symmetric(horizontal: 16.0),
+                  child: Column(
                     mainAxisSize: .min,
                     crossAxisAlignment: .stretch,
                     children: [
@@ -88,7 +88,7 @@ class _UsersScreenState extends State<UsersScreen> {
                       if (state.showLoader) const AppLoader(size: 20.0),
                     ],
                   ),
-              );
+                );
         },
       ),
     );
