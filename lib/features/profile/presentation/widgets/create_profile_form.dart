@@ -33,42 +33,32 @@ class CreateProfileForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        padding: .only(
-          top: 24.0,
-          left: 24.0,
-          right: 24.0,
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: .start,
-            crossAxisAlignment: .stretch,
-            spacing: 16.0,
-            children: [
-              UsernameTextField(
-                enabled: isFormActive,
-                userNameController: userNameController,
-              ),
-              EmailTextField(
-                enabled: isFormActive,
-                emailController: emailController,
-              ),
-              PasswordTextField(
-                enabled: isFormActive,
-                passwordController: passwordController,
-                obscure: obscure,
-                onObscureChanged: onObscureChanged,
-              ),
-              ElevatedButton(
-                onPressed: !isFormActive ? null : onSaveTapped,
-                child: isLoading ? AppLoader.small() : Text(mainButtonText),
-              ),
-            ],
+    return Form(
+      key: formKey,
+      child: Column(
+        mainAxisAlignment: .center,
+        crossAxisAlignment: .stretch,
+        spacing: 16.0,
+        children: [
+          UsernameTextField(
+            enabled: isFormActive,
+            userNameController: userNameController,
           ),
-        ),
+          EmailTextField(
+            enabled: isFormActive,
+            emailController: emailController,
+          ),
+          PasswordTextField(
+            enabled: isFormActive,
+            passwordController: passwordController,
+            obscure: obscure,
+            onObscureChanged: onObscureChanged,
+          ),
+          ElevatedButton(
+            onPressed: !isFormActive ? null : onSaveTapped,
+            child: isLoading ? AppLoader.small() : Text(mainButtonText),
+          ),
+        ],
       ),
     );
   }

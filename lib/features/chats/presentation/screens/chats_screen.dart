@@ -104,24 +104,24 @@ class _ChatsScreenState extends State<ChatsScreen>
           );
         }
       },
-      child: Column(
-        crossAxisAlignment: .stretch,
-        children: [
-          Padding(
-            padding: const .all(16.0),
-            child: AppSearchBar(
-              onChanged: (query) {
-                query = query;
-                cubit.loadAllChats(query: query);
-              },
+      child: Padding(
+        padding: const .symmetric(horizontal: 16.0),
+        child: Column(
+          crossAxisAlignment: .stretch,
+          children: [
+            Padding(
+              padding: const .symmetric(vertical: 16.0),
+              child: AppSearchBar(
+                onChanged: (query) {
+                  query = query;
+                  cubit.loadAllChats(query: query);
+                },
+              ),
             ),
-          ),
-          Builder(
-            key: ValueKey(context.locale),
-            builder: (context) {
-              return Padding(
-                padding: const .symmetric(horizontal: 16.0),
-                child: CustomTabBar(
+            Builder(
+              key: ValueKey(context.locale),
+              builder: (context) {
+                return CustomTabBar(
                   tabs: [
                     'chatsScreen.tabs.active'.tr(),
                     'chatsScreen.tabs.archive'.tr(),
@@ -145,17 +145,17 @@ class _ChatsScreenState extends State<ChatsScreen>
                   selectedLabelColor: Colors.white,
                   separator: const SizedBox(),
                   fontSize: 14.0,
-                ),
-              );
-            },
-          ),
-          Expanded(
-            child: IndexedStack(
-              index: _tabController.index,
-              children: List.generate(tabCount, _buildTab),
+                );
+              },
             ),
-          ),
-        ],
+            Expanded(
+              child: IndexedStack(
+                index: _tabController.index,
+                children: List.generate(tabCount, _buildTab),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

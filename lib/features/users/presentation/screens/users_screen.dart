@@ -65,27 +65,30 @@ class _UsersScreenState extends State<UsersScreen> {
           final isLoading = state.isLoading;
           return isLoading
               ? const Center(child: AppLoader())
-              : Column(
-                  mainAxisSize: .min,
-                  crossAxisAlignment: .stretch,
-                  children: [
-                    Padding(
-                      padding: const .all(16.0),
-                      child: AppSearchBar(
-                        onChanged: (query) {
-                          cubit.loadUsers(query: query);
-                        },
+              : Padding(
+                padding: const .symmetric(horizontal: 16.0),
+                child: Column(
+                    mainAxisSize: .min,
+                    crossAxisAlignment: .stretch,
+                    children: [
+                      Padding(
+                        padding: const .symmetric(vertical: 16.0),
+                        child: AppSearchBar(
+                          onChanged: (query) {
+                            cubit.loadUsers(query: query);
+                          },
+                        ),
                       ),
-                    ),
-                    Flexible(
-                      child: UsersList(
-                        users: state.users,
-                        scrollController: _scrollController,
+                      Flexible(
+                        child: UsersList(
+                          users: state.users,
+                          scrollController: _scrollController,
+                        ),
                       ),
-                    ),
-                    if (state.showLoader) const AppLoader(size: 20.0),
-                  ],
-                );
+                      if (state.showLoader) const AppLoader(size: 20.0),
+                    ],
+                  ),
+              );
         },
       ),
     );

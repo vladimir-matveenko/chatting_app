@@ -17,21 +17,18 @@ class UsersListItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.translucent,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Row(
-          spacing: 8.0,
-          mainAxisAlignment: .start,
-          children: [
-            UserAvatar(
-              size: 30.0,
-              avatar: user.avatarUrl ?? '',
-              firstName: userName,
-              lastName: '',
-            ),
-            Text(userName, style: textTheme.bodyMedium),
-          ],
-        ),
+      child: Row(
+        spacing: 8.0,
+        mainAxisAlignment: .start,
+        children: [
+          UserAvatar(
+            size: 30.0,
+            avatar: user.avatarUrl ?? '',
+            firstName: userName,
+            lastName: '',
+          ),
+          Text(userName, style: textTheme.bodyMedium),
+        ],
       ),
     );
   }
