@@ -39,7 +39,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
           controller: _timerController,
           timer: (sec) {
             return Column(
-              spacing: 8.0,
+              spacing: 16.0,
               crossAxisAlignment: .center,
               mainAxisSize: .min,
               children: [
@@ -57,7 +57,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
             );
           },
           onFinishedPlaceholder: Column(
-            spacing: 8.0,
+            spacing: 16.0,
             crossAxisAlignment: .center,
             mainAxisSize: .min,
             children: [
