@@ -62,7 +62,6 @@ class AuthCubit extends Cubit<AuthState> {
 
     result.fold(
       (l) {
-        hasLoggedIn = true;
         emit(state.copyWith(status: AuthStatus.unauthenticated));
       },
       (r) async {
@@ -80,7 +79,6 @@ class AuthCubit extends Cubit<AuthState> {
             }
           }
         } else {
-          hasLoggedIn = true;
           emit(state.copyWith(status: AuthStatus.unauthenticated));
         }
       },
