@@ -58520,10 +58520,10 @@ this.aC()},
 m(){this.e.m()
 this.aA()},
 B(a){var s=null,r=A.P(a),q=t.l,p=A.b4(a,B.br,q).w.a,o=A.b4(a,B.br,q).w.a
-return A.o8(s,s,A.dR(A.auM(this.e,A.cd(A.b([A.aD8("assets/images/no_connection_server.png",s,o.a>o.b?p.b*0.6:p.a*0.6),A.aw(A.am("errors.noConnectionWithServer"),s,s,s,s,s,r.ok.y,s,s)],t.p),B.r,B.y,B.a7,8),s,new A.bcD(this,r)),s,s),s,s,s,s)}}
+return A.o8(s,s,A.dR(A.auM(this.e,A.cd(A.b([A.aD8("assets/images/no_connection_server.png",s,o.a>o.b?p.b*0.6:p.a*0.6),A.aw(A.am("errors.noConnectionWithServer"),s,s,s,s,s,r.ok.y,s,s)],t.p),B.r,B.y,B.a7,16),s,new A.bcD(this,r)),s,s),s,s,s,s)}}
 A.bcD.prototype={
 $1(a){var s=null,r=this.b
-return A.cd(A.b([new A.JE(60,a,r.k1,r.ax.b,s),A.aw(A.am("waitingScreen.waitingForServer"),s,s,s,s,s,r.ok.y,s,s)],t.p),B.r,B.y,B.a7,8)},
+return A.cd(A.b([new A.JE(60,a,r.k1,r.ax.b,s),A.aw(A.am("waitingScreen.waitingForServer"),s,s,s,s,s,r.ok.y,s,s)],t.p),B.r,B.y,B.a7,16)},
 $S:558}
 A.Xx.prototype={
 B(a){return A.bma(new A.app(a))}}

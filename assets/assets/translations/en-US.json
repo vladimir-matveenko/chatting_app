@@ -163,7 +163,7 @@
     "authError": "Auth error",
     "wrongEmailOrPassword": "Wrong email or password",
     "serverError": "Server error",
-    "noConnectionWithServer": "No connection with server",
+    "noConnectionWithServer": "No connection to the server",
     "cacheError": "Cache reading error",
     "noData": "No data available",
     "accessTokenInvalid": "Access token is invalid",
