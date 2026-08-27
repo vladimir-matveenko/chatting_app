@@ -79,7 +79,23 @@ class AuthCubit extends Cubit<AuthState> {
             }
           }
         } else {
-          emit(state.copyWith(status: AuthStatus.unauthenticated));
+          // check if the server is running
+          final result = await _checkServerUseCase(NoParams());
+          result.fold(
+            (l) async {
+              emit(state.copyWith(status: AuthStatus.serverLoading));
+              final result = await _waitForBackend();
+              if (result) {
+                emit(state.copyWith(status: AuthStatus.unauthenticated));
+              } else {
+                // no action if server is not ready
+                return;
+              }
+            },
+            (r) {
+              emit(state.copyWith(status: AuthStatus.unauthenticated));
+            },
+          );
         }
       },
     );
