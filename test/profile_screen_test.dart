@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chatting_app/app/constants/asset_paths.dart';
+import 'package:chatting_app/app/router/app_routes.dart';
 import 'package:chatting_app/features/auth/domain/entity/user_entity.dart';
 import 'package:chatting_app/features/auth/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/auth/presentation/cubit/state.dart';
@@ -117,21 +118,21 @@ void main() async {
 
   GoRouter createRouter() {
     return GoRouter(
-      initialLocation: '/profile',
+      initialLocation: AppRoutes.profile,
       routes: [
         GoRoute(
-          path: '/profile',
+          path: AppRoutes.profile,
           builder: (context, state) => const Scaffold(body: ProfileScreen()),
           routes: [
             GoRoute(
-              path: 'edit-profile',
+              path: AppRoutes.editProfile,
               builder: (context, state) =>
                   const Scaffold(body: Text('Edit Profile Screen')),
             ),
           ],
         ),
         GoRoute(
-          path: '/licenses',
+          path: AppRoutes.licenses,
           builder: (context, state) =>
               const Scaffold(body: Text('Licenses Screen')),
         ),
