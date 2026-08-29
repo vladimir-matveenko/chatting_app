@@ -51,7 +51,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> _handleAuthenticated() async {
     final token = await _getTokenUseCase(NoParams());
-    token.fold((l) {}, (r) async {
+    token.fold((l) async {}, (r) async {
       await _socketService.connect();
     });
     emit(state.copyWith(status: AuthStatus.authenticated));
@@ -67,13 +67,13 @@ class AuthCubit extends Cubit<AuthState> {
       (r) async {
         if (r) {
           if (hasLoggedIn) {
-            _handleAuthenticated();
+            await _handleAuthenticated();
           } else {
             // check if the server is running
             emit(state.copyWith(status: AuthStatus.serverLoading));
             final result = await _waitForBackend();
             if (result) {
-              _handleAuthenticated();
+              await _handleAuthenticated();
             } else {
               // no action if server is not ready
               return;
