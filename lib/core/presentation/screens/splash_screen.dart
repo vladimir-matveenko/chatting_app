@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,21 +17,40 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   late AuthCubit cubit;
 
+  bool _imagesReady = false;
+
   @override
   void initState() {
     super.initState();
+
     cubit = context.read<AuthCubit>();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 1), () {
-        cubit.checkAuth();
-      });
+      _initializeSplash();
+      Future.delayed(const Duration(seconds: 1), cubit.checkAuth);
     });
+  }
+
+  Future<void> _initializeSplash() async {
+    try {
+      await Future.wait([
+        precacheImage(const AssetImage(AssetPaths.splashBackground), context),
+        precacheImage(const AssetImage(AssetPaths.splashLogo), context),
+      ]);
+
+      if (!mounted) return;
+    } catch (e) {
+      log(e.toString());
+    } finally {
+      setState(() {
+        _imagesReady = true;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Stack(
         children: [
           Positioned.fill(
@@ -40,10 +61,11 @@ class _SplashScreenState extends State<SplashScreen> {
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 spacing: 24.0,
-                mainAxisSize: .min,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset(AssetPaths.splashLogo),
-                  const WaveDotsLoader(),
+                  if (_imagesReady) Image.asset(AssetPaths.splashLogo),
+
+                  if (_imagesReady) const WaveDotsLoader(),
                 ],
               ),
             ),
