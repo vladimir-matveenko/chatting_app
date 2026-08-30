@@ -1,5 +1,4 @@
 import 'package:chatting_app/core/presentation/widgets/base_list_view.dart';
-import 'package:chatting_app/features/chat/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/notifications/presentation/widgets/notification_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,7 +44,6 @@ class NotificationsList extends StatelessWidget {
                   final chatId = item.payload.chatId ?? '';
                   final messageId = item.payload.messageId;
                   if (chatId.isNotEmpty) {
-                    context.read<ChatCubit>().getChatById(chatId);
                     context.go('${AppRoutes.chats}/$chatId', extra: messageId);
                   }
                 },
