@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:chatting_app/app/constants/app_constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,20 +22,21 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
 
   final SharedPreferences sharedPreferences;
 
-  static const String cachedToken = 'CACHED_TOKEN';
-
   AuthTokenModel? _tokenModel;
 
   @override
   Future<void> cacheToken(AuthTokenModel token) async {
     _tokenModel = token;
-    await sharedPreferences.setString(cachedToken, jsonEncode(token.toJson()));
+    await sharedPreferences.setString(
+      AppConstants.cachedTokenKey,
+      jsonEncode(token.toJson()),
+    );
   }
 
   @override
   Future<void> clearToken() async {
     _tokenModel = null;
-    final result = await sharedPreferences.remove(cachedToken);
+    final result = await sharedPreferences.remove(AppConstants.cachedTokenKey);
     if (kDebugMode) {
       log('Cached token removed: $result');
       log('Cached _tokenModel removed: ${_tokenModel == null}');
@@ -47,7 +49,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       return _tokenModel;
     }
 
-    final jsonString = sharedPreferences.getString(cachedToken);
+    final jsonString = sharedPreferences.getString(AppConstants.cachedTokenKey);
 
     if (jsonString == null) {
       return null;
