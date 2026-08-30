@@ -32,7 +32,10 @@ class AuthRemoteDataSourceImpl extends BaseRemoteDataSource
   @override
   Future<bool> checkHealth() {
     return makeRequest<bool>(() async {
-      final response = await dio.get('health');
+      final response = await dio.get(
+        'health',
+        options: Options(extra: {'skipAuth': true}),
+      );
       return response.statusCode == 200;
     });
   }
