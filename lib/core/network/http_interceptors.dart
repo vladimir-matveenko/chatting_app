@@ -26,10 +26,7 @@ class AuthInterceptor extends Interceptor {
   final AuthSessionManager sessionManager;
   final Dio refreshDio;
 
-  Future<void>? _refreshFuture;
-
-  final List<({RequestOptions request, Completer<Response> completer})> _queue =
-      [];
+  Future<String>? _refreshFuture;
 
   @override
   Future<void> onRequest(
@@ -41,8 +38,10 @@ class AuthInterceptor extends Interceptor {
     if (!skipAuth) {
       final token = await localDataSource.getCachedToken();
 
-      if (token?.accessToken != null) {
-        options.headers['Authorization'] = 'Bearer ${token!.accessToken}';
+      final accessToken = token?.accessToken;
+
+      if (accessToken != null) {
+        options.headers['Authorization'] = 'Bearer $accessToken';
       }
     }
 
@@ -56,133 +55,116 @@ class AuthInterceptor extends Interceptor {
   ) async {
     final statusCode = err.response?.statusCode;
 
-    // TODO(): remove logs!
-    log(statusCode.toString());
-    log(err.requestOptions.baseUrl + err.requestOptions.path);
-    log(err.message.toString());
+    if (kDebugMode) {
+      log(
+        'HTTP ERROR: '
+        '$statusCode '
+        '${err.requestOptions.method} '
+        '${err.requestOptions.uri}',
+      );
+    }
 
     final isUnauthorized = statusCode == 401;
-
     final isLoginCall = err.requestOptions.path.endsWith(_loginPath);
-
     final isRefreshCall = err.requestOptions.path.endsWith(_refreshPath);
-
     final alreadyRetried = err.requestOptions.extra['retried'] == true;
 
-    /// Refresh token expired or invalid
-    if (isUnauthorized && isRefreshCall) {
-      sessionManager.notifySessionExpired();
+    if (!isUnauthorized) {
+      return handler.next(err);
+    }
 
+    // Refresh itself failed.
+    if (isRefreshCall) {
+      sessionManager.notifySessionExpired();
       return handler.reject(err);
     }
 
-    /// Regular 401 handling
-    if (isUnauthorized && !isLoginCall && !isRefreshCall && !alreadyRetried) {
-      final completer = Completer<Response>();
-
-      _queue.add((request: err.requestOptions, completer: completer));
-
-      try {
-        _refreshFuture ??= _performRefresh();
-
-        await _refreshFuture;
-
-        final response = await completer.future;
-
-        return handler.resolve(response);
-      } catch (e) {
-        if (e is DioException) {
-          return handler.reject(e);
-        }
-
-        return handler.reject(
-          DioException(
-            requestOptions: err.requestOptions,
-            response: err.response,
-            error: e,
-          ),
-        );
-      }
+    // Login must not trigger refresh.
+    if (isLoginCall) {
+      return handler.next(err);
     }
 
-    handler.next(err);
-  }
+    // Do not retry the same request twice.
+    if (alreadyRetried) {
+      return handler.next(err);
+    }
 
-  Future<void> _performRefresh() async {
     try {
-      final newAccessToken = await _refreshToken();
+      final refreshFuture = _refreshFuture ??= _refreshToken();
+      final newAccessToken = await refreshFuture;
 
-      if (kDebugMode) {
-        log('token refreshed');
-      }
+      final request = err.requestOptions.copyWith(
+        headers: {
+          ...err.requestOptions.headers,
+          'Authorization': 'Bearer $newAccessToken',
+        },
+        extra: {...err.requestOptions.extra, 'retried': true},
+      );
 
-      while (_queue.isNotEmpty) {
-        final item = _queue.removeAt(0);
+      final response = await refreshDio.fetch(request);
 
-        try {
-          final request = item.request.copyWith(
-            headers: {
-              ...item.request.headers,
-              'Authorization': 'Bearer $newAccessToken',
-            },
-            extra: {...item.request.extra, 'retried': true},
-          );
-
-          final response = await refreshDio.fetch(request);
-
-          item.completer.complete(response);
-        } catch (e) {
-          item.completer.completeError(
-            e is DioException
-                ? e
-                : DioException(requestOptions: item.request, error: e),
-          );
-        }
-      }
+      return handler.resolve(response);
     } catch (e) {
-      final isUnauthorized = e is DioException && e.response?.statusCode == 401;
-
-      if (isUnauthorized || e is InvalidCredentialsException) {
-        sessionManager.notifySessionExpired();
+      if (e is DioException) {
+        return handler.reject(e);
       }
 
-      while (_queue.isNotEmpty) {
-        final item = _queue.removeAt(0);
-
-        item.completer.completeError(
-          e is DioException
-              ? e
-              : DioException(requestOptions: item.request, error: e),
-        );
-      }
-      return;
-    } finally {
-      _refreshFuture = null;
+      return handler.reject(
+        DioException(requestOptions: err.requestOptions, error: e),
+      );
     }
   }
 
   Future<String> _refreshToken() async {
-    final token = await localDataSource.getCachedToken();
+    try {
+      final token = await localDataSource.getCachedToken();
 
-    if (token?.refreshToken == null) {
-      throw const InvalidCredentialsException();
+      final refreshToken = token?.refreshToken;
+
+      if (refreshToken == null) {
+        throw const InvalidCredentialsException();
+      }
+
+      if (kDebugMode) {
+        log(
+          'REFRESH START: '
+          '${refreshToken.substring(0, 8)}...',
+        );
+      }
+
+      final response = await refreshDio.post(
+        _refreshPath,
+        data: {'refreshToken': refreshToken},
+        options: Options(extra: {'skipAuth': true}),
+      );
+
+      final authData = AuthModel.fromJson(response.data);
+
+      final accessToken = authData.tokens.accessToken;
+      final newRefreshToken = authData.tokens.refreshToken;
+
+      await localDataSource.cacheToken(
+        AuthTokenModel(accessToken: accessToken, refreshToken: newRefreshToken),
+      );
+
+      if (kDebugMode) {
+        log(
+          'REFRESH SUCCESS: '
+          '${newRefreshToken.substring(0, 8)}...',
+        );
+      }
+
+      return accessToken;
+    } catch (e) {
+      if (e is DioException && e.response?.statusCode == 401) {
+        sessionManager.notifySessionExpired();
+      } else if (e is InvalidCredentialsException) {
+        sessionManager.notifySessionExpired();
+      }
+
+      rethrow;
+    } finally {
+      _refreshFuture = null;
     }
-
-    final response = await refreshDio.post(
-      _refreshPath,
-      data: {'refreshToken': token!.refreshToken},
-      options: Options(extra: {'skipAuth': true}),
-    );
-
-    final authData = AuthModel.fromJson(response.data);
-
-    final accessToken = authData.tokens.accessToken;
-    final refreshToken = authData.tokens.refreshToken;
-
-    await localDataSource.cacheToken(
-      AuthTokenModel(accessToken: accessToken, refreshToken: refreshToken),
-    );
-
-    return accessToken;
   }
 }
