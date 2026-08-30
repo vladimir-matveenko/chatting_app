@@ -28,7 +28,7 @@ class NotificationsScreen extends StatelessWidget {
               onDisableFilters: cubit.disableFilters,
             ),
             if (isLoading)
-              const Center(child: AppLoader())
+              const Expanded(child: Center(child: AppLoader()))
             else if (state.notifications.isNotEmpty)
               Padding(
                 padding: const .symmetric(horizontal: 16.0),
