@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 class AppConstants {
   const AppConstants._();
 
-  static const themeKey = 'theme_mode';
+  static const String cachedTokenKey = 'CHATTING_APP_CACHED_TOKEN';
+  static const String themeKey = 'theme_mode';
 
   /// test data
-  static const testEmail = 'john@example.com';
-  static const testPassword = '1234567890';
+  static const String testEmail = 'john@example.com';
+  static const String testPassword = '1234567890';
 
   /// locales
-  static const enLocale = 'en-US';
-  static const ruLocale = 'ru-Ru';
+  static const String enLocale = 'en-US';
+  static const String ruLocale = 'ru-Ru';
 
   /// reactions
   static const reactions = ['👍', '👎︎'];
