@@ -59224,15 +59224,15 @@ aGE(a){var s=0,r=A.n(t.H),q=this
 var $async$Ab=A.j(function(b,c){if(b===1)return A.k(c,r)
 for(;;)switch(s){case 0:q.b=a
 s=2
-return A.o(q.a.O6("String","CACHED_TOKEN",B.b3.GY(A.a1(["accessToken",a.a,"refreshToken",a.b],t.N,t.z),null)),$async$Ab)
+return A.o(q.a.O6("String","CHATTING_APP_CACHED_TOKEN",B.b3.GY(A.a1(["accessToken",a.a,"refreshToken",a.b],t.N,t.z),null)),$async$Ab)
 case 2:return A.l(null,r)}})
 return A.m($async$Ab,r)},
 Ah(){var s=0,r=A.n(t.H),q=this
 var $async$Ah=A.j(function(a,b){if(a===1)return A.k(b,r)
 for(;;)switch(s){case 0:q.b=null
-q.a.a.H(0,"CACHED_TOKEN")
+q.a.a.H(0,"CHATTING_APP_CACHED_TOKEN")
 s=2
-return A.o($.bgb().H(0,"flutter.CACHED_TOKEN"),$async$Ah)
+return A.o($.bgb().H(0,"flutter.CHATTING_APP_CACHED_TOKEN"),$async$Ah)
 case 2:return A.l(null,r)}})
 return A.m($async$Ah,r)},
 v_(){var s=0,r=A.n(t.S0),q,p=this,o,n
@@ -59240,7 +59240,7 @@ var $async$v_=A.j(function(a,b){if(a===1)return A.k(b,r)
 for(;;)switch(s){case 0:n=p.b
 if(n!=null){q=n
 s=1
-break}o=A.bl(p.a.a.i(0,"CACHED_TOKEN"))
+break}o=A.bl(p.a.a.i(0,"CHATTING_APP_CACHED_TOKEN"))
 if(o==null){q=null
 s=1
 break}q=p.b=A.bsi(B.b3.Qs(o,null))
