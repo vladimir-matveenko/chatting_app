@@ -84,7 +84,7 @@ class _MessagesListState extends State<MessagesList> {
     widget.scrollController.itemPositionsListener.itemPositions.addListener(
       _onPositionsChanged,
     );
-    _timer = Timer(const Duration(seconds: 10), () {
+    _timer = Timer(const Duration(seconds: 5), () {
       if (mounted &&
           widget.messages.isNotEmpty &&
           (widget.chat.lastReadMessageId ?? 0) < widget.messages.first.id) {
