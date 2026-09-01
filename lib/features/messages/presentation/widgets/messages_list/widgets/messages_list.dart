@@ -84,16 +84,14 @@ class _MessagesListState extends State<MessagesList> {
     widget.scrollController.itemPositionsListener.itemPositions.addListener(
       _onPositionsChanged,
     );
-    _timer = Timer(
-      const Duration(seconds: 10),
-      () => WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (widget.messages.isNotEmpty &&
-            (widget.chat.lastReadMessageId ?? 0) < widget.messages.first.id) {
-          final id = widget.messages.first.id;
-          _onMessageSeen(id);
-        }
-      }),
-    );
+    _timer = Timer(const Duration(seconds: 10), () {
+      if (mounted &&
+          widget.messages.isNotEmpty &&
+          (widget.chat.lastReadMessageId ?? 0) < widget.messages.first.id) {
+        final id = widget.messages.first.id;
+        _onMessageSeen(id);
+      }
+    });
   }
 
   @override
@@ -188,12 +186,16 @@ class _MessagesListState extends State<MessagesList> {
                 final isCurrentUnRead =
                     message.id > (widget.chat.lastReadMessageId ?? -1);
 
-                final isNextRead = hasNext
-                    ? next!.id < (widget.chat.lastReadMessageId ?? -1)
+                final hasPrevious = index > 0;
+                final previous = hasPrevious
+                    ? widget.messages[index - 1]
+                    : null;
+                final isPreviousRead = hasPrevious
+                    ? previous!.readCount > 0
                     : true;
 
-                final isNextMine = hasNext
-                    ? next!.sender.id == widget.currentUserId
+                final isPreviousMine = hasPrevious
+                    ? previous!.sender.id == widget.currentUserId
                     : true;
 
                 final isCurrentMine = message.sender.id == widget.currentUserId;
@@ -209,8 +211,8 @@ class _MessagesListState extends State<MessagesList> {
                   child: Column(
                     children: [
                       if (isCurrentUnRead &&
-                          (isNextRead || isNextMine) &&
-                          !isCurrentMine)
+                          !isCurrentMine &&
+                          (isPreviousRead || isPreviousMine))
                         Chip(label: Text('chatScreen.unreadMessages'.tr())),
                       if (shouldShowDate)
                         Padding(
