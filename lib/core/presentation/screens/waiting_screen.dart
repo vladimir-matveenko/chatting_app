@@ -5,6 +5,7 @@ import '../../../app/constants/asset_paths.dart';
 import '../../../app/utils/extensions.dart';
 import '../widgets/countdown_timer.dart';
 import '../widgets/custom_progress_indicator.dart';
+import '../widgets/disable_back_navigation.dart';
 
 class WaitingScreen extends StatefulWidget {
   const WaitingScreen({super.key});
@@ -33,45 +34,47 @@ class _WaitingScreenState extends State<WaitingScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.sizeOf(context);
-    return Scaffold(
-      body: Center(
-        child: CountdownTimer(
-          controller: _timerController,
-          timer: (sec) {
-            return Column(
+    return DisableBackNavigation(
+      child: Scaffold(
+        body: Center(
+          child: CountdownTimer(
+            controller: _timerController,
+            timer: (sec) {
+              return Column(
+                spacing: 16.0,
+                crossAxisAlignment: .center,
+                mainAxisSize: .min,
+                children: [
+                  CustomProgressIndicator(
+                    initialValue: _time,
+                    currentValue: sec,
+                    activeColor: theme.unselectedWidgetColor,
+                    inactiveColor: theme.colorScheme.primary,
+                  ),
+                  Text(
+                    'waitingScreen.waitingForServer'.tr(),
+                    style: theme.textTheme.bodyLarge,
+                  ),
+                ],
+              );
+            },
+            onFinishedPlaceholder: Column(
               spacing: 16.0,
               crossAxisAlignment: .center,
               mainAxisSize: .min,
               children: [
-                CustomProgressIndicator(
-                  initialValue: _time,
-                  currentValue: sec,
-                  activeColor: theme.unselectedWidgetColor,
-                  inactiveColor: theme.colorScheme.primary,
+                Image.asset(
+                  height: context.isLandscape()
+                      ? screenSize.height * 0.6
+                      : screenSize.width * 0.6,
+                  AssetPaths.noConnectionServer,
                 ),
                 Text(
-                  'waitingScreen.waitingForServer'.tr(),
+                  'errors.noConnectionWithServer'.tr(),
                   style: theme.textTheme.bodyLarge,
                 ),
               ],
-            );
-          },
-          onFinishedPlaceholder: Column(
-            spacing: 16.0,
-            crossAxisAlignment: .center,
-            mainAxisSize: .min,
-            children: [
-              Image.asset(
-                height: context.isLandscape()
-                    ? screenSize.height * 0.6
-                    : screenSize.width * 0.6,
-                AssetPaths.noConnectionServer,
-              ),
-              Text(
-                'errors.noConnectionWithServer'.tr(),
-                style: theme.textTheme.bodyLarge,
-              ),
-            ],
+            ),
           ),
         ),
       ),
