@@ -365,7 +365,7 @@ class _MessagesListState extends State<MessagesList> {
           top: state.showOlderLoader ? 0 : null,
           bottom: state.showNewerLoader ? 0 : null,
           child: state.showNewerLoader || state.showOlderLoader
-              ? const AppLoader(size: 20.0)
+              ? AppLoader.small()
               : const SizedBox(),
         ),
       ],

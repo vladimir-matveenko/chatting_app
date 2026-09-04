@@ -25,7 +25,7 @@ class EmailTextField extends StatelessWidget {
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'fieldValidation.enterPassword'.tr();
+          return 'fieldValidation.enterEmail'.tr();
         }
         return null;
       },

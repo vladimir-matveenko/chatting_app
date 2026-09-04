@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chatting_app/core/presentation/screens/waiting_screen.dart';
+import 'package:chatting_app/features/camera/presentation/screens/camera_screen.dart';
 import 'package:chatting_app/features/chat/presentation/screens/chat_settings_screen.dart';
 import 'package:chatting_app/features/chat/presentation/screens/create_group_screen.dart';
 import 'package:chatting_app/features/chats/presentation/screens/chats_screen.dart';
@@ -109,6 +110,11 @@ class AppRouter {
         path: AppRoutes.waiting,
         pageBuilder: (context, state) =>
             const NoTransitionPage(child: WaitingScreen()),
+      ),
+      GoRoute(
+        path: AppRoutes.camera,
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: CameraScreen()),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

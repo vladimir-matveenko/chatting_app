@@ -192,11 +192,11 @@ class _ChatSettingsScreenState extends State<ChatSettingsScreen> {
               ],
             ),
             if (state.showLoader)
-              const Positioned(
+              Positioned(
                 bottom: 16.0,
                 left: 0,
                 right: 0,
-                child: AppLoader(size: 20.0),
+                child: AppLoader.small(),
               ),
           ],
         );
