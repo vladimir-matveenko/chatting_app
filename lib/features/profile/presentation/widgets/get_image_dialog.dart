@@ -35,10 +35,7 @@ class GetImageDialog extends StatelessWidget {
               mainAxisAlignment: .center,
               children: [
                 Text('profileScreen.imageSource.camera'.tr()),
-                const Icon(
-                  Icons.camera_alt_outlined,
-                  size: 16.0,
-                ),
+                const Icon(Icons.camera_alt_outlined, size: 16.0),
               ],
             ),
           ),
@@ -52,10 +49,7 @@ class GetImageDialog extends StatelessWidget {
               mainAxisAlignment: .center,
               children: [
                 Text('profileScreen.imageSource.gallery'.tr()),
-                const Icon(
-                  Icons.image,
-                  size: 16.0,
-                ),
+                const Icon(Icons.image, size: 16.0),
               ],
             ),
           ),
