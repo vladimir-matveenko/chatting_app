@@ -16,6 +16,11 @@ class ImageService {
   static const _maxImageSize = 1024;
   static const _quality = 0.90;
 
+  static Future<AppImageEntity?> processCameraImage(Uint8List bytes) async {
+    /// Is not available on WEB platform
+    throw UnimplementedError();
+  }
+
   static Future<AppImageEntity?> getImageFromGallery() async {
     final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
 
