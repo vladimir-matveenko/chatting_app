@@ -1,4 +1,3 @@
-import 'package:chatting_app/core/presentation/widgets/text_fields/app_text_form_field.dart';
 import 'package:chatting_app/features/reset_password/presentation/cubit/cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/presentation/widgets/app_loader.dart';
 import '../../../../core/presentation/widgets/countdown_timer.dart';
+import '../../../../core/presentation/widgets/text_fields/email_text_field.dart';
 
 class RequestCodeBody extends StatefulWidget {
   const RequestCodeBody({super.key});
@@ -55,14 +55,9 @@ class _RequestCodeBodyState extends State<RequestCodeBody> {
                   ),
                   onFinishedPlaceholder: const SizedBox(),
                 ),
-              AppTextFormField(
-                controller: cubit.emailController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'fieldValidation.enterEmail'.tr();
-                  }
-                  return null;
-                },
+              EmailTextField(
+                emailController: cubit.emailController,
+                enabled: true,
               ),
               ElevatedButton(
                 onPressed: _onRequestTapped,

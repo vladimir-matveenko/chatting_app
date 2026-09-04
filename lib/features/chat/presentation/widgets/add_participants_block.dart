@@ -108,11 +108,11 @@ class _AddParticipantsBlockState extends State<AddParticipantsBlock> {
                             },
                           ),
                           if (state.showLoader)
-                            const Positioned(
+                            Positioned(
                               left: 0,
                               bottom: 0,
                               right: 0,
-                              child: AppLoader(size: 20.0),
+                              child: AppLoader.small(),
                             ),
                         ],
                       ),

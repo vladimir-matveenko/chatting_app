@@ -1,9 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:chatting_app/features/profile/domain/usecases/update_profile_usecase.dart';
 import 'package:chatting_app/features/profile/presentation/profile_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../app/utils/app_utils.dart';
+import '../../../../core/domain/entity/app_image_entity.dart';
 import '../../../../core/domain/usecases/usecase.dart';
 import '../../../../core/services/image_service.dart';
 import '../../domain/usecases/create_profile_usecase.dart';
@@ -96,10 +99,15 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
-  Future<void> updateUserAvatar() async {
+  Future<void> updateUserAvatar({Uint8List? bytes}) async {
     if (state.isAvatarLoading) return;
+    AppImageEntity? avatar;
     emit(state.copyWith(isAvatarLoading: true));
-    final avatar = await ImageService.getImageFromGallery();
+    if (bytes != null) {
+      avatar = await ImageService.processCameraImage(bytes);
+    } else {
+      avatar = await ImageService.getImageFromGallery();
+    }
 
     if (avatar == null) {
       emit(state.copyWith(isAvatarLoading: false));

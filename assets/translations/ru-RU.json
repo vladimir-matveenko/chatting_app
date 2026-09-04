@@ -1,6 +1,8 @@
 {
   "okText": "ОК",
   "cancelText": "Отмена",
+  "close": "Закрыть",
+  "retry": "Повторить",
   "and": "и",
   "change": "Изменить",
   "you": "Вы",
@@ -60,6 +62,10 @@
     "themeDark": "Темная тема",
     "themeLight": "Светлая тема",
     "logout": "Выйти",
+    "imageSource": {
+      "camera": "Камера",
+      "gallery": "Галлерея"
+    },
     "avatar": {
       "removeAvatar": "Удалить аватар",
       "areYouSure": "Вы уверены, что хотите удалить аватар?"
@@ -168,6 +174,12 @@
     "noData": "Нет данных для отображения",
     "accessTokenInvalid": "Access token невалидный",
     "logoutError": "Ошибка logout",
+    "camera": {
+      "unableInitialize": "Проблема инициализации камеры",
+      "cameraAccessDenied": "Доступ к камере запрещен.",
+      "cameraAccessDeniedWithoutPrompt": "Доступ к камере был запрещен. Пожалуйста, разрешите доступ к камере в системных настройках.",
+      "cameraAccessRestricted": "Доступ к камере на этом устройстве ограничен."
+    },
     "network": {
       "noInternet": "Проблемы с подключением к сети",
       "timeout": "Время ожидания ответа истекло",

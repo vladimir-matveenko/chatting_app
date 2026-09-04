@@ -14,6 +14,17 @@ class ImageService {
   static const _maxImageSize = 1024.0;
   static const _quality = 90;
 
+  static Future<AppImageEntity?> processCameraImage(Uint8List bytes) async {
+    try {
+      final normalizedBytes = await compute(_normalizeCameraImage, bytes);
+
+      return AppImageEntity(bytes: normalizedBytes, name: 'camera.jpg');
+    } catch (e) {
+      log('processCameraImage error: $e');
+      return null;
+    }
+  }
+
   static Future<AppImageEntity?> getImageFromGallery() async {
     final picked = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -40,6 +51,23 @@ class ImageService {
     } catch (e) {
       log('getImageFromGallery error: $e');
       return null;
+    }
+  }
+
+  static Uint8List _normalizeCameraImage(Uint8List bytes) {
+    try {
+      final image = img.decodeImage(bytes);
+
+      if (image == null) {
+        return bytes;
+      }
+
+      final normalized = img.bakeOrientation(image);
+
+      return Uint8List.fromList(img.encodeJpg(normalized, quality: _quality));
+    } catch (e) {
+      log('normalizeCameraImage error: $e');
+      return bytes;
     }
   }
 

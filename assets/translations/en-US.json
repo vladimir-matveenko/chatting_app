@@ -1,6 +1,8 @@
 {
   "okText": "ОК",
   "cancelText": "Cancel",
+  "close": "Close",
+  "retry": "Retry",
   "and": "and",
   "change": "Change",
   "you": "You",
@@ -60,6 +62,10 @@
     "themeDark": "Dark theme",
     "themeLight": "Light theme",
     "logout": "Logout",
+    "imageSource": {
+      "camera": "Camera",
+      "gallery": "Gallery"
+    },
     "avatar": {
       "removeAvatar": "Remove avatar",
       "areYouSure": "Are you sure, you want to remove avatar?"
@@ -168,6 +174,12 @@
     "noData": "No data available",
     "accessTokenInvalid": "Access token is invalid",
     "logoutError": "Logout error",
+    "camera": {
+      "unableInitialize": "Unable to initialize camera",
+      "cameraAccessDenied": "Camera permission was denied.",
+      "cameraAccessDeniedWithoutPrompt": "Camera permission was previously denied. Please allow camera access in system settings.",
+      "cameraAccessRestricted": "Camera access is restricted on this device."
+    },
     "network": {
       "noInternet": "Network error",
       "timeout": "Connection timeout",

@@ -7,6 +7,7 @@ class AppRoutes {
   static const splash = '/splash';
   static const waiting = '/waiting';
   static const login = '/login';
+  static const camera = '/camera';
   static const createProfile = '/create-profile';
   static const resetPassword = '/reset-password';
   static const editProfile = 'edit-profile';
