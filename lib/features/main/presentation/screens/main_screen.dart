@@ -2,6 +2,7 @@ import 'package:chatting_app/features/main/presentation/widgets/bottom_nav_bar.d
 import 'package:chatting_app/features/main/presentation/widgets/custom_fab.dart';
 import 'package:chatting_app/features/notifications/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/users/presentation/cubit/cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -42,7 +43,12 @@ class _MainScreenState extends State<MainScreen> {
       appBar: isSettings
           ? null
           : AppBar(
-              title: Text(MainScreenUtils.getAppBarTitle(context)),
+              title: Builder(
+                key: ValueKey(context.locale),
+                builder: (context) {
+                  return Text(MainScreenUtils.getAppBarTitle(context));
+                },
+              ),
               centerTitle: true,
               leading: MainScreenUtils.showBackButton(context)
                   ? const AppBackButton()
