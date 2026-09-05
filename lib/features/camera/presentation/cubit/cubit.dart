@@ -32,7 +32,7 @@ class CameraCubit extends Cubit<CameraState> {
       return;
     }
 
-    // Если controller уже готов — ничего делать не нужно.
+    // Если controller is ready — do nothing.
     if (_controller?.value.isInitialized == true) {
       return;
     }
@@ -42,7 +42,7 @@ class CameraCubit extends Cubit<CameraState> {
     emit(state.copyWith(status: CameraStatus.loading, error: null));
 
     try {
-      // Получаем список камер только один раз.
+      // Getting cameras list (just once).
       if (_cameras.isEmpty) {
         _cameras = await availableCameras();
 
@@ -131,8 +131,8 @@ class CameraCubit extends Cubit<CameraState> {
         ),
       );
     } catch (e) {
-      // Controller мог быть заменён/уничтожен во время
-      // асинхронной инициализации.
+      // Controller could be replaced/destroyed during the asynchronous
+      // initialization.
       if (identical(_controller, controller)) {
         _controller = null;
       }
@@ -158,11 +158,11 @@ class CameraCubit extends Cubit<CameraState> {
       return;
     }
 
-    // Сохраняем текущую камеру.
+    // Current camera saved.
     _activeCamera = controller.description;
 
-    // Camera plugin требует освобождать ресурсы камеры,
-    // когда приложение становится inactive.
+    // The camera plugin requires releasing camera resources
+    // when the application becomes inactive.
     await _disposeController();
   }
 
@@ -171,7 +171,7 @@ class CameraCubit extends Cubit<CameraState> {
       return;
     }
 
-    // Пока приложение было свернуто, controller был уничтожен.
+    // While the application was minimized, the controller was destroyed.
     if (_controller == null) {
       await initialize();
     }
@@ -218,8 +218,7 @@ class CameraCubit extends Cubit<CameraState> {
     try {
       _activeCamera = targetCamera;
 
-      // setDescription() позволяет переиспользовать
-      // существующий CameraController.
+      // setDescription() allows reusing of an existing CameraController.
       await controller.setDescription(targetCamera);
 
       if (isClosed) {
@@ -230,7 +229,7 @@ class CameraCubit extends Cubit<CameraState> {
 
       final maxZoom = await controller.getMaxZoomLevel();
 
-      // После смены камеры сбрасываем flash.
+      // After changing the camera, we reset the flash.
       await controller.setFlashMode(FlashMode.off);
 
       emit(
@@ -247,8 +246,9 @@ class CameraCubit extends Cubit<CameraState> {
     } on CameraException catch (e) {
       _handleCameraException(e);
 
-      // Если переключение камеры сломалось,
-      // controller всё ещё может быть пригоден.
+      // If the camera switching mechanism has broken,
+      // the controller may still be usable..
+
       if (!isClosed && _controller?.value.isInitialized == true) {
         emit(state.copyWith(status: CameraStatus.ready));
       }
@@ -330,13 +330,12 @@ class CameraCubit extends Cubit<CameraState> {
     }
 
     try {
-      // Point должен быть нормализованным:
+      // Point should be normalized:
       // x: 0..1
       // y: 0..1
       await controller.setFocusPoint(point);
     } on CameraException {
-      // Не все камеры/устройства поддерживают
-      // ручную установку точки фокусировки.
+      // Not all cameras/devices support manual focus point selection.
     }
   }
 
@@ -443,8 +442,7 @@ class CameraCubit extends Cubit<CameraState> {
     try {
       await controller.dispose();
     } catch (_) {
-      // Controller может уже быть уничтожен самим
-      // camera plugin / платформой.
+      // Controller can be destroyed by camera plugin/platform
     }
   }
 

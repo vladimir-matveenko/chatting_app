@@ -93,7 +93,7 @@ class ImageService {
   static Uint8List _encode(img.Image image, String ext) {
     return switch (ext) {
       'png' => Uint8List.fromList(img.encodePng(image)),
-      'webp ' => Uint8List.fromList(img.encodeWebP(image)),
+      'webp' => Uint8List.fromList(img.encodeWebP(image)),
       _ => Uint8List.fromList(img.encodeJpg(image)),
     };
   }
