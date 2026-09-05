@@ -62286,8 +62286,8 @@ $2(a,b){return a.w!=b.w},
 $S:93}
 A.atV.prototype={
 $2(a,b){var s=b.w
-if(s==null)return
-A.nG(a,s,null)},
+if((s==null?null:s.length!==0)===!0){s.toString
+A.nG(a,s,null)}},
 $S:898}
 A.atT.prototype={
 $2(a,b){var s=b.a
