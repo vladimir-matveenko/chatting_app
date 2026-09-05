@@ -21,13 +21,9 @@ class CameraScreen extends StatelessWidget {
         body: BlocConsumer<CameraCubit, CameraState>(
           listenWhen: (previous, current) => previous.error != current.error,
           listener: (context, state) {
-            final message = state.error;
-
-            if (message == null) {
-              return;
+            if (state.error?.isNotEmpty == true) {
+              AppMessage.error(context, message: state.error!);
             }
-
-            AppMessage.error(context, message: message);
           },
           builder: (context, state) {
             if (state.status == CameraStatus.initial ||
