@@ -1,4 +1,5 @@
 import 'package:chatting_app/app/router/app_routes.dart';
+import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/app/utils/extensions.dart';
 import 'package:chatting_app/core/presentation/widgets/app_loader.dart';
 import 'package:chatting_app/core/presentation/widgets/avatar_stack.dart';
@@ -13,10 +14,42 @@ import 'package:go_router/go_router.dart';
 import '../cubit/cubit.dart';
 import '../cubit/state.dart';
 
-class ChatList extends StatelessWidget {
+class ChatList extends StatefulWidget {
   const ChatList({super.key, required this.scrollController});
 
   final ScrollController scrollController;
+
+  @override
+  State<ChatList> createState() => _ChatListState();
+}
+
+class _ChatListState extends State<ChatList> {
+  bool _imagesReady = false;
+  bool _imagesInProgress = false;
+
+  Future<void> _precacheAvatars(
+    BuildContext context,
+    List<ChatListItemEntity> chats,
+  ) async {
+    _imagesInProgress = true;
+    final images = chats
+        .take(10)
+        .expand((chat) => chat.participants)
+        .map((participant) => participant.avatarUrl)
+        .whereType<String>()
+        .where((url) => url.trim().isNotEmpty)
+        .toSet()
+        .toList();
+
+    await AppUtils.precacheImages(context, images: images);
+
+    if (!mounted) return;
+
+    setState(() {
+      _imagesInProgress = false;
+      _imagesReady = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +58,16 @@ class ChatList extends StatelessWidget {
         final chats = state.status == ChatsScreenStatus.active
             ? state.chats
             : state.archivedChats;
-        final isLoading = state.isLoading;
+
+        if (!_imagesReady && !_imagesInProgress && state.chats.isNotEmpty) {
+          _precacheAvatars(context, chats);
+        }
+        final isLoading = state.isLoading || !_imagesReady;
         return isLoading
             ? const Center(child: AppLoader())
             : chats.isNotEmpty
             ? BaseListView(
-                controller: scrollController,
+                controller: widget.scrollController,
                 items: chats,
                 itemBuilder: (context, index) {
                   final chat = chats[index];
