@@ -32,7 +32,7 @@ class CameraCubit extends Cubit<CameraState> {
       return;
     }
 
-    // Если controller is ready — do nothing.
+    // If controller is ready — do nothing.
     if (_controller?.value.isInitialized == true) {
       return;
     }

@@ -17,7 +17,7 @@ class ScrolledWrapper extends StatelessWidget {
                 top: 24.0,
                 left: 24.0,
                 right: 24.0,
-                bottom: MediaQuery.of(context).viewInsets.bottom,
+                bottom: MediaQuery.viewInsetsOf(context).bottom,
               ),
           physics: const ClampingScrollPhysics(),
           child: ConstrainedBox(
