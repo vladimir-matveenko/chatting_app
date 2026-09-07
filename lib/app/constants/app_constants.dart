@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 class AppConstants {
   const AppConstants._();
 
+  static const String baseUrl = 'https://chatting-app-api-y1cp.onrender.com/';
+  static const String localBaseUrl = 'http://127.0.0.1:3000/';
   static const String cachedTokenKey = 'CHATTING_APP_CACHED_TOKEN';
   static const String themeKey = 'theme_mode';
 

@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,26 +26,17 @@ class _SplashScreenState extends State<SplashScreen> {
     cubit = context.read<AuthCubit>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _initializeSplash();
+      AppUtils.precacheImages(
+        context,
+        images: [AssetPaths.splashBackground, AssetPaths.splashLogo],
+        onDone: () {
+          setState(() {
+            _imagesReady = true;
+          });
+        },
+      );
       Future.delayed(const Duration(seconds: 1), cubit.checkAuth);
     });
-  }
-
-  Future<void> _initializeSplash() async {
-    try {
-      await Future.wait([
-        precacheImage(const AssetImage(AssetPaths.splashBackground), context),
-        precacheImage(const AssetImage(AssetPaths.splashLogo), context),
-      ]);
-
-      if (!mounted) return;
-    } catch (e) {
-      log(e.toString());
-    } finally {
-      setState(() {
-        _imagesReady = true;
-      });
-    }
   }
 
   @override
