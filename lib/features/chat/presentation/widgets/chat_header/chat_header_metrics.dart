@@ -8,57 +8,57 @@ abstract final class ChatHeaderMetrics {
   // Layout
   // ---------------------------------------------------------------------------
 
-  /// Отступ сверху до большого аватара.
+  /// Top margin to the large avatar.
   static const double topPadding = 32.0;
 
-  /// Размер большого аватара.
+  /// Big avatar size.
   static const double avatarSize = 88.0;
 
-  /// Отступ между блоками.
+  /// Margin between the blocks.
   static const double spacing = 16.0;
 
-  /// Высота строки с названием чата.
+  /// Chat title line height.
   static const double titleHeight = 32.0;
 
-  /// Высота строки с подзаголовком.
+  /// Subtitle line height.
   static const double subtitleHeight = 20.0;
 
-  /// Высота панели действий.
+  /// Action bar height.
   static const double actionBarHeight = 72.0;
 
-  /// Нижний отступ после панели действий.
+  /// Bottom margin after the action bar.
   static const double bottomPadding = 16.0;
 
   // ---------------------------------------------------------------------------
   // Toolbar
   // ---------------------------------------------------------------------------
 
-  /// Размер аватара в свернутом состоянии.
+  /// Avatar size when collapsed.
   static const double toolbarAvatarSize = 42.0;
 
-  /// Верхняя координата аватара в toolbar.
+  /// Top coordinate of the avatar in the toolbar.
   static const double toolbarAvatarTop = 10.0;
 
-  /// Верхняя координата заголовка в toolbar.
+  /// Top coordinate of the header in the toolbar.
   static const double toolbarTitleTop = 18.0;
 
   // ---------------------------------------------------------------------------
   // Derived layout
   // ---------------------------------------------------------------------------
 
-  /// Верхняя координата большого аватара.
+  /// Top coordinate of the large avatar.
   static const double avatarTop = topPadding;
 
-  /// Верхняя координата заголовка.
+  /// Top coordinate of the header.
   static const double titleTop = avatarTop + avatarSize + spacing;
 
-  /// Верхняя координата подзаголовка.
+  /// Top coordinate of subtitle.
   static const double subtitleTop = titleTop + titleHeight + 4.0;
 
-  /// Верхняя координата ActionBar.
+  /// ActionBar top coordinate.
   static const double actionBarTop = subtitleTop + subtitleHeight + spacing;
 
-  /// Полная высота раскрытого Header.
+  /// Full height of the expanded Header.
   static const double expandedHeight =
       actionBarTop + actionBarHeight + bottomPadding;
 
@@ -66,36 +66,36 @@ abstract final class ChatHeaderMetrics {
   // Animation
   // ---------------------------------------------------------------------------
 
-  /// С какого момента появляется toolbar title.
+  /// At what point does the toolbar title appear.
   static const double toolbarTitleFadeStart = 0.60;
   static const double toolbarTitleFadeEnd = 0.80;
 
-  /// С какого момента исчезает большой аватар.
+  /// At what point does the large avatar disappear.
   static const double avatarFadeStart = 0.45;
   static const double avatarFadeEnd = 0.65;
 
-  /// С какого момента исчезает подзаголовок.
+  /// At what point does the subtitle disappear.
   static const double subtitleFadeStart = 0.40;
   static const double subtitleFadeEnd = 0.55;
 
-  /// С какого момента исчезает ActionBar.
+  /// At what point does the ActionBar disappear.
   static const double actionBarFadeStart = 0.35;
   static const double actionBarFadeEnd = 0.55;
 
-  /// С какого момента исчезает title.
+  /// At what point does the title disappear.
   static const double titleFadeStart = .45;
   static const double titleFadeEnd = 0.65;
 
-  /// Кривая движения аватара.
+  /// Avatar movement curve.
   static const Curve avatarCurve = Curves.easeOutCubic;
 
-  /// Кривая появления toolbar title.
+  /// Toolbar title appearance curve.
   static const Curve toolbarCurve = Curves.easeInOut;
 
-  /// Кривая исчезновения ActionBar.
+  /// ActionBar disappearance curve.
   static const Curve actionBarCurve = Curves.easeOut;
 
-  /// Верхняя координата подзаголовка в свернутом состоянии.
-  /// Используется только во время анимации.
+  /// Top coordinate of the subheading in the collapsed state.
+  /// Used only during animation..
   static const double toolbarSubtitleTop = toolbarTitleTop + 28.0;
 }

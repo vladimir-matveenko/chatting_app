@@ -16,7 +16,7 @@ void showReactionsMenu({
   final messagePosition = renderBox.localToGlobal(Offset.zero);
   final messageSize = renderBox.size;
   final screenSize = MediaQuery.of(context).size;
-  final statusBarHeight = MediaQuery.of(context).padding.top;
+  final statusBarHeight = MediaQuery.paddingOf(context).top;
 
   /// menu size
   const double menuWidth = 120.0;
