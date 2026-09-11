@@ -5,7 +5,7 @@ import 'package:chatting_app/core/websocket/socket_token_provider.dart';
 import 'package:injectable/injectable.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
-import '../../app_env.dart';
+import '../../app/app_env.dart';
 import 'events/socket_event.dart';
 import 'socket_events.dart';
 import 'socket_events_mapper.dart';
