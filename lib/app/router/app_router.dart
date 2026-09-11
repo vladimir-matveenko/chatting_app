@@ -63,11 +63,7 @@ class AppRouter {
       }
 
       if (status == AuthStatus.authenticated) {
-        if (isSplash ||
-            isCreateProfile ||
-            isLogin ||
-            isResetPassword ||
-            isWaiting) {
+        if (isSplash || isLogin || isResetPassword || isWaiting) {
           return AppRoutes.chats;
         }
         return null;
