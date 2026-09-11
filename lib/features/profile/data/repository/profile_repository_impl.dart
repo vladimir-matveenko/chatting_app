@@ -23,10 +23,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<Failure, UserEntity>> fetchProfile() async {
     try {
       final model = await _profileRemoteDataSource.fetchProfile();
-      if (model == null) {
-        return Left(CacheFailure());
-      }
-      _profile = model.toEntity();
+      _profile = model?.toEntity();
       return Right(_profile!);
     } catch (e) {
       return Left(mapExceptionToFailure(e));
@@ -64,9 +61,6 @@ class ProfileRepositoryImpl implements ProfileRepository {
         displayName: displayName,
         email: email,
       );
-      if (!result) {
-        return Left(CacheFailure());
-      }
       return Right(result);
     } catch (e) {
       return Left(mapExceptionToFailure(e));
