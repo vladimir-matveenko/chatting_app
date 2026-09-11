@@ -97,6 +97,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logout() async {
     await _logoutUseCase.call(NoParams());
     await _socketService.disconnect();
+    await _clearCacheUseCase.call(NoParams());
     emit(state.copyWith(status: AuthStatus.unauthenticated));
   }
 

@@ -20,7 +20,7 @@ abstract class ProfileRepository {
     required String newPassword,
   });
 
-  Future<Either<Failure, void>> clearCache();
+  Either<Failure, void> clearCache();
 
   Future<Either<Failure, UserEntity>> updateUserAvatar(
     AppImageEntity imageFile,

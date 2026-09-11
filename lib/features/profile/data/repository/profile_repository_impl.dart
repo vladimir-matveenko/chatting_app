@@ -68,11 +68,11 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Either<Failure, void>> clearCache() async {
+  Either<Failure, void> clearCache() {
     try {
       _profile = null;
       return const Right(null);
-    } on Exception catch (e) {
+    } catch (e) {
       return Left(mapExceptionToFailure(e));
     }
   }

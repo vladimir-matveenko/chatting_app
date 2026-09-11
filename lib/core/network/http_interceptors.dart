@@ -56,10 +56,11 @@ class AuthInterceptor extends Interceptor {
   ) async {
     final statusCode = err.response?.statusCode;
 
-    // TODO(): remove logs!
-    log(statusCode.toString());
-    log(err.requestOptions.baseUrl + err.requestOptions.path);
-    log(err.message.toString());
+    if (kDebugMode) {
+      log(statusCode.toString());
+      log(err.requestOptions.baseUrl + err.requestOptions.path);
+      log(err.message.toString());
+    }
 
     final isUnauthorized = statusCode == 401;
 
