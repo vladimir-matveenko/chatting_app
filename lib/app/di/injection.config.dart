@@ -411,7 +411,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i71.SocketTokenProvider>(
       () => _i71.SocketTokenProvider(gh<_i866.GetTokenUseCase>()),
     );
-    gh.lazySingleton<_i523.LoginCubit>(
+    gh.factory<_i523.LoginCubit>(
       () => _i523.LoginCubit(gh<_i171.LoginUseCase>()),
     );
     gh.lazySingleton<_i91.ChatRepository>(

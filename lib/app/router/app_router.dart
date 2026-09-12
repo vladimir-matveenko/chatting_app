@@ -5,7 +5,6 @@ import 'package:chatting_app/features/camera/presentation/screens/camera_screen.
 import 'package:chatting_app/features/chat/presentation/screens/chat_settings_screen.dart';
 import 'package:chatting_app/features/chat/presentation/screens/create_group_screen.dart';
 import 'package:chatting_app/features/chats/presentation/screens/chats_screen.dart';
-import 'package:chatting_app/features/login/presentation/screens/login_screen.dart';
 import 'package:chatting_app/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:chatting_app/features/reset_password/presentation/screens/reset_password_screen.dart';
 import 'package:chatting_app/features/users/presentation/screens/users_screen.dart';
@@ -18,6 +17,7 @@ import '../../core/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/cubit/cubit.dart';
 import '../../features/auth/presentation/cubit/state.dart';
 import '../../features/chat/presentation/screens/chat_screen.dart';
+import '../../features/login/presentation/routes/login_route.dart';
 import '../../features/main/presentation/screens/main_screen.dart';
 import '../../features/profile/presentation/screens/create_profile_screen.dart';
 import '../../features/profile/presentation/screens/edit_profile_screen.dart';
@@ -80,7 +80,7 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.login,
         pageBuilder: (context, state) =>
-            const NoTransitionPage(child: LoginScreen()),
+            const NoTransitionPage(child: LoginRoute()),
       ),
       GoRoute(
         path: AppRoutes.resetPassword,
