@@ -1,5 +1,4 @@
 import 'package:chatting_app/core/presentation/widgets/app_dialog.dart';
-import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/profile/presentation/widgets/get_image_dialog.dart';
 import 'package:chatting_app/features/profile/presentation/widgets/profile_screen_wrapper.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -27,7 +26,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   late ProfileCubit cubit;
   late AuthCubit authCubit;
-  late LoginCubit loginCubit;
 
   @override
   void initState() {
@@ -35,7 +33,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     cubit = context.read<ProfileCubit>();
     cubit.loadProfile(loadSilent: false);
     authCubit = context.read<AuthCubit>();
-    loginCubit = context.read<LoginCubit>();
   }
 
   @override
@@ -130,7 +127,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     OutlinedButton(
                       onPressed: () {
                         authCubit.logout();
-                        loginCubit.onLogout();
                       },
                       child: Row(
                         spacing: 8.0,

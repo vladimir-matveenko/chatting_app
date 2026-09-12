@@ -5,8 +5,6 @@ import 'package:chatting_app/app/router/app_routes.dart';
 import 'package:chatting_app/features/auth/domain/entity/user_entity.dart';
 import 'package:chatting_app/features/auth/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/auth/presentation/cubit/state.dart';
-import 'package:chatting_app/features/login/presentation/cubit/cubit.dart';
-import 'package:chatting_app/features/login/presentation/cubit/state.dart';
 import 'package:chatting_app/features/profile/presentation/profile_cubit/cubit.dart';
 import 'package:chatting_app/features/profile/presentation/profile_cubit/state.dart';
 import 'package:chatting_app/features/profile/presentation/screens/profile_screen.dart';
@@ -27,8 +25,6 @@ class MockProfileCubit extends Mock implements ProfileCubit {}
 
 class MockAuthCubit extends Mock implements AuthCubit {}
 
-class MockLoginCubit extends Mock implements LoginCubit {}
-
 class MockThemeCubit extends Mock implements ThemeCubit {}
 
 class FakeProfileState extends Fake implements ProfileState {}
@@ -42,7 +38,6 @@ void main() async {
 
   late MockProfileCubit profileCubit;
   late MockAuthCubit authCubit;
-  late MockLoginCubit loginCubit;
   late MockThemeCubit themeCubit;
 
   late StreamController<ProfileState> profileController;
@@ -58,7 +53,6 @@ void main() async {
   setUp(() {
     profileCubit = MockProfileCubit();
     authCubit = MockAuthCubit();
-    loginCubit = MockLoginCubit();
     themeCubit = MockThemeCubit();
 
     profileController = StreamController<ProfileState>.broadcast();
@@ -72,15 +66,6 @@ void main() async {
     when(
       () => authCubit.stream,
     ).thenAnswer((_) => const Stream<AuthState>.empty());
-
-    /// LoginCubit
-    when(
-      () => loginCubit.state,
-    ).thenReturn(const LoginState(status: LoginStatus.unknown, error: ''));
-
-    when(
-      () => loginCubit.stream,
-    ).thenAnswer((_) => const Stream<LoginState>.empty());
 
     when(
       () => profileCubit.loadProfile(loadSilent: false),
@@ -107,8 +92,6 @@ void main() async {
     when(() => themeCubit.stream).thenAnswer((_) => themeController.stream);
 
     when(() => authCubit.logout()).thenAnswer((_) async {});
-
-    when(() => loginCubit.onLogout()).thenAnswer((_) async {});
   });
 
   tearDown(() async {
@@ -148,7 +131,6 @@ void main() async {
         providers: [
           BlocProvider<ProfileCubit>.value(value: profileCubit),
           BlocProvider<AuthCubit>.value(value: authCubit),
-          BlocProvider<LoginCubit>.value(value: loginCubit),
           BlocProvider<ThemeCubit>.value(value: themeCubit),
         ],
         child: EasyLocalization(
@@ -207,8 +189,6 @@ void main() async {
     await tester.pump();
 
     verify(() => authCubit.logout()).called(1);
-
-    verify(() => loginCubit.onLogout()).called(1);
   });
 
   testWidgets('ProfileScreen navigates to edit profile', (

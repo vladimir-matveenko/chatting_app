@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/failure.dart';
 
-@lazySingleton
+@injectable
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._loginUseCase) : super(const LoginState());
   final LoginUseCase _loginUseCase;
@@ -34,10 +34,6 @@ class LoginCubit extends Cubit<LoginState> {
         emit(state.copyWith(status: LoginStatus.success));
       },
     );
-  }
-
-  Future<void> onLogout() async {
-    emit(state.copyWith(error: '', status: LoginStatus.unknown));
   }
 
   Future<void> disableError() async {
