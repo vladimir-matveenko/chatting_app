@@ -51,10 +51,15 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> _handleAuthenticated() async {
     final token = await _getTokenUseCase(NoParams());
-    token.fold((l) async {}, (r) async {
-      await _socketService.connect();
-    });
-    emit(state.copyWith(status: AuthStatus.authenticated));
+    token.fold(
+      (l) async {
+        emit(state.copyWith(status: AuthStatus.unauthenticated));
+      },
+      (r) async {
+        await _socketService.connect();
+        emit(state.copyWith(status: AuthStatus.authenticated));
+      },
+    );
   }
 
   Future<void> checkAuth() async {
