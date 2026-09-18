@@ -3,6 +3,7 @@ import 'package:chatting_app/features/auth/domain/usecases/check_server_usecase.
 import 'package:chatting_app/features/auth/domain/usecases/clear_cache_usecase.dart';
 import 'package:chatting_app/features/auth/domain/usecases/get_token_usecase.dart';
 import 'package:chatting_app/features/auth/domain/usecases/logout_usecase.dart';
+import 'package:chatting_app/features/profile/domain/usecases/fetch_profile_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -21,12 +22,14 @@ class AuthCubit extends Cubit<AuthState> {
     this._socketService,
     this._clearCacheUseCase,
     this._sessionLogger,
+    this._fetchProfileUseCase,
   ) : super(const AuthState());
   final CheckAuthUseCase _checkAuthUseCase;
   final LogoutUseCase _logoutUseCase;
   final GetTokenUseCase _getTokenUseCase;
   final ClearCacheUseCase _clearCacheUseCase;
   final CheckServerUseCase _checkServerUseCase;
+  final FetchProfileUseCase _fetchProfileUseCase;
   final SocketService _socketService;
   final SessionLogger _sessionLogger;
 
@@ -60,6 +63,8 @@ class AuthCubit extends Cubit<AuthState> {
       emit(state.copyWith(status: AuthStatus.unauthenticated));
       return;
     }
+    _sessionLogger.log('Get me trying');
+    await _fetchProfileUseCase.call(NoParams());
     _sessionLogger.log('Socket is connecting');
     await _socketService.connect();
     _sessionLogger.log('User is authenticated');

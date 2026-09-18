@@ -492,17 +492,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i55.SessionLogger>(),
       ),
     );
-    gh.lazySingleton<_i330.AuthCubit>(
-      () => _i330.AuthCubit(
-        gh<_i323.CheckAuthUseCase>(),
-        gh<_i844.LogoutUseCase>(),
-        gh<_i866.GetTokenUseCase>(),
-        gh<_i39.CheckServerUseCase>(),
-        gh<_i739.SocketService>(),
-        gh<_i478.ClearCacheUseCase>(),
-        gh<_i55.SessionLogger>(),
-      ),
-    );
     gh.lazySingleton<_i643.ProfileCubit>(
       () => _i643.ProfileCubit(
         gh<_i483.FetchProfileUseCase>(),
@@ -541,9 +530,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i626.GetMeFromChatUseCase>(),
       ),
     );
-    gh.lazySingleton<_i289.AppRouter>(
-      () => _i289.AppRouter(gh<_i330.AuthCubit>()),
-    );
     gh.lazySingleton<_i2.MessagesSocketService>(
       () => _i702.MessagesSocketServiceImpl(gh<_i739.SocketService>()),
     );
@@ -554,6 +540,18 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i156.ChatsSocketService>(),
         gh<_i921.ArchiveChatUseCase>(),
         gh<_i525.ReturnFromArchiveUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i330.AuthCubit>(
+      () => _i330.AuthCubit(
+        gh<_i323.CheckAuthUseCase>(),
+        gh<_i844.LogoutUseCase>(),
+        gh<_i866.GetTokenUseCase>(),
+        gh<_i39.CheckServerUseCase>(),
+        gh<_i739.SocketService>(),
+        gh<_i478.ClearCacheUseCase>(),
+        gh<_i55.SessionLogger>(),
+        gh<_i483.FetchProfileUseCase>(),
       ),
     );
     gh.lazySingleton<_i367.NotificationsCubit>(
@@ -580,6 +578,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i564.GetAroundContextUseCase>(),
         gh<_i927.SearchMessagesUseCase>(),
       ),
+    );
+    gh.lazySingleton<_i289.AppRouter>(
+      () => _i289.AppRouter(gh<_i330.AuthCubit>()),
     );
     return this;
   }
