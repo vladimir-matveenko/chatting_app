@@ -63,38 +63,35 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> checkAuth() async {
     final result = await _checkAuthUseCase(NoParams());
 
-    result.fold(
-      (l) {
+    if (result.isLeft()) {
+      emit(state.copyWith(status: AuthStatus.unauthenticated));
+      return;
+    }
+
+    final isAuthenticated = result.getOrElse(() => false);
+    if (!isAuthenticated) {
+      emit(state.copyWith(status: AuthStatus.serverLoading));
+
+      final serverAvailable = await _waitForBackend();
+
+      if (serverAvailable) {
         emit(state.copyWith(status: AuthStatus.unauthenticated));
-      },
-      (r) async {
-        if (r) {
-          if (hasLoggedIn) {
-            await _handleAuthenticated();
-          } else {
-            // check if the server is running
-            emit(state.copyWith(status: AuthStatus.serverLoading));
-            final result = await _waitForBackend();
-            if (result) {
-              await _handleAuthenticated();
-            } else {
-              // no action if server is not ready
-              return;
-            }
-          }
-        } else {
-          // check if the server is running
-          emit(state.copyWith(status: AuthStatus.serverLoading));
-          final result = await _waitForBackend();
-          if (result) {
-            emit(state.copyWith(status: AuthStatus.unauthenticated));
-          } else {
-            // no action if server is not ready
-            return;
-          }
-        }
-      },
-    );
+      }
+
+      return;
+    }
+
+    if (!hasLoggedIn) {
+      emit(state.copyWith(status: AuthStatus.serverLoading));
+
+      final serverAvailable = await _waitForBackend();
+
+      if (!serverAvailable) {
+        return;
+      }
+    }
+
+    await _handleAuthenticated();
   }
 
   Future<void> logout() async {
