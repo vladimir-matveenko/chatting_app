@@ -135,12 +135,21 @@ class SocketServiceImpl implements SocketService {
       final message = '🔴 Socket connect error: $error';
       log(message);
       _sessionLogger.log(message);
+
     });
 
     _socket!.onError((error) {
       final message = '🔴 Socket error: $error';
       log(message);
       _sessionLogger.log(message);
+    });
+
+    _socket!.onReconnectAttempt((_) async {
+      final token = await _tokenProvider();
+
+      if (token != null) {
+        _socket!.auth = {'token': token};
+      }
     });
 
     _socket!.onDisconnect((reason) {
