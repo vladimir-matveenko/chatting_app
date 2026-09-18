@@ -492,15 +492,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i55.SessionLogger>(),
       ),
     );
-    gh.lazySingleton<_i643.ProfileCubit>(
-      () => _i643.ProfileCubit(
-        gh<_i483.FetchProfileUseCase>(),
-        gh<_i605.CreateProfileUseCase>(),
-        gh<_i237.UpdateProfileUseCase>(),
-        gh<_i413.UpdateAvatarUseCase>(),
-        gh<_i171.DeleteAvatarUseCase>(),
-      ),
-    );
     gh.lazySingleton<_i330.AuthCubit>(
       () => _i330.AuthCubit(
         gh<_i323.CheckAuthUseCase>(),
@@ -509,6 +500,16 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i39.CheckServerUseCase>(),
         gh<_i739.SocketService>(),
         gh<_i478.ClearCacheUseCase>(),
+        gh<_i55.SessionLogger>(),
+      ),
+    );
+    gh.lazySingleton<_i643.ProfileCubit>(
+      () => _i643.ProfileCubit(
+        gh<_i483.FetchProfileUseCase>(),
+        gh<_i605.CreateProfileUseCase>(),
+        gh<_i237.UpdateProfileUseCase>(),
+        gh<_i413.UpdateAvatarUseCase>(),
+        gh<_i171.DeleteAvatarUseCase>(),
         gh<_i55.SessionLogger>(),
       ),
     );

@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:chatting_app/core/services/session_logger.dart';
 import 'package:chatting_app/features/profile/domain/usecases/update_profile_usecase.dart';
 import 'package:chatting_app/features/profile/presentation/profile_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,12 +23,14 @@ class ProfileCubit extends Cubit<ProfileState> {
     this._updateProfileUseCase,
     this._updateAvatarUseCase,
     this._deleteAvatarUseCase,
+    this._sessionLogger,
   ) : super(const ProfileState());
   final FetchProfileUseCase _fetchProfileUseCase;
   final CreateProfileUseCase _createProfileUseCase;
   final UpdateProfileUseCase _updateProfileUseCase;
   final UpdateAvatarUseCase _updateAvatarUseCase;
   final DeleteAvatarUseCase _deleteAvatarUseCase;
+  final SessionLogger _sessionLogger;
 
   Future<void> loadProfile({bool loadSilent = true}) async {
     emit(state.copyWith(isLoading: !loadSilent));
@@ -153,5 +156,10 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> disableSuccess() async {
     emit(state.copyWith(createdSuccessful: false, updatedSuccessful: false));
+  }
+
+  Future<void> getLogs() async {
+    final log = _sessionLogger.getLog;
+    emit(state.copyWith(log: log));
   }
 }
