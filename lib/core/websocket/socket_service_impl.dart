@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:chatting_app/core/services/session_logger.dart';
 import 'package:chatting_app/core/websocket/socket_token_provider.dart';
 import 'package:injectable/injectable.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -13,9 +14,10 @@ import 'socket_service.dart';
 
 @LazySingleton(as: SocketService)
 class SocketServiceImpl implements SocketService {
-  SocketServiceImpl(this._tokenProvider);
+  SocketServiceImpl(this._tokenProvider, this._sessionLogger);
 
   final SocketTokenProvider _tokenProvider;
+  final SessionLogger _sessionLogger;
 
   io.Socket? _socket;
   String? _currentToken;
@@ -58,6 +60,7 @@ class SocketServiceImpl implements SocketService {
     );
 
     _registerEvents();
+    _registerConnectionEvents();
 
     _socket!.onReconnectAttempt((_) async {
       _socket!.auth = {'token': token};
@@ -115,8 +118,35 @@ class SocketServiceImpl implements SocketService {
         } catch (e, s) {
           log('$e');
           log('$s');
+          _sessionLogger.log(e.toString());
         }
       });
     }
+  }
+
+  void _registerConnectionEvents() {
+    _socket!.onConnect((_) {
+      final message = '🟢 Socket connected';
+      log(message);
+      _sessionLogger.log(message);
+    });
+
+    _socket!.onConnectError((error) {
+      final message = '🔴 Socket connect error: $error';
+      log(message);
+      _sessionLogger.log(message);
+    });
+
+    _socket!.onError((error) {
+      final message = '🔴 Socket error: $error';
+      log(message);
+      _sessionLogger.log(message);
+    });
+
+    _socket!.onDisconnect((reason) {
+      final message = '🟡 Socket disconnected: $reason';
+      log(message);
+      _sessionLogger.log(message);
+    });
   }
 }
