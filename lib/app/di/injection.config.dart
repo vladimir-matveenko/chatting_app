@@ -14,6 +14,7 @@ import 'package:chatting_app/app/di/modules/shared_pref_module.dart' as _i786;
 import 'package:chatting_app/app/router/app_router.dart' as _i289;
 import 'package:chatting_app/core/network/http_interceptors.dart' as _i370;
 import 'package:chatting_app/core/services/auth_session_manager.dart' as _i186;
+import 'package:chatting_app/core/services/session_logger.dart' as _i55;
 import 'package:chatting_app/core/websocket/socket_service.dart' as _i739;
 import 'package:chatting_app/core/websocket/socket_service_impl.dart' as _i581;
 import 'package:chatting_app/core/websocket/socket_token_provider.dart' as _i71;
@@ -232,6 +233,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i186.AuthSessionManager>(
       () => _i186.AuthSessionManager(),
     );
+    gh.lazySingleton<_i55.SessionLogger>(() => _i55.SessionLogger());
     gh.lazySingleton<_i999.AuthLocalDataSource>(
       () => _i999.AuthLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
@@ -485,7 +487,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i998.UpdateChatUseCase(gh<_i91.ChatRepository>()),
     );
     gh.lazySingleton<_i739.SocketService>(
-      () => _i581.SocketServiceImpl(gh<_i71.SocketTokenProvider>()),
+      () => _i581.SocketServiceImpl(
+        gh<_i71.SocketTokenProvider>(),
+        gh<_i55.SessionLogger>(),
+      ),
     );
     gh.lazySingleton<_i643.ProfileCubit>(
       () => _i643.ProfileCubit(
@@ -494,6 +499,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i237.UpdateProfileUseCase>(),
         gh<_i413.UpdateAvatarUseCase>(),
         gh<_i171.DeleteAvatarUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i330.AuthCubit>(
+      () => _i330.AuthCubit(
+        gh<_i323.CheckAuthUseCase>(),
+        gh<_i844.LogoutUseCase>(),
+        gh<_i866.GetTokenUseCase>(),
+        gh<_i39.CheckServerUseCase>(),
+        gh<_i739.SocketService>(),
+        gh<_i478.ClearCacheUseCase>(),
+        gh<_i55.SessionLogger>(),
       ),
     );
     gh.lazySingleton<_i126.ChangePasswordCubit>(
@@ -522,16 +538,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i349.ChangeOwnerUseCase>(),
         gh<_i454.ChangeMemberRoleUseCase>(),
         gh<_i626.GetMeFromChatUseCase>(),
-      ),
-    );
-    gh.lazySingleton<_i330.AuthCubit>(
-      () => _i330.AuthCubit(
-        gh<_i323.CheckAuthUseCase>(),
-        gh<_i844.LogoutUseCase>(),
-        gh<_i866.GetTokenUseCase>(),
-        gh<_i39.CheckServerUseCase>(),
-        gh<_i739.SocketService>(),
-        gh<_i478.ClearCacheUseCase>(),
       ),
     );
     gh.lazySingleton<_i289.AppRouter>(

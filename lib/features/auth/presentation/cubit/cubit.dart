@@ -1,3 +1,4 @@
+import 'package:chatting_app/core/services/session_logger.dart';
 import 'package:chatting_app/features/auth/domain/usecases/check_server_usecase.dart';
 import 'package:chatting_app/features/auth/domain/usecases/clear_cache_usecase.dart';
 import 'package:chatting_app/features/auth/domain/usecases/get_token_usecase.dart';
@@ -19,6 +20,7 @@ class AuthCubit extends Cubit<AuthState> {
     this._checkServerUseCase,
     this._socketService,
     this._clearCacheUseCase,
+    this._sessionLogger,
   ) : super(const AuthState());
   final CheckAuthUseCase _checkAuthUseCase;
   final LogoutUseCase _logoutUseCase;
@@ -26,6 +28,7 @@ class AuthCubit extends Cubit<AuthState> {
   final ClearCacheUseCase _clearCacheUseCase;
   final CheckServerUseCase _checkServerUseCase;
   final SocketService _socketService;
+  final SessionLogger _sessionLogger;
 
   bool hasLoggedIn = false;
 
@@ -53,10 +56,13 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await _getTokenUseCase(NoParams());
     final token = result.fold((l) => null, (r) => r);
     if (token == null) {
+      _sessionLogger.log('User is unauthenticated');
       emit(state.copyWith(status: AuthStatus.unauthenticated));
       return;
     }
+    _sessionLogger.log('Socket is connecting');
     await _socketService.connect();
+    _sessionLogger.log('User is authenticated');
     emit(state.copyWith(status: AuthStatus.authenticated));
   }
 
@@ -65,6 +71,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     if (result.isLeft()) {
       emit(state.copyWith(status: AuthStatus.unauthenticated));
+      _sessionLogger.log('User is unauthenticated');
       return;
     }
 
@@ -75,6 +82,7 @@ class AuthCubit extends Cubit<AuthState> {
       final serverAvailable = await _waitForBackend();
 
       if (serverAvailable) {
+        _sessionLogger.log('User is unauthenticated');
         emit(state.copyWith(status: AuthStatus.unauthenticated));
       }
 
@@ -82,6 +90,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
 
     if (!hasLoggedIn) {
+      _sessionLogger.log('Server is loading');
       emit(state.copyWith(status: AuthStatus.serverLoading));
 
       final serverAvailable = await _waitForBackend();

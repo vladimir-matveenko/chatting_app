@@ -71,10 +71,11 @@ class AppDialog {
     BuildContext context, {
     required Widget content,
     VoidCallback? onClose,
+    BoxConstraints? constraints,
   }) {
     return showDialog(
       context: context,
-      builder: (context) => Dialog(child: content),
+      builder: (context) => Dialog(constraints: constraints, child: content),
     ).then((_) {
       onClose?.call();
     });

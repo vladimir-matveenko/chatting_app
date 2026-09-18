@@ -1,3 +1,4 @@
+import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/core/presentation/widgets/app_dialog.dart';
 import 'package:chatting_app/features/profile/presentation/widgets/get_image_dialog.dart';
 import 'package:chatting_app/features/profile/presentation/widgets/profile_screen_wrapper.dart';
@@ -7,9 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/di/injection.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
 import '../../../../core/presentation/widgets/scrolled_wrapper.dart';
+import '../../../../core/services/session_logger.dart';
 import '../../../auth/presentation/cubit/cubit.dart';
 import '../profile_cubit/cubit.dart';
 import '../widgets/language_selector.dart';
@@ -24,6 +27,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final _sessionLogger = getIt<SessionLogger>();
   late ProfileCubit cubit;
   late AuthCubit authCubit;
 
@@ -123,6 +127,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         context.push(AppRoutes.licenses);
                       },
                       child: const Text('Open Source Licenses'),
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: theme.colorScheme.primary,
+                        textStyle: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.primary,
+                          decoration: .underline,
+                          decorationColor: theme.colorScheme.primary,
+                        ),
+                      ),
+                      onPressed: () {
+                        final children = _sessionLogger.getLog
+                            .map(Text.new)
+                            .toList();
+                        AppDialog.empty(
+                          context,
+                          constraints: AppUtils.getModalDialogConstraints(
+                            context,
+                          ),
+                          content: ScrolledWrapper(
+                            child: Column(children: children),
+                          ),
+                        );
+                      },
+                      child: const Text('Logger history'),
                     ),
                     OutlinedButton(
                       onPressed: () {
