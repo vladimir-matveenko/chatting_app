@@ -62,175 +62,188 @@ void main() async {
     );
   });
 
-  testWidgets('LoginScreen renders correctly', (tester) async {
-    await tester.pumpWidget(createWidget());
-    await tester.pumpAndSettle();
-
-    expect(find.byType(LoginScreen), findsOneWidget);
-  });
-
-  testWidgets('LoginScreen has email and password fields', (tester) async {
-    await tester.pumpWidget(createWidget());
-    await tester.pumpAndSettle();
-
-    expect(find.byType(EmailTextField), findsOneWidget);
-    expect(find.byType(PasswordTextField), findsOneWidget);
-  });
-
-  testWidgets('LoginScreen initializes email and password fields', (
-    tester,
-  ) async {
-    await tester.pumpWidget(createWidget());
-    await tester.pumpAndSettle();
-
-    final emailField = find.byType(EmailTextField);
-    final passwordField = find.byType(PasswordTextField);
-
-    expect(emailField, findsOneWidget);
-    expect(passwordField, findsOneWidget);
-
-    final emailTextField = find.descendant(
-      of: emailField,
-      matching: find.byType(TextFormField),
-    );
-
-    final passwordTextField = find.descendant(
-      of: passwordField,
-      matching: find.byType(TextFormField),
-    );
-
-    expect(
-      tester.widget<TextFormField>(emailTextField).controller?.text,
-      AppConstants.testEmail,
-    );
-
-    expect(
-      tester.widget<TextFormField>(passwordTextField).controller?.text,
-      AppConstants.testPassword,
-    );
-  });
-
-  testWidgets(
-    'LoginScreen has login, create profile and reset password buttons',
-    (tester) async {
+  group('LoginScreen Tests', () {
+    testWidgets('LoginScreen renders correctly', (tester) async {
       await tester.pumpWidget(createWidget());
       await tester.pumpAndSettle();
 
-      expect(
-        find.widgetWithText(ElevatedButton, 'loginScreen.btnLogin'.tr()),
-        findsOneWidget,
+      expect(find.byType(LoginScreen), findsOneWidget);
+    });
+
+    testWidgets('LoginScreen has email and password fields', (tester) async {
+      await tester.pumpWidget(createWidget());
+      await tester.pumpAndSettle();
+
+      expect(find.byType(EmailTextField), findsOneWidget);
+      expect(find.byType(PasswordTextField), findsOneWidget);
+    });
+
+    testWidgets('LoginScreen initializes email and password fields', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createWidget());
+      await tester.pumpAndSettle();
+
+      final emailField = find.byType(EmailTextField);
+      final passwordField = find.byType(PasswordTextField);
+
+      expect(emailField, findsOneWidget);
+      expect(passwordField, findsOneWidget);
+
+      final emailTextField = find.descendant(
+        of: emailField,
+        matching: find.byType(TextFormField),
+      );
+
+      final passwordTextField = find.descendant(
+        of: passwordField,
+        matching: find.byType(TextFormField),
       );
 
       expect(
-        find.widgetWithText(TextButton, 'createProfileScreen.screenName'.tr()),
-        findsOneWidget,
+        tester.widget<TextFormField>(emailTextField).controller?.text,
+        AppConstants.testEmail,
       );
 
       expect(
-        find.widgetWithText(
-          TextButton,
-          '${'loginScreen.forgotPassword'.tr()}?',
+        tester.widget<TextFormField>(passwordTextField).controller?.text,
+        AppConstants.testPassword,
+      );
+    });
+
+    testWidgets(
+      'LoginScreen has login, create profile and reset password buttons',
+      (tester) async {
+        await tester.pumpWidget(createWidget());
+        await tester.pumpAndSettle();
+
+        expect(
+          find.widgetWithText(ElevatedButton, 'loginScreen.btnLogin'.tr()),
+          findsOneWidget,
+        );
+
+        expect(
+          find.widgetWithText(
+            TextButton,
+            'createProfileScreen.screenName'.tr(),
+          ),
+          findsOneWidget,
+        );
+
+        expect(
+          find.widgetWithText(
+            TextButton,
+            '${'loginScreen.forgotPassword'.tr()}?',
+          ),
+          findsOneWidget,
+        );
+      },
+    );
+
+    testWidgets('Shows loader inside login button when loading', (
+      tester,
+    ) async {
+      when(
+        () => mockCubit.state,
+      ).thenReturn(const LoginState(status: LoginStatus.inProgress, error: ''));
+
+      whenListen(
+        mockCubit,
+        Stream<LoginState>.value(
+          const LoginState(status: LoginStatus.inProgress, error: ''),
         ),
-        findsOneWidget,
+        initialState: const LoginState(
+          status: LoginStatus.inProgress,
+          error: '',
+        ),
       );
-    },
-  );
 
-  testWidgets('Shows loader inside login button when loading', (tester) async {
-    when(
-      () => mockCubit.state,
-    ).thenReturn(const LoginState(status: LoginStatus.inProgress, error: ''));
+      await tester.pumpWidget(createWidget());
+      await tester.pump();
 
-    whenListen(
-      mockCubit,
-      Stream<LoginState>.value(
-        const LoginState(status: LoginStatus.inProgress, error: ''),
-      ),
-      initialState: const LoginState(status: LoginStatus.inProgress, error: ''),
-    );
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    });
 
-    await tester.pumpWidget(createWidget());
-    await tester.pump();
+    testWidgets('Login button is disabled when loading', (tester) async {
+      when(
+        () => mockCubit.state,
+      ).thenReturn(const LoginState(status: LoginStatus.inProgress, error: ''));
 
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
-  });
+      whenListen(
+        mockCubit,
+        Stream<LoginState>.value(
+          const LoginState(status: LoginStatus.inProgress, error: ''),
+        ),
+        initialState: const LoginState(
+          status: LoginStatus.inProgress,
+          error: '',
+        ),
+      );
 
-  testWidgets('Login button is disabled when loading', (tester) async {
-    when(
-      () => mockCubit.state,
-    ).thenReturn(const LoginState(status: LoginStatus.inProgress, error: ''));
+      await tester.pumpWidget(createWidget());
+      await tester.pump();
 
-    whenListen(
-      mockCubit,
-      Stream<LoginState>.value(
-        const LoginState(status: LoginStatus.inProgress, error: ''),
-      ),
-      initialState: const LoginState(status: LoginStatus.inProgress, error: ''),
-    );
+      final loginButton = tester.widget<ElevatedButton>(
+        find.byType(ElevatedButton),
+      );
 
-    await tester.pumpWidget(createWidget());
-    await tester.pump();
+      expect(loginButton.onPressed, isNull);
+    });
 
-    final loginButton = tester.widget<ElevatedButton>(
-      find.byType(ElevatedButton),
-    );
+    testWidgets('Login with valid data triggers login request', (tester) async {
+      await tester.pumpWidget(createWidget());
+      await tester.pumpAndSettle();
 
-    expect(loginButton.onPressed, isNull);
-  });
+      // Values are already initialized by LoginScreen.initState().
+      expect(
+        tester
+            .widget<TextFormField>(
+              find.descendant(
+                of: find.byType(EmailTextField),
+                matching: find.byType(TextFormField),
+              ),
+            )
+            .controller
+            ?.text,
+        AppConstants.testEmail,
+      );
 
-  testWidgets('Login with valid data triggers login request', (tester) async {
-    await tester.pumpWidget(createWidget());
-    await tester.pumpAndSettle();
+      expect(
+        tester
+            .widget<TextFormField>(
+              find.descendant(
+                of: find.byType(PasswordTextField),
+                matching: find.byType(TextFormField),
+              ),
+            )
+            .controller
+            ?.text,
+        AppConstants.testPassword,
+      );
 
-    // Values are already initialized by LoginScreen.initState().
-    expect(
-      tester
-          .widget<TextFormField>(
-            find.descendant(
-              of: find.byType(EmailTextField),
-              matching: find.byType(TextFormField),
-            ),
-          )
-          .controller
-          ?.text,
-      AppConstants.testEmail,
-    );
+      final loginButton = find.widgetWithText(
+        ElevatedButton,
+        'loginScreen.btnLogin'.tr(),
+      );
 
-    expect(
-      tester
-          .widget<TextFormField>(
-            find.descendant(
-              of: find.byType(PasswordTextField),
-              matching: find.byType(TextFormField),
-            ),
-          )
-          .controller
-          ?.text,
-      AppConstants.testPassword,
-    );
+      await tester.tap(loginButton);
+      await tester.pump();
 
-    final loginButton = find.widgetWithText(
-      ElevatedButton,
-      'loginScreen.btnLogin'.tr(),
-    );
+      verify(
+        () => mockCubit.login(
+          email: AppConstants.testEmail,
+          password: AppConstants.testPassword,
+        ),
+      ).called(1);
+    });
 
-    await tester.tap(loginButton);
-    await tester.pump();
+    testWidgets('Calls setInitialParameters when screen is created', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createWidget());
+      await tester.pumpAndSettle();
 
-    verify(
-      () => mockCubit.login(
-        email: AppConstants.testEmail,
-        password: AppConstants.testPassword,
-      ),
-    ).called(1);
-  });
-
-  testWidgets('Calls setInitialParameters when screen is created', (
-    tester,
-  ) async {
-    await tester.pumpWidget(createWidget());
-    await tester.pumpAndSettle();
-
-    verify(() => mockCubit.setInitialParameters()).called(1);
+      verify(() => mockCubit.setInitialParameters()).called(1);
+    });
   });
 }

@@ -73,6 +73,8 @@ void main() async {
 
     when(() => profileCubit.loadProfile()).thenAnswer((_) async {});
 
+    when(() => profileCubit.getLogs()).thenAnswer((_) async {});
+
     when(() => profileCubit.state).thenReturn(
       ProfileState(
         profile: UserEntity(
@@ -82,6 +84,7 @@ void main() async {
           avatarUrl: '',
           createdAt: DateTime.now(),
         ),
+        log: [],
       ),
     );
 
@@ -146,78 +149,80 @@ void main() async {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('ProfileScreen displays user info and controls', (
-    WidgetTester tester,
-  ) async {
-    await pumpProfileScreen(tester);
+  group('ProfileScreen Tests', () {
+    testWidgets('ProfileScreen displays user info and controls', (
+      WidgetTester tester,
+    ) async {
+      await pumpProfileScreen(tester);
 
-    // Profile is loaded when screen is initialized.
-    verify(() => profileCubit.loadProfile(loadSilent: false)).called(1);
+      // Profile is loaded when screen is initialized.
+      verify(() => profileCubit.loadProfile(loadSilent: false)).called(1);
 
-    // User information.
-    expect(find.byType(ProfileAvatar), findsOneWidget);
+      // User information.
+      expect(find.byType(ProfileAvatar), findsOneWidget);
 
-    expect(find.text('Jhon'), findsOneWidget);
+      expect(find.text('Jhon'), findsOneWidget);
 
-    expect(find.text('john@mail.com'), findsOneWidget);
+      expect(find.text('john@mail.com'), findsOneWidget);
 
-    // Theme and language selectors.
-    expect(find.byType(ThemeSelector), findsOneWidget);
+      // Theme and language selectors.
+      expect(find.byType(ThemeSelector), findsOneWidget);
 
-    expect(find.byType(LanguageSelector), findsOneWidget);
+      expect(find.byType(LanguageSelector), findsOneWidget);
 
-    // Edit profile button.
-    expect(find.byIcon(Icons.edit), findsOneWidget);
+      // Edit profile button.
+      expect(find.byIcon(Icons.edit), findsOneWidget);
 
-    // Licenses button.
-    expect(find.text('Open Source Licenses'), findsOneWidget);
+      // Licenses button.
+      expect(find.text('Open Source Licenses'), findsOneWidget);
 
-    // Logout button.
-    expect(find.byIcon(Icons.logout), findsOneWidget);
-  });
+      // Logout button.
+      expect(find.byIcon(Icons.logout), findsOneWidget);
+    });
 
-  testWidgets('ProfileScreen logout calls auth and login cubits', (
-    WidgetTester tester,
-  ) async {
-    await pumpProfileScreen(tester);
+    testWidgets('ProfileScreen logout calls auth and login cubits', (
+      WidgetTester tester,
+    ) async {
+      await pumpProfileScreen(tester);
 
-    final logoutButton = find.byIcon(Icons.logout);
+      final logoutButton = find.byIcon(Icons.logout);
 
-    expect(logoutButton, findsOneWidget);
+      expect(logoutButton, findsOneWidget);
 
-    await tester.tap(logoutButton);
-    await tester.pump();
+      await tester.tap(logoutButton);
+      await tester.pump();
 
-    verify(() => authCubit.logout()).called(1);
-  });
+      verify(() => authCubit.logout()).called(1);
+    });
 
-  testWidgets('ProfileScreen navigates to edit profile', (
-    WidgetTester tester,
-  ) async {
-    await pumpProfileScreen(tester);
+    testWidgets('ProfileScreen navigates to edit profile', (
+      WidgetTester tester,
+    ) async {
+      await pumpProfileScreen(tester);
 
-    final editButton = find.byIcon(Icons.edit);
+      final editButton = find.byIcon(Icons.edit);
 
-    expect(editButton, findsOneWidget);
+      expect(editButton, findsOneWidget);
 
-    await tester.tap(editButton);
-    await tester.pumpAndSettle();
+      await tester.tap(editButton);
+      await tester.pumpAndSettle();
 
-    expect(find.text('Edit Profile Screen'), findsOneWidget);
-  });
+      expect(find.text('Edit Profile Screen'), findsOneWidget);
+    });
 
-  testWidgets('ProfileScreen navigates to licenses', (
-    WidgetTester tester,
-  ) async {
-    await pumpProfileScreen(tester);
+    testWidgets('ProfileScreen navigates to licenses', (
+      WidgetTester tester,
+    ) async {
+      await pumpProfileScreen(tester);
 
-    final licensesButton = find.text('Open Source Licenses');
+      final licensesButton = find.text('Open Source Licenses');
 
-    expect(licensesButton, findsOneWidget);
+      expect(licensesButton, findsOneWidget);
 
-    await tester.tap(licensesButton);
-    await tester.pumpAndSettle();
+      await tester.tap(licensesButton);
+      await tester.pumpAndSettle();
 
-    expect(find.text('Licenses Screen'), findsOneWidget);
+      expect(find.text('Licenses Screen'), findsOneWidget);
+    });
   });
 }

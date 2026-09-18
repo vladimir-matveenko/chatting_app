@@ -13,5 +13,6 @@ abstract class ProfileState with _$ProfileState {
     @Default(false) bool isAvatarLoading,
     @Default(false) bool createdSuccessful,
     @Default(false) bool updatedSuccessful,
+    @Default([]) List<String> log,
   }) = _ProfileState;
 }
