@@ -135,7 +135,6 @@ class SocketServiceImpl implements SocketService {
       final message = '🔴 Socket connect error: $error';
       log(message);
       _sessionLogger.log(message);
-
     });
 
     _socket!.onError((error) {
