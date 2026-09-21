@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:chatting_app/core/domain/entity/availability_filter_entity.dart';
 import 'package:chatting_app/core/websocket/events/notification_created_socket_event.dart';
@@ -57,6 +58,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   Future<void> _onNotificationCreated(
     NotificationCreatedSocketEvent event,
   ) async {
+    log(event.notification.type.toString());
     await loadData();
   }
 

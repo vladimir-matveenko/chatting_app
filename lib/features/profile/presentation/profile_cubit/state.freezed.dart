@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProfileState {
 
- UserEntity? get profile; String? get error; bool get isLoading; bool get isAvatarLoading; bool get createdSuccessful; bool get updatedSuccessful; List<String> get log;
+ PackageInfo? get appInfo; UserEntity? get profile; String? get error; bool get isLoading; bool get isAvatarLoading; bool get isAppInfoLoading; bool get createdSuccessful; bool get updatedSuccessful; List<String> get log;
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ProfileStateCopyWith<ProfileState> get copyWith => _$ProfileStateCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileState&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isAvatarLoading, isAvatarLoading) || other.isAvatarLoading == isAvatarLoading)&&(identical(other.createdSuccessful, createdSuccessful) || other.createdSuccessful == createdSuccessful)&&(identical(other.updatedSuccessful, updatedSuccessful) || other.updatedSuccessful == updatedSuccessful)&&const DeepCollectionEquality().equals(other.log, log));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileState&&(identical(other.appInfo, appInfo) || other.appInfo == appInfo)&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isAvatarLoading, isAvatarLoading) || other.isAvatarLoading == isAvatarLoading)&&(identical(other.isAppInfoLoading, isAppInfoLoading) || other.isAppInfoLoading == isAppInfoLoading)&&(identical(other.createdSuccessful, createdSuccessful) || other.createdSuccessful == createdSuccessful)&&(identical(other.updatedSuccessful, updatedSuccessful) || other.updatedSuccessful == updatedSuccessful)&&const DeepCollectionEquality().equals(other.log, log));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,profile,error,isLoading,isAvatarLoading,createdSuccessful,updatedSuccessful,const DeepCollectionEquality().hash(log));
+int get hashCode => Object.hash(runtimeType,appInfo,profile,error,isLoading,isAvatarLoading,isAppInfoLoading,createdSuccessful,updatedSuccessful,const DeepCollectionEquality().hash(log));
 
 @override
 String toString() {
-  return 'ProfileState(profile: $profile, error: $error, isLoading: $isLoading, isAvatarLoading: $isAvatarLoading, createdSuccessful: $createdSuccessful, updatedSuccessful: $updatedSuccessful, log: $log)';
+  return 'ProfileState(appInfo: $appInfo, profile: $profile, error: $error, isLoading: $isLoading, isAvatarLoading: $isAvatarLoading, isAppInfoLoading: $isAppInfoLoading, createdSuccessful: $createdSuccessful, updatedSuccessful: $updatedSuccessful, log: $log)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ProfileStateCopyWith<$Res>  {
   factory $ProfileStateCopyWith(ProfileState value, $Res Function(ProfileState) _then) = _$ProfileStateCopyWithImpl;
 @useResult
 $Res call({
- UserEntity? profile, String? error, bool isLoading, bool isAvatarLoading, bool createdSuccessful, bool updatedSuccessful, List<String> log
+ PackageInfo? appInfo, UserEntity? profile, String? error, bool isLoading, bool isAvatarLoading, bool isAppInfoLoading, bool createdSuccessful, bool updatedSuccessful, List<String> log
 });
 
 
@@ -62,12 +62,14 @@ class _$ProfileStateCopyWithImpl<$Res>
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? profile = freezed,Object? error = freezed,Object? isLoading = null,Object? isAvatarLoading = null,Object? createdSuccessful = null,Object? updatedSuccessful = null,Object? log = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? appInfo = freezed,Object? profile = freezed,Object? error = freezed,Object? isLoading = null,Object? isAvatarLoading = null,Object? isAppInfoLoading = null,Object? createdSuccessful = null,Object? updatedSuccessful = null,Object? log = null,}) {
   return _then(_self.copyWith(
-profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
+appInfo: freezed == appInfo ? _self.appInfo : appInfo // ignore: cast_nullable_to_non_nullable
+as PackageInfo?,profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
 as UserEntity?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isAvatarLoading: null == isAvatarLoading ? _self.isAvatarLoading : isAvatarLoading // ignore: cast_nullable_to_non_nullable
+as bool,isAppInfoLoading: null == isAppInfoLoading ? _self.isAppInfoLoading : isAppInfoLoading // ignore: cast_nullable_to_non_nullable
 as bool,createdSuccessful: null == createdSuccessful ? _self.createdSuccessful : createdSuccessful // ignore: cast_nullable_to_non_nullable
 as bool,updatedSuccessful: null == updatedSuccessful ? _self.updatedSuccessful : updatedSuccessful // ignore: cast_nullable_to_non_nullable
 as bool,log: null == log ? _self.log : log // ignore: cast_nullable_to_non_nullable
@@ -168,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( UserEntity? profile,  String? error,  bool isLoading,  bool isAvatarLoading,  bool createdSuccessful,  bool updatedSuccessful,  List<String> log)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( PackageInfo? appInfo,  UserEntity? profile,  String? error,  bool isLoading,  bool isAvatarLoading,  bool isAppInfoLoading,  bool createdSuccessful,  bool updatedSuccessful,  List<String> log)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProfileState() when $default != null:
-return $default(_that.profile,_that.error,_that.isLoading,_that.isAvatarLoading,_that.createdSuccessful,_that.updatedSuccessful,_that.log);case _:
+return $default(_that.appInfo,_that.profile,_that.error,_that.isLoading,_that.isAvatarLoading,_that.isAppInfoLoading,_that.createdSuccessful,_that.updatedSuccessful,_that.log);case _:
   return orElse();
 
 }
@@ -189,10 +191,10 @@ return $default(_that.profile,_that.error,_that.isLoading,_that.isAvatarLoading,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( UserEntity? profile,  String? error,  bool isLoading,  bool isAvatarLoading,  bool createdSuccessful,  bool updatedSuccessful,  List<String> log)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( PackageInfo? appInfo,  UserEntity? profile,  String? error,  bool isLoading,  bool isAvatarLoading,  bool isAppInfoLoading,  bool createdSuccessful,  bool updatedSuccessful,  List<String> log)  $default,) {final _that = this;
 switch (_that) {
 case _ProfileState():
-return $default(_that.profile,_that.error,_that.isLoading,_that.isAvatarLoading,_that.createdSuccessful,_that.updatedSuccessful,_that.log);case _:
+return $default(_that.appInfo,_that.profile,_that.error,_that.isLoading,_that.isAvatarLoading,_that.isAppInfoLoading,_that.createdSuccessful,_that.updatedSuccessful,_that.log);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -209,10 +211,10 @@ return $default(_that.profile,_that.error,_that.isLoading,_that.isAvatarLoading,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( UserEntity? profile,  String? error,  bool isLoading,  bool isAvatarLoading,  bool createdSuccessful,  bool updatedSuccessful,  List<String> log)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( PackageInfo? appInfo,  UserEntity? profile,  String? error,  bool isLoading,  bool isAvatarLoading,  bool isAppInfoLoading,  bool createdSuccessful,  bool updatedSuccessful,  List<String> log)?  $default,) {final _that = this;
 switch (_that) {
 case _ProfileState() when $default != null:
-return $default(_that.profile,_that.error,_that.isLoading,_that.isAvatarLoading,_that.createdSuccessful,_that.updatedSuccessful,_that.log);case _:
+return $default(_that.appInfo,_that.profile,_that.error,_that.isLoading,_that.isAvatarLoading,_that.isAppInfoLoading,_that.createdSuccessful,_that.updatedSuccessful,_that.log);case _:
   return null;
 
 }
@@ -224,13 +226,15 @@ return $default(_that.profile,_that.error,_that.isLoading,_that.isAvatarLoading,
 
 
 class _ProfileState implements ProfileState {
-  const _ProfileState({this.profile, this.error, this.isLoading = false, this.isAvatarLoading = false, this.createdSuccessful = false, this.updatedSuccessful = false, final  List<String> log = const []}): _log = log;
+  const _ProfileState({this.appInfo, this.profile, this.error, this.isLoading = false, this.isAvatarLoading = false, this.isAppInfoLoading = false, this.createdSuccessful = false, this.updatedSuccessful = false, final  List<String> log = const []}): _log = log;
   
 
+@override final  PackageInfo? appInfo;
 @override final  UserEntity? profile;
 @override final  String? error;
 @override@JsonKey() final  bool isLoading;
 @override@JsonKey() final  bool isAvatarLoading;
+@override@JsonKey() final  bool isAppInfoLoading;
 @override@JsonKey() final  bool createdSuccessful;
 @override@JsonKey() final  bool updatedSuccessful;
  final  List<String> _log;
@@ -251,16 +255,16 @@ _$ProfileStateCopyWith<_ProfileState> get copyWith => __$ProfileStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileState&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isAvatarLoading, isAvatarLoading) || other.isAvatarLoading == isAvatarLoading)&&(identical(other.createdSuccessful, createdSuccessful) || other.createdSuccessful == createdSuccessful)&&(identical(other.updatedSuccessful, updatedSuccessful) || other.updatedSuccessful == updatedSuccessful)&&const DeepCollectionEquality().equals(other._log, _log));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileState&&(identical(other.appInfo, appInfo) || other.appInfo == appInfo)&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isAvatarLoading, isAvatarLoading) || other.isAvatarLoading == isAvatarLoading)&&(identical(other.isAppInfoLoading, isAppInfoLoading) || other.isAppInfoLoading == isAppInfoLoading)&&(identical(other.createdSuccessful, createdSuccessful) || other.createdSuccessful == createdSuccessful)&&(identical(other.updatedSuccessful, updatedSuccessful) || other.updatedSuccessful == updatedSuccessful)&&const DeepCollectionEquality().equals(other._log, _log));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,profile,error,isLoading,isAvatarLoading,createdSuccessful,updatedSuccessful,const DeepCollectionEquality().hash(_log));
+int get hashCode => Object.hash(runtimeType,appInfo,profile,error,isLoading,isAvatarLoading,isAppInfoLoading,createdSuccessful,updatedSuccessful,const DeepCollectionEquality().hash(_log));
 
 @override
 String toString() {
-  return 'ProfileState(profile: $profile, error: $error, isLoading: $isLoading, isAvatarLoading: $isAvatarLoading, createdSuccessful: $createdSuccessful, updatedSuccessful: $updatedSuccessful, log: $log)';
+  return 'ProfileState(appInfo: $appInfo, profile: $profile, error: $error, isLoading: $isLoading, isAvatarLoading: $isAvatarLoading, isAppInfoLoading: $isAppInfoLoading, createdSuccessful: $createdSuccessful, updatedSuccessful: $updatedSuccessful, log: $log)';
 }
 
 
@@ -271,7 +275,7 @@ abstract mixin class _$ProfileStateCopyWith<$Res> implements $ProfileStateCopyWi
   factory _$ProfileStateCopyWith(_ProfileState value, $Res Function(_ProfileState) _then) = __$ProfileStateCopyWithImpl;
 @override @useResult
 $Res call({
- UserEntity? profile, String? error, bool isLoading, bool isAvatarLoading, bool createdSuccessful, bool updatedSuccessful, List<String> log
+ PackageInfo? appInfo, UserEntity? profile, String? error, bool isLoading, bool isAvatarLoading, bool isAppInfoLoading, bool createdSuccessful, bool updatedSuccessful, List<String> log
 });
 
 
@@ -288,12 +292,14 @@ class __$ProfileStateCopyWithImpl<$Res>
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? profile = freezed,Object? error = freezed,Object? isLoading = null,Object? isAvatarLoading = null,Object? createdSuccessful = null,Object? updatedSuccessful = null,Object? log = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? appInfo = freezed,Object? profile = freezed,Object? error = freezed,Object? isLoading = null,Object? isAvatarLoading = null,Object? isAppInfoLoading = null,Object? createdSuccessful = null,Object? updatedSuccessful = null,Object? log = null,}) {
   return _then(_ProfileState(
-profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
+appInfo: freezed == appInfo ? _self.appInfo : appInfo // ignore: cast_nullable_to_non_nullable
+as PackageInfo?,profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
 as UserEntity?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isAvatarLoading: null == isAvatarLoading ? _self.isAvatarLoading : isAvatarLoading // ignore: cast_nullable_to_non_nullable
+as bool,isAppInfoLoading: null == isAppInfoLoading ? _self.isAppInfoLoading : isAppInfoLoading // ignore: cast_nullable_to_non_nullable
 as bool,createdSuccessful: null == createdSuccessful ? _self.createdSuccessful : createdSuccessful // ignore: cast_nullable_to_non_nullable
 as bool,updatedSuccessful: null == updatedSuccessful ? _self.updatedSuccessful : updatedSuccessful // ignore: cast_nullable_to_non_nullable
 as bool,log: null == log ? _self._log : log // ignore: cast_nullable_to_non_nullable

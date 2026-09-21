@@ -199,7 +199,7 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
                 ),
               ],
             ),
-            if (isLoading) const Center(child: AppLoader()),
+            if (isLoading) const AppLoader(),
           ],
         );
       },

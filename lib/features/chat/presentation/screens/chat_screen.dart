@@ -124,7 +124,7 @@ class _ChatScreenState extends State<ChatScreen> {
       child: BlocBuilder<ChatCubit, ChatState>(
         builder: (context, state) {
           if (state.isLoading) {
-            return const Center(child: AppLoader());
+            return const AppLoader();
           }
           return state.chat != null
               ? ChatScreenBody(

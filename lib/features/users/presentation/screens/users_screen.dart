@@ -64,7 +64,7 @@ class _UsersScreenState extends State<UsersScreen> {
         builder: (context, state) {
           final isLoading = state.isLoading;
           return isLoading
-              ? const Center(child: AppLoader())
+              ? const AppLoader()
               : Padding(
                   padding: const .symmetric(horizontal: 16.0),
                   child: Column(

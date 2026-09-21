@@ -289,22 +289,18 @@ class _MessagesListState extends State<MessagesList> {
                             }
                           },
                         ),
-                        reaction: message.currentUserReaction != null
-                            ? GestureDetector(
-                                onTap: () {
+                        reaction: MessagesUtils.getReactionWidget(
+                          context,
+                          message: message,
+                          onTap: message.currentUserReaction != null
+                              ? () {
                                   cubit.deleteReaction(
                                     chatId: widget.chat.id,
                                     messageId: message.id.toString(),
                                   );
-                                },
-                                child: Text(
-                                  AppUtils.getReactionSymbol(
-                                    message.currentUserReaction!,
-                                  ),
-                                  style: const TextStyle(fontSize: 18.0),
-                                ),
-                              )
-                            : null,
+                                }
+                              : null,
+                        ),
                         onTap: isSelected ? cubit.unSelectMessage : null,
                         bubbleAlignment: isCurrentMine ? .end : .start,
                       ),

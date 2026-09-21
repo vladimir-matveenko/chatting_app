@@ -4,6 +4,8 @@ import 'package:chatting_app/features/messages/presentation/widgets/messages_lis
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+import '../../app/utils/app_utils.dart';
+
 @immutable
 class MessagesUtils {
   const MessagesUtils._();
@@ -69,5 +71,49 @@ class MessagesUtils {
     }
 
     return maxVisibleId > 0 ? maxVisibleId : null;
+  }
+
+  static Widget? getReactionWidget(
+    BuildContext context, {
+    required MessageEntity message,
+    VoidCallback? onTap,
+  }) {
+    if (message.reactions.isEmpty && message.currentUserReaction == null) {
+      return null;
+    }
+    final theme = Theme.of(context);
+    final textStyle = theme.textTheme.bodyMedium;
+    List<Widget> reactions = [];
+    if (message.reactions.isNotEmpty) {
+      reactions = message.reactions.map((e) {
+        final youReacted = e.type == message.currentUserReaction;
+        return GestureDetector(
+          onTap: onTap,
+          child: Chip(
+            backgroundColor: youReacted && e.count > 1
+                ? theme.colorScheme.primary
+                : null,
+            label: Row(
+              spacing: 4.0,
+              children: [
+                Text(
+                  AppUtils.getReactionSymbol(e.type),
+                  style: textStyle?.copyWith(fontSize: 18.0),
+                ),
+                if (e.count > 1)
+                  Text(
+                    e.count.toString(),
+                    style: textStyle?.copyWith(
+                      color: youReacted ? theme.colorScheme.onPrimary : null,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        );
+      }).toList();
+    }
+
+    return Row(spacing: 4.0, children: reactions);
   }
 }
