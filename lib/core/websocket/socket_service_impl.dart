@@ -107,6 +107,7 @@ class SocketServiceImpl implements SocketService {
       SocketEvents.presenceOffline,
       SocketEvents.chatChanged,
       SocketEvents.exception,
+      SocketEvents.notificationCreated,
     ];
 
     for (final event in events) {

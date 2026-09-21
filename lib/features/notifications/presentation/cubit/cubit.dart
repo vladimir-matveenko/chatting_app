@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chatting_app/core/domain/entity/availability_filter_entity.dart';
+import 'package:chatting_app/core/websocket/events/notification_created_socket_event.dart';
 import 'package:chatting_app/features/notifications/data/socket/notifications_socket_service.dart';
 import 'package:chatting_app/features/notifications/domain/usecases/get_unread_count_usecase.dart';
 import 'package:chatting_app/features/notifications/domain/usecases/mark_all_as_read_usecase.dart';
@@ -47,10 +48,16 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
   void _subscribeSocketEvents() {
     _subscriptions.add(
-      _notificationSocketService.refreshData.listen((_) async {
-        await loadData();
-      }),
+      _notificationSocketService.notificationCreated.listen(
+        (event) async => _onNotificationCreated(event),
+      ),
     );
+  }
+
+  Future<void> _onNotificationCreated(
+    NotificationCreatedSocketEvent event,
+  ) async {
+    await loadData();
   }
 
   Future<void> loadData({bool loadSilent = true}) async {

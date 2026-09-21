@@ -30,9 +30,12 @@ class NotificationsScreen extends StatelessWidget {
             if (isLoading)
               const Expanded(child: Center(child: AppLoader()))
             else if (state.notifications.isNotEmpty)
-              Padding(
-                padding: const .symmetric(horizontal: 16.0),
-                child: NotificationsList(notifications: state.notifications),
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  padding: const .symmetric(horizontal: 16.0),
+                  child: NotificationsList(notifications: state.notifications),
+                ),
               )
             else
               Expanded(
