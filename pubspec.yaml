@@ -36,6 +36,7 @@ dependencies:
   pin_code_fields: ^9.4.0
   mocktail: ^1.0.5
   camera: ^0.12.1
+  flutter_native_splash: ^2.4.8
 
 dev_dependencies:
   flutter_test:
@@ -58,3 +59,4 @@ flutter:
     - assets/images/
     - assets/translations/
     - assets/svg_icons/
+    - assets/splash/
