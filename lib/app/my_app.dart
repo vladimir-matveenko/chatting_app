@@ -8,8 +8,10 @@ import 'package:chatting_app/features/profile/presentation/change_password_cubit
 import 'package:chatting_app/features/reset_password/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/users/presentation/cubit/cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import '../core/services/auth_session_manager.dart';
 import '../features/auth/domain/repository/auth_repository.dart';
@@ -51,6 +53,9 @@ class _MyAppState extends State<MyApp> {
     _sessionSub = sessionManager.onSessionExpired.listen((_) async {
       authCubit.clearCache();
     });
+    if (!kIsWeb) {
+      FlutterNativeSplash.remove();
+    }
   }
 
   @override
