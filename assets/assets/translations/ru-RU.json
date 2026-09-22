@@ -69,7 +69,8 @@
     "avatar": {
       "removeAvatar": "Удалить аватар",
       "areYouSure": "Вы уверены, что хотите удалить аватар?"
-    }
+    },
+    "version": "Версия"
   },
   "editProfileScreen": {
     "screenName": "Редактировать профиль",
