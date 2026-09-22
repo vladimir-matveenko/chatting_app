@@ -69,7 +69,8 @@
     "avatar": {
       "removeAvatar": "Remove avatar",
       "areYouSure": "Are you sure, you want to remove avatar?"
-    }
+    },
+    "version": "Version"
   },
   "editProfileScreen": {
     "screenName": "Edit profile",

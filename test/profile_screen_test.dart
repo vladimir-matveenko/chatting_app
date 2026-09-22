@@ -75,6 +75,8 @@ void main() async {
 
     when(() => profileCubit.getLogs()).thenAnswer((_) async {});
 
+    when(() => profileCubit.loadAppInfo()).thenAnswer((_) async {});
+
     when(() => profileCubit.state).thenReturn(
       ProfileState(
         profile: UserEntity(
@@ -85,6 +87,7 @@ void main() async {
           createdAt: DateTime.now(),
         ),
         log: [],
+        appInfo: null,
       ),
     );
 
