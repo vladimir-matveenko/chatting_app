@@ -57,15 +57,21 @@ class NotificationsUtils {
       spacing: 8.0,
       children: [
         Icon(icon, size: 24.0),
-        Column(
-          crossAxisAlignment: .start,
-          children: [
-            Text(text, style: textStyle),
-            Text(
-              timeFormatter.format(notification.createdAt),
-              style: smallTextStyle,
-            ),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: .start,
+            children: [
+              Row(
+                children: [
+                  Expanded(child: Text(text, style: textStyle, softWrap: true)),
+                ],
+              ),
+              Text(
+                timeFormatter.format(notification.createdAt),
+                style: smallTextStyle,
+              ),
+            ],
+          ),
         ),
       ],
     );

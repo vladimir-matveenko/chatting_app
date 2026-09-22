@@ -140,7 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           );
                         },
                         child: Text(
-                          state.appInfo!.version,
+                          '${'profileScreen.version'.tr()}: ${state.appInfo!.version}',
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: theme.colorScheme.primary,
                           ),

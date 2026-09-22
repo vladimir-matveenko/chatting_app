@@ -50,11 +50,13 @@ class NotificationItem extends StatelessWidget {
           mainAxisAlignment: .spaceBetween,
           crossAxisAlignment: .center,
           children: [
-            NotificationsUtils.getNotificationBody(
-              notification: notification,
-              textStyle: theme.textTheme.bodyMedium!,
-              smallTextStyle: theme.textTheme.bodySmall!,
-              timeFormatter: context.timeFormatter,
+            Expanded(
+              child: NotificationsUtils.getNotificationBody(
+                notification: notification,
+                textStyle: theme.textTheme.bodyMedium!,
+                smallTextStyle: theme.textTheme.bodySmall!,
+                timeFormatter: context.timeFormatter,
+              ),
             ),
             if (!notification.isRead)
               Padding(
