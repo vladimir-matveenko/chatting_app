@@ -5,6 +5,7 @@ import 'package:chatting_app/features/profile/domain/usecases/update_profile_use
 import 'package:chatting_app/features/profile/presentation/profile_cubit/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../../app/utils/app_utils.dart';
 import '../../../../core/domain/entity/app_image_entity.dart';
@@ -31,6 +32,16 @@ class ProfileCubit extends Cubit<ProfileState> {
   final UpdateAvatarUseCase _updateAvatarUseCase;
   final DeleteAvatarUseCase _deleteAvatarUseCase;
   final SessionLogger _sessionLogger;
+
+  Future<void> loadAppInfo() async {
+    emit(state.copyWith(isAppInfoLoading: true));
+    try {
+      final appInfo = await PackageInfo.fromPlatform();
+      emit(state.copyWith(appInfo: appInfo, isAppInfoLoading: false));
+    } catch (e) {
+      emit(state.copyWith(isAppInfoLoading: false));
+    }
+  }
 
   Future<void> loadProfile({bool loadSilent = true}) async {
     emit(state.copyWith(isLoading: !loadSilent));

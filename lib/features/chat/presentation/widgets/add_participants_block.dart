@@ -85,7 +85,7 @@ class _AddParticipantsBlockState extends State<AddParticipantsBlock> {
           builder: (context, state) {
             final isLoading = state.isLoading;
             return isLoading
-                ? const Center(child: AppLoader())
+                ? const AppLoader()
                 : Column(
                     crossAxisAlignment: .stretch,
                     children: [

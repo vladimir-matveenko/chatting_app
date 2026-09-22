@@ -64,7 +64,7 @@ class _ChatListState extends State<ChatList> {
         }
         final isLoading = state.isLoading || !_imagesReady;
         return isLoading
-            ? const Center(child: AppLoader())
+            ? const AppLoader()
             : chats.isNotEmpty
             ? BaseListView(
                 controller: widget.scrollController,

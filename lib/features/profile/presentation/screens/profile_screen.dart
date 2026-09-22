@@ -34,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     cubit = context.read<ProfileCubit>();
     cubit.loadProfile(loadSilent: false);
+    cubit.loadAppInfo();
     authCubit = context.read<AuthCubit>();
   }
 
@@ -126,27 +127,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                       child: const Text('Open Source Licenses'),
                     ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        foregroundColor: theme.colorScheme.primary,
-                        textStyle: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.primary,
-                          decoration: .underline,
-                          decorationColor: theme.colorScheme.primary,
+                    if (state.appInfo != null)
+                      GestureDetector(
+                        onDoubleTap: () {
+                          cubit.getLogs();
+                          AppDialog.empty(
+                            context,
+                            constraints: AppUtils.getModalDialogConstraints(
+                              context,
+                            ),
+                            content: const LoggerDialogBody(),
+                          );
+                        },
+                        child: Text(
+                          state.appInfo!.version,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.primary,
+                          ),
                         ),
                       ),
-                      onPressed: () {
-                        cubit.getLogs();
-                        AppDialog.empty(
-                          context,
-                          constraints: AppUtils.getModalDialogConstraints(
-                            context,
-                          ),
-                          content: const LoggerDialogBody(),
-                        );
-                      },
-                      child: const Text('Logger history'),
-                    ),
                     OutlinedButton(
                       onPressed: () {
                         authCubit.logout();

@@ -102,19 +102,19 @@ class MessagesCubit extends Cubit<MessagesState> {
     await loadMessages(chatId: event.message.chatId);
   }
 
-  void _onMessageUpdated(MessageUpdatedSocketEvent event) async {
+  Future<void> _onMessageUpdated(MessageUpdatedSocketEvent event) async {
     await loadMessages(chatId: event.message.chatId);
   }
 
-  void _onMessageDeleted(MessageDeletedSocketEvent event) async {
+  Future<void> _onMessageDeleted(MessageDeletedSocketEvent event) async {
     await loadMessages(chatId: event.message.chatId);
   }
 
-  void _onMessageRead(MessageReadSocketEvent event) async {
+  Future<void> _onMessageRead(MessageReadSocketEvent event) async {
     await loadMessages(chatId: event.chatId);
   }
 
-  void _onReactionUpdated(ReactionUpdatedSocketEvent event) async {
+  Future<void> _onReactionUpdated(ReactionUpdatedSocketEvent event) async {
     await loadMessages(chatId: event.message.chatId);
   }
 

@@ -24,7 +24,7 @@ class PinnedMessagesModal extends StatelessWidget {
         builder: (context, state) {
           final isLoading = state.isLoading;
           return isLoading
-              ? const Center(child: AppLoader())
+              ? const AppLoader()
               : BaseListView<MessageEntity>(
                   items: state.pinnedMessages,
                   itemBuilder: (context, index) {
