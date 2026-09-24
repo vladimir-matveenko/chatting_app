@@ -15,7 +15,8 @@ class ScrollToBottomButton extends StatelessWidget {
     return ListenableBuilder(
       listenable: controller,
       builder: (context, _) {
-        final visible = !controller.isLatestVisible;
+        final visible =
+            !controller.isLatestVisible && controller.isScrollingToEnd;
 
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),

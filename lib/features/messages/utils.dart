@@ -1,6 +1,8 @@
+import 'package:chatting_app/app/utils/extensions.dart';
 import 'package:chatting_app/features/chat/domain/entity/chat_entity.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
 import 'package:chatting_app/features/messages/presentation/widgets/messages_list/controllers/chat_scroll_controller.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -9,6 +11,25 @@ import '../../app/utils/app_utils.dart';
 @immutable
 class MessagesUtils {
   const MessagesUtils._();
+
+  static String formatDate(BuildContext context, {required DateTime dateTime}) {
+    final now = DateTime.now();
+    if (dateTime.isSameDay(now)) {
+      return 'today'.tr();
+    }
+    final date = DateFormat(
+      'dd MMMM',
+      context.locale.languageCode,
+    ).format(dateTime);
+    if (dateTime.year == now.year) {
+      return date;
+    }
+    final year = DateFormat(
+      'yyyy',
+      context.locale.languageCode,
+    ).format(dateTime);
+    return '$date $year';
+  }
 
   static bool isEnoughVisible(ItemPosition position) {
     const visibleThreshold = 0.5;
