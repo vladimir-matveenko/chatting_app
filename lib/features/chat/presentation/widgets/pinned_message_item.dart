@@ -8,11 +8,13 @@ class PinnedMessageItem extends StatelessWidget {
     required this.message,
     required this.onUnpinTap,
     required this.onNavigateTap,
+    required this.currentUserId,
   });
 
   final MessageEntity message;
   final Function(int) onUnpinTap;
   final Function(MessageEntity) onNavigateTap;
+  final String currentUserId;
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +56,13 @@ class PinnedMessageItem extends StatelessWidget {
                 ),
               ],
             ),
-            IconButton(
-              onPressed: () {
-                onUnpinTap(message.id);
-              },
-              icon: Icon(Icons.close, color: theme.colorScheme.error),
-            ),
+            if (currentUserId == message.sender.id)
+              IconButton(
+                onPressed: () {
+                  onUnpinTap(message.id);
+                },
+                icon: Icon(Icons.close, color: theme.colorScheme.error),
+              ),
           ],
         ),
       ),

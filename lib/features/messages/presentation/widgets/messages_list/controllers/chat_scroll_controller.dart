@@ -26,6 +26,7 @@ class ChatScrollController extends ChangeNotifier {
   ChatScrollState _state = const ChatScrollState.initial();
 
   bool _isJumping = false;
+  bool _isScrollingToEnd = false;
 
   ChatScrollState get state => _state;
 
@@ -38,6 +39,9 @@ class ChatScrollController extends ChangeNotifier {
   int? get lastVisibleIndex => _state.lastVisibleIndex;
 
   bool get isLatestVisible => _state.isLatestVisible;
+
+  /// True when the user is currently moving towards the end/latest messages.
+  bool get isScrollingToEnd => _isScrollingToEnd;
 
   bool isVisible(int index) {
     return itemPositionsListener.itemPositions.value.any(
@@ -123,6 +127,19 @@ class ChatScrollController extends ChangeNotifier {
       (position) => position.index <= latestThreshold,
     );
 
+    // Smaller indexes are closer to the latest message.
+    //
+    // firstVisibleIndex moving down:
+    //   20 -> 19 -> 18 -> ... = moving towards latest/end
+    //
+    // firstVisibleIndex moving up:
+    //   18 -> 19 -> 20 -> ... = moving towards beginning
+    final previousFirst = _state.firstVisibleIndex;
+
+    if (previousFirst != null && first != previousFirst) {
+      _setScrollingToEnd(first < previousFirst);
+    }
+
     _setState(
       ChatScrollState(
         firstVisibleIndex: first,
@@ -130,6 +147,12 @@ class ChatScrollController extends ChangeNotifier {
         isLatestVisible: latestVisible,
       ),
     );
+
+    // Once latest messages become visible, there is no reason
+    // to keep the button visible.
+    if (latestVisible) {
+      _setScrollingToEnd(false);
+    }
   }
 
   void _setState(ChatScrollState state) {
@@ -138,6 +161,15 @@ class ChatScrollController extends ChangeNotifier {
     }
 
     _state = state;
+    notifyListeners();
+  }
+
+  void _setScrollingToEnd(bool value) {
+    if (_isScrollingToEnd == value) {
+      return;
+    }
+
+    _isScrollingToEnd = value;
     notifyListeners();
   }
 

@@ -108,7 +108,6 @@ class _MessagesListState extends State<MessagesList> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final messageColor = isDark ? Colors.grey.shade200 : theme.cardTheme.color;
-    final dateFormatter = context.dateFormatter;
     final timeFormatter = context.timeFormatter;
     final state = context.watch<MessagesCubit>().state;
     final isPinnedMessageSelected = state.pinnedMessages.any(
@@ -223,7 +222,10 @@ class _MessagesListState extends State<MessagesList> {
                           child: Align(
                             alignment: .center,
                             child: Text(
-                              dateFormatter.format(message.createdAt),
+                              MessagesUtils.formatDate(
+                                context,
+                                dateTime: message.createdAt,
+                              ),
                             ),
                           ),
                         ),

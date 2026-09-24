@@ -1,10 +1,12 @@
 import 'package:chatting_app/app/utils/app_utils.dart';
 import 'package:chatting_app/core/presentation/widgets/base_list_view.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
+import 'package:chatting_app/features/profile/domain/repository/profile_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/di/injection.dart';
 import '../../../../core/presentation/widgets/app_loader.dart';
 import '../../../../core/presentation/widgets/app_message.dart';
 import '../../../messages/presentation/cubit/cubit.dart';
@@ -17,6 +19,7 @@ class PinnedMessagesModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<MessagesCubit>();
+    final profileRepo = getIt<ProfileRepository>();
     return Container(
       padding: const .all(16.0),
       constraints: AppUtils.getModalDialogConstraints(context),
@@ -30,6 +33,7 @@ class PinnedMessagesModal extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final item = state.pinnedMessages[index];
                     return PinnedMessageItem(
+                      currentUserId: profileRepo.profile?.id ?? '',
                       message: item,
                       onNavigateTap: (message) {
                         cubit.getAroundContext(
