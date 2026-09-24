@@ -116,11 +116,11 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<MessagesCubit>();
+    final theme = Theme.of(context);
     return BlocConsumer<MessagesCubit, MessagesState>(
       builder: (context, state) {
         final isLoading = state.isLoading;
         return Stack(
-          alignment: .center,
           children: [
             Column(
               children: [
@@ -172,8 +172,9 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
                     ),
                   ),
                 ),
-                Padding(
+                Container(
                   padding: const .symmetric(horizontal: 16.0),
+                  color: theme.bottomNavigationBarTheme.backgroundColor,
                   child: MessageBar(
                     messageFocusNode: widget.messageFocusNode,
                     onSend: () {
