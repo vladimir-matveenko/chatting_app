@@ -10,12 +10,14 @@ class PinnedMessageWidget extends StatelessWidget {
     required this.onUnpinTap,
     required this.onNavigateTap,
     required this.onShowModalTap,
+    required this.currentUserId,
   });
 
   final List<MessageEntity> messages;
   final Function(int) onUnpinTap;
   final Function(MessageEntity) onNavigateTap;
   final VoidCallback onShowModalTap;
+  final String currentUserId;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class PinnedMessageWidget extends StatelessWidget {
               onUnpinTap: onUnpinTap,
               onNavigateTap: onNavigateTap,
               message: messages.first,
+              currentUserId: currentUserId,
             )
           : PinnedMessagePlaceholder(onTap: onShowModalTap),
     );

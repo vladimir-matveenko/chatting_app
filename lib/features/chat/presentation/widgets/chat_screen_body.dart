@@ -142,6 +142,7 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
                 ),
                 if (state.pinnedMessages.isNotEmpty)
                   PinnedMessageWidget(
+                    currentUserId: widget.currentUserId,
                     messages: state.pinnedMessages,
                     onUnpinTap: (id) {
                       cubit.unpinMessage(id);
