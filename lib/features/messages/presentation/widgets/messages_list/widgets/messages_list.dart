@@ -161,6 +161,7 @@ class _MessagesListState extends State<MessagesList> {
               itemPositionsListener:
                   widget.scrollController.itemPositionsListener,
               physics: const ClampingScrollPhysics(),
+              padding: const .symmetric(vertical: 16.0),
               separatorBuilder: (context, index) => const SizedBox(height: 8),
               itemBuilder: (context, index) {
                 final message = widget.messages[index];
