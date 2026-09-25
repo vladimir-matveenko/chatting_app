@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../app/utils/app_utils.dart';
+import '../../core/presentation/widgets/svg_image.dart';
 
 @immutable
 class MessagesUtils {
@@ -117,9 +118,10 @@ class MessagesUtils {
             label: Row(
               spacing: 4.0,
               children: [
-                Text(
-                  AppUtils.getReactionSymbol(e.type),
-                  style: textStyle?.copyWith(fontSize: 18.0),
+                SvgImage(
+                  asset: AppUtils.getReactionEmoji(e.type),
+                  width: 24.0,
+                  height: 24.0,
                 ),
                 if (e.count > 1)
                   Text(

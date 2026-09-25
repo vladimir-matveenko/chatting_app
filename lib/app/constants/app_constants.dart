@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'asset_paths.dart';
+
 @immutable
 class AppConstants {
   const AppConstants._();
@@ -18,7 +20,7 @@ class AppConstants {
   static const String ruLocale = 'ru-Ru';
 
   /// reactions
-  static const reactions = ['👍', '👎︎'];
+  static final reactions = [AssetPaths.like, AssetPaths.dislike];
 
   /// available image types
   static const availableImageTypes = ['jpeg', 'png', 'webp'];

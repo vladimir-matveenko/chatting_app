@@ -1,5 +1,5 @@
+import 'package:chatting_app/core/presentation/widgets/svg_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../app/constants/asset_paths.dart';
 
@@ -23,10 +23,7 @@ class ProfileUtils {
     return SizedBox(
       width: 32.0,
       height: 24.0,
-      child: SvgPicture.asset(
-        assetName,
-        errorBuilder: (_, e, s) => const SizedBox(),
-      ),
+      child: SvgImage(asset: assetName),
     );
   }
 }
