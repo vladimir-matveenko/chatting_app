@@ -231,7 +231,7 @@ class _ReactionItemState extends State<_ReactionItem> {
         duration: const Duration(milliseconds: 100),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: SvgImage(asset: widget.emoji, width: 24.0),
+          child: SvgImage(asset: widget.emoji, width: 24.0, height: 24.0),
         ),
       ),
     );
