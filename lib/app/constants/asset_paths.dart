@@ -8,8 +8,16 @@ class AssetPaths {
   static const splashLogo = 'assets/images/splash_logo.png';
   static const splashBackground = 'assets/images/splash_background.png';
   static const congratsAnimation = 'assets/images/congrats_animation.gif';
-  static const flagRu = 'assets/svg_icons/flag_ru.svg';
-  static const flagUs = 'assets/svg_icons/flag_us.svg';
+
+  /// flags
+  static const flagRu = 'assets/flags/flag_ru.svg';
+  static const flagUs = 'assets/flags/flag_us.svg';
+
+  /// errors
   static const somethingWentWrong = 'assets/images/something_went_wrong.png';
   static const noConnectionServer = 'assets/images/no_connection_server.png';
+
+  /// emoji
+  static const like = 'assets/emoji/like.svg';
+  static const dislike = 'assets/emoji/dislike.svg';
 }

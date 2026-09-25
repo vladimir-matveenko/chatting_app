@@ -58,5 +58,6 @@ flutter:
     - assets/
     - assets/images/
     - assets/translations/
-    - assets/svg_icons/
+    - assets/flags/
     - assets/splash/
+    - assets/emoji/

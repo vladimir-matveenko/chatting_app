@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:chatting_app/core/presentation/widgets/svg_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -230,7 +231,7 @@ class _ReactionItemState extends State<_ReactionItem> {
         duration: const Duration(milliseconds: 100),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: Text(widget.emoji, style: const TextStyle(fontSize: 26.0)),
+          child: SvgImage(asset: widget.emoji, width: 24.0),
         ),
       ),
     );

@@ -115,16 +115,16 @@ class AppUtils {
     });
   }
 
-  static String getReactionSymbol(ReactionType type) => switch (type) {
+  static String getReactionEmoji(ReactionType type) => switch (type) {
     ReactionType.like => AppConstants.reactions[0],
     ReactionType.dislike => AppConstants.reactions[1],
   };
 
-  static ReactionType getReactionTypeBySymbol(String symbol) {
-    if (symbol == AppConstants.reactions[0]) {
+  static ReactionType getReactionTypeByEmoji(String emoji) {
+    if (emoji == AppConstants.reactions[0]) {
       return ReactionType.like;
     }
-    if (symbol == AppConstants.reactions[1]) {
+    if (emoji == AppConstants.reactions[1]) {
       return ReactionType.dislike;
     }
     return ReactionType.like;

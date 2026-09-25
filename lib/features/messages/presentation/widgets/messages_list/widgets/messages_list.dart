@@ -266,13 +266,16 @@ class _MessagesListState extends State<MessagesList> {
                                 messageKey: bubbleKey,
                                 reactions: AppConstants.reactions,
                                 onReactionSelected: (reaction) {
-                                  cubit.addReaction(
-                                    chatId: widget.chat.id,
-                                    messageId: message.id.toString(),
-                                    type: AppUtils.getReactionTypeBySymbol(
-                                      reaction,
-                                    ),
-                                  );
+                                  final reactionType =
+                                      AppUtils.getReactionTypeByEmoji(reaction);
+                                  if (reactionType !=
+                                      message.currentUserReaction) {
+                                    cubit.addReaction(
+                                      chatId: widget.chat.id,
+                                      messageId: message.id.toString(),
+                                      type: reactionType,
+                                    );
+                                  }
                                 },
                               );
                             }
