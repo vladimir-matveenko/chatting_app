@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:chatting_app/core/websocket/events/chat_list_chat_changed_socket_event.dart';
+import 'package:chatting_app/core/websocket/events/chat_list_message_created_socket_event.dart';
 import 'package:chatting_app/features/chats/domain/usecases/load_archived_chats_usecase.dart';
 import 'package:chatting_app/features/chats/domain/usecases/load_chats_usecase.dart';
 import 'package:chatting_app/features/chats/presentation/cubit/state.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../app/utils/app_utils.dart';
+import '../../../../core/websocket/events/message_read_socket_event.dart';
 import '../../data/socket/chats_socket_service.dart';
 import '../../domain/usecases/archive_chat_usecase.dart';
 import '../../domain/usecases/return_from_archive_usecase.dart';
@@ -45,11 +48,31 @@ class ChatsCubit extends Cubit<ChatsState> {
   }
 
   void _subscribeSocketEvents() {
-    _subscriptions.add(
-      _chatsSocketService.refreshChats.listen((_) async {
-        await loadAllChats();
-      }),
-    );
+    _subscriptions.addAll([
+      _chatsSocketService.messageCreated.listen(
+        (event) async => _onMessageCreated(event),
+      ),
+      _chatsSocketService.messageRead.listen(
+        (event) async => _onMessageRead(event),
+      ),
+      _chatsSocketService.chatChanged.listen(
+        (event) async => _onChatChanged(event),
+      ),
+    ]);
+  }
+
+  Future<void> _onMessageCreated(
+    ChatListMessageCreatedSocketEvent event,
+  ) async {
+    await loadAllChats();
+  }
+
+  Future<void> _onMessageRead(MessageReadSocketEvent event) async {
+    await loadAllChats();
+  }
+
+  Future<void> _onChatChanged(ChatListChatChangedSocketEvent event) async {
+    await loadAllChats();
   }
 
   Future<void> loadAllChats({bool loadSilent = true, String? query}) async {

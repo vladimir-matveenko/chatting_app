@@ -108,6 +108,8 @@ class SocketServiceImpl implements SocketService {
       SocketEvents.chatChanged,
       SocketEvents.exception,
       SocketEvents.notificationCreated,
+      SocketEvents.chatListMessageCreated,
+      SocketEvents.chatListChatChanged,
     ];
 
     for (final event in events) {

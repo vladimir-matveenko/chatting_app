@@ -38,4 +38,8 @@ abstract final class SocketEvents {
   static const exception = 'exception';
 
   static const notificationCreated = 'notification:created';
+
+  static const chatListChatChanged = 'chat-list-chat:changed';
+
+  static const chatListMessageCreated = 'chat-list-message:created';
 }

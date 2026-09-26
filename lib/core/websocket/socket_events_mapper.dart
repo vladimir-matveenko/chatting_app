@@ -1,3 +1,5 @@
+import 'package:chatting_app/core/websocket/events/chat_list_chat_changed_socket_event.dart';
+import 'package:chatting_app/core/websocket/events/chat_list_message_created_socket_event.dart';
 import 'package:chatting_app/core/websocket/events/notification_created_socket_event.dart';
 import 'package:chatting_app/features/messages/data/models/message_model.dart';
 import 'package:chatting_app/features/notifications/data/models/notification_model.dart';
@@ -12,6 +14,11 @@ abstract final class SocketEventsMapper {
     switch (event) {
       case SocketEvents.messageCreated:
         return MessageCreatedSocketEvent(message: MessageModel.fromJson(json));
+
+      case SocketEvents.chatListMessageCreated:
+        return ChatListMessageCreatedSocketEvent(
+          message: MessageModel.fromJson(json),
+        );
 
       case SocketEvents.messageUpdated:
         return MessageUpdatedSocketEvent(message: MessageModel.fromJson(json));
@@ -55,6 +62,9 @@ abstract final class SocketEventsMapper {
 
       case SocketEvents.chatChanged:
         return ChatChangedSocketEvent(chatId: json['chatId'] as String);
+
+      case SocketEvents.chatListChatChanged:
+        return ChatListChatChangedSocketEvent(chatId: json['chatId'] as String);
 
       case SocketEvents.exception:
         return ExceptionSocketEvent(message: json['message'] as String);
