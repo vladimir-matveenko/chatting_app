@@ -6,6 +6,7 @@ import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/error/failure.dart';
 import 'extensions.dart';
@@ -191,6 +192,12 @@ class AppUtils {
           try {
             if (image.contains('http')) {
               await precacheImage(CachedNetworkImageProvider(image), context);
+            } else if (image.toLowerCase().endsWith('.svg')) {
+              final loader = SvgAssetLoader(image);
+              await svg.cache.putIfAbsent(
+                loader.cacheKey(null),
+                () => loader.loadBytes(null),
+              );
             } else {
               await precacheImage(AssetImage(image), context);
             }

@@ -1,3 +1,4 @@
+import 'package:chatting_app/app/constants/app_constants.dart';
 import 'package:chatting_app/core/presentation/widgets/app_dialog.dart';
 import 'package:chatting_app/core/presentation/widgets/app_loader.dart';
 import 'package:chatting_app/features/chat/domain/entity/chat_entity.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/constants/app_enums.dart';
+import '../../../../app/utils/app_utils.dart';
 import '../../../messages/presentation/widgets/message_bar.dart';
 import '../../../messages/presentation/widgets/messages_list/controllers/chat_scroll_controller.dart';
 import '../../../messages/presentation/widgets/messages_list/widgets/messages_list.dart';
@@ -107,6 +109,7 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
   @override
   void initState() {
     super.initState();
+    AppUtils.precacheImages(context, images: AppConstants.reactions);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _handleScroll(context, context.read<MessagesCubit>().state);
