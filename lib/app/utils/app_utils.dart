@@ -190,7 +190,7 @@ class AppUtils {
       await Future.wait(
         images.map((image) async {
           try {
-            if (image.contains('http')) {
+            if (image.startsWith('http')) {
               await precacheImage(CachedNetworkImageProvider(image), context);
             } else if (image.toLowerCase().endsWith('.svg')) {
               final loader = SvgAssetLoader(image);
