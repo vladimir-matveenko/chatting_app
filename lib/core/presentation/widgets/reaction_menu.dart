@@ -141,18 +141,12 @@ class _ReactionsOverlayState extends State<_ReactionsOverlay>
               tween: Tween<double>(begin: 0.0, end: 1.0),
               duration: const Duration(milliseconds: 150),
               builder: (context, value, child) {
-                return ClipRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(
-                      sigmaX: value * 4.0,
-                      sigmaY: value * 4.0,
-                    ),
-                    child: Container(
-                      color: Colors.black.withValues(alpha: value * 0.15),
-                    ),
-                  ),
-                );
+                return Opacity(opacity: value, child: child);
               },
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                child: Container(color: Colors.black.withValues(alpha: 0.15)),
+              ),
             ),
           ),
         ),
