@@ -1,6 +1,5 @@
+import 'package:chatting_app/app/theme/app_theme_colors.dart';
 import 'package:flutter/material.dart';
-
-import '../../../app/theme/app_semantic_colors.dart';
 
 class AppMessage {
   static void show(
@@ -39,11 +38,14 @@ class AppMessage {
     required String message,
     VoidCallback? onClose,
   }) {
-    final colors = Theme.of(context).extension<AppSemanticColors>()!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final color = isDark
+        ? AppThemeColors.dark.success
+        : AppThemeColors.light.success;
     AppMessage.show(
       context,
       message: message,
-      backgroundColor: colors.success,
+      backgroundColor: color,
       onClose: onClose,
     );
   }

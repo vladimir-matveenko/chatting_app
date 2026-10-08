@@ -115,7 +115,13 @@ class MessagesCubit extends Cubit<MessagesState> {
   }
 
   Future<void> _onReactionUpdated(ReactionUpdatedSocketEvent event) async {
-    await loadMessages(chatId: event.message.chatId);
+    final messageId = int.tryParse(event.message.id);
+    if (messageId != null) {
+      await updateAroundContext(
+        chatId: event.message.chatId,
+        messageId: messageId,
+      );
+    }
   }
 
   Future<void> _onMessagePinned(MessagePinnedSocketEvent event) async {
@@ -341,6 +347,31 @@ class MessagesCubit extends Cubit<MessagesState> {
             status: MessagesListStatus.aroundContext,
             highlightedMessageIndex: index,
             closeModal: closeModal,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> updateAroundContext({
+    required String chatId,
+    required int messageId,
+  }) async {
+    final result = await _getAroundContextUseCase(
+      GetAroundContextParams(
+        chatId: chatId,
+        aroundMessageId: messageId.toString(),
+      ),
+    );
+    result.fold(
+      (l) {
+        emit(state.copyWith(error: AppUtils.parseFailureMessage(l)));
+      },
+      (r) {
+        emit(
+          state.copyWith(
+            messagesPageEntity: r,
+            status: MessagesListStatus.aroundContext,
           ),
         );
       },
