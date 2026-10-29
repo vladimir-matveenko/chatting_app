@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/constants/app_constants.dart';
 import '../../../../app/router/app_routes.dart';
+import '../../../../app/utils/app_utils.dart';
 import '../../../../core/presentation/widgets/app_back_button.dart';
 import '../../../chats/presentation/cubit/cubit.dart';
 import '../../utils.dart';
@@ -32,6 +34,7 @@ class _MainScreenState extends State<MainScreen> {
     context.read<UsersCubit>().loadUsers(loadSilent: false);
     context.read<NotificationsCubit>().loadData(loadSilent: false);
     context.read<ChatsCubit>().loadAllChats(loadSilent: false);
+    AppUtils.precacheImages(context, images: AppConstants.reactions);
     super.initState();
   }
 
