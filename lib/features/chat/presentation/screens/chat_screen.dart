@@ -126,15 +126,19 @@ class _ChatScreenState extends State<ChatScreen> {
           if (state.isLoading) {
             return const AppLoader();
           }
-          return state.chat != null
-              ? ChatScreenBody(
-                  chat: state.chat!,
-                  scrollController: _scrollController,
-                  messageController: _messageController,
-                  currentUserId: _userProfile?.id ?? '',
-                  messageFocusNode: messageFocusNode,
-                )
-              : const SomethingWentWrongWidget();
+          if (state.chat != null) {
+            return ChatScreenBody(
+              chat: state.chat!,
+              scrollController: _scrollController,
+              messageController: _messageController,
+              currentUserId: _userProfile?.id ?? '',
+              messageFocusNode: messageFocusNode,
+            );
+          }
+          if (state.error?.isNotEmpty == true && state.chat == null) {
+            return const SomethingWentWrongWidget();
+          }
+          return const SizedBox();
         },
       ),
     );
