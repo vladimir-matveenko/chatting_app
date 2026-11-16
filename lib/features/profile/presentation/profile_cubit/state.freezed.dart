@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'state.dart';
@@ -9,6 +9,7 @@ part of 'state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $ProfileStateCopyWith<ProfileState> get copyWith => _$ProfileStateCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileState&&(identical(other.appInfo, appInfo) || other.appInfo == appInfo)&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isAvatarLoading, isAvatarLoading) || other.isAvatarLoading == isAvatarLoading)&&(identical(other.isAppInfoLoading, isAppInfoLoading) || other.isAppInfoLoading == isAppInfoLoading)&&(identical(other.createdSuccessful, createdSuccessful) || other.createdSuccessful == createdSuccessful)&&(identical(other.updatedSuccessful, updatedSuccessful) || other.updatedSuccessful == updatedSuccessful)&&const DeepCollectionEquality().equals(other.log, log));
+  final _this = this as ProfileState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileState&&(identical(other.appInfo, _this.appInfo) || other.appInfo == _this.appInfo)&&(identical(other.profile, _this.profile) || other.profile == _this.profile)&&(identical(other.error, _this.error) || other.error == _this.error)&&(identical(other.isLoading, _this.isLoading) || other.isLoading == _this.isLoading)&&(identical(other.isAvatarLoading, _this.isAvatarLoading) || other.isAvatarLoading == _this.isAvatarLoading)&&(identical(other.isAppInfoLoading, _this.isAppInfoLoading) || other.isAppInfoLoading == _this.isAppInfoLoading)&&(identical(other.createdSuccessful, _this.createdSuccessful) || other.createdSuccessful == _this.createdSuccessful)&&(identical(other.updatedSuccessful, _this.updatedSuccessful) || other.updatedSuccessful == _this.updatedSuccessful)&&const DeepCollectionEquality().equals(other.log, _this.log));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,appInfo,profile,error,isLoading,isAvatarLoading,isAppInfoLoading,createdSuccessful,updatedSuccessful,const DeepCollectionEquality().hash(log));
+int get hashCode {
+  final _this = this as ProfileState;
+  return Object.hash(runtimeType,_this.appInfo,_this.profile,_this.error,_this.isLoading,_this.isAvatarLoading,_this.isAppInfoLoading,_this.createdSuccessful,_this.updatedSuccessful,const DeepCollectionEquality().hash(_this.log));
+}
 
 @override
 String toString() {
-  return 'ProfileState(appInfo: $appInfo, profile: $profile, error: $error, isLoading: $isLoading, isAvatarLoading: $isAvatarLoading, isAppInfoLoading: $isAppInfoLoading, createdSuccessful: $createdSuccessful, updatedSuccessful: $updatedSuccessful, log: $log)';
+  final _this = this as ProfileState;
+  return 'ProfileState(appInfo: ${_this.appInfo}, profile: ${_this.profile}, error: ${_this.error}, isLoading: ${_this.isLoading}, isAvatarLoading: ${_this.isAvatarLoading}, isAppInfoLoading: ${_this.isAppInfoLoading}, createdSuccessful: ${_this.createdSuccessful}, updatedSuccessful: ${_this.updatedSuccessful}, log: ${_this.log})';
 }
 
 
@@ -63,7 +69,7 @@ class _$ProfileStateCopyWithImpl<$Res>
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? appInfo = freezed,Object? profile = freezed,Object? error = freezed,Object? isLoading = null,Object? isAvatarLoading = null,Object? isAppInfoLoading = null,Object? createdSuccessful = null,Object? updatedSuccessful = null,Object? log = null,}) {
-  return _then(_self.copyWith(
+  return _then(ProfileState(
 appInfo: freezed == appInfo ? _self.appInfo : appInfo // ignore: cast_nullable_to_non_nullable
 as PackageInfo?,profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
 as UserEntity?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
@@ -226,7 +232,7 @@ return $default(_that.appInfo,_that.profile,_that.error,_that.isLoading,_that.is
 
 
 class _ProfileState implements ProfileState {
-  const _ProfileState({this.appInfo, this.profile, this.error, this.isLoading = false, this.isAvatarLoading = false, this.isAppInfoLoading = false, this.createdSuccessful = false, this.updatedSuccessful = false, final  List<String> log = const []}): _log = log;
+  const _ProfileState({this.appInfo, this.profile, this.error, this.isLoading = false, this.isAvatarLoading = false, this.isAppInfoLoading = false, this.createdSuccessful = false, this.updatedSuccessful = false,  List<String> log = const []}): _log = log;
   
 
 @override final  PackageInfo? appInfo;
@@ -255,16 +261,18 @@ _$ProfileStateCopyWith<_ProfileState> get copyWith => __$ProfileStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileState&&(identical(other.appInfo, appInfo) || other.appInfo == appInfo)&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isAvatarLoading, isAvatarLoading) || other.isAvatarLoading == isAvatarLoading)&&(identical(other.isAppInfoLoading, isAppInfoLoading) || other.isAppInfoLoading == isAppInfoLoading)&&(identical(other.createdSuccessful, createdSuccessful) || other.createdSuccessful == createdSuccessful)&&(identical(other.updatedSuccessful, updatedSuccessful) || other.updatedSuccessful == updatedSuccessful)&&const DeepCollectionEquality().equals(other._log, _log));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileState&&(identical(other.appInfo, appInfo) || other.appInfo == appInfo)&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isAvatarLoading, isAvatarLoading) || other.isAvatarLoading == isAvatarLoading)&&(identical(other.isAppInfoLoading, isAppInfoLoading) || other.isAppInfoLoading == isAppInfoLoading)&&(identical(other.createdSuccessful, createdSuccessful) || other.createdSuccessful == createdSuccessful)&&(identical(other.updatedSuccessful, updatedSuccessful) || other.updatedSuccessful == updatedSuccessful)&&const DeepCollectionEquality().equals(other.log, _log));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,appInfo,profile,error,isLoading,isAvatarLoading,isAppInfoLoading,createdSuccessful,updatedSuccessful,const DeepCollectionEquality().hash(_log));
+int get hashCode {
+    return Object.hash(runtimeType,appInfo,profile,error,isLoading,isAvatarLoading,isAppInfoLoading,createdSuccessful,updatedSuccessful,const DeepCollectionEquality().hash(_log));
+}
 
 @override
 String toString() {
-  return 'ProfileState(appInfo: $appInfo, profile: $profile, error: $error, isLoading: $isLoading, isAvatarLoading: $isAvatarLoading, isAppInfoLoading: $isAppInfoLoading, createdSuccessful: $createdSuccessful, updatedSuccessful: $updatedSuccessful, log: $log)';
+    return 'ProfileState(appInfo: $appInfo, profile: $profile, error: $error, isLoading: $isLoading, isAvatarLoading: $isAvatarLoading, isAppInfoLoading: $isAppInfoLoading, createdSuccessful: $createdSuccessful, updatedSuccessful: $updatedSuccessful, log: $log)';
 }
 
 

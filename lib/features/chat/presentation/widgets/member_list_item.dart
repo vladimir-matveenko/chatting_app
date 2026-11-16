@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/utils/extensions.dart';
 import '../../../../core/presentation/widgets/app_dialog.dart';

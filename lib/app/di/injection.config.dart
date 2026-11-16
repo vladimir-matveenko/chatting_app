@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:chatting_app/app/di/modules/network_module.dart' as _i930;
 import 'package:chatting_app/app/di/modules/shared_pref_module.dart' as _i786;
 import 'package:chatting_app/app/router/app_router.dart' as _i289;
@@ -41,7 +42,7 @@ import 'package:chatting_app/features/auth/presentation/cubit/cubit.dart'
 import 'package:chatting_app/features/chat/data/data_sources/chat_remote_data_source.dart'
     as _i915;
 import 'package:chatting_app/features/chat/data/repository/chat_repository_impl.dart'
-    as _i325;
+    as _i326;
 import 'package:chatting_app/features/chat/data/socket/chat_socket_service.dart'
     as _i226;
 import 'package:chatting_app/features/chat/data/socket/chat_socket_service_impl.dart'
@@ -63,7 +64,7 @@ import 'package:chatting_app/features/chat/domain/usecases/get_chat_members_usec
 import 'package:chatting_app/features/chat/domain/usecases/get_chat_usecase.dart'
     as _i415;
 import 'package:chatting_app/features/chat/domain/usecases/get_me_from_chat_usecase.dart'
-    as _i626;
+    as _i627;
 import 'package:chatting_app/features/chat/domain/usecases/leave_chat_usecase.dart'
     as _i618;
 import 'package:chatting_app/features/chat/domain/usecases/mute_chat_usecase.dart'
@@ -75,7 +76,7 @@ import 'package:chatting_app/features/chat/presentation/cubit/cubit.dart'
 import 'package:chatting_app/features/chats/data/data_sources/chats_remote_data_source.dart'
     as _i423;
 import 'package:chatting_app/features/chats/data/repository/chats_repository_impl.dart'
-    as _i252;
+    as _i253;
 import 'package:chatting_app/features/chats/data/socket/chats_socket_service.dart'
     as _i156;
 import 'package:chatting_app/features/chats/data/socket/chats_socket_service_impl.dart'
@@ -91,7 +92,7 @@ import 'package:chatting_app/features/chats/domain/usecases/load_chats_usecase.d
 import 'package:chatting_app/features/chats/domain/usecases/return_from_archive_usecase.dart'
     as _i525;
 import 'package:chatting_app/features/chats/presentation/cubit/cubit.dart'
-    as _i55;
+    as _i56;
 import 'package:chatting_app/features/login/domain/usecases/login_usecase.dart'
     as _i171;
 import 'package:chatting_app/features/login/presentation/cubit/cubit.dart'
@@ -101,7 +102,7 @@ import 'package:chatting_app/features/messages/data/data_sources/messages_remote
 import 'package:chatting_app/features/messages/data/repository/messages_repository_impl.dart'
     as _i2;
 import 'package:chatting_app/features/messages/data/socket/messages_socket_service.dart'
-    as _i2;
+    as _i3;
 import 'package:chatting_app/features/messages/data/socket/messages_socket_service_impl.dart'
     as _i702;
 import 'package:chatting_app/features/messages/domain/repository/messages_repository.dart'
@@ -127,7 +128,7 @@ import 'package:chatting_app/features/messages/domain/usecases/search_messages_u
 import 'package:chatting_app/features/messages/domain/usecases/send_message_usecase.dart'
     as _i977;
 import 'package:chatting_app/features/messages/domain/usecases/unpin_message_usecase.dart'
-    as _i969;
+    as _i970;
 import 'package:chatting_app/features/messages/domain/usecases/update_message_usecase.dart'
     as _i752;
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart'
@@ -165,7 +166,7 @@ import 'package:chatting_app/features/profile/domain/usecases/clear_cache_usecas
 import 'package:chatting_app/features/profile/domain/usecases/create_profile_usecase.dart'
     as _i605;
 import 'package:chatting_app/features/profile/domain/usecases/delete_avatar_usecase.dart'
-    as _i171;
+    as _i172;
 import 'package:chatting_app/features/profile/domain/usecases/fetch_profile_usecase.dart'
     as _i483;
 import 'package:chatting_app/features/profile/domain/usecases/update_avatar_usecase.dart'
@@ -183,9 +184,9 @@ import 'package:chatting_app/features/reset_password/data/repository/reset_passw
 import 'package:chatting_app/features/reset_password/domain/repository/reset_password_repository.dart'
     as _i1051;
 import 'package:chatting_app/features/reset_password/domain/usecases/request_code_usecase.dart'
-    as _i970;
+    as _i971;
 import 'package:chatting_app/features/reset_password/domain/usecases/reset_password_usecase.dart'
-    as _i989;
+    as _i990;
 import 'package:chatting_app/features/reset_password/domain/usecases/validate_code_usecase.dart'
     as _i427;
 import 'package:chatting_app/features/reset_password/presentation/cubit/cubit.dart'
@@ -319,8 +320,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i977.SendMessageUseCase>(
       () => _i977.SendMessageUseCase(gh<_i166.MessagesRepository>()),
     );
-    gh.lazySingleton<_i969.UnpinMessageUseCase>(
-      () => _i969.UnpinMessageUseCase(gh<_i166.MessagesRepository>()),
+    gh.lazySingleton<_i970.UnpinMessageUseCase>(
+      () => _i970.UnpinMessageUseCase(gh<_i166.MessagesRepository>()),
     );
     gh.lazySingleton<_i752.UpdateMessageUseCase>(
       () => _i752.UpdateMessageUseCase(gh<_i166.MessagesRepository>()),
@@ -332,7 +333,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i993.UsersRemoteDataSourceImpl(gh<_i361.Dio>()),
     );
     gh.lazySingleton<_i989.ChatsRepository>(
-      () => _i252.ChatsRepositoryImpl(gh<_i423.ChatsRemoteDataSource>()),
+      () => _i253.ChatsRepositoryImpl(gh<_i423.ChatsRemoteDataSource>()),
     );
     gh.lazySingleton<_i915.ChatRemoteDataSource>(
       () => _i915.ChatRemoteDataSourceImpl(gh<_i361.Dio>()),
@@ -417,7 +418,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i523.LoginCubit(gh<_i171.LoginUseCase>()),
     );
     gh.lazySingleton<_i91.ChatRepository>(
-      () => _i325.ChatRepositoryImpl(gh<_i915.ChatRemoteDataSource>()),
+      () => _i326.ChatRepositoryImpl(gh<_i915.ChatRemoteDataSource>()),
     );
     gh.lazySingleton<_i312.ChangePasswordUseCase>(
       () => _i312.ChangePasswordUseCase(gh<_i672.ProfileRepository>()),
@@ -425,8 +426,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i209.ClearCacheUseCase>(
       () => _i209.ClearCacheUseCase(gh<_i672.ProfileRepository>()),
     );
-    gh.lazySingleton<_i171.DeleteAvatarUseCase>(
-      () => _i171.DeleteAvatarUseCase(gh<_i672.ProfileRepository>()),
+    gh.lazySingleton<_i172.DeleteAvatarUseCase>(
+      () => _i172.DeleteAvatarUseCase(gh<_i672.ProfileRepository>()),
     );
     gh.lazySingleton<_i483.FetchProfileUseCase>(
       () => _i483.FetchProfileUseCase(gh<_i672.ProfileRepository>()),
@@ -437,20 +438,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i237.UpdateProfileUseCase>(
       () => _i237.UpdateProfileUseCase(gh<_i672.ProfileRepository>()),
     );
-    gh.lazySingleton<_i970.RequestCodeUseCase>(
-      () => _i970.RequestCodeUseCase(gh<_i1051.ResetPasswordRepository>()),
+    gh.lazySingleton<_i971.RequestCodeUseCase>(
+      () => _i971.RequestCodeUseCase(gh<_i1051.ResetPasswordRepository>()),
     );
-    gh.lazySingleton<_i989.ResetPasswordUseCase>(
-      () => _i989.ResetPasswordUseCase(gh<_i1051.ResetPasswordRepository>()),
+    gh.lazySingleton<_i990.ResetPasswordUseCase>(
+      () => _i990.ResetPasswordUseCase(gh<_i1051.ResetPasswordRepository>()),
     );
     gh.lazySingleton<_i427.ValidateCodeUseCase>(
       () => _i427.ValidateCodeUseCase(gh<_i1051.ResetPasswordRepository>()),
     );
     gh.lazySingleton<_i669.ResetPasswordCubit>(
       () => _i669.ResetPasswordCubit(
-        gh<_i970.RequestCodeUseCase>(),
+        gh<_i971.RequestCodeUseCase>(),
         gh<_i427.ValidateCodeUseCase>(),
-        gh<_i989.ResetPasswordUseCase>(),
+        gh<_i990.ResetPasswordUseCase>(),
       ),
     );
     gh.lazySingleton<_i926.AddMemberUseCase>(
@@ -474,8 +475,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i415.GetChatUseCase>(
       () => _i415.GetChatUseCase(gh<_i91.ChatRepository>()),
     );
-    gh.lazySingleton<_i626.GetMeFromChatUseCase>(
-      () => _i626.GetMeFromChatUseCase(gh<_i91.ChatRepository>()),
+    gh.lazySingleton<_i627.GetMeFromChatUseCase>(
+      () => _i627.GetMeFromChatUseCase(gh<_i91.ChatRepository>()),
     );
     gh.lazySingleton<_i618.LeaveChatUseCase>(
       () => _i618.LeaveChatUseCase(gh<_i91.ChatRepository>()),
@@ -498,7 +499,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i605.CreateProfileUseCase>(),
         gh<_i237.UpdateProfileUseCase>(),
         gh<_i413.UpdateAvatarUseCase>(),
-        gh<_i171.DeleteAvatarUseCase>(),
+        gh<_i172.DeleteAvatarUseCase>(),
         gh<_i55.SessionLogger>(),
       ),
     );
@@ -527,14 +528,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i618.LeaveChatUseCase>(),
         gh<_i349.ChangeOwnerUseCase>(),
         gh<_i454.ChangeMemberRoleUseCase>(),
-        gh<_i626.GetMeFromChatUseCase>(),
+        gh<_i627.GetMeFromChatUseCase>(),
       ),
     );
-    gh.lazySingleton<_i2.MessagesSocketService>(
+    gh.lazySingleton<_i3.MessagesSocketService>(
       () => _i702.MessagesSocketServiceImpl(gh<_i739.SocketService>()),
     );
-    gh.lazySingleton<_i55.ChatsCubit>(
-      () => _i55.ChatsCubit(
+    gh.lazySingleton<_i56.ChatsCubit>(
+      () => _i56.ChatsCubit(
         gh<_i321.LoadChatsUseCase>(),
         gh<_i704.LoadArchivedChatsUseCase>(),
         gh<_i156.ChatsSocketService>(),
@@ -572,9 +573,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i0.DeleteReactionUseCase>(),
         gh<_i752.UpdateMessageUseCase>(),
         gh<_i375.PinMessageUseCase>(),
-        gh<_i969.UnpinMessageUseCase>(),
+        gh<_i970.UnpinMessageUseCase>(),
         gh<_i252.GetPinnedMessagesUseCase>(),
-        gh<_i2.MessagesSocketService>(),
+        gh<_i3.MessagesSocketService>(),
         gh<_i564.GetAroundContextUseCase>(),
         gh<_i927.SearchMessagesUseCase>(),
       ),

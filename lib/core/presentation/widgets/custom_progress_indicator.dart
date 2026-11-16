@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class CustomProgressIndicator extends StatefulWidget {
   const CustomProgressIndicator({
@@ -110,9 +110,8 @@ class _CustomProgressIndicatorState extends State<CustomProgressIndicator>
                 value.round().clamp(0, 99).toString().padLeft(2, '0'),
                 style:
                     widget.textStyle ??
-                    Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                    Theme.of(context).textTheme.headlineMedium
+                        ?.copyWith(fontWeight: FontWeight.w600),
               ),
             ),
           );

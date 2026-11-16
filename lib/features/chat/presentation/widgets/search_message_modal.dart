@@ -3,9 +3,9 @@ import 'package:chatting_app/features/chat/presentation/widgets/search_result_it
 import 'package:chatting_app/features/messages/domain/entity/message_search_result_entity.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/utils/app_utils.dart';
 import '../../../../core/presentation/widgets/app_search_bar.dart';

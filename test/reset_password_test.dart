@@ -43,9 +43,8 @@ void main() {
         mockResetPasswordUseCase,
       ),
       act: (cubit) async {
-        when(
-          () => mockRequestCodeUseCase(any()),
-        ).thenAnswer((_) async => const Right(true));
+        when(() => mockRequestCodeUseCase(any()))
+            .thenAnswer((_) async => const Right(true));
         cubit.emailController.text = 'test@example.com';
         await cubit.requestCode();
       },
@@ -66,9 +65,8 @@ void main() {
         mockResetPasswordUseCase,
       ),
       act: (cubit) async {
-        when(
-          () => mockRequestCodeUseCase(any()),
-        ).thenAnswer((_) async => Left(ServerFailure(message: 'Error')));
+        when(() => mockRequestCodeUseCase(any()))
+            .thenAnswer((_) async => Left(ServerFailure(message: 'Error')));
         cubit.emailController.text = 'test@example.com';
         await cubit.requestCode();
       },
@@ -86,9 +84,8 @@ void main() {
         mockResetPasswordUseCase,
       ),
       act: (cubit) async {
-        when(
-          () => mockValidateCodeUseCase(any()),
-        ).thenAnswer((_) async => const Right('token'));
+        when(() => mockValidateCodeUseCase(any()))
+            .thenAnswer((_) async => const Right('token'));
         await cubit.validateCode(email: 'test@example.com', code: '123456');
       },
       expect: () => [
@@ -109,9 +106,8 @@ void main() {
         mockResetPasswordUseCase,
       ),
       act: (cubit) async {
-        when(
-          () => mockValidateCodeUseCase(any()),
-        ).thenAnswer((_) async => Left(ServerFailure(message: 'Error')));
+        when(() => mockValidateCodeUseCase(any()))
+            .thenAnswer((_) async => Left(ServerFailure(message: 'Error')));
         await cubit.validateCode(email: 'test@example.com', code: '123456');
       },
       expect: () => [
@@ -128,9 +124,8 @@ void main() {
         mockResetPasswordUseCase,
       ),
       act: (cubit) async {
-        when(
-          () => mockResetPasswordUseCase(any()),
-        ).thenAnswer((_) async => const Right(true));
+        when(() => mockResetPasswordUseCase(any()))
+            .thenAnswer((_) async => const Right(true));
         // Set up state to have a resetToken
         cubit.emit(
           const ResetPasswordState(
@@ -166,9 +161,8 @@ void main() {
         mockResetPasswordUseCase,
       ),
       act: (cubit) async {
-        when(
-          () => mockResetPasswordUseCase(any()),
-        ).thenAnswer((_) async => Left(ServerFailure(message: 'Error')));
+        when(() => mockResetPasswordUseCase(any()))
+            .thenAnswer((_) async => Left(ServerFailure(message: 'Error')));
         // Set up state to have a resetToken
         cubit.emit(
           const ResetPasswordState(

@@ -9,9 +9,9 @@ import 'package:chatting_app/features/reset_password/presentation/cubit/cubit.da
 import 'package:chatting_app/features/users/presentation/cubit/cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../core/services/auth_session_manager.dart';
 import '../features/auth/domain/repository/auth_repository.dart';
@@ -87,7 +87,10 @@ class _MyAppState extends State<MyApp> {
             routerConfig: appRouter.router,
             debugShowCheckedModeBanner: false,
             theme: state.theme,
-            localizationsDelegates: context.localizationDelegates,
+            localizationsDelegates: [
+              ...context.localizationDelegates,
+              ...GlobalMaterialLocalizations.delegates,
+            ],
             supportedLocales: context.supportedLocales,
             locale: context.locale,
           );

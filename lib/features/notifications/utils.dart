@@ -1,6 +1,6 @@
 import 'package:chatting_app/features/notifications/domain/entity/notification_entity.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'data/enums/notification_type.dart';
 

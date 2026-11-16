@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'message_page_entity.dart';
@@ -9,6 +9,7 @@ part of 'message_page_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $MessagesPageEntityCopyWith<MessagesPageEntity> get copyWith => _$MessagesPageEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessagesPageEntity&&(identical(other.hasPrevious, hasPrevious) || other.hasPrevious == hasPrevious)&&(identical(other.hasNext, hasNext) || other.hasNext == hasNext)&&const DeepCollectionEquality().equals(other.messages, messages));
+  final _this = this as MessagesPageEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessagesPageEntity&&(identical(other.hasPrevious, _this.hasPrevious) || other.hasPrevious == _this.hasPrevious)&&(identical(other.hasNext, _this.hasNext) || other.hasNext == _this.hasNext)&&const DeepCollectionEquality().equals(other.messages, _this.messages));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,hasPrevious,hasNext,const DeepCollectionEquality().hash(messages));
+int get hashCode {
+  final _this = this as MessagesPageEntity;
+  return Object.hash(runtimeType,_this.hasPrevious,_this.hasNext,const DeepCollectionEquality().hash(_this.messages));
+}
 
 @override
 String toString() {
-  return 'MessagesPageEntity(hasPrevious: $hasPrevious, hasNext: $hasNext, messages: $messages)';
+  final _this = this as MessagesPageEntity;
+  return 'MessagesPageEntity(hasPrevious: ${_this.hasPrevious}, hasNext: ${_this.hasNext}, messages: ${_this.messages})';
 }
 
 
@@ -66,7 +72,7 @@ class _$MessagesPageEntityCopyWithImpl<$Res>
 /// Create a copy of MessagesPageEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? hasPrevious = null,Object? hasNext = null,Object? messages = null,}) {
-  return _then(_self.copyWith(
+  return _then(MessagesPageEntity(
 hasPrevious: null == hasPrevious ? _self.hasPrevious : hasPrevious // ignore: cast_nullable_to_non_nullable
 as bool,hasNext: null == hasNext ? _self.hasNext : hasNext // ignore: cast_nullable_to_non_nullable
 as bool,messages: null == messages ? _self.messages : messages // ignore: cast_nullable_to_non_nullable
@@ -211,7 +217,7 @@ return $default(_that.hasPrevious,_that.hasNext,_that.messages);case _:
 @JsonSerializable()
 
 class _MessagesPageEntity implements MessagesPageEntity {
-  const _MessagesPageEntity({required this.hasPrevious, required this.hasNext, required final  List<MessageEntity> messages}): _messages = messages;
+  const _MessagesPageEntity({required this.hasPrevious, required this.hasNext, required  List<MessageEntity> messages}): _messages = messages;
   factory _MessagesPageEntity.fromJson(Map<String, dynamic> json) => _$MessagesPageEntityFromJson(json);
 
 @override final  bool hasPrevious;
@@ -237,16 +243,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessagesPageEntity&&(identical(other.hasPrevious, hasPrevious) || other.hasPrevious == hasPrevious)&&(identical(other.hasNext, hasNext) || other.hasNext == hasNext)&&const DeepCollectionEquality().equals(other._messages, _messages));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessagesPageEntity&&(identical(other.hasPrevious, hasPrevious) || other.hasPrevious == hasPrevious)&&(identical(other.hasNext, hasNext) || other.hasNext == hasNext)&&const DeepCollectionEquality().equals(other.messages, _messages));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,hasPrevious,hasNext,const DeepCollectionEquality().hash(_messages));
+int get hashCode {
+    return Object.hash(runtimeType,hasPrevious,hasNext,const DeepCollectionEquality().hash(_messages));
+}
 
 @override
 String toString() {
-  return 'MessagesPageEntity(hasPrevious: $hasPrevious, hasNext: $hasNext, messages: $messages)';
+    return 'MessagesPageEntity(hasPrevious: $hasPrevious, hasNext: $hasNext, messages: $messages)';
 }
 
 

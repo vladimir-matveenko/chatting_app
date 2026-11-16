@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'state.dart';
@@ -9,6 +9,7 @@ part of 'state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $MessagesStateCopyWith<MessagesState> get copyWith => _$MessagesStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessagesState&&const DeepCollectionEquality().equals(other.pinnedMessages, pinnedMessages)&&const DeepCollectionEquality().equals(other.searchResults, searchResults)&&(identical(other.messagesPageEntity, messagesPageEntity) || other.messagesPageEntity == messagesPageEntity)&&(identical(other.error, error) || other.error == error)&&(identical(other.selectedMessage, selectedMessage) || other.selectedMessage == selectedMessage)&&(identical(other.highlightedMessageIndex, highlightedMessageIndex) || other.highlightedMessageIndex == highlightedMessageIndex)&&(identical(other.highlightedMessageId, highlightedMessageId) || other.highlightedMessageId == highlightedMessageId)&&(identical(other.showMenu, showMenu) || other.showMenu == showMenu)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.showNewerLoader, showNewerLoader) || other.showNewerLoader == showNewerLoader)&&(identical(other.showOlderLoader, showOlderLoader) || other.showOlderLoader == showOlderLoader)&&(identical(other.editModeActive, editModeActive) || other.editModeActive == editModeActive)&&(identical(other.replyModeActive, replyModeActive) || other.replyModeActive == replyModeActive)&&(identical(other.closeModal, closeModal) || other.closeModal == closeModal)&&(identical(other.shouldScroll, shouldScroll) || other.shouldScroll == shouldScroll)&&(identical(other.status, status) || other.status == status));
+  final _this = this as MessagesState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessagesState&&const DeepCollectionEquality().equals(other.pinnedMessages, _this.pinnedMessages)&&const DeepCollectionEquality().equals(other.searchResults, _this.searchResults)&&(identical(other.messagesPageEntity, _this.messagesPageEntity) || other.messagesPageEntity == _this.messagesPageEntity)&&(identical(other.error, _this.error) || other.error == _this.error)&&(identical(other.selectedMessage, _this.selectedMessage) || other.selectedMessage == _this.selectedMessage)&&(identical(other.highlightedMessageIndex, _this.highlightedMessageIndex) || other.highlightedMessageIndex == _this.highlightedMessageIndex)&&(identical(other.highlightedMessageId, _this.highlightedMessageId) || other.highlightedMessageId == _this.highlightedMessageId)&&(identical(other.showMenu, _this.showMenu) || other.showMenu == _this.showMenu)&&(identical(other.isLoading, _this.isLoading) || other.isLoading == _this.isLoading)&&(identical(other.showNewerLoader, _this.showNewerLoader) || other.showNewerLoader == _this.showNewerLoader)&&(identical(other.showOlderLoader, _this.showOlderLoader) || other.showOlderLoader == _this.showOlderLoader)&&(identical(other.editModeActive, _this.editModeActive) || other.editModeActive == _this.editModeActive)&&(identical(other.replyModeActive, _this.replyModeActive) || other.replyModeActive == _this.replyModeActive)&&(identical(other.closeModal, _this.closeModal) || other.closeModal == _this.closeModal)&&(identical(other.shouldScroll, _this.shouldScroll) || other.shouldScroll == _this.shouldScroll)&&(identical(other.status, _this.status) || other.status == _this.status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(pinnedMessages),const DeepCollectionEquality().hash(searchResults),messagesPageEntity,error,selectedMessage,highlightedMessageIndex,highlightedMessageId,showMenu,isLoading,showNewerLoader,showOlderLoader,editModeActive,replyModeActive,closeModal,shouldScroll,status);
+int get hashCode {
+  final _this = this as MessagesState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.pinnedMessages),const DeepCollectionEquality().hash(_this.searchResults),_this.messagesPageEntity,_this.error,_this.selectedMessage,_this.highlightedMessageIndex,_this.highlightedMessageId,_this.showMenu,_this.isLoading,_this.showNewerLoader,_this.showOlderLoader,_this.editModeActive,_this.replyModeActive,_this.closeModal,_this.shouldScroll,_this.status);
+}
 
 @override
 String toString() {
-  return 'MessagesState(pinnedMessages: $pinnedMessages, searchResults: $searchResults, messagesPageEntity: $messagesPageEntity, error: $error, selectedMessage: $selectedMessage, highlightedMessageIndex: $highlightedMessageIndex, highlightedMessageId: $highlightedMessageId, showMenu: $showMenu, isLoading: $isLoading, showNewerLoader: $showNewerLoader, showOlderLoader: $showOlderLoader, editModeActive: $editModeActive, replyModeActive: $replyModeActive, closeModal: $closeModal, shouldScroll: $shouldScroll, status: $status)';
+  final _this = this as MessagesState;
+  return 'MessagesState(pinnedMessages: ${_this.pinnedMessages}, searchResults: ${_this.searchResults}, messagesPageEntity: ${_this.messagesPageEntity}, error: ${_this.error}, selectedMessage: ${_this.selectedMessage}, highlightedMessageIndex: ${_this.highlightedMessageIndex}, highlightedMessageId: ${_this.highlightedMessageId}, showMenu: ${_this.showMenu}, isLoading: ${_this.isLoading}, showNewerLoader: ${_this.showNewerLoader}, showOlderLoader: ${_this.showOlderLoader}, editModeActive: ${_this.editModeActive}, replyModeActive: ${_this.replyModeActive}, closeModal: ${_this.closeModal}, shouldScroll: ${_this.shouldScroll}, status: ${_this.status})';
 }
 
 
@@ -63,7 +69,7 @@ class _$MessagesStateCopyWithImpl<$Res>
 /// Create a copy of MessagesState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? pinnedMessages = null,Object? searchResults = null,Object? messagesPageEntity = freezed,Object? error = freezed,Object? selectedMessage = freezed,Object? highlightedMessageIndex = freezed,Object? highlightedMessageId = freezed,Object? showMenu = null,Object? isLoading = null,Object? showNewerLoader = null,Object? showOlderLoader = null,Object? editModeActive = null,Object? replyModeActive = null,Object? closeModal = null,Object? shouldScroll = null,Object? status = null,}) {
-  return _then(_self.copyWith(
+  return _then(MessagesState(
 pinnedMessages: null == pinnedMessages ? _self.pinnedMessages : pinnedMessages // ignore: cast_nullable_to_non_nullable
 as List<MessageEntity>,searchResults: null == searchResults ? _self.searchResults : searchResults // ignore: cast_nullable_to_non_nullable
 as List<MessageSearchResultEntity>,messagesPageEntity: freezed == messagesPageEntity ? _self.messagesPageEntity : messagesPageEntity // ignore: cast_nullable_to_non_nullable
@@ -245,7 +251,7 @@ return $default(_that.pinnedMessages,_that.searchResults,_that.messagesPageEntit
 
 
 class _MessagesState implements MessagesState {
-  const _MessagesState({final  List<MessageEntity> pinnedMessages = const [], final  List<MessageSearchResultEntity> searchResults = const [], this.messagesPageEntity, this.error, this.selectedMessage, this.highlightedMessageIndex, this.highlightedMessageId, this.showMenu = false, this.isLoading = false, this.showNewerLoader = false, this.showOlderLoader = false, this.editModeActive = false, this.replyModeActive = false, this.closeModal = false, this.shouldScroll = false, this.status = MessagesListStatus.list}): _pinnedMessages = pinnedMessages,_searchResults = searchResults;
+  const _MessagesState({ List<MessageEntity> pinnedMessages = const [],  List<MessageSearchResultEntity> searchResults = const [], this.messagesPageEntity, this.error, this.selectedMessage, this.highlightedMessageIndex, this.highlightedMessageId, this.showMenu = false, this.isLoading = false, this.showNewerLoader = false, this.showOlderLoader = false, this.editModeActive = false, this.replyModeActive = false, this.closeModal = false, this.shouldScroll = false, this.status = MessagesListStatus.list}): _pinnedMessages = pinnedMessages,_searchResults = searchResults;
   
 
  final  List<MessageEntity> _pinnedMessages;
@@ -287,16 +293,18 @@ _$MessagesStateCopyWith<_MessagesState> get copyWith => __$MessagesStateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessagesState&&const DeepCollectionEquality().equals(other._pinnedMessages, _pinnedMessages)&&const DeepCollectionEquality().equals(other._searchResults, _searchResults)&&(identical(other.messagesPageEntity, messagesPageEntity) || other.messagesPageEntity == messagesPageEntity)&&(identical(other.error, error) || other.error == error)&&(identical(other.selectedMessage, selectedMessage) || other.selectedMessage == selectedMessage)&&(identical(other.highlightedMessageIndex, highlightedMessageIndex) || other.highlightedMessageIndex == highlightedMessageIndex)&&(identical(other.highlightedMessageId, highlightedMessageId) || other.highlightedMessageId == highlightedMessageId)&&(identical(other.showMenu, showMenu) || other.showMenu == showMenu)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.showNewerLoader, showNewerLoader) || other.showNewerLoader == showNewerLoader)&&(identical(other.showOlderLoader, showOlderLoader) || other.showOlderLoader == showOlderLoader)&&(identical(other.editModeActive, editModeActive) || other.editModeActive == editModeActive)&&(identical(other.replyModeActive, replyModeActive) || other.replyModeActive == replyModeActive)&&(identical(other.closeModal, closeModal) || other.closeModal == closeModal)&&(identical(other.shouldScroll, shouldScroll) || other.shouldScroll == shouldScroll)&&(identical(other.status, status) || other.status == status));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessagesState&&const DeepCollectionEquality().equals(other.pinnedMessages, _pinnedMessages)&&const DeepCollectionEquality().equals(other.searchResults, _searchResults)&&(identical(other.messagesPageEntity, messagesPageEntity) || other.messagesPageEntity == messagesPageEntity)&&(identical(other.error, error) || other.error == error)&&(identical(other.selectedMessage, selectedMessage) || other.selectedMessage == selectedMessage)&&(identical(other.highlightedMessageIndex, highlightedMessageIndex) || other.highlightedMessageIndex == highlightedMessageIndex)&&(identical(other.highlightedMessageId, highlightedMessageId) || other.highlightedMessageId == highlightedMessageId)&&(identical(other.showMenu, showMenu) || other.showMenu == showMenu)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.showNewerLoader, showNewerLoader) || other.showNewerLoader == showNewerLoader)&&(identical(other.showOlderLoader, showOlderLoader) || other.showOlderLoader == showOlderLoader)&&(identical(other.editModeActive, editModeActive) || other.editModeActive == editModeActive)&&(identical(other.replyModeActive, replyModeActive) || other.replyModeActive == replyModeActive)&&(identical(other.closeModal, closeModal) || other.closeModal == closeModal)&&(identical(other.shouldScroll, shouldScroll) || other.shouldScroll == shouldScroll)&&(identical(other.status, status) || other.status == status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_pinnedMessages),const DeepCollectionEquality().hash(_searchResults),messagesPageEntity,error,selectedMessage,highlightedMessageIndex,highlightedMessageId,showMenu,isLoading,showNewerLoader,showOlderLoader,editModeActive,replyModeActive,closeModal,shouldScroll,status);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_pinnedMessages),const DeepCollectionEquality().hash(_searchResults),messagesPageEntity,error,selectedMessage,highlightedMessageIndex,highlightedMessageId,showMenu,isLoading,showNewerLoader,showOlderLoader,editModeActive,replyModeActive,closeModal,shouldScroll,status);
+}
 
 @override
 String toString() {
-  return 'MessagesState(pinnedMessages: $pinnedMessages, searchResults: $searchResults, messagesPageEntity: $messagesPageEntity, error: $error, selectedMessage: $selectedMessage, highlightedMessageIndex: $highlightedMessageIndex, highlightedMessageId: $highlightedMessageId, showMenu: $showMenu, isLoading: $isLoading, showNewerLoader: $showNewerLoader, showOlderLoader: $showOlderLoader, editModeActive: $editModeActive, replyModeActive: $replyModeActive, closeModal: $closeModal, shouldScroll: $shouldScroll, status: $status)';
+    return 'MessagesState(pinnedMessages: $pinnedMessages, searchResults: $searchResults, messagesPageEntity: $messagesPageEntity, error: $error, selectedMessage: $selectedMessage, highlightedMessageIndex: $highlightedMessageIndex, highlightedMessageId: $highlightedMessageId, showMenu: $showMenu, isLoading: $isLoading, showNewerLoader: $showNewerLoader, showOlderLoader: $showOlderLoader, editModeActive: $editModeActive, replyModeActive: $replyModeActive, closeModal: $closeModal, shouldScroll: $shouldScroll, status: $status)';
 }
 
 

@@ -7,8 +7,8 @@ import 'package:chatting_app/features/chat/presentation/widgets/pinned_messages_
 import 'package:chatting_app/features/chat/presentation/widgets/search_message_modal.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/state.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/constants/app_enums.dart';
 import '../../../messages/presentation/widgets/message_bar.dart';

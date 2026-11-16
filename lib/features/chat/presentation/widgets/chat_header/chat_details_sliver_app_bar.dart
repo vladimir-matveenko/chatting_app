@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:chatting_app/app/constants/app_enums.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../../core/presentation/widgets/app_back_button.dart';
 import '../../../../profile/presentation/widgets/user_avatar.dart';

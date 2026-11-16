@@ -4,8 +4,8 @@ import 'package:chatting_app/features/chat/presentation/widgets/set_group_name_w
 import 'package:chatting_app/features/chat/utils.dart';
 import 'package:chatting_app/features/profile/domain/repository/profile_repository.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/di/injection.dart';
 

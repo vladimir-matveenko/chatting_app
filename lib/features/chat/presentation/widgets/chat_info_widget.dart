@@ -1,7 +1,7 @@
 import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:chatting_app/features/profile/presentation/widgets/user_avatar.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'user_online_indicator.dart';
 

@@ -1,6 +1,6 @@
 import 'package:chatting_app/app/utils/extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../app/constants/asset_paths.dart';
 

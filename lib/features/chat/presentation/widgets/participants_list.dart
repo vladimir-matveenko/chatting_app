@@ -1,5 +1,5 @@
 import 'package:chatting_app/core/presentation/widgets/base_list_view.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../users/domain/entity/users_list_item_entity.dart';
 import '../../../users/presentation/widgets/users_list_item.dart';

@@ -1,5 +1,5 @@
 import 'package:chatting_app/app/utils/extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppSearchBar extends StatelessWidget {
   const AppSearchBar({super.key, this.height = 40.0, required this.onChanged});

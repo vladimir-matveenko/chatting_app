@@ -9,8 +9,8 @@ import 'package:chatting_app/features/messages/presentation/widgets/messages_lis
 import 'package:chatting_app/features/messages/presentation/widgets/messages_list/widgets/chat_scroll_wrapper.dart';
 import 'package:chatting_app/features/messages/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../../../app/constants/app_constants.dart';

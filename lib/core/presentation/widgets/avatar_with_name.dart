@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../features/chat/presentation/widgets/user_online_indicator.dart';
 import '../../../features/profile/presentation/widgets/user_avatar.dart';

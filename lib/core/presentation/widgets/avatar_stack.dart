@@ -1,5 +1,5 @@
 import 'package:chatting_app/features/profile/presentation/widgets/user_avatar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AvatarStack extends StatelessWidget {
   const AvatarStack({

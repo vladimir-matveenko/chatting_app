@@ -9,9 +9,9 @@ import 'package:chatting_app/features/notifications/presentation/screens/notific
 import 'package:chatting_app/features/reset_password/presentation/screens/reset_password_screen.dart';
 import 'package:chatting_app/features/users/presentation/screens/users_screen.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../core/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/cubit/cubit.dart';

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'notification_payload_entity.dart';
@@ -9,6 +9,7 @@ part of 'notification_payload_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $NotificationPayloadEntityCopyWith<NotificationPayloadEntity> get copyWith => _$
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationPayloadEntity&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.messageId, messageId) || other.messageId == messageId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.memberId, memberId) || other.memberId == memberId));
+  final _this = this as NotificationPayloadEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationPayloadEntity&&(identical(other.chatId, _this.chatId) || other.chatId == _this.chatId)&&(identical(other.messageId, _this.messageId) || other.messageId == _this.messageId)&&(identical(other.senderId, _this.senderId) || other.senderId == _this.senderId)&&(identical(other.memberId, _this.memberId) || other.memberId == _this.memberId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,chatId,messageId,senderId,memberId);
+int get hashCode {
+  final _this = this as NotificationPayloadEntity;
+  return Object.hash(runtimeType,_this.chatId,_this.messageId,_this.senderId,_this.memberId);
+}
 
 @override
 String toString() {
-  return 'NotificationPayloadEntity(chatId: $chatId, messageId: $messageId, senderId: $senderId, memberId: $memberId)';
+  final _this = this as NotificationPayloadEntity;
+  return 'NotificationPayloadEntity(chatId: ${_this.chatId}, messageId: ${_this.messageId}, senderId: ${_this.senderId}, memberId: ${_this.memberId})';
 }
 
 
@@ -66,7 +72,7 @@ class _$NotificationPayloadEntityCopyWithImpl<$Res>
 /// Create a copy of NotificationPayloadEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? chatId = freezed,Object? messageId = freezed,Object? senderId = freezed,Object? memberId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(NotificationPayloadEntity(
 chatId: freezed == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
 as String?,messageId: freezed == messageId ? _self.messageId : messageId // ignore: cast_nullable_to_non_nullable
 as String?,senderId: freezed == senderId ? _self.senderId : senderId // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationPayloadEntity&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.messageId, messageId) || other.messageId == messageId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.memberId, memberId) || other.memberId == memberId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationPayloadEntity&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.messageId, messageId) || other.messageId == messageId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.memberId, memberId) || other.memberId == memberId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,chatId,messageId,senderId,memberId);
+int get hashCode {
+    return Object.hash(runtimeType,chatId,messageId,senderId,memberId);
+}
 
 @override
 String toString() {
-  return 'NotificationPayloadEntity(chatId: $chatId, messageId: $messageId, senderId: $senderId, memberId: $memberId)';
+    return 'NotificationPayloadEntity(chatId: $chatId, messageId: $messageId, senderId: $senderId, memberId: $memberId)';
 }
 
 

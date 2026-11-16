@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'chat_list_item_entity.dart';
@@ -9,6 +9,7 @@ part of 'chat_list_item_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $ChatListItemEntityCopyWith<ChatListItemEntity> get copyWith => _$ChatListItemEn
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatListItemEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.lastReadMessageId, lastReadMessageId) || other.lastReadMessageId == lastReadMessageId)&&(identical(other.lastMessageId, lastMessageId) || other.lastMessageId == lastMessageId)&&(identical(other.lastMessagePreview, lastMessagePreview) || other.lastMessagePreview == lastMessagePreview)&&(identical(other.lastMessageAt, lastMessageAt) || other.lastMessageAt == lastMessageAt)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount)&&const DeepCollectionEquality().equals(other.participants, participants)&&(identical(other.participantsCount, participantsCount) || other.participantsCount == participantsCount));
+  final _this = this as ChatListItemEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatListItemEntity&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.avatarUrl, _this.avatarUrl) || other.avatarUrl == _this.avatarUrl)&&(identical(other.ownerId, _this.ownerId) || other.ownerId == _this.ownerId)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.lastReadMessageId, _this.lastReadMessageId) || other.lastReadMessageId == _this.lastReadMessageId)&&(identical(other.lastMessageId, _this.lastMessageId) || other.lastMessageId == _this.lastMessageId)&&(identical(other.lastMessagePreview, _this.lastMessagePreview) || other.lastMessagePreview == _this.lastMessagePreview)&&(identical(other.lastMessageAt, _this.lastMessageAt) || other.lastMessageAt == _this.lastMessageAt)&&(identical(other.unreadCount, _this.unreadCount) || other.unreadCount == _this.unreadCount)&&const DeepCollectionEquality().equals(other.participants, _this.participants)&&(identical(other.participantsCount, _this.participantsCount) || other.participantsCount == _this.participantsCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,title,avatarUrl,ownerId,createdAt,updatedAt,lastReadMessageId,lastMessageId,lastMessagePreview,lastMessageAt,unreadCount,const DeepCollectionEquality().hash(participants),participantsCount);
+int get hashCode {
+  final _this = this as ChatListItemEntity;
+  return Object.hash(runtimeType,_this.id,_this.type,_this.title,_this.avatarUrl,_this.ownerId,_this.createdAt,_this.updatedAt,_this.lastReadMessageId,_this.lastMessageId,_this.lastMessagePreview,_this.lastMessageAt,_this.unreadCount,const DeepCollectionEquality().hash(_this.participants),_this.participantsCount);
+}
 
 @override
 String toString() {
-  return 'ChatListItemEntity(id: $id, type: $type, title: $title, avatarUrl: $avatarUrl, ownerId: $ownerId, createdAt: $createdAt, updatedAt: $updatedAt, lastReadMessageId: $lastReadMessageId, lastMessageId: $lastMessageId, lastMessagePreview: $lastMessagePreview, lastMessageAt: $lastMessageAt, unreadCount: $unreadCount, participants: $participants, participantsCount: $participantsCount)';
+  final _this = this as ChatListItemEntity;
+  return 'ChatListItemEntity(id: ${_this.id}, type: ${_this.type}, title: ${_this.title}, avatarUrl: ${_this.avatarUrl}, ownerId: ${_this.ownerId}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt}, lastReadMessageId: ${_this.lastReadMessageId}, lastMessageId: ${_this.lastMessageId}, lastMessagePreview: ${_this.lastMessagePreview}, lastMessageAt: ${_this.lastMessageAt}, unreadCount: ${_this.unreadCount}, participants: ${_this.participants}, participantsCount: ${_this.participantsCount})';
 }
 
 
@@ -66,7 +72,7 @@ class _$ChatListItemEntityCopyWithImpl<$Res>
 /// Create a copy of ChatListItemEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? type = null,Object? title = freezed,Object? avatarUrl = freezed,Object? ownerId = freezed,Object? createdAt = null,Object? updatedAt = null,Object? lastReadMessageId = freezed,Object? lastMessageId = freezed,Object? lastMessagePreview = freezed,Object? lastMessageAt = freezed,Object? unreadCount = null,Object? participants = null,Object? participantsCount = null,}) {
-  return _then(_self.copyWith(
+  return _then(ChatListItemEntity(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
 as ChatType,title: freezed == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -222,7 +228,7 @@ return $default(_that.id,_that.type,_that.title,_that.avatarUrl,_that.ownerId,_t
 @JsonSerializable()
 
 class _ChatListItemEntity implements ChatListItemEntity {
-  const _ChatListItemEntity({required this.id, required this.type, this.title, this.avatarUrl, this.ownerId, required this.createdAt, required this.updatedAt, this.lastReadMessageId, this.lastMessageId, this.lastMessagePreview, this.lastMessageAt, required this.unreadCount, required final  List<ChatListParticipantModel> participants, required this.participantsCount}): _participants = participants;
+  const _ChatListItemEntity({required this.id, required this.type, this.title, this.avatarUrl, this.ownerId, required this.createdAt, required this.updatedAt, this.lastReadMessageId, this.lastMessageId, this.lastMessagePreview, this.lastMessageAt, required this.unreadCount, required  List<ChatListParticipantModel> participants, required this.participantsCount}): _participants = participants;
   factory _ChatListItemEntity.fromJson(Map<String, dynamic> json) => _$ChatListItemEntityFromJson(json);
 
 @override final  String id;
@@ -259,16 +265,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatListItemEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.lastReadMessageId, lastReadMessageId) || other.lastReadMessageId == lastReadMessageId)&&(identical(other.lastMessageId, lastMessageId) || other.lastMessageId == lastMessageId)&&(identical(other.lastMessagePreview, lastMessagePreview) || other.lastMessagePreview == lastMessagePreview)&&(identical(other.lastMessageAt, lastMessageAt) || other.lastMessageAt == lastMessageAt)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount)&&const DeepCollectionEquality().equals(other._participants, _participants)&&(identical(other.participantsCount, participantsCount) || other.participantsCount == participantsCount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatListItemEntity&&(identical(other.id, id) || other.id == id)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.lastReadMessageId, lastReadMessageId) || other.lastReadMessageId == lastReadMessageId)&&(identical(other.lastMessageId, lastMessageId) || other.lastMessageId == lastMessageId)&&(identical(other.lastMessagePreview, lastMessagePreview) || other.lastMessagePreview == lastMessagePreview)&&(identical(other.lastMessageAt, lastMessageAt) || other.lastMessageAt == lastMessageAt)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount)&&const DeepCollectionEquality().equals(other.participants, _participants)&&(identical(other.participantsCount, participantsCount) || other.participantsCount == participantsCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,type,title,avatarUrl,ownerId,createdAt,updatedAt,lastReadMessageId,lastMessageId,lastMessagePreview,lastMessageAt,unreadCount,const DeepCollectionEquality().hash(_participants),participantsCount);
+int get hashCode {
+    return Object.hash(runtimeType,id,type,title,avatarUrl,ownerId,createdAt,updatedAt,lastReadMessageId,lastMessageId,lastMessagePreview,lastMessageAt,unreadCount,const DeepCollectionEquality().hash(_participants),participantsCount);
+}
 
 @override
 String toString() {
-  return 'ChatListItemEntity(id: $id, type: $type, title: $title, avatarUrl: $avatarUrl, ownerId: $ownerId, createdAt: $createdAt, updatedAt: $updatedAt, lastReadMessageId: $lastReadMessageId, lastMessageId: $lastMessageId, lastMessagePreview: $lastMessagePreview, lastMessageAt: $lastMessageAt, unreadCount: $unreadCount, participants: $participants, participantsCount: $participantsCount)';
+    return 'ChatListItemEntity(id: $id, type: $type, title: $title, avatarUrl: $avatarUrl, ownerId: $ownerId, createdAt: $createdAt, updatedAt: $updatedAt, lastReadMessageId: $lastReadMessageId, lastMessageId: $lastMessageId, lastMessagePreview: $lastMessagePreview, lastMessageAt: $lastMessageAt, unreadCount: $unreadCount, participants: $participants, participantsCount: $participantsCount)';
 }
 
 

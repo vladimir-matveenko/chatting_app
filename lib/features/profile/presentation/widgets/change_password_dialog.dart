@@ -1,9 +1,9 @@
 import 'package:chatting_app/features/profile/presentation/change_password_cubit/cubit.dart';
 import 'package:chatting_app/features/profile/presentation/widgets/change_password_screen_wrapper.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/utils/app_utils.dart';
 import 'change_password_form.dart';

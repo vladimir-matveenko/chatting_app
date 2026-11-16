@@ -1,6 +1,6 @@
 import 'package:chatting_app/features/messages/domain/entity/message_sender_entity.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../../domain/entity/message_reply_entity.dart';
 import 'message_content.dart';

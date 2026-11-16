@@ -1,5 +1,5 @@
 import 'package:chatting_app/core/presentation/widgets/text_fields/email_text_field.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/presentation/widgets/app_loader.dart';
 import '../../../../core/presentation/widgets/text_fields/password_field.dart';

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'state.dart';
@@ -9,6 +9,7 @@ part of 'state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $ChatStateCopyWith<ChatState> get copyWith => _$ChatStateCopyWithImpl<ChatState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatState&&(identical(other.chat, chat) || other.chat == chat)&&(identical(other.me, me) || other.me == me)&&const DeepCollectionEquality().equals(other.chatMembers, chatMembers)&&const DeepCollectionEquality().equals(other.selectedParticipants, selectedParticipants)&&(identical(other.selectedMember, selectedMember) || other.selectedMember == selectedMember)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.shouldNavigate, shouldNavigate) || other.shouldNavigate == shouldNavigate)&&(identical(other.closeModal, closeModal) || other.closeModal == closeModal)&&(identical(other.showLoader, showLoader) || other.showLoader == showLoader)&&(identical(other.status, status) || other.status == status)&&(identical(other.typingUserEntity, typingUserEntity) || other.typingUserEntity == typingUserEntity));
+  final _this = this as ChatState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatState&&(identical(other.chat, _this.chat) || other.chat == _this.chat)&&(identical(other.me, _this.me) || other.me == _this.me)&&const DeepCollectionEquality().equals(other.chatMembers, _this.chatMembers)&&const DeepCollectionEquality().equals(other.selectedParticipants, _this.selectedParticipants)&&(identical(other.selectedMember, _this.selectedMember) || other.selectedMember == _this.selectedMember)&&(identical(other.error, _this.error) || other.error == _this.error)&&(identical(other.isLoading, _this.isLoading) || other.isLoading == _this.isLoading)&&(identical(other.shouldNavigate, _this.shouldNavigate) || other.shouldNavigate == _this.shouldNavigate)&&(identical(other.closeModal, _this.closeModal) || other.closeModal == _this.closeModal)&&(identical(other.showLoader, _this.showLoader) || other.showLoader == _this.showLoader)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.typingUserEntity, _this.typingUserEntity) || other.typingUserEntity == _this.typingUserEntity));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,chat,me,const DeepCollectionEquality().hash(chatMembers),const DeepCollectionEquality().hash(selectedParticipants),selectedMember,error,isLoading,shouldNavigate,closeModal,showLoader,status,typingUserEntity);
+int get hashCode {
+  final _this = this as ChatState;
+  return Object.hash(runtimeType,_this.chat,_this.me,const DeepCollectionEquality().hash(_this.chatMembers),const DeepCollectionEquality().hash(_this.selectedParticipants),_this.selectedMember,_this.error,_this.isLoading,_this.shouldNavigate,_this.closeModal,_this.showLoader,_this.status,_this.typingUserEntity);
+}
 
 @override
 String toString() {
-  return 'ChatState(chat: $chat, me: $me, chatMembers: $chatMembers, selectedParticipants: $selectedParticipants, selectedMember: $selectedMember, error: $error, isLoading: $isLoading, shouldNavigate: $shouldNavigate, closeModal: $closeModal, showLoader: $showLoader, status: $status, typingUserEntity: $typingUserEntity)';
+  final _this = this as ChatState;
+  return 'ChatState(chat: ${_this.chat}, me: ${_this.me}, chatMembers: ${_this.chatMembers}, selectedParticipants: ${_this.selectedParticipants}, selectedMember: ${_this.selectedMember}, error: ${_this.error}, isLoading: ${_this.isLoading}, shouldNavigate: ${_this.shouldNavigate}, closeModal: ${_this.closeModal}, showLoader: ${_this.showLoader}, status: ${_this.status}, typingUserEntity: ${_this.typingUserEntity})';
 }
 
 
@@ -63,7 +69,7 @@ class _$ChatStateCopyWithImpl<$Res>
 /// Create a copy of ChatState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? chat = freezed,Object? me = freezed,Object? chatMembers = null,Object? selectedParticipants = null,Object? selectedMember = freezed,Object? error = freezed,Object? isLoading = null,Object? shouldNavigate = null,Object? closeModal = null,Object? showLoader = null,Object? status = null,Object? typingUserEntity = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(ChatState(
 chat: freezed == chat ? _self.chat : chat // ignore: cast_nullable_to_non_nullable
 as ChatEntity?,me: freezed == me ? _self.me : me // ignore: cast_nullable_to_non_nullable
 as ChatMemberEntity?,chatMembers: null == chatMembers ? _self.chatMembers : chatMembers // ignore: cast_nullable_to_non_nullable
@@ -253,7 +259,7 @@ return $default(_that.chat,_that.me,_that.chatMembers,_that.selectedParticipants
 
 
 class _ChatState implements ChatState {
-  const _ChatState({this.chat, this.me, final  List<ChatMemberEntity> chatMembers = const [], final  List<UserListItemEntity> selectedParticipants = const [], this.selectedMember, this.error, this.isLoading = false, this.shouldNavigate = false, this.closeModal = false, this.showLoader = false, this.status = CreateGroupStatus.initial, this.typingUserEntity}): _chatMembers = chatMembers,_selectedParticipants = selectedParticipants;
+  const _ChatState({this.chat, this.me,  List<ChatMemberEntity> chatMembers = const [],  List<UserListItemEntity> selectedParticipants = const [], this.selectedMember, this.error, this.isLoading = false, this.shouldNavigate = false, this.closeModal = false, this.showLoader = false, this.status = CreateGroupStatus.initial, this.typingUserEntity}): _chatMembers = chatMembers,_selectedParticipants = selectedParticipants;
   
 
 @override final  ChatEntity? chat;
@@ -291,16 +297,18 @@ _$ChatStateCopyWith<_ChatState> get copyWith => __$ChatStateCopyWithImpl<_ChatSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatState&&(identical(other.chat, chat) || other.chat == chat)&&(identical(other.me, me) || other.me == me)&&const DeepCollectionEquality().equals(other._chatMembers, _chatMembers)&&const DeepCollectionEquality().equals(other._selectedParticipants, _selectedParticipants)&&(identical(other.selectedMember, selectedMember) || other.selectedMember == selectedMember)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.shouldNavigate, shouldNavigate) || other.shouldNavigate == shouldNavigate)&&(identical(other.closeModal, closeModal) || other.closeModal == closeModal)&&(identical(other.showLoader, showLoader) || other.showLoader == showLoader)&&(identical(other.status, status) || other.status == status)&&(identical(other.typingUserEntity, typingUserEntity) || other.typingUserEntity == typingUserEntity));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatState&&(identical(other.chat, chat) || other.chat == chat)&&(identical(other.me, me) || other.me == me)&&const DeepCollectionEquality().equals(other.chatMembers, _chatMembers)&&const DeepCollectionEquality().equals(other.selectedParticipants, _selectedParticipants)&&(identical(other.selectedMember, selectedMember) || other.selectedMember == selectedMember)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.shouldNavigate, shouldNavigate) || other.shouldNavigate == shouldNavigate)&&(identical(other.closeModal, closeModal) || other.closeModal == closeModal)&&(identical(other.showLoader, showLoader) || other.showLoader == showLoader)&&(identical(other.status, status) || other.status == status)&&(identical(other.typingUserEntity, typingUserEntity) || other.typingUserEntity == typingUserEntity));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,chat,me,const DeepCollectionEquality().hash(_chatMembers),const DeepCollectionEquality().hash(_selectedParticipants),selectedMember,error,isLoading,shouldNavigate,closeModal,showLoader,status,typingUserEntity);
+int get hashCode {
+    return Object.hash(runtimeType,chat,me,const DeepCollectionEquality().hash(_chatMembers),const DeepCollectionEquality().hash(_selectedParticipants),selectedMember,error,isLoading,shouldNavigate,closeModal,showLoader,status,typingUserEntity);
+}
 
 @override
 String toString() {
-  return 'ChatState(chat: $chat, me: $me, chatMembers: $chatMembers, selectedParticipants: $selectedParticipants, selectedMember: $selectedMember, error: $error, isLoading: $isLoading, shouldNavigate: $shouldNavigate, closeModal: $closeModal, showLoader: $showLoader, status: $status, typingUserEntity: $typingUserEntity)';
+    return 'ChatState(chat: $chat, me: $me, chatMembers: $chatMembers, selectedParticipants: $selectedParticipants, selectedMember: $selectedMember, error: $error, isLoading: $isLoading, shouldNavigate: $shouldNavigate, closeModal: $closeModal, showLoader: $showLoader, status: $status, typingUserEntity: $typingUserEntity)';
 }
 
 

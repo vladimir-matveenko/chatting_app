@@ -2,7 +2,7 @@ import 'package:chatting_app/features/chat/domain/entity/chat_member_entity.dart
 import 'package:chatting_app/features/users/domain/entity/users_list_item_entity.dart';
 import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 @immutable
 class ChatUtils {
