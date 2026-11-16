@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class PinnedMessagePlaceholder extends StatelessWidget {
   const PinnedMessagePlaceholder({super.key, required this.onTap});

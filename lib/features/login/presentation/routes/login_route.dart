@@ -1,6 +1,6 @@
 import 'package:chatting_app/features/login/presentation/screens/login_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/di/injection.dart';
 import '../cubit/cubit.dart';

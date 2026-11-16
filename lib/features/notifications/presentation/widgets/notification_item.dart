@@ -1,7 +1,7 @@
 import 'package:chatting_app/features/notifications/domain/entity/notification_entity.dart';
 import 'package:chatting_app/features/notifications/utils.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/theme/app_semantic_colors.dart';
 import '../../../../app/utils/extensions.dart';

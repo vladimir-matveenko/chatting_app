@@ -1,5 +1,5 @@
 import 'package:chatting_app/core/presentation/widgets/app_loader.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class LoadingView extends StatelessWidget {
   const LoadingView({super.key});

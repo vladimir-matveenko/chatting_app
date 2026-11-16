@@ -2,9 +2,9 @@ import 'package:chatting_app/core/presentation/widgets/app_back_button.dart';
 import 'package:chatting_app/features/chat/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/set_group_name_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/utils/app_utils.dart';
 import '../cubit/state.dart';

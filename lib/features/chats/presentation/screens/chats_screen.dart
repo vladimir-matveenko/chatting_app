@@ -1,8 +1,8 @@
 import 'package:chatting_app/features/chats/presentation/cubit/cubit.dart';
 import 'package:chatting_app/features/chats/presentation/cubit/state.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/utils/app_utils.dart';
 import '../../../../core/presentation/widgets/app_message.dart';

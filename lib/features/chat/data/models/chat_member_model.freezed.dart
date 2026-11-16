@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'chat_member_model.dart';
@@ -9,6 +9,7 @@ part of 'chat_member_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $ChatMemberModelCopyWith<ChatMemberModel> get copyWith => _$ChatMemberModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatMemberModel&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.role, role) || other.role == role)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.lastReadMessageId, lastReadMessageId) || other.lastReadMessageId == lastReadMessageId)&&(identical(other.isMuted, isMuted) || other.isMuted == isMuted)&&(identical(other.isArchived, isArchived) || other.isArchived == isArchived)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline));
+  final _this = this as ChatMemberModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatMemberModel&&(identical(other.chatId, _this.chatId) || other.chatId == _this.chatId)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.role, _this.role) || other.role == _this.role)&&(identical(other.joinedAt, _this.joinedAt) || other.joinedAt == _this.joinedAt)&&(identical(other.lastReadMessageId, _this.lastReadMessageId) || other.lastReadMessageId == _this.lastReadMessageId)&&(identical(other.isMuted, _this.isMuted) || other.isMuted == _this.isMuted)&&(identical(other.isArchived, _this.isArchived) || other.isArchived == _this.isArchived)&&(identical(other.displayName, _this.displayName) || other.displayName == _this.displayName)&&(identical(other.userName, _this.userName) || other.userName == _this.userName)&&(identical(other.avatarUrl, _this.avatarUrl) || other.avatarUrl == _this.avatarUrl)&&(identical(other.isOnline, _this.isOnline) || other.isOnline == _this.isOnline));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,chatId,userId,role,joinedAt,lastReadMessageId,isMuted,isArchived,displayName,userName,avatarUrl,isOnline);
+int get hashCode {
+  final _this = this as ChatMemberModel;
+  return Object.hash(runtimeType,_this.chatId,_this.userId,_this.role,_this.joinedAt,_this.lastReadMessageId,_this.isMuted,_this.isArchived,_this.displayName,_this.userName,_this.avatarUrl,_this.isOnline);
+}
 
 @override
 String toString() {
-  return 'ChatMemberModel(chatId: $chatId, userId: $userId, role: $role, joinedAt: $joinedAt, lastReadMessageId: $lastReadMessageId, isMuted: $isMuted, isArchived: $isArchived, displayName: $displayName, userName: $userName, avatarUrl: $avatarUrl, isOnline: $isOnline)';
+  final _this = this as ChatMemberModel;
+  return 'ChatMemberModel(chatId: ${_this.chatId}, userId: ${_this.userId}, role: ${_this.role}, joinedAt: ${_this.joinedAt}, lastReadMessageId: ${_this.lastReadMessageId}, isMuted: ${_this.isMuted}, isArchived: ${_this.isArchived}, displayName: ${_this.displayName}, userName: ${_this.userName}, avatarUrl: ${_this.avatarUrl}, isOnline: ${_this.isOnline})';
 }
 
 
@@ -66,7 +72,7 @@ class _$ChatMemberModelCopyWithImpl<$Res>
 /// Create a copy of ChatMemberModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? chatId = null,Object? userId = null,Object? role = null,Object? joinedAt = null,Object? lastReadMessageId = freezed,Object? isMuted = null,Object? isArchived = null,Object? displayName = freezed,Object? userName = null,Object? avatarUrl = freezed,Object? isOnline = null,}) {
-  return _then(_self.copyWith(
+  return _then(ChatMemberModel(
 chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
@@ -247,16 +253,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatMemberModel&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.role, role) || other.role == role)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.lastReadMessageId, lastReadMessageId) || other.lastReadMessageId == lastReadMessageId)&&(identical(other.isMuted, isMuted) || other.isMuted == isMuted)&&(identical(other.isArchived, isArchived) || other.isArchived == isArchived)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatMemberModel&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.role, role) || other.role == role)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt)&&(identical(other.lastReadMessageId, lastReadMessageId) || other.lastReadMessageId == lastReadMessageId)&&(identical(other.isMuted, isMuted) || other.isMuted == isMuted)&&(identical(other.isArchived, isArchived) || other.isArchived == isArchived)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,chatId,userId,role,joinedAt,lastReadMessageId,isMuted,isArchived,displayName,userName,avatarUrl,isOnline);
+int get hashCode {
+    return Object.hash(runtimeType,chatId,userId,role,joinedAt,lastReadMessageId,isMuted,isArchived,displayName,userName,avatarUrl,isOnline);
+}
 
 @override
 String toString() {
-  return 'ChatMemberModel(chatId: $chatId, userId: $userId, role: $role, joinedAt: $joinedAt, lastReadMessageId: $lastReadMessageId, isMuted: $isMuted, isArchived: $isArchived, displayName: $displayName, userName: $userName, avatarUrl: $avatarUrl, isOnline: $isOnline)';
+    return 'ChatMemberModel(chatId: $chatId, userId: $userId, role: $role, joinedAt: $joinedAt, lastReadMessageId: $lastReadMessageId, isMuted: $isMuted, isArchived: $isArchived, displayName: $displayName, userName: $userName, avatarUrl: $avatarUrl, isOnline: $isOnline)';
 }
 
 

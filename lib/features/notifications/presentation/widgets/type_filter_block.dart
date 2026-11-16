@@ -1,5 +1,5 @@
 import 'package:chatting_app/features/notifications/utils.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/domain/entity/availability_filter_entity.dart';
 import '../../data/enums/notification_type.dart';

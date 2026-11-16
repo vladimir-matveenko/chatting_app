@@ -1,7 +1,7 @@
 import 'package:chatting_app/features/theme/presentation/cubit/state.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/theme/app_theme.dart';
 import '../../../../app/theme/app_theme_colors.dart';

@@ -2,8 +2,8 @@ import 'package:chatting_app/core/presentation/widgets/app_loader.dart';
 import 'package:chatting_app/core/presentation/widgets/something_went_wrong_widget.dart';
 import 'package:chatting_app/features/chat/presentation/cubit/state.dart';
 import 'package:chatting_app/features/messages/presentation/cubit/cubit.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/di/injection.dart';
 import '../../../../core/presentation/widgets/app_message.dart';

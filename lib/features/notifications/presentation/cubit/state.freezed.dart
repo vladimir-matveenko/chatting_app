@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'state.dart';
@@ -9,6 +9,7 @@ part of 'state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $NotificationsStateCopyWith<NotificationsState> get copyWith => _$NotificationsS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationsState&&const DeepCollectionEquality().equals(other.notifications, notifications)&&const DeepCollectionEquality().equals(other.filters, filters)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.showLoader, showLoader) || other.showLoader == showLoader));
+  final _this = this as NotificationsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationsState&&const DeepCollectionEquality().equals(other.notifications, _this.notifications)&&const DeepCollectionEquality().equals(other.filters, _this.filters)&&(identical(other.unreadCount, _this.unreadCount) || other.unreadCount == _this.unreadCount)&&(identical(other.error, _this.error) || other.error == _this.error)&&(identical(other.isLoading, _this.isLoading) || other.isLoading == _this.isLoading)&&(identical(other.showLoader, _this.showLoader) || other.showLoader == _this.showLoader));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(notifications),const DeepCollectionEquality().hash(filters),unreadCount,error,isLoading,showLoader);
+int get hashCode {
+  final _this = this as NotificationsState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.notifications),const DeepCollectionEquality().hash(_this.filters),_this.unreadCount,_this.error,_this.isLoading,_this.showLoader);
+}
 
 @override
 String toString() {
-  return 'NotificationsState(notifications: $notifications, filters: $filters, unreadCount: $unreadCount, error: $error, isLoading: $isLoading, showLoader: $showLoader)';
+  final _this = this as NotificationsState;
+  return 'NotificationsState(notifications: ${_this.notifications}, filters: ${_this.filters}, unreadCount: ${_this.unreadCount}, error: ${_this.error}, isLoading: ${_this.isLoading}, showLoader: ${_this.showLoader})';
 }
 
 
@@ -63,7 +69,7 @@ class _$NotificationsStateCopyWithImpl<$Res>
 /// Create a copy of NotificationsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? notifications = null,Object? filters = null,Object? unreadCount = null,Object? error = freezed,Object? isLoading = null,Object? showLoader = null,}) {
-  return _then(_self.copyWith(
+  return _then(NotificationsState(
 notifications: null == notifications ? _self.notifications : notifications // ignore: cast_nullable_to_non_nullable
 as List<NotificationEntity>,filters: null == filters ? _self.filters : filters // ignore: cast_nullable_to_non_nullable
 as List<AvailabilityFilterEntity>,unreadCount: null == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
@@ -211,7 +217,7 @@ return $default(_that.notifications,_that.filters,_that.unreadCount,_that.error,
 
 
 class _NotificationsState implements NotificationsState {
-  const _NotificationsState({final  List<NotificationEntity> notifications = const [], final  List<AvailabilityFilterEntity> filters = const [], this.unreadCount = 0, this.error, this.isLoading = false, this.showLoader = false}): _notifications = notifications,_filters = filters;
+  const _NotificationsState({ List<NotificationEntity> notifications = const [],  List<AvailabilityFilterEntity> filters = const [], this.unreadCount = 0, this.error, this.isLoading = false, this.showLoader = false}): _notifications = notifications,_filters = filters;
   
 
  final  List<NotificationEntity> _notifications;
@@ -243,16 +249,18 @@ _$NotificationsStateCopyWith<_NotificationsState> get copyWith => __$Notificatio
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationsState&&const DeepCollectionEquality().equals(other._notifications, _notifications)&&const DeepCollectionEquality().equals(other._filters, _filters)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.showLoader, showLoader) || other.showLoader == showLoader));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationsState&&const DeepCollectionEquality().equals(other.notifications, _notifications)&&const DeepCollectionEquality().equals(other.filters, _filters)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.showLoader, showLoader) || other.showLoader == showLoader));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_notifications),const DeepCollectionEquality().hash(_filters),unreadCount,error,isLoading,showLoader);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_notifications),const DeepCollectionEquality().hash(_filters),unreadCount,error,isLoading,showLoader);
+}
 
 @override
 String toString() {
-  return 'NotificationsState(notifications: $notifications, filters: $filters, unreadCount: $unreadCount, error: $error, isLoading: $isLoading, showLoader: $showLoader)';
+    return 'NotificationsState(notifications: $notifications, filters: $filters, unreadCount: $unreadCount, error: $error, isLoading: $isLoading, showLoader: $showLoader)';
 }
 
 

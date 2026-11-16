@@ -1,5 +1,5 @@
 import 'package:chatting_app/app/theme/app_theme_colors.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppMessage {
   static void show(

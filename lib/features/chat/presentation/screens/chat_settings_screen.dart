@@ -1,8 +1,8 @@
 import 'package:chatting_app/app/constants/app_enums.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/add_members_modal.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/di/injection.dart';
 import '../../../../app/utils/app_utils.dart';

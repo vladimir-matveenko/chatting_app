@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'message_search_result_entity.dart';
@@ -9,6 +9,7 @@ part of 'message_search_result_entity.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $MessageSearchResultEntityCopyWith<MessageSearchResultEntity> get copyWith => _$
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageSearchResultEntity&&(identical(other.messageId, messageId) || other.messageId == messageId)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.sender, sender) || other.sender == sender)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  final _this = this as MessageSearchResultEntity;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageSearchResultEntity&&(identical(other.messageId, _this.messageId) || other.messageId == _this.messageId)&&(identical(other.chatId, _this.chatId) || other.chatId == _this.chatId)&&(identical(other.sender, _this.sender) || other.sender == _this.sender)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.body, _this.body) || other.body == _this.body)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,messageId,chatId,sender,type,body,createdAt);
+int get hashCode {
+  final _this = this as MessageSearchResultEntity;
+  return Object.hash(runtimeType,_this.messageId,_this.chatId,_this.sender,_this.type,_this.body,_this.createdAt);
+}
 
 @override
 String toString() {
-  return 'MessageSearchResultEntity(messageId: $messageId, chatId: $chatId, sender: $sender, type: $type, body: $body, createdAt: $createdAt)';
+  final _this = this as MessageSearchResultEntity;
+  return 'MessageSearchResultEntity(messageId: ${_this.messageId}, chatId: ${_this.chatId}, sender: ${_this.sender}, type: ${_this.type}, body: ${_this.body}, createdAt: ${_this.createdAt})';
 }
 
 
@@ -66,7 +72,7 @@ class _$MessageSearchResultEntityCopyWithImpl<$Res>
 /// Create a copy of MessageSearchResultEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? messageId = null,Object? chatId = null,Object? sender = null,Object? type = null,Object? body = freezed,Object? createdAt = null,}) {
-  return _then(_self.copyWith(
+  return _then(MessageSearchResultEntity(
 messageId: null == messageId ? _self.messageId : messageId // ignore: cast_nullable_to_non_nullable
 as int,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
 as String,sender: null == sender ? _self.sender : sender // ignore: cast_nullable_to_non_nullable
@@ -246,16 +252,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageSearchResultEntity&&(identical(other.messageId, messageId) || other.messageId == messageId)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.sender, sender) || other.sender == sender)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageSearchResultEntity&&(identical(other.messageId, messageId) || other.messageId == messageId)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.sender, sender) || other.sender == sender)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,messageId,chatId,sender,type,body,createdAt);
+int get hashCode {
+    return Object.hash(runtimeType,messageId,chatId,sender,type,body,createdAt);
+}
 
 @override
 String toString() {
-  return 'MessageSearchResultEntity(messageId: $messageId, chatId: $chatId, sender: $sender, type: $type, body: $body, createdAt: $createdAt)';
+    return 'MessageSearchResultEntity(messageId: $messageId, chatId: $chatId, sender: $sender, type: $type, body: $body, createdAt: $createdAt)';
 }
 
 

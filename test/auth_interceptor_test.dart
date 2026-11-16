@@ -91,9 +91,8 @@ void main() {
         ),
       ).called(1);
 
-      final captured = verify(
-        () => localDataSource.cacheToken(captureAny()),
-      ).captured;
+      final captured = verify(() => localDataSource.cacheToken(captureAny()))
+          .captured;
 
       expect(
         captured.single,
@@ -143,9 +142,8 @@ void main() {
     });
 
     test('missing refresh token → logout', () async {
-      when(
-        () => localDataSource.getCachedToken(),
-      ).thenAnswer((_) async => null);
+      when(() => localDataSource.getCachedToken())
+          .thenAnswer((_) async => null);
 
       await interceptor.onError(
         DioException(

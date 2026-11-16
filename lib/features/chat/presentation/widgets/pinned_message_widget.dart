@@ -1,7 +1,7 @@
 import 'package:chatting_app/features/chat/presentation/widgets/pinned_message_item.dart';
 import 'package:chatting_app/features/chat/presentation/widgets/pinned_message_placeholder.dart';
 import 'package:chatting_app/features/messages/domain/entity/message_entity.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class PinnedMessageWidget extends StatelessWidget {
   const PinnedMessageWidget({

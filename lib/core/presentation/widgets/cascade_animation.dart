@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Cascade animation. Can be used for adding elements into the list
 class CascadeAnimation extends StatelessWidget {

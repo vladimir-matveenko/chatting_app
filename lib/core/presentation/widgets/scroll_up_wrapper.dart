@@ -1,5 +1,5 @@
 import 'package:chatting_app/core/presentation/widgets/scroll_up_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ScrollWrapper extends StatelessWidget {
   const ScrollWrapper({

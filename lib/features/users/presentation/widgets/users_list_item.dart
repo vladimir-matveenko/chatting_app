@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../profile/presentation/widgets/user_avatar.dart';
 import '../../domain/entity/users_list_item_entity.dart';

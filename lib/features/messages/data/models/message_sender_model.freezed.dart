@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'message_sender_model.dart';
@@ -9,6 +9,7 @@ part of 'message_sender_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $MessageSenderModelCopyWith<MessageSenderModel> get copyWith => _$MessageSenderM
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageSenderModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
+  final _this = this as MessageSenderModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageSenderModel&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.userName, _this.userName) || other.userName == _this.userName)&&(identical(other.displayName, _this.displayName) || other.displayName == _this.displayName)&&(identical(other.avatarUrl, _this.avatarUrl) || other.avatarUrl == _this.avatarUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userName,displayName,avatarUrl);
+int get hashCode {
+  final _this = this as MessageSenderModel;
+  return Object.hash(runtimeType,_this.id,_this.userName,_this.displayName,_this.avatarUrl);
+}
 
 @override
 String toString() {
-  return 'MessageSenderModel(id: $id, userName: $userName, displayName: $displayName, avatarUrl: $avatarUrl)';
+  final _this = this as MessageSenderModel;
+  return 'MessageSenderModel(id: ${_this.id}, userName: ${_this.userName}, displayName: ${_this.displayName}, avatarUrl: ${_this.avatarUrl})';
 }
 
 
@@ -66,7 +72,7 @@ class _$MessageSenderModelCopyWithImpl<$Res>
 /// Create a copy of MessageSenderModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userName = null,Object? displayName = freezed,Object? avatarUrl = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(MessageSenderModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userName: null == userName ? _self.userName : userName // ignore: cast_nullable_to_non_nullable
 as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageSenderModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageSenderModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userName, userName) || other.userName == userName)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userName,displayName,avatarUrl);
+int get hashCode {
+    return Object.hash(runtimeType,id,userName,displayName,avatarUrl);
+}
 
 @override
 String toString() {
-  return 'MessageSenderModel(id: $id, userName: $userName, displayName: $displayName, avatarUrl: $avatarUrl)';
+    return 'MessageSenderModel(id: $id, userName: $userName, displayName: $displayName, avatarUrl: $avatarUrl)';
 }
 
 

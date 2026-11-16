@@ -1,8 +1,8 @@
 import 'package:chatting_app/core/presentation/widgets/base_list_view.dart';
 import 'package:chatting_app/features/users/presentation/widgets/users_list_item.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/constants/app_enums.dart';
 import '../../../../app/router/app_routes.dart';

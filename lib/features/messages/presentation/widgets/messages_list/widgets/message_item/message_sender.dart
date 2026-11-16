@@ -1,5 +1,5 @@
 import 'package:chatting_app/features/messages/domain/entity/message_sender_entity.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class MessageSender extends StatelessWidget {
   const MessageSender({super.key, required this.sender});

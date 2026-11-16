@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'message_model.dart';
@@ -9,6 +9,7 @@ part of 'message_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $MessageModelCopyWith<MessageModel> get copyWith => _$MessageModelCopyWithImpl<M
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.sender, sender) || other.sender == sender)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.replyToId, replyToId) || other.replyToId == replyToId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.isDeleted, isDeleted) || other.isDeleted == isDeleted)&&const DeepCollectionEquality().equals(other.reactions, reactions)&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.currentUserReaction, currentUserReaction) || other.currentUserReaction == currentUserReaction)&&(identical(other.readCount, readCount) || other.readCount == readCount));
+  final _this = this as MessageModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageModel&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.chatId, _this.chatId) || other.chatId == _this.chatId)&&(identical(other.sender, _this.sender) || other.sender == _this.sender)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.body, _this.body) || other.body == _this.body)&&(identical(other.replyToId, _this.replyToId) || other.replyToId == _this.replyToId)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt)&&(identical(other.deletedAt, _this.deletedAt) || other.deletedAt == _this.deletedAt)&&(identical(other.isDeleted, _this.isDeleted) || other.isDeleted == _this.isDeleted)&&const DeepCollectionEquality().equals(other.reactions, _this.reactions)&&(identical(other.reply, _this.reply) || other.reply == _this.reply)&&(identical(other.currentUserReaction, _this.currentUserReaction) || other.currentUserReaction == _this.currentUserReaction)&&(identical(other.readCount, _this.readCount) || other.readCount == _this.readCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,chatId,sender,type,body,replyToId,createdAt,updatedAt,deletedAt,isDeleted,const DeepCollectionEquality().hash(reactions),reply,currentUserReaction,readCount);
+int get hashCode {
+  final _this = this as MessageModel;
+  return Object.hash(runtimeType,_this.id,_this.chatId,_this.sender,_this.type,_this.body,_this.replyToId,_this.createdAt,_this.updatedAt,_this.deletedAt,_this.isDeleted,const DeepCollectionEquality().hash(_this.reactions),_this.reply,_this.currentUserReaction,_this.readCount);
+}
 
 @override
 String toString() {
-  return 'MessageModel(id: $id, chatId: $chatId, sender: $sender, type: $type, body: $body, replyToId: $replyToId, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, isDeleted: $isDeleted, reactions: $reactions, reply: $reply, currentUserReaction: $currentUserReaction, readCount: $readCount)';
+  final _this = this as MessageModel;
+  return 'MessageModel(id: ${_this.id}, chatId: ${_this.chatId}, sender: ${_this.sender}, type: ${_this.type}, body: ${_this.body}, replyToId: ${_this.replyToId}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt}, deletedAt: ${_this.deletedAt}, isDeleted: ${_this.isDeleted}, reactions: ${_this.reactions}, reply: ${_this.reply}, currentUserReaction: ${_this.currentUserReaction}, readCount: ${_this.readCount})';
 }
 
 
@@ -66,7 +72,7 @@ class _$MessageModelCopyWithImpl<$Res>
 /// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? chatId = null,Object? sender = null,Object? type = null,Object? body = freezed,Object? replyToId = freezed,Object? createdAt = null,Object? updatedAt = null,Object? deletedAt = freezed,Object? isDeleted = null,Object? reactions = null,Object? reply = freezed,Object? currentUserReaction = freezed,Object? readCount = null,}) {
-  return _then(_self.copyWith(
+  return _then(MessageModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
 as String,sender: null == sender ? _self.sender : sender // ignore: cast_nullable_to_non_nullable
@@ -243,7 +249,7 @@ return $default(_that.id,_that.chatId,_that.sender,_that.type,_that.body,_that.r
 @JsonSerializable()
 
 class _MessageModel extends MessageModel {
-  const _MessageModel({required this.id, required this.chatId, required this.sender, required this.type, this.body, this.replyToId, required this.createdAt, required this.updatedAt, this.deletedAt, @JsonKey(defaultValue: false) required this.isDeleted, @JsonKey(defaultValue: []) required final  List<MessageReactionSummaryModel> reactions, this.reply, this.currentUserReaction, required this.readCount}): _reactions = reactions,super._();
+  const _MessageModel({required this.id, required this.chatId, required this.sender, required this.type, this.body, this.replyToId, required this.createdAt, required this.updatedAt, this.deletedAt, @JsonKey(defaultValue: false) required this.isDeleted, @JsonKey(defaultValue: []) required  List<MessageReactionSummaryModel> reactions, this.reply, this.currentUserReaction, required this.readCount}): _reactions = reactions,super._();
   factory _MessageModel.fromJson(Map<String, dynamic> json) => _$MessageModelFromJson(json);
 
 @override final  String id;
@@ -280,16 +286,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.sender, sender) || other.sender == sender)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.replyToId, replyToId) || other.replyToId == replyToId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.isDeleted, isDeleted) || other.isDeleted == isDeleted)&&const DeepCollectionEquality().equals(other._reactions, _reactions)&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.currentUserReaction, currentUserReaction) || other.currentUserReaction == currentUserReaction)&&(identical(other.readCount, readCount) || other.readCount == readCount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.sender, sender) || other.sender == sender)&&(identical(other.type, type) || other.type == type)&&(identical(other.body, body) || other.body == body)&&(identical(other.replyToId, replyToId) || other.replyToId == replyToId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.deletedAt, deletedAt) || other.deletedAt == deletedAt)&&(identical(other.isDeleted, isDeleted) || other.isDeleted == isDeleted)&&const DeepCollectionEquality().equals(other.reactions, _reactions)&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.currentUserReaction, currentUserReaction) || other.currentUserReaction == currentUserReaction)&&(identical(other.readCount, readCount) || other.readCount == readCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,chatId,sender,type,body,replyToId,createdAt,updatedAt,deletedAt,isDeleted,const DeepCollectionEquality().hash(_reactions),reply,currentUserReaction,readCount);
+int get hashCode {
+    return Object.hash(runtimeType,id,chatId,sender,type,body,replyToId,createdAt,updatedAt,deletedAt,isDeleted,const DeepCollectionEquality().hash(_reactions),reply,currentUserReaction,readCount);
+}
 
 @override
 String toString() {
-  return 'MessageModel(id: $id, chatId: $chatId, sender: $sender, type: $type, body: $body, replyToId: $replyToId, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, isDeleted: $isDeleted, reactions: $reactions, reply: $reply, currentUserReaction: $currentUserReaction, readCount: $readCount)';
+    return 'MessageModel(id: $id, chatId: $chatId, sender: $sender, type: $type, body: $body, replyToId: $replyToId, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, isDeleted: $isDeleted, reactions: $reactions, reply: $reply, currentUserReaction: $currentUserReaction, readCount: $readCount)';
 }
 
 

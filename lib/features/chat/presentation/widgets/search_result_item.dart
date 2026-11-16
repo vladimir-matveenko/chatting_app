@@ -1,6 +1,6 @@
 import 'package:chatting_app/features/messages/domain/entity/message_search_result_entity.dart';
 import 'package:chatting_app/features/profile/presentation/widgets/user_avatar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SearchResultItem extends StatelessWidget {
   const SearchResultItem({super.key, required this.item, required this.onTap});

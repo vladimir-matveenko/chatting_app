@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'state.dart';
@@ -9,6 +9,7 @@ part of 'state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $ChatsStateCopyWith<ChatsState> get copyWith => _$ChatsStateCopyWithImpl<ChatsSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatsState&&const DeepCollectionEquality().equals(other.chats, chats)&&const DeepCollectionEquality().equals(other.archivedChats, archivedChats)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.shouldNavigate, shouldNavigate) || other.shouldNavigate == shouldNavigate)&&(identical(other.showLoader, showLoader) || other.showLoader == showLoader)&&(identical(other.status, status) || other.status == status));
+  final _this = this as ChatsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatsState&&const DeepCollectionEquality().equals(other.chats, _this.chats)&&const DeepCollectionEquality().equals(other.archivedChats, _this.archivedChats)&&(identical(other.error, _this.error) || other.error == _this.error)&&(identical(other.isLoading, _this.isLoading) || other.isLoading == _this.isLoading)&&(identical(other.shouldNavigate, _this.shouldNavigate) || other.shouldNavigate == _this.shouldNavigate)&&(identical(other.showLoader, _this.showLoader) || other.showLoader == _this.showLoader)&&(identical(other.status, _this.status) || other.status == _this.status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(chats),const DeepCollectionEquality().hash(archivedChats),error,isLoading,shouldNavigate,showLoader,status);
+int get hashCode {
+  final _this = this as ChatsState;
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.chats),const DeepCollectionEquality().hash(_this.archivedChats),_this.error,_this.isLoading,_this.shouldNavigate,_this.showLoader,_this.status);
+}
 
 @override
 String toString() {
-  return 'ChatsState(chats: $chats, archivedChats: $archivedChats, error: $error, isLoading: $isLoading, shouldNavigate: $shouldNavigate, showLoader: $showLoader, status: $status)';
+  final _this = this as ChatsState;
+  return 'ChatsState(chats: ${_this.chats}, archivedChats: ${_this.archivedChats}, error: ${_this.error}, isLoading: ${_this.isLoading}, shouldNavigate: ${_this.shouldNavigate}, showLoader: ${_this.showLoader}, status: ${_this.status})';
 }
 
 
@@ -63,7 +69,7 @@ class _$ChatsStateCopyWithImpl<$Res>
 /// Create a copy of ChatsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? chats = null,Object? archivedChats = null,Object? error = freezed,Object? isLoading = null,Object? shouldNavigate = null,Object? showLoader = null,Object? status = null,}) {
-  return _then(_self.copyWith(
+  return _then(ChatsState(
 chats: null == chats ? _self.chats : chats // ignore: cast_nullable_to_non_nullable
 as List<ChatListItemEntity>,archivedChats: null == archivedChats ? _self.archivedChats : archivedChats // ignore: cast_nullable_to_non_nullable
 as List<ChatListItemEntity>,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
@@ -212,7 +218,7 @@ return $default(_that.chats,_that.archivedChats,_that.error,_that.isLoading,_tha
 
 
 class _ChatsState implements ChatsState {
-  const _ChatsState({final  List<ChatListItemEntity> chats = const [], final  List<ChatListItemEntity> archivedChats = const [], this.error, this.isLoading = false, this.shouldNavigate = false, this.showLoader = false, this.status = ChatsScreenStatus.active}): _chats = chats,_archivedChats = archivedChats;
+  const _ChatsState({ List<ChatListItemEntity> chats = const [],  List<ChatListItemEntity> archivedChats = const [], this.error, this.isLoading = false, this.shouldNavigate = false, this.showLoader = false, this.status = ChatsScreenStatus.active}): _chats = chats,_archivedChats = archivedChats;
   
 
  final  List<ChatListItemEntity> _chats;
@@ -245,16 +251,18 @@ _$ChatsStateCopyWith<_ChatsState> get copyWith => __$ChatsStateCopyWithImpl<_Cha
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatsState&&const DeepCollectionEquality().equals(other._chats, _chats)&&const DeepCollectionEquality().equals(other._archivedChats, _archivedChats)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.shouldNavigate, shouldNavigate) || other.shouldNavigate == shouldNavigate)&&(identical(other.showLoader, showLoader) || other.showLoader == showLoader)&&(identical(other.status, status) || other.status == status));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatsState&&const DeepCollectionEquality().equals(other.chats, _chats)&&const DeepCollectionEquality().equals(other.archivedChats, _archivedChats)&&(identical(other.error, error) || other.error == error)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.shouldNavigate, shouldNavigate) || other.shouldNavigate == shouldNavigate)&&(identical(other.showLoader, showLoader) || other.showLoader == showLoader)&&(identical(other.status, status) || other.status == status));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_chats),const DeepCollectionEquality().hash(_archivedChats),error,isLoading,shouldNavigate,showLoader,status);
+int get hashCode {
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_chats),const DeepCollectionEquality().hash(_archivedChats),error,isLoading,shouldNavigate,showLoader,status);
+}
 
 @override
 String toString() {
-  return 'ChatsState(chats: $chats, archivedChats: $archivedChats, error: $error, isLoading: $isLoading, shouldNavigate: $shouldNavigate, showLoader: $showLoader, status: $status)';
+    return 'ChatsState(chats: $chats, archivedChats: $archivedChats, error: $error, isLoading: $isLoading, shouldNavigate: $shouldNavigate, showLoader: $showLoader, status: $status)';
 }
 
 

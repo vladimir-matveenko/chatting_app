@@ -3,8 +3,8 @@ import 'dart:js_interop';
 import 'dart:typed_data';
 
 import 'package:chatting_app/app/utils/app_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:web/web.dart';
 
 import '../domain/entity/app_image_entity.dart';

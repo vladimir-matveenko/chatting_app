@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:chatting_app/features/profile/presentation/profile_cubit/cubit.dart';
 import 'package:chatting_app/features/profile/presentation/profile_cubit/state.dart';
 import 'package:chatting_app/features/profile/presentation/widgets/profile_screen_wrapper.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockProfileCubit extends Mock implements ProfileCubit {}
@@ -88,9 +88,8 @@ void main() {
       ) async {
         when(() => profileCubit.state).thenReturn(const ProfileState());
 
-        when(
-          () => profileCubit.stream,
-        ).thenAnswer((_) => stateController.stream);
+        when(() => profileCubit.stream)
+            .thenAnswer((_) => stateController.stream);
 
         await tester.pumpWidget(
           MaterialApp(

@@ -1,6 +1,6 @@
 import 'package:chatting_app/core/presentation/widgets/app_loader.dart';
 import 'package:chatting_app/features/profile/presentation/widgets/user_avatar.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ProfileAvatar extends StatelessWidget {
   const ProfileAvatar({
